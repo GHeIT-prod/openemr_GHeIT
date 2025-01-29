@@ -28,8 +28,8 @@ services:
     restart: always
     image: openemr/openemr:flex
     ports:
-    - 8300:80
-    - 9300:443
+    - 80:80
+    - 443:443
     volumes:
     - ../..:/openemr:ro
     - ../..:/var/www/localhost/htdocs/openemr:rw
@@ -49,6 +49,8 @@ services:
       MYSQL_ROOT_PASS: root
       MYSQL_USER: openemr
       MYSQL_PASS: openemr
+      DOMAIN: openemrdev.shoprideon.com
+      EMAIL: bijita.kc@asteriskhubs.com
       OE_USER: admin
       OE_PASS: pass
       EASY_DEV_MODE: "yes"
@@ -65,7 +67,7 @@ services:
       SELENIUM_FORCE_HEADLESS: "false"
       SELENIUM_BASE_URL: "http://openemr"
       OPENEMR_DOCKER_ENV_TAG: easy-dev-docker
-      OPENEMR_SETTING_site_addr_oath: 'https://localhost:9300'
+      OPENEMR_SETTING_site_addr_oath: 'https://openemrdev.shoprideon.com'
       OPENEMR_SETTING_oauth_password_grant: 3
       OPENEMR_SETTING_rest_system_scopes_api: 1
       OPENEMR_SETTING_rest_api: 1
