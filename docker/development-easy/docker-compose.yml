@@ -28,8 +28,8 @@ services:
     restart: always
     image: openemr/openemr:flex
     ports:
-    - 8300:80
-    - 9300:443
+    - 80:80
+    - 443:443
     volumes:
     - ../..:/openemr:ro
     - ../..:/var/www/localhost/htdocs/openemr:rw
