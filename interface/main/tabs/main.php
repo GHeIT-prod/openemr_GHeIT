@@ -97,7 +97,7 @@ $twig = (new TwigContainer(null, OEGlobalsBag::getInstance()->getKernel()))->get
 <html>
 
 <head>
-    <title><?php echo text($openemr_name); ?></title>
+<title><?php echo text($openemr_name); ?></title>
 
     <script>
         // This is to prevent users from losing data by refreshing or backing out of OpenEMR.
@@ -108,15 +108,15 @@ $twig = (new TwigContainer(null, OEGlobalsBag::getInstance()->getKernel()))->get
                 event.returnValue = <?php echo xlj('Recommend not leaving or refreshing or you may lose data.'); ?>;
             }
         });
-        <?php } ?>
+    <?php } ?>
 
         <?php require(OEGlobalsBag::getInstance()->get('srcdir') . "/restoreSession.php"); ?>
 
-        // Since this should be the parent window, this is to prevent calls to the
-        // window that opened this window. For example when a new window is opened
-        // from the Patient Flow Board or the Patient Finder.
-        window.opener = null;
-        window.name = "main";
+    // Since this should be the parent window, this is to prevent calls to the
+    // window that opened this window. For example when a new window is opened
+    // from the Patient Flow Board or the Patient Finder.
+    window.opener = null;
+    window.name = "main";
 
         // This flag indicates if another window or frame is trying to reload the login
         // page to this top-level window.  It is set by javascript returned by auth.inc.php
@@ -181,73 +181,73 @@ $twig = (new TwigContainer(null, OEGlobalsBag::getInstance()->getKernel()))->get
             }
         }
 
-        function goRepeaterServices() {
-            // Ensure send the skip_timeout_reset parameter to not count this as a manual entry in the
-            // timing out mechanism in OpenEMR.
+    function goRepeaterServices() {
+        // Ensure send the skip_timeout_reset parameter to not count this as a manual entry in the
+        // timing out mechanism in OpenEMR.
 
-            // Send the skip_timeout_reset parameter to not count this as a manual entry in the
-            // timing out mechanism in OpenEMR. Notify App for various portal and reminder alerts.
-            // Combined portal and reminders ajax to fetch sjp 06-07-2020.
-            // Incorporated timeout mechanism in 2021
-            restoreSession();
-            let request = new FormData;
-            request.append("skip_timeout_reset", "1");
-            request.append("isPortal", isPortalEnabled);
-            request.append("isServicesOther", isServicesOther);
-            request.append("isSms", isSms);
-            request.append("isFax", isFax);
-            request.append("csrf_token_form", csrf_token_js);
-            fetch(webroot_url + "/library/ajax/dated_reminders_counter.php", {
-                method: 'POST',
-                credentials: 'same-origin',
-                body: request
-            }).then((response) => {
-                if (response.status !== 200) {
-                    console.log('Reminders start failed. Status Code: ' + response.status);
-                    return;
+        // Send the skip_timeout_reset parameter to not count this as a manual entry in the
+        // timing out mechanism in OpenEMR. Notify App for various portal and reminder alerts.
+        // Combined portal and reminders ajax to fetch sjp 06-07-2020.
+        // Incorporated timeout mechanism in 2021
+        restoreSession();
+        let request = new FormData;
+        request.append("skip_timeout_reset", "1");
+        request.append("isPortal", isPortalEnabled);
+        request.append("isServicesOther", isServicesOther);
+        request.append("isSms", isSms);
+        request.append("isFax", isFax);
+        request.append("csrf_token_form", csrf_token_js);
+        fetch(webroot_url + "/library/ajax/dated_reminders_counter.php", {
+            method: 'POST',
+            credentials: 'same-origin',
+            body: request
+        }).then((response) => {
+            if (response.status !== 200) {
+                console.log('Reminders start failed. Status Code: ' + response.status);
+                return;
+            }
+            return response.json();
+        }).then((data) => {
+            if (data.timeoutMessage && (data.timeoutMessage == 'timeout')) {
+                // timeout has happened, so logout
+                timeoutLogout();
+            }
+            if (isPortalEnabled) {
+                let mail = data.mailCnt;
+                let chats = data.chatCnt;
+                let audits = data.auditCnt;
+                let payments = data.paymentCnt;
+                let total = data.total;
+                let enable = ((1 * mail) + (1 * audits)); // payments are among audits.
+                // Send portal counts to notification button model
+                // Will turn off button display if no notification!
+                app_view_model.application_data.user().portal(enable);
+                if (enable > 0) {
+                    app_view_model.application_data.user().portalAlerts(total);
+                    app_view_model.application_data.user().portalAudits(audits);
+                    app_view_model.application_data.user().portalMail(mail);
+                    app_view_model.application_data.user().portalChats(chats);
+                    app_view_model.application_data.user().portalPayments(payments);
                 }
-                return response.json();
-            }).then((data) => {
-                if (data.timeoutMessage && (data.timeoutMessage == 'timeout')) {
-                    // timeout has happened, so logout
-                    timeoutLogout();
+            }
+            if (isServicesOther) {
+                let sms = data.smsCnt;
+                let fax = data.faxCnt;
+                let total = data.serviceTotal;
+                let enable = ((1 * sms) + (1 * fax));
+                // Will turn off button display if no notification!
+                app_view_model.application_data.user().servicesOther(enable);
+                if (enable > 0) {
+                    app_view_model.application_data.user().serviceAlerts(total);
+                    app_view_model.application_data.user().smsAlerts(sms);
+                    app_view_model.application_data.user().faxAlerts(fax);
                 }
-                if (isPortalEnabled) {
-                    let mail = data.mailCnt;
-                    let chats = data.chatCnt;
-                    let audits = data.auditCnt;
-                    let payments = data.paymentCnt;
-                    let total = data.total;
-                    let enable = ((1 * mail) + (1 * audits)); // payments are among audits.
-                    // Send portal counts to notification button model
-                    // Will turn off button display if no notification!
-                    app_view_model.application_data.user().portal(enable);
-                    if (enable > 0) {
-                        app_view_model.application_data.user().portalAlerts(total);
-                        app_view_model.application_data.user().portalAudits(audits);
-                        app_view_model.application_data.user().portalMail(mail);
-                        app_view_model.application_data.user().portalChats(chats);
-                        app_view_model.application_data.user().portalPayments(payments);
-                    }
-                }
-                if (isServicesOther) {
-                    let sms = data.smsCnt;
-                    let fax = data.faxCnt;
-                    let total = data.serviceTotal;
-                    let enable = ((1 * sms) + (1 * fax));
-                    // Will turn off button display if no notification!
-                    app_view_model.application_data.user().servicesOther(enable);
-                    if (enable > 0) {
-                        app_view_model.application_data.user().serviceAlerts(total);
-                        app_view_model.application_data.user().smsAlerts(sms);
-                        app_view_model.application_data.user().faxAlerts(fax);
-                    }
-                }
-                // Always send reminder count text to model
-                app_view_model.application_data.user().messages(data.reminderText);
-            }).catch(function (error) {
-                console.log('Request failed', error);
-            });
+            }
+            // Always send reminder count text to model
+            app_view_model.application_data.user().messages(data.reminderText);
+        }).catch(function (error) {
+            console.log('Request failed', error);
+        });
 
             // run background-services
             // delay 10 seconds to prevent both utility trigger at close to same time.
@@ -273,37 +273,37 @@ $twig = (new TwigContainer(null, OEGlobalsBag::getInstance()->getKernel()))->get
                 }, 10000);
             }
 
-            // auto run this function every 60 seconds
-            var repeater = setTimeout("goRepeaterServices()", 60000);
-        }
+        // auto run this function every 60 seconds
+        var repeater = setTimeout("goRepeaterServices()", 60000);
+    }
 
-        function isEncounterLocked(encounterId) {
-            <?php if ($esignApi->lockEncounters()) { ?>
-            // If encounter locking is enabled, make a synchronous call (async=false) to check the
-            // DB to see if the encounter is locked.
-            // Call restore session, just in case
-            // @TODO next clean up pass, turn into await promise then modify tabs_view_model.js L-309
-            restoreSession();
-            let url = webroot_url + "/interface/esign/index.php?module=encounter&method=esign_is_encounter_locked";
-            $.ajax({
-                type: 'POST',
-                url: url,
-                data: {
-                    encounterId: encounterId
-                },
-                success: function (data) {
-                    encounter_locked = data;
-                },
-                dataType: 'json',
-                async: false
-            });
-            return encounter_locked;
-            <?php } else { ?>
-            // If encounter locking isn't enabled then always return false
-            return false;
-            <?php } ?>
-        }
-    </script>
+    function isEncounterLocked(encounterId) {
+        <?php if ($esignApi->lockEncounters()) { ?>
+        // If encounter locking is enabled, make a synchronous call (async=false) to check the
+        // DB to see if the encounter is locked.
+        // Call restore session, just in case
+        // @TODO next clean up pass, turn into await promise then modify tabs_view_model.js L-309
+        restoreSession();
+        let url = webroot_url + "/interface/esign/index.php?module=encounter&method=esign_is_encounter_locked";
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {
+                encounterId: encounterId
+            },
+            success: function (data) {
+                encounter_locked = data;
+            },
+            dataType: 'json',
+            async: false
+        });
+        return encounter_locked;
+        <?php } else { ?>
+        // If encounter locking isn't enabled then always return false
+        return false;
+        <?php } ?>
+    }
+</script>
 
     <?php Header::setupHeader(['knockout', 'tabs-theme', 'i18next', 'hotkeys', 'i18formatting']); ?>
     <script>
@@ -338,29 +338,29 @@ $twig = (new TwigContainer(null, OEGlobalsBag::getInstance()->getKernel()))->get
             console.log(error.message);
         });
 
-        /**
-         * Assign and persist documents to portal patients
-         * @var int patientId pid
-         */
-        function assignPatientDocuments(patientId) {
-            let url = top.webroot_url + '/portal/import_template_ui.php?from_demo_pid=' + encodeURIComponent(patientId);
-            dlgopen(url, 'pop-assignments', 'modal-lg', 850, '', '', {
-                allowDrag: true,
-                allowResize: true,
-                sizeHeight: 'full',
-            });
-        }
-    </script>
+    /**
+     * Assign and persist documents to portal patients
+     * @var int patientId pid
+     */
+    function assignPatientDocuments(patientId) {
+        let url = top.webroot_url + '/portal/import_template_ui.php?from_demo_pid=' + encodeURIComponent(patientId);
+        dlgopen(url, 'pop-assignments', 'modal-lg', 850, '', '', {
+            allowDrag: true,
+            allowResize: true,
+            sizeHeight: 'full',
+        });
+    }
+</script>
 
-    <script src="js/custom_bindings.js?v=<?php echo $v_js_includes; ?>"></script>
-    <script src="js/user_data_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
-    <script src="js/patient_data_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
-    <script src="js/therapy_group_data_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
-    <script src="js/tabs_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
-    <script src="js/application_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
-    <script src="js/frame_proxies.js?v=<?php echo $v_js_includes; ?>"></script>
-    <script src="js/dialog_utils.js?v=<?php echo $v_js_includes; ?>"></script>
-    <script src="js/shortcuts.js?v=<?php echo $v_js_includes; ?>"></script>
+<script src="js/custom_bindings.js?v=<?php echo $v_js_includes; ?>"></script>
+<script src="js/user_data_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
+<script src="js/patient_data_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
+<script src="js/therapy_group_data_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
+<script src="js/tabs_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
+<script src="js/application_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
+<script src="js/frame_proxies.js?v=<?php echo $v_js_includes; ?>"></script>
+<script src="js/dialog_utils.js?v=<?php echo $v_js_includes; ?>"></script>
+<script src="js/shortcuts.js?v=<?php echo $v_js_includes; ?>"></script>
 
     <?php
     // Below code block is to prepare certain elements for deciding what links to show on the menu
@@ -548,15 +548,21 @@ $twig = (new TwigContainer(null, OEGlobalsBag::getInstance()->getKernel()))->get
     </script>
     <?php
 
-    // fire off an event here
+// fire off an event here
+if (!empty($GLOBALS['kernel']->getEventDispatcher())) {
+    /**
+     * @var \Symfony\Component\EventDispatcher\EventDispatcher
+     */
+    $dispatcher = $GLOBALS['kernel']->getEventDispatcher();
     $dispatcher->dispatch(new RenderEvent(), RenderEvent::EVENT_BODY_RENDER_POST);
+}
 
     if ($allowRegisterDialog !== false) { // disable if running unit tests.
         // Include the product registration js, telemetry and usage data reporting dialog
         echo $twig->render("product_registration/product_reg.js.twig", ['webroot' => $webroot]);
     }
 
-    ?>
+?>
 </body>
 
 </html>
