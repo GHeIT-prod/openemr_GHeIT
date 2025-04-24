@@ -3,7 +3,7 @@
 /**
  *
  * @package   OpenEMR
- * @link      http://www.open-emr.org
+ * @link      https://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
  * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
@@ -13,7 +13,7 @@
 /**
  *
  * @package   OpenEMR
- * @link      http://www.open-emr.org
+ * @link      https://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
  * @author    Jerry Padgett <sjpadgett@gmail.com>
@@ -24,19 +24,18 @@
 
 require_once __DIR__ . "/../../../../globals.php";
 
+use OpenEMR\Common\Acl\AccessDeniedHelper;
 use OpenEMR\Common\Acl\AclMain;
-use OpenEMR\Common\Csrf\CsrfUtils;
-use OpenEMR\Common\Twig\TwigContainer;
-use OpenEMR\Modules\Dorn\ConnectorApi;
 use OpenEMR\Core\Header;
+use OpenEMR\Core\OEGlobalsBag;
+use OpenEMR\Modules\Dorn\ConnectorApi;
 
 //this is needed along with setupHeader() to get the pop up to appear
 
 $tab = "orders";
 $pageTitle = xl("DORN Orders");
 if (!AclMain::aclCheckCore('patients', 'lab')) {
-    echo (new TwigContainer(null, $GLOBALS['kernel']))->getTwig()->render('core/unauthorized.html.twig', ['pageTitle' => $pageTitle]);
-    exit;
+    AccessDeniedHelper::denyWithTemplate("ACL check failed for patients/lab: DORN Orders", $pageTitle);
 }
 $primaryInfos = ConnectorApi::getPrimaryInfos('');
 if (!empty($_POST)) {
@@ -61,11 +60,11 @@ if (!empty($_POST)) {
             <?php $datetimepicker_timepicker = false; ?>
             <?php $datetimepicker_showseconds = false; ?>
             <?php $datetimepicker_formatInput = false; ?>
-            <?php require($GLOBALS['srcdir'] . '/js/xl/jquery-datetimepicker-2-5-4.js.php'); ?>
+            <?php require(OEGlobalsBag::getInstance()->get('srcdir') . '/js/xl/jquery-datetimepicker-2-5-4.js.php'); ?>
         });
     });
 </script>
-<body>
+<body class="container-fluid">
     <div class="row">
         <div class="col">
             <?php
@@ -77,7 +76,7 @@ if (!empty($_POST)) {
         <div class="col">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title"><?php echo xlt("DORN - Lab Orders"); ?></h5>
+                    <h5 class="card-title"><?php echo xlt("DORN - Lab Pending or Queued Orders"); ?></h5>
                     <div class="row">
                         <div class="col">
                             <form method="post" action="orders.php">
@@ -85,7 +84,7 @@ if (!empty($_POST)) {
                                     <div class="col-md-4">
                                         <select name="form_primaryId">
                                             <?php foreach ($primaryInfos as $primaryInfo) {
-                                                $selected = $primaryInfo->primaryId === $_GET['form_primaryId'] ? "selected" : "";
+                                                $selected = $primaryInfo->primaryId === $_POST['form_primaryId'] ? "selected" : "";
                                                 ?>
                                                 <option value='<?php echo attr($primaryInfo->primaryId); ?>' <?php echo $selected; ?>>
                                                     <?php echo text($primaryInfo->primaryName); ?>
@@ -116,7 +115,8 @@ if (!empty($_POST)) {
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <button type="submit" name="SubmitButton" class="btn btn-primary"><?php echo xlt("Submit") ?></button>
+                                        <button type="submit" name="SubmitButton" class="btn btn-primary mb-1" onclick="$('#loading').removeClass(('d-none'));"><?php echo xlt("Submit") ?></button>
+                                        <i class="fa fa-gear fa-spin fa-2x text-primary d-none" id="loading" role="status" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </form>
@@ -133,6 +133,7 @@ if (!empty($_POST)) {
                                     <thead>
                                     <tr>
                                         <th scope="col"><?php echo xlt("Lab Name") ?></th>
+                                        <th scope="col"><?php echo xlt("Create Date") ?></th>
                                         <th scope="col"><?php echo xlt("Order Number") ?></th>
                                         <th scope="col"><?php echo xlt("Order Status") ?></th>
                                         <th scope="col"><?php echo xlt("Is Pending") ?></th>
@@ -144,6 +145,7 @@ if (!empty($_POST)) {
                                         ?>
                                         <tr>
                                             <td scope="row"><?php echo text($data->labName); ?></td>
+                                            <td scope="row"><?php echo text(date('Y-m-d H:i:s', strtotime((string) $data->createdDateTimeUtc))); ?></td>
                                             <td scope="row"><?php echo text($data->orderNumber); ?></td>
                                             <td scope="row"><?php echo text($data->orderStatusLong); ?></td>
                                             <td scope="row"><?php echo text($data->isPending); ?></td>

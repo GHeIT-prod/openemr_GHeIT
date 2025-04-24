@@ -3,7 +3,7 @@
 /**
  *
  * @package   OpenEMR
- * @link      http://www.open-emr.org
+ * @link      https://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
  * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
@@ -13,6 +13,9 @@
 namespace OpenEMR\Modules\Dorn;
 
 use DateTime;
+use OpenEMR\Core\OEGlobalsBag;
+use OpenEMR\Modules\ClaimRevConnector\ClaimRevApi;
+use OpenEMR\Modules\ClaimRevConnector\ClaimRevAuthenticationException;
 use OpenEMR\Modules\Dorn\models\AckViewModel;
 use OpenEMR\Modules\Dorn\models\ApiResponseViewModel;
 use OpenEMR\Modules\Dorn\models\CompendiumInstallDateViewModel;
@@ -25,7 +28,7 @@ class ConnectorApi
         $api_server = ConnectorApi::getServerInfo();
         $url = $api_server . "/api/Orders/v1/SearchOrderStatus";
         $params = [];
-// Initialize an empty params array
+        // Initialize an empty params array
 
         if (!empty($originalOrderNumber)) {
             $params['originalOrderNumber'] = $originalOrderNumber;
@@ -73,7 +76,6 @@ class ConnectorApi
         $api_server = ConnectorApi::getServerInfo();
         $url = $api_server . "/api/Orders/v1/GetPendingResults";
         $params = [];
-// Initialize an empty params array
 
         if (!empty($labAccountNumber)) {
             $params['labAccountNumber'] = $labAccountNumber;
@@ -98,11 +100,12 @@ class ConnectorApi
         return $returnData;
     }
 
+
     public static function sendOrder($labGuid, $labAccountNumber, $orderNumber, $patientId, $hl7)
     {
         $api_server = ConnectorApi::getServerInfo();
         $url = $api_server . "/api/Orders/v1/SendLabOrder";
-        $base64 = base64_encode($hl7);
+        $base64 = base64_encode((string) $hl7);
         $data = new LabOrderViewModel();
         $data->labGuid = $labGuid . '';
         $data->orderNumber = $orderNumber . '';
@@ -126,7 +129,25 @@ class ConnectorApi
         $url = $api_server . "/api/Route/v1/CreateRoute";
         return ConnectorApi::postData($url, $data);
     }
+    public static function getRoutesFromDorn()
+    {
+        $api_server = ConnectorApi::getServerInfo();
+        $url = $api_server . "/api/Route/v1/GetRoutesFromDorn";
+        $returnData = ConnectorApi::getData($url);
+        return $returnData;
+    }
 
+    public static function deleteRoutesFromDorn($labGuid, $labAccountNumber)
+    {
+        $payload = [
+            'LabGuid'      => $labGuid,
+            'AccountNumber' => $labAccountNumber
+        ];
+        $api_server = ConnectorApi::getServerInfo();
+        $url = $api_server . "/api/Route/v1/DeleteRoute";
+        $returnData = ConnectorApi::postData($url, $payload);
+        return $returnData;
+    }
     public static function getLab($labGuid)
     {
         $api_server = ConnectorApi::getServerInfo();
@@ -192,7 +213,7 @@ class ConnectorApi
         $api_server = ConnectorApi::getServerInfo();
         $url = $api_server . "/api/Customer/v1/GetPrimaryInfoByNpi";
         if ($npi) {
-            $params = array('npi' => $npi);
+            $params = ['npi' => $npi];
             $url = $url . '?' . http_build_query($params);
         }
 
@@ -205,14 +226,13 @@ class ConnectorApi
         $api_server = ConnectorApi::getServerInfo();
         $url = $api_server . "/api/Customer/v1/SearchPrimaryInfo";
         if ($npi) {
-            $params = array('npi' => $npi);
+            $params = ['npi' => $npi];
             $url = $url . '?' . http_build_query($params);
         }
 
         $returnData = ConnectorApi::getData($url);
         return $returnData;
     }
-
 
     public static function getData($url)
     {
@@ -222,8 +242,11 @@ class ConnectorApi
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
+        if ($result === false) {
+            error_log('cURL error: ' . curl_error($ch));
+        }
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if ($httpcode == 200 || $httpcode == 400) {
             $responseJsonData = json_decode($result);
             return $responseJsonData;
@@ -246,8 +269,11 @@ class ConnectorApi
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
+        if ($result === false) {
+            error_log('cURL error: ' . curl_error($ch));
+        }
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if ($httpcode == 200 || $httpcode == 400) {
             $responseJsonData = json_decode($result);
             return $responseJsonData;
@@ -262,6 +288,7 @@ class ConnectorApi
 
     public static function postData($url, $sendData)
     {
+        $error = "";
         $headers = ConnectorApi::buildHeader();
         $payload = json_encode($sendData, JSON_UNESCAPED_SLASHES);
         $ch = curl_init();
@@ -271,8 +298,12 @@ class ConnectorApi
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
+        if ($result === false) {
+            $error = curl_error($ch);
+            error_log('cURL error: ' . curl_error($ch));
+        }
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if ($httpcode == 200 || $httpcode == 400) {
             $responseJsonData = json_decode($result);
             return $responseJsonData;
@@ -280,13 +311,13 @@ class ConnectorApi
         error_log("Error " . "Status Code" . text($httpcode) . " sending in api " . text($url) . " Message " . text($result));
         $response = new ApiResponseViewModel();
         $response->isSuccess = false;
-        $response->responseMessage = "Error Posting Data!";
+        $response->responseMessage = "Error Posting Data! " . $error;
         return $response;
     }
 
     public static function getServerInfo()
     {
-        $bootstrap = new Bootstrap($GLOBALS['kernel']->getEventDispatcher());
+        $bootstrap = new Bootstrap(OEGlobalsBag::getInstance()->getKernel()->getEventDispatcher());
         $globalsConfig = $bootstrap->getGlobalConfig();
         $api_server = $globalsConfig->getApiServer();
         return $api_server;
@@ -305,18 +336,19 @@ class ConnectorApi
     }
 
 
-    public static function canConnectToClaimRev()
+    public static function canConnectToClaimRev(): bool
     {
-        $token = ClaimRevApi::GetAccessToken();
-        if ($token == "") {
-            return "No";
+        try {
+            ClaimRevApi::makeFromGlobals();
+            return true;
+        } catch (ClaimRevAuthenticationException) {
+            return false;
         }
-        return "Yes";
     }
 
     public static function getAccessToken()
     {
-        $bootstrap = new Bootstrap($GLOBALS['kernel']->getEventDispatcher());
+        $bootstrap = new Bootstrap(OEGlobalsBag::getInstance()->getKernel()->getEventDispatcher());
         $globalsConfig = $bootstrap->getGlobalConfig();
         $authority = $globalsConfig->getClientAuthority();
         $clientId = $globalsConfig->getClientId();
@@ -335,6 +367,9 @@ class ConnectorApi
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $result = curl_exec($ch);
         curl_close($ch);
+        if ($result === false) {
+            error_log('cURL error: ' . curl_error($ch));
+        }
         $data = json_decode($result);
         $token = "";
         if (property_exists($data, 'access_token')) {
