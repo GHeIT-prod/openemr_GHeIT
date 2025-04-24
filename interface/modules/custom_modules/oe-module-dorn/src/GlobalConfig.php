@@ -3,17 +3,16 @@
 /**
  *
  * @package OpenEMR
- * @link    https://www.open-emr.org
+ * @link    http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
- * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
+ * @copyright Copyright (c) 2022 Brad Sharp <brad.sharp@claimrev.com>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
  namespace OpenEMR\Modules\Dorn;
 
-use OpenEMR\BC\ServiceContainer;
-use OpenEMR\Common\Crypto\CryptoInterface;
+use OpenEMR\Common\Crypto\CryptoGen;
 use OpenEMR\Services\Globals\GlobalSetting;
 
 class GlobalConfig
@@ -27,12 +26,17 @@ class GlobalConfig
 
 
     public const CONFIG_ENABLE_MENU = "oe_dorn_config_add_menu_button";
+    private $globalsArray;
 
-    private readonly CryptoInterface $cryptoGen;
+    /**
+     * @var CryptoGen
+     */
+    private $cryptoGen;
 
-    public function __construct(private array $globalsArray)
+    public function __construct(array $globalsArray)
     {
-        $this->cryptoGen = ServiceContainer::getCrypto();
+        $this->globalsArray = $globalsArray;
+        $this->cryptoGen = new CryptoGen();
     }
 
     /**
@@ -59,7 +63,7 @@ class GlobalConfig
     public function getClientSecret()
     {
         $encryptedValue = $this->getGlobalSetting(self::CONFIG_OPTION_CLIENTSECRET);
-        return $this->cryptoGen->decryptStandard(is_string($encryptedValue) ? $encryptedValue : null);
+        return $this->cryptoGen->decryptStandard($encryptedValue);
     }
 
     public function getClientScope()
@@ -87,6 +91,23 @@ class GlobalConfig
         return $this->getGlobalSetting(self::CONFIG_OPTION_API_URL);
     }
 
+
+    public function getTextOption()
+    {
+        return $this->getGlobalSetting(self::CONFIG_OPTION_TEXT);
+    }
+
+    /**
+     * Returns our decrypted value if we have one, or false if the value could not be decrypted or is empty.
+     *
+     * @return bool|string
+     */
+    public function getEncryptedOption()
+    {
+        $encryptedValue = $this->getGlobalSetting(self::CONFIG_OPTION_ENCRYPTED);
+        return $this->cryptoGen->decryptStandard($encryptedValue);
+    }
+
     public function getGlobalSetting($settingKey)
     {
         return $this->globalsArray[$settingKey] ?? null;
@@ -105,7 +126,7 @@ class GlobalConfig
                 'title' => 'API URL'
                 ,'description' => 'The api system you to connect to'
                 ,'type' => GlobalSetting::DATA_TYPE_TEXT
-                ,'default' => ''
+                ,'default' => 'production\url\when\known'
             ]
             ,self::CONFIG_OPTION_CLIENTID => [
                 'title' => 'Client ID'

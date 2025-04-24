@@ -3,10 +3,10 @@
 /**
  *
  * @package OpenEMR
- * @link    https://www.open-emr.org
+ * @link    http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
- * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
+ * @copyright Copyright (c) 2022 Brad Sharp <brad.sharp@claimrev.com>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
@@ -34,7 +34,6 @@ class CustomerPrimaryInfoView
     {
         $model = new CustomerPrimaryInfoView();
         $model->primaryId = $postData["form_primaryId"];
-        $model->accountNumber = $postData["form_account_number"];
         $model->npi = $postData["form_npi"];
         $model->primaryName = $postData["form_name"];
         $model->primaryPhone = $postData["form_phone"];

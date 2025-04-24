@@ -2,36 +2,37 @@
 
 /**
  *
- * @package   OpenEMR
- * @link      https://www.open-emr.org
+ * @package OpenEMR
+ * @link    http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
- * @author    Jerry Padgett <sjpadgett@gmail.com>
- * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
- * @copyright Copyright (c) 2024-2025 Jerry Padgett <sjpadgett@gmail.com>
+ * @copyright Copyright (c) 2022 Brad Sharp <brad.sharp@claimrev.com>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
-    require_once __DIR__ . "/../../../../globals.php";
+    require_once "../../../../globals.php";
 
-    use OpenEMR\Common\Acl\AccessDeniedHelper;
     use OpenEMR\Common\Acl\AclMain;
     use OpenEMR\Common\Csrf\CsrfUtils;
-    use OpenEMR\Common\Session\SessionWrapperFactory;
+    use OpenEMR\Common\Twig\TwigContainer;
     use OpenEMR\Core\Header;
     use OpenEMR\Modules\Dorn\ReceiveHl7Results;
 
-$session = SessionWrapperFactory::getInstance()->getActiveSession();
 if (!empty($_GET)) {
-    CsrfUtils::checkCsrfInput(INPUT_GET, dieOnFail: true);
+    if (!CsrfUtils::verifyCsrfToken($_GET["csrf_token_form"])) {
+        CsrfUtils::csrfNotVerified();
+    }
 }
 
 if (!empty($_POST)) {
-    CsrfUtils::checkCsrfInput(INPUT_POST, dieOnFail: true);
+    if (!CsrfUtils::verifyCsrfToken($_POST["csrf_token_form"])) {
+        CsrfUtils::csrfNotVerified();
+    }
 }
 
 if (!AclMain::aclCheckCore('admin', 'users')) {
-    AccessDeniedHelper::denyWithTemplate("ACL check failed for admin/users: Get Lab Results", xl("Get Lab Results"));
+    echo (new TwigContainer(null, $GLOBALS['kernel']))->getTwig()->render('core/unauthorized.html.twig', ['pageTitle' => xl("Edit/Add Procedure Provider")]);
+    exit;
 }
 
 $resultsGuid = $_REQUEST['resultGuid'];
@@ -46,7 +47,6 @@ if ($resultsGuid) {
 }
 
 ?>
-<!DOCTYPE html>
 <html>
     <head>
         <?php Header::setupHeader(['opener']); ?>

@@ -2,7 +2,7 @@
 
 /**
  * Class to be called from Laminas Module Manager for reporting management actions.
- * Example is if the module is enabled, disabled or unregistered etc.
+ * Example is if the module is enabled, disabled or unregistered ect.
  *
  * The class is in the Laminas "Installer\Controller" namespace.
  * Currently, register isn't supported of which support should be a part of install.
@@ -31,6 +31,7 @@
 */
 
 use OpenEMR\Core\AbstractModuleActionListener;
+use OpenEMR\Modules\WenoModule\Services\ModuleService;
 
 /* Allows maintenance of background tasks depending on Module Manager action. */
 
@@ -186,9 +187,9 @@ class ModuleManagerListener extends AbstractModuleActionListener
     {
         $registry = [];
         $sql = "SELECT $col FROM modules WHERE mod_id = ?";
-        $results = sqlQuery($sql, [$modId]);
+        $results = sqlQuery($sql, array($modId));
         foreach ($results as $k => $v) {
-            $registry[$k] = trim(((string) preg_replace('/\R/', '', (string) $v)));
+            $registry[$k] = trim((preg_replace('/\R/', '', $v)));
         }
 
         return $registry;
@@ -210,12 +211,12 @@ class ModuleManagerListener extends AbstractModuleActionListener
         if ($removeTask) {
             $sql_next = "DELETE FROM background_services WHERE `name` = ?";
             foreach ($serviceArray as $name) {
-                sqlQuery($sql_next, [$name]);
+                sqlQuery($sql_next, array($name));
             }
             return;
         }
         foreach ($serviceArray as $name) {
-            sqlQuery($sql_next, [$flag, $name]);
+            sqlQuery($sql_next, array($flag, $name));
         }
     }
 
@@ -229,6 +230,6 @@ class ModuleManagerListener extends AbstractModuleActionListener
     {
         // set module state.
         $sql = "UPDATE `modules` SET `mod_active` = ?, `mod_ui_active` = ? WHERE `mod_id` = ? OR `mod_directory` = ?";
-        return sqlQuery($sql, [$flag, $flag_ui, $modId, $modId]);
+        return sqlQuery($sql, array($flag, $flag_ui, $modId, $modId));
     }
 }
