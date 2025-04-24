@@ -6,7 +6,7 @@
  * @link      http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
- * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
+ * @copyright Copyright (c) 2022 Brad Sharp <brad.sharp@claimrev.com>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
@@ -185,21 +185,21 @@ class GenHl7OrderBase
         if ($tmp == '') {
             return '';
         } elseif ($tmp == 'asian') {
-            return '2028-9';
+            return 'A';
         } elseif ($tmp == 'black_or_afri_amer') {
-            return '2054-5';
+            return 'B';
         } elseif ($tmp == 'white') {
-            return '2106-3';
+            return 'C';
         } elseif ($tmp == 'hispanic') {
-            return '2131-1';
+            return 'H';
         } elseif ($tmp == 'amer_ind_or_alaska_native') {
-            return '1002-5';
+            return 'I';
         } elseif ($tmp == 'other') {
-            return '2131-1';
+            return 'O';
         } elseif ($tmp == 'ashkenazi_jewish') {
-            return '2131-1';
+            return 'J';
         } elseif ($tmp == 'sephardic_jewish') {
-            return '2131-1';
+            return 'S';
         }
         // Should not get here so this will probably get noticed if we do.
         return $s;
