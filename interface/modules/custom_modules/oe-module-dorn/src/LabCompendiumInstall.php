@@ -2,11 +2,11 @@
 
 /**
  *
- * @package   OpenEMR
- * @link      http://www.open-emr.org
+ * @package OpenEMR
+ * @link    http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
- * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
+ * @copyright Copyright (c) 2022 Brad Sharp <brad.sharp@claimrev.com>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
@@ -17,16 +17,6 @@ use OpenEMR\Modules\Dorn\LabRouteSetup;
 
 class LabCompendiumInstall
 {
-    /**
-     * Echoes a string wrapped in an HTML <li>.
-     */
-    protected static function echoLi(string $msg): void
-    {
-        echo '<li>' . text($msg) . '</li>';
-        ob_flush();
-        flush();
-    }
-
     public static function install($labGuid)
     {
         $compendiumResponse = ConnectorApi::getCompendium($labGuid);
@@ -41,12 +31,11 @@ class LabCompendiumInstall
                 }
             }
             ConnectorApi::setCompendiumLastUpdate($labGuid);
-            self::echoLi("Compendium has been updated for lab: " . ($compendiumResponse->compendium->labName));
+            echo "Compendium has been updated for lab: " . text($compendiumResponse->compendium->labName);
         } else {
-            self::echoLi("Error Getting Compendium! " . ($compendiumResponse->responseMessage));
+            echo "Error Getting Compendium! " . text($compendiumResponse->responseMessage);
         }
     }
-
     public static function loadGroupRecord($compendium, $lab_id)
     {
         $sql = "SELECT * FROM procedure_type WHERE parent = ? AND lab_id = ? AND procedure_type = ?";
@@ -62,39 +51,39 @@ class LabCompendiumInstall
         }
 
 
-        $sql = "INSERT INTO procedure_type (name, lab_id, procedure_type, description)
+        $sql = "INSERT INTO procedure_type (name, lab_id, procedure_type, description) 
         VALUES (?, ?, ?, ?)";
 
-        $sqlArr = [$compendium->labName, $lab_id, 'grp', 'DORN:' . $compendium->labName . ' Orders'];
+        $sqlArr = array($compendium->labName, $lab_id, 'grp','DORN:' . $compendium->labName . ' Orders');
         $id = sqlInsert($sql, $sqlArr);
 
-        $sql = "INSERT INTO procedure_type (parent,name, lab_id, procedure_type, description)
+        $sql = "INSERT INTO procedure_type (parent,name, lab_id, procedure_type, description) 
                 VALUES (?, ?, ?, ?, ?)";
 
-        $sqlArr = [$id, $compendium->labName, $lab_id, 'grp', 'Ordering Tests'];
+        $sqlArr = array($id,$compendium->labName, $lab_id, 'grp','Ordering Tests');
         $id = sqlInsert($sql, $sqlArr);
+
 
         return $id;
     }
-
     public static function loadOrderableItem($item, $parentId, $lab_id)
     {
         if (!$item->loinc) {
             $item->loinc = "";
         }
 
-        $sql = "SELECT procedure_type_id FROM procedure_type
+        $sql = "SELECT procedure_type_id FROM procedure_type 
             WHERE lab_id = ? AND parent = ? AND procedure_code = ? AND procedure_type = ? AND standard_code = ?";
-        $procOrder = sqlQuery($sql, [$lab_id, $parentId, $item->code, "ord", $item->loinc]);
+        $procOrder = sqlQuery($sql, [$lab_id ,$parentId, $item->code, "ord" ,$item->loinc]);
         if ($procOrder) {
             $id = $procOrder["procedure_type_id"];
             $sql = "UPDATE procedure_type SET Activity = ? WHERE procedure_type_id = ?";
-            sqlStatement($sql, [1, $id]);
+            sqlStatement($sql, [1,$id]);
         } else {
-            $sql = "INSERT INTO procedure_type (parent, name, lab_id, procedure_type, procedure_code, standard_code)
+            $sql = "INSERT INTO procedure_type (parent, name, lab_id, procedure_type, procedure_code, standard_code) 
             VALUES (?, ?, ?, ?, ?, ?)";
 
-            $sqlArr = [$parentId, $item->name ?? '', $lab_id ?? '', 'ord', $item->code ?? '', $item->loinc ?? ''];
+            $sqlArr = array($parentId, $item->name, $lab_id, 'ord', $item->code, $item->loinc);
             $id = sqlInsert($sql, $sqlArr);
         }
 
@@ -107,15 +96,14 @@ class LabCompendiumInstall
             $aoeCount++;
         }
     }
-
     public static function loadResult($component, $parentId, $lab_id)
     {
-        $sql = "INSERT INTO procedure_type (parent, name, lab_id, procedure_type, procedure_code, standard_code)
+        echo "loading result";
+        $sql = "INSERT INTO procedure_type (parent, name, lab_id, procedure_type, procedure_code, standard_code) 
         VALUES (?, ?, ?, ?, ?, ?)";
-        $sqlArr = [$parentId, $component->name ?? '', $lab_id ?? '', 'res', $component->code ?? '', $component->loinc ?? ''];
+        $sqlArr = array($parentId, $component->name, $lab_id, 'res', $component->code, $component->loinc);
         $id = sqlInsert($sql, $sqlArr);
     }
-
     public static function loadAoe($aoe, $lab_id, $aoeCount, $pcode)
     {
         $fldtype = LabCompendiumInstall::getQuestionType($aoe->questionType);
@@ -124,69 +112,65 @@ class LabCompendiumInstall
         $required = $aoe->answerRequired;
         $activity = 1;
         $maxSize = 15;
-        $options = LabCompendiumInstall::formatAnswers($aoe->answers, $aoe->verboseAnswers) ?: null;
+        $options = "+" . LabCompendiumInstall::formatAnswers($aoe->answers);
 
         // check for existing record
         $qrow = sqlQuery(
             "SELECT * FROM procedure_questions WHERE lab_id = ? AND procedure_code = ? AND question_code = ?",
-            [
-                $lab_id,
-                $pcode,
-                $qcode
-            ]
+            array(
+            $lab_id,
+            $pcode,
+            $qcode
+            )
         );
+
 
         // new record
         if (empty($qrow ['procedure_code'])) {
             sqlStatement(
                 "INSERT INTO procedure_questions SET seq = ?, lab_id = ?, procedure_code = ?, question_code = ?, question_text = ?, fldtype = ?, required = ?, tips = ?, activity = ?, options = ?, maxsize = ?",
-                [
-                    $aoeCount,
-                    $lab_id,
-                    $pcode,
-                    $qcode,
-                    $question,
-                    $fldtype,
-                    $required,
-                    "",
-                    $activity,
-                    $options,
-                    $maxSize
-                ]
+                array(
+                $aoeCount,
+                $lab_id,
+                $pcode,
+                $qcode,
+                $question,
+                $fldtype,
+                $required,
+                "",
+                $activity,
+                $options,
+                $maxSize
+                )
             );
         } else { // update record
             sqlStatement(
-                "UPDATE procedure_questions SET seq = ?, question_text = ?, fldtype = ?, required = ?, tips = ?, activity = ?, options = ?, maxsize = ?  WHERE lab_id = ? AND procedure_code = ? AND question_code = ?",
-                [
-                    $aoeCount,
-                    $question,
-                    $fldtype,
-                    $required,
-                    "",
-                    $activity,
-                    $options,
-                    $maxSize,
-                    $lab_id,
-                    $pcode,
-                    $qcode,
-                ]
+                "UPDATE procedure_questions SET seq = ?, question_text = ?, fldtype = ?, required = ?, tips = ?, activity = ? WHERE lab_id = ? AND procedure_code = ? AND question_code = ?, options = ?, maxsize = ?",
+                array(
+                $aoeCount,
+                $question,
+                $fldtype,
+                $required,
+                "",
+                $activity,
+                $lab_id,
+                $pcode,
+                $qcode,
+                $options,
+                $maxSize
+                )
             );
         }
     }
-
-    public static function formatAnswers($answers, $v_answers): string
+    public static function formatAnswers($answers): string
     {
         $returnValue = "";
-        foreach ($answers as $k => $answer) {
-            if (empty($v_answers[$k] ?? '')) {
-                $v_answers[$k] = $answer; // if no verbose answer, use the answer as the verbose answer
-            }
-            $value = $v_answers[$k] . ":" . $answer;
-            $returnValue .= $value . ";";
+        foreach ($answers as $answer) {
+            $value = $answer . ":" . $answer;
+            $returnValue .= ";" . $value;
         }
         return $returnValue;
     }
-
     public static function getQuestionType($questionType)
     {
         /*
@@ -197,18 +181,20 @@ class LabCompendiumInstall
         List of Check boxes = M
         Radio buttons or drop-list, depending on the number of choices. = anything else (maybe S) for a single select
         */
-        return match ($questionType) {
-            'Free Text' => 'T',
-            'List' => 'S',
-            'Multi-Select List' => 'M',
-            default => 'T',
-        };
+        switch ($questionType) {
+            case 'Free Text':
+                return 'T';
+            case 'List':
+                return 'S';
+            case 'Multi-Select List':
+                return 'M';
+        }
+        return 'T';
     }
-
     public static function uninstall($lab_id)
     {
-        sqlStatement("DELETE FROM procedure_type WHERE lab_id = ? AND (procedure_type = 'det' OR procedure_type = 'res') ", [$lab_id]);
+        sqlStatement("DELETE FROM procedure_type WHERE lab_id = ? AND (procedure_type = 'det' OR procedure_type = 'res') ", array($lab_id));
         // Mark everything else for the indicated lab as inactive.
-        sqlStatement("UPDATE procedure_type SET activity = 0, related_code = '' WHERE lab_id = ? AND procedure_type != 'grp' ", [$lab_id]);
+        sqlStatement("UPDATE procedure_type SET activity = 0, related_code = '' WHERE lab_id = ? AND procedure_type != 'grp' ", array($lab_id));
     }
 }

@@ -6,7 +6,7 @@
  * @link    http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
- * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
+ * @copyright Copyright (c) 2022 Brad Sharp <brad.sharp@claimrev.com>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
@@ -26,14 +26,16 @@ class GlobalConfig
 
 
     public const CONFIG_ENABLE_MENU = "oe_dorn_config_add_menu_button";
+    private $globalsArray;
 
     /**
      * @var CryptoGen
      */
     private $cryptoGen;
 
-    public function __construct(private array $globalsArray)
+    public function __construct(array $globalsArray)
     {
+        $this->globalsArray = $globalsArray;
         $this->cryptoGen = new CryptoGen();
     }
 
@@ -124,7 +126,7 @@ class GlobalConfig
                 'title' => 'API URL'
                 ,'description' => 'The api system you to connect to'
                 ,'type' => GlobalSetting::DATA_TYPE_TEXT
-                ,'default' => ''
+                ,'default' => 'production\url\when\known'
             ]
             ,self::CONFIG_OPTION_CLIENTID => [
                 'title' => 'Client ID'

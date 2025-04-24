@@ -6,7 +6,7 @@
  * @link    http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
- * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
+ * @copyright Copyright (c) 2022 Brad Sharp <brad.sharp@claimrev.com>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
@@ -34,7 +34,7 @@ class ProcedureSqlStatements
             "f.formdir = 'procedure_order' AND " .
             "f.form_id = po.procedure_order_id AND " .
             "pd.pid = f.pid AND " .
-            "u.id = po.provider_id", [$orderid]);
+            "u.id = po.provider_id", array($orderid));
         return $porow;
     }
     public static function getProcedureCode($orderid)
@@ -45,7 +45,7 @@ class ProcedureSqlStatements
             "WHERE " .
             "pc.procedure_order_id = ? AND " .
             "pc.do_not_send = 0 " .
-            "ORDER BY pc.procedure_order_seq", [$orderid]);
+            "ORDER BY pc.procedure_order_seq", array($orderid));
         return $pcres;
     }
     public static function getVitals($pid, $encounter)
@@ -70,7 +70,7 @@ class ProcedureSqlStatements
             "WHERE " .
             "a.procedure_order_id = ? AND " .
             "a.procedure_order_seq = ? " .
-            "ORDER BY q.seq, a.answer_seq", [$labId, $procedureCode, $orderId, $procOrderSeq]);
+            "ORDER BY q.seq, a.answer_seq", array($labId, $procedureCode, $orderId, $procOrderSeq));
         return $qres;
     }
 }

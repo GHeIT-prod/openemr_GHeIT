@@ -6,7 +6,7 @@
  * @link      http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
- * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
+ * @copyright Copyright (c) 2022 Brad Sharp <brad.sharp@claimrev.com>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
@@ -27,7 +27,7 @@ class GenHl7OrderBase
     {
         if (is_array($data) && count($data) > 1) {
             // Run each element through $this->hl7Text()
-            $data = array_map($this->hl7Text(...), $data);
+            $data = array_map(array($this, 'hl7Text'), $data);
             return implode($this->componentSeparator, $data);
         } else {
             // Run the single element through $this->hl7Text()
@@ -69,7 +69,7 @@ class GenHl7OrderBase
 
     public function hl7Zip($s)
     {
-        return $this->hl7Text(preg_replace('/[-\s]*/', '', (string) $s));
+        return $this->hl7Text(preg_replace('/[-\s]*/', '', $s));
     }
 
     public function hl7DateTime($s)
@@ -113,7 +113,7 @@ class GenHl7OrderBase
 
     public function hl7Date($s)
     {
-        return preg_replace('/[^\d]/', '', (string) $s);
+        return preg_replace('/[^\d]/', '', $s);
     }
 
     public function hl7Time($s)
@@ -121,12 +121,12 @@ class GenHl7OrderBase
         if (empty($s)) {
             return '';
         }
-        return date('YmdHi', strtotime((string) $s));
+        return date('YmdHi', strtotime($s));
     }
 
     public function hl7Sex($s)
     {
-        $s = strtoupper(substr((string) $s, 0, 1));
+        $s = strtoupper(substr($s, 0, 1));
         if ($s !== 'M' && $s !== 'F') {
             $s = 'U';
         }
@@ -135,10 +135,10 @@ class GenHl7OrderBase
 
     public function hl7Phone($s)
     {
-        if (preg_match("/([2-9]\d\d)\D*(\d\d\d)\D*(\d\d\d\d)\D*$/", (string) $s, $tmp)) {
+        if (preg_match("/([2-9]\d\d)\D*(\d\d\d)\D*(\d\d\d\d)\D*$/", $s, $tmp)) {
             return $tmp[1] . $tmp[2] . $tmp[3];
         }
-        if (preg_match("/(\d\d\d)\D*(\d\d\d\d)\D*$/", (string) $s, $tmp)) {
+        if (preg_match("/(\d\d\d)\D*(\d\d\d\d)\D*$/", $s, $tmp)) {
             return $tmp[1] . $tmp[2];
         }
         return '';
@@ -146,7 +146,7 @@ class GenHl7OrderBase
 
     public function hl7SSN($s)
     {
-        if (preg_match("/(\d\d\d)\D*(\d\d)\D*(\d\d\d\d)\D*$/", (string) $s, $tmp)) {
+        if (preg_match("/(\d\d\d)\D*(\d\d)\D*(\d\d\d\d)\D*$/", $s, $tmp)) {
             return $tmp[1] . $tmp[2] . $tmp[3];
         }
         return '';
@@ -154,12 +154,12 @@ class GenHl7OrderBase
 
     public function hl7Priority($s)
     {
-        return strtoupper(substr((string) $s, 0, 1)) === 'H' ? 'S' : 'R';
+        return strtoupper(substr($s, 0, 1)) === 'H' ? 'S' : 'R';
     }
 
     public function hl7Relation($s)
     {
-        $tmp = strtolower((string) $s);
+        $tmp = strtolower($s);
         if ($tmp == 'self' || $tmp == '') {
             return '1';
         }
@@ -181,25 +181,25 @@ class GenHl7OrderBase
 
     public function hl7Race($s)
     {
-        $tmp = strtolower((string) $s);
+        $tmp = strtolower($s);
         if ($tmp == '') {
             return '';
         } elseif ($tmp == 'asian') {
-            return '2028-9';
+            return 'A';
         } elseif ($tmp == 'black_or_afri_amer') {
-            return '2054-5';
+            return 'B';
         } elseif ($tmp == 'white') {
-            return '2106-3';
+            return 'C';
         } elseif ($tmp == 'hispanic') {
-            return '2131-1';
+            return 'H';
         } elseif ($tmp == 'amer_ind_or_alaska_native') {
-            return '1002-5';
+            return 'I';
         } elseif ($tmp == 'other') {
-            return '2131-1';
+            return 'O';
         } elseif ($tmp == 'ashkenazi_jewish') {
-            return '2131-1';
+            return 'J';
         } elseif ($tmp == 'sephardic_jewish') {
-            return '2131-1';
+            return 'S';
         }
         // Should not get here so this will probably get noticed if we do.
         return $s;
@@ -229,12 +229,12 @@ class GenHl7OrderBase
             $date = date('Y-m-d');
         }
 
-        $payers = [];
-        $dres = sqlStatement("SELECT * FROM insurance_data WHERE pid = ? AND (date <= ? OR date IS NULL) ORDER BY type ASC, date DESC", [$pid, $date]);
+        $payers = array();
+        $dres = sqlStatement("SELECT * FROM insurance_data WHERE pid = ? AND (date <= ? OR date IS NULL) ORDER BY type ASC, date DESC", array($pid, $date));
         $prevtype = '';
         // type is primary, secondary or tertiary
         while ($drow = sqlFetchArray($dres)) {
-            if (strcmp($prevtype, (string) $drow['type']) == 0) {
+            if (strcmp($prevtype, $drow['type']) == 0) {
                 continue;
             }
 
@@ -246,9 +246,9 @@ class GenHl7OrderBase
             }
 
             $ins = count($payers);
-            $crow = sqlQuery("SELECT * FROM insurance_companies WHERE id = ?", [$drow['provider']]);
+            $crow = sqlQuery("SELECT * FROM insurance_companies WHERE id = ?", array($drow['provider']));
             $orow = new InsuranceCompany($drow['provider']);
-            $payers[$ins] = [];
+            $payers[$ins] = array();
             $payers[$ins]['data'] = $drow;
             $payers[$ins]['company'] = $crow;
             $payers[$ins]['object'] = $orow;
@@ -262,12 +262,12 @@ class GenHl7OrderBase
         if (empty($date)) {
             $date = date('Y-m-d');
         }
-        $guarantors = [];
-        $gres = sqlStatement("SELECT * FROM insurance_data WHERE pid = ? AND date <= ? ORDER BY type ASC, date DESC LIMIT 1", [$pid, $date]);
+        $guarantors = array();
+        $gres = sqlStatement("SELECT * FROM insurance_data WHERE pid = ? AND date <= ? ORDER BY type ASC, date DESC LIMIT 1", array($pid, $date));
         // type is primary, secondary or tertiary
         while ($drow = sqlFetchArray($gres)) {
             $gnt = count($guarantors);
-            $guarantors[$gnt] = [];
+            $guarantors[$gnt] = array();
             $guarantors[$gnt]['data'] = $drow;
         }
         return $guarantors;

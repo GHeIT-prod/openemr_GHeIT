@@ -2,13 +2,11 @@
 
 /**
  *
- * @package   OpenEMR
- * @link      http://www.open-emr.org
+ * @package OpenEMR
+ * @link    http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
- * @author    Jerry Padgett <sjpadgett@gmail.com>
- * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
- * @copyright Copyright (c) 2024-2025 Jerry Padgett <sjpadgett@gmail.com>
+ * @copyright Copyright (c) 2022 Brad Sharp <brad.sharp@claimrev.com>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
@@ -25,11 +23,13 @@ use OpenEMR\Events\Globals\GlobalsInitializedEvent;
 use OpenEMR\Events\Main\Tabs\RenderEvent;
 use OpenEMR\Events\RestApiExtend\RestApiResourceServiceEvent;
 use OpenEMR\Events\RestApiExtend\RestApiScopeEvent;
-use OpenEMR\Modules\Dorn\EventSubscriber\DornLabSubscriber;
 use OpenEMR\Services\Globals\GlobalSetting;
 use OpenEMR\Menu\MenuEvent;
 use OpenEMR\Events\RestApiExtend\RestApiCreateEvent;
 use OpenEMR\Events\PatientDemographics\RenderEvent as pRenderEvent;
+
+
+
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;
@@ -38,6 +38,10 @@ class Bootstrap
 {
     const MODULE_INSTALLATION_PATH = "/interface/modules/custom_modules/";
     const MODULE_NAME = "oe-module-dorn";
+    /**
+     * @var EventDispatcherInterface The object responsible for sending and subscribing to events through the OpenEMR system
+     */
+    private $eventDispatcher;
 
     /**
      * @var GlobalConfig Holds our module global configuration values that can be used throughout the module.
@@ -59,14 +63,8 @@ class Bootstrap
      */
     private $logger;
 
-    /**
-     * @param EventDispatcherInterface $eventDispatcher The object responsible for sending and subscribing to events through the OpenEMR system
-     * @param ?Kernel $kernel
-     */
-    public function __construct(
-        private readonly EventDispatcherInterface $eventDispatcher,
-        ?Kernel $kernel = null
-    ) {
+    public function __construct(EventDispatcherInterface $eventDispatcher, ?Kernel $kernel = null)
+    {
         global $GLOBALS;
 
         if (empty($kernel)) {
@@ -80,6 +78,7 @@ class Bootstrap
         $this->twig = $twigEnv;
 
         $this->moduleDirectoryName = basename(dirname(__DIR__));
+        $this->eventDispatcher = $eventDispatcher;
 
         // we inject our globals value.
         $this->globalsConfig = new GlobalConfig($GLOBALS);
@@ -95,7 +94,6 @@ class Bootstrap
             $this->registerMenuItems();
             $this->registerTemplateEvents();
             $this->subscribeToApiEvents();
-            $this->eventDispatcher->addSubscriber(new DornLabSubscriber());
         }
     }
 
@@ -110,16 +108,14 @@ class Bootstrap
 
     public function addGlobalSettings()
     {
-        $this->eventDispatcher->addListener(GlobalsInitializedEvent::EVENT_HANDLE, $this->addGlobalSettingsSection(...));
+        $this->eventDispatcher->addListener(GlobalsInitializedEvent::EVENT_HANDLE, [$this, 'addGlobalSettingsSection']);
     }
     public function addGlobalSettingsSection(GlobalsInitializedEvent $event)
     {
-        // If globals are properly included elsewhere this should not be needed.
-        //  Will leave this here for now to avoid breaking anything.
         global $GLOBALS;
 
         $service = $event->getGlobalsService();
-        $section = xlt("DORN Lab Integration");
+        $section = xlt("DORN");
         $service->createSection($section, 'Portal');
 
         $settings = $this->globalsConfig->getGlobalSettingSectionConfiguration();
@@ -134,7 +130,7 @@ class Bootstrap
                     $config['type'],
                     $value,
                     xlt($config['description']),
-                    false // Config only. No user settings entry.
+                    true
                 )
             );
         }
@@ -145,7 +141,7 @@ class Bootstrap
      */
     public function registerTemplateEvents()
     {
-        $this->eventDispatcher->addListener(TwigEnvironmentEvent::EVENT_CREATED, $this->addTemplateOverrideLoader(...));
+        $this->eventDispatcher->addListener(TwigEnvironmentEvent::EVENT_CREATED, [$this, 'addTemplateOverrideLoader']);
     }
 
     /**
@@ -187,7 +183,7 @@ class Bootstrap
              * @global $eventDispatcher @see ModulesApplication::loadCustomModule
              * @global $module @see ModulesApplication::loadCustomModule
              */
-            $this->eventDispatcher->addListener(MenuEvent::MENU_UPDATE, $this->addCustomModuleMenuItem(...));
+            $this->eventDispatcher->addListener(MenuEvent::MENU_UPDATE, [$this, 'addCustomModuleMenuItem']);
         }
     }
 
@@ -199,10 +195,8 @@ class Bootstrap
         $menuItem->requirement = 0;
         $menuItem->target = 'mod';
         $menuItem->menu_id = 'mod0';
-        $menuItem->acl_req = ["patients", "lab"];
-        $menuItem->label = xlt("DORN Lab Integration");
-        $menuItem->global_req = [];
-            // TODO: pull the install location into a constant into the codebase so if OpenEMR changes this location it
+        $menuItem->label = xlt("DORN");
+        // TODO: pull the install location into a constant into the codebase so if OpenEMR changes this location it
         // doesn't break any modules.
         $menuItem->url = "/interface/modules/custom_modules/oe-module-dorn/public/index.php";
         $menuItem->children = [];
@@ -236,7 +230,7 @@ class Bootstrap
         $menuItem->global_req = [];
 
         foreach ($menu as $item) {
-            if ($item->menu_id == 'proimg') {
+            if ($item->menu_id == 'modimg') {
                 $item->children[] = $menuItem;
                 break;
             }
