@@ -3,7 +3,7 @@
 /**
  *
  * @package OpenEMR
- * @link    http://www.open-emr.org
+ * @link    https://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
  * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
@@ -46,20 +46,20 @@ $isAuth = AclMain::aclCheckCore('admin', 'users') ?? false;
             if ($tab == "orders") {
                 echo "active";
             } ?>" >
-                <a class="nav-link" href="orders.php"><?php echo xlt("Orders"); ?> </a>                            
+                <a class="nav-link" href="orders.php"><?php echo xlt("Orders"); ?> </a>
             </li>
             <li class="nav-item <?php
             if ($tab == "results") {
                 echo "active";
             } ?>" >
-                <a class="nav-link" href="results.php"><?php echo xlt("Results"); ?></a>                            
-            </li>  
+                <a class="nav-link" href="results.php"><?php echo xlt("Results"); ?></a>
+            </li>
             <li class="nav-item <?php
             if ($tab == "routes") {
                 echo "active";
             } ?>" >
-                <a class="nav-link" href="routes.php"><?php echo xlt("Route List"); ?></a>                            
-            </li>               
-        </ul>        
+                <a class="nav-link" href="routes.php"><?php echo xlt("Route List"); ?></a>
+            </li>
+        </ul>
     </div>
-</nav>       
+</nav>
