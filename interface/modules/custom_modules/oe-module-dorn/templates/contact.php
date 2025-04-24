@@ -6,7 +6,7 @@
  * @link    http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
- * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
+ * @copyright Copyright (c) 2022 Brad Sharp <brad.sharp@claimrev.com>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
@@ -19,4 +19,4 @@
         <li> <?php echo xlt("Email Support"); ?>: <a href = "support@claimrev.com">support@claimrev.com</a> </li>
         <li> <?php echo xlt("Email Sales"); ?>: <a href = "info@claimrev.com">info@claimrev.com</a> </li>
     </ul>
-</div>
+</div>        

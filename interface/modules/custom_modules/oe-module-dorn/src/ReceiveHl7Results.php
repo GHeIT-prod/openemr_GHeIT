@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -7,13 +6,12 @@
  * @link    http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
- * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
+ * @copyright Copyright (c) 2022 Brad Sharp <brad.sharp@claimrev.com>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
 namespace OpenEMR\Modules\Dorn;
 
-use Document;
 use OpenEMR\Common\Crypto\CryptoGen;
 use OpenEMR\Modules\Dorn\ConnectorApi;
 use OpenEMR\Modules\Dorn\models\ReceiveResultsResponseModel;
@@ -58,12 +56,12 @@ class ReceiveHl7Results
 
 
         $sql = "SELECT pp.name, pp.npi, pp.protocol, pp.remote_host, pp.send_fac_id, pp.recv_fac_id,
-                pp.recv_app_id,pp.DorP, pp.direction, r.*
+                pp.recv_app_id,pp.DorP, pp.direction, r.* 
                 FROM mod_dorn_routes r
                 INNER JOIN procedure_providers pp ON
                     r.ppid = pp.ppid
-                WHERE lab_guid = ?
-                AND lab_account_number = ?
+                WHERE lab_guid = ? 
+                AND lab_account_number = ? 
                 LIMIT 1;";
         $record = sqlQuery($sql, [$result->labGuid, $result->accountNumber]);
 
@@ -72,14 +70,14 @@ class ReceiveHl7Results
         $send_account = $record['send_fac_id'];
         $recv_account = $record['recv_fac_id'];
         $lab_app = $record['recv_app_id'];
-        $lab_npi = strtoupper(trim((string) $record['npi']));
+        $lab_npi = strtoupper(trim($record['npi']));
         $lab_name = $record['name'];
         $direction = $record['direction'];
         $hl7 = '';
 
         $protocol = $record['protocol'];
         $remote_host = $record['remote_host'];
-        $debug = trim((string) $record['DorP']) === 'D';
+        $debug = trim($record['DorP']) === 'D';
 
         $logpath = $GLOBALS['OE_SITE_DIR'] . "/documents/procedure_results/logs/$lab_npi";
         $prpath .= $resultPath . '/' . $ppid . '-' . $lab_npi;
@@ -99,7 +97,7 @@ class ReceiveHl7Results
         }
 
         if (!empty($result->hl7Base64)) {
-            $hl7 = base64_decode((string) $result->hl7Base64);
+            $hl7 = base64_decode($result->hl7Base64);
         } else {
             $returnValue->message = "HL7 appears to be empty";
             $returnValue->isSuccess = false;
@@ -188,14 +186,14 @@ class ReceiveHl7Results
         global $lab_npi;
         //$direction = 'R';
         // This will hold returned error messages and related variables.
-        $rhl7_return = [];
-        $rhl7_return['mssgs'] = [];
+        $rhl7_return = array();
+        $rhl7_return['mssgs'] = array();
         $rhl7_return['needmatch'] = false; // indicates if this file is pending a match request
 
         $rhl7_segnum = 0;
         $obrPerformingOrganization = '';
 
-        if (!str_starts_with((string) $hl7, 'MSH')) {
+        if (substr($hl7, 0, 3) != 'MSH') {
             return $this->rhl7LogMsg(xl('Input does not begin with a MSH segment'), true);
         }
 
@@ -208,13 +206,13 @@ class ReceiveHl7Results
         // 'res' - array of rows to write to procedure_result for this procedure_report
         // 'fid' - unique lab-provided identifier for this report
         //
-        $amain = [];
+        $amain = array();
 
         // End-of-line delimiter for text in procedure_result.comments and other multi-line notes.
         $commentdelim = "\n";
 
         // Ensoftek: Different labs seem to send different EOLs. Edit HL7 input to a character we know.
-        $hl7 = (string)str_replace(["\r\n", "\r", "\n"], "\r", $hl7);
+        $hl7 = (string)str_replace(array("\r\n", "\r", "\n"), "\r", $hl7);
 
         $today = time();
         $in_message_lab_name = '';
@@ -232,7 +230,7 @@ class ReceiveHl7Results
         $pcrow = false;
         $oprow = false;
 
-        $code_seq_array = []; // tracks sequence numbers of order codes
+        $code_seq_array = array(); // tracks sequence numbers of order codes
         $results_category_id = 0;  // document category ID for lab results
 
         // This is so we know where we are if a segment like NTE that can appear in
@@ -258,7 +256,7 @@ class ReceiveHl7Results
         // We'll need the document category IDs for any embedded documents.
         $catrow = sqlQuery(
             "SELECT id FROM categories WHERE name = ?",
-            [$GLOBALS['lab_results_category_name']]
+            array($GLOBALS['lab_results_category_name'])
         );
         if (empty($catrow['id'])) {
             return $this->rhl7LogMsg(
@@ -271,7 +269,7 @@ class ReceiveHl7Results
             $mdm_category_id = $results_category_id;
             $catrow = sqlQuery(
                 "SELECT id FROM categories WHERE name = ?",
-                [$GLOBALS['gbl_mdm_category_name']]
+                array($GLOBALS['gbl_mdm_category_name'])
             );
             if (!empty($catrow['id'])) {
                 $mdm_category_id = $catrow['id'];
@@ -297,7 +295,7 @@ class ReceiveHl7Results
                     $this->rhl7FlushMain($amain, $commentdelim);
                 }
 
-                $amain = [];
+                $amain = array();
 
                 if ('MDM' == $msgtype && !$dryrun) {
                     $rc = $this->rhl7FlushMDM(
@@ -319,7 +317,7 @@ class ReceiveHl7Results
                 // Ensoftek: Could come is as 'ORU^R01^ORU_R01'. Handle all cases when 'ORU^R01' is seen.
                 if (strstr($a[8], "ORU^R01")) {
                     $msgtype = 'ORU';
-                } elseif (in_array($a[8], ['MDM^T02', 'MDM^T04', 'MDM^T08'])) {
+                } elseif ($a[8] == 'MDM^T02' || $a[8] == 'MDM^T04' || $a[8] == 'MDM^T08') {
                     $msgtype = 'MDM';
                     $mdm_datetime = '';
                     $mdm_docname = '';
@@ -363,12 +361,19 @@ class ReceiveHl7Results
                 $in_state = $this->rhl7Text($tmp[3] ?? '');
                 $in_zip = $this->rhl7Text($tmp[4] ?? '');
                 $in_phone = $this->rhl7Text($a[13]) ?? '';
-                $in_sex = match (strtoupper($a[8])) {
-                    'M' => 'Male',
-                    'F' => 'Female',
-                    'T' => 'Transgender',
-                    default => 'Unassigned',
-                };
+                switch (strtoupper($a[8])) {
+                    case 'M':
+                        $in_sex = 'Male';
+                        break;
+                    case 'F':
+                        $in_sex = 'Female';
+                        break;
+                    case 'T':
+                        $in_sex = 'Transgender';
+                        break;
+                    default:
+                        $in_sex = 'Unassigned';
+                }
                 $tmp = explode($d2, $a[5]);
                 $in_lname = $this->rhl7Text($tmp[0]);
                 $in_fname = $this->rhl7Text($tmp[1]);
@@ -378,12 +383,12 @@ class ReceiveHl7Results
 
                 // Patient matching is needed for a results-only interface or MDM message type.
                 if ('R' == $direction || 'MDM' == $msgtype) {
-                    $ptarr = [
-                        'ss' => strtoupper((string) $in_ssn),
+                    $ptarr = array(
+                        'ss' => strtoupper($in_ssn),
                         'fname' => $this->ucname($in_fname),
                         'lname' => $this->ucname($in_lname),
                         'mname' => $this->ucname($in_mname),
-                        'DOB' => strtoupper((string) $in_dob),
+                        'DOB' => strtoupper($in_dob),
                         'sex' => $in_sex,
                         'street' => $in_street,
                         'city' => $in_city,
@@ -391,7 +396,7 @@ class ReceiveHl7Results
                         'postal_code' => $in_zip,
                         'phone_home' => $in_phone,
                         'pubpid' => $in_pubpid
-                    ];
+                    );
                     $patient_id = $this->matchPatient($ptarr);
                     if ($patient_id == -1) {
                         // Result is indeterminate.
@@ -447,7 +452,7 @@ class ReceiveHl7Results
                 }
             } elseif ('ORC' == $a[0] && 'ORU' == $msgtype) {
                 $context = $a[0];
-                $arep = [];
+                $arep = array();
                 $porow = false;
                 $pcrow = false;
                 if ($direction != 'R' && $a[2]) {
@@ -461,7 +466,7 @@ class ReceiveHl7Results
                 // Is this ever used?
             } elseif ('OBR' == $a[0] && 'ORU' == $msgtype) {
                 $context = $a[0];
-                $arep = [];
+                $arep = array();
                 if ($direction != 'R' && $a[2]) {
                     $in_orderid = intval($a[2]);
                     $porow = false;
@@ -492,7 +497,7 @@ class ReceiveHl7Results
                     $tmp = explode($d2, $a[29]);
                     $in_parent_obrkey = isset($tmp[1]) ? str_replace($d5, $d2, $tmp[1]) : '';
                     $tmp = explode($d2, $a[26]);
-                    $in_parent_obxkey = (isset($tmp[0]) ? str_replace($d5, $d2, $tmp[0]) : '') . $d1 . ($tmp[1] ?? '');
+                    $in_parent_obxkey = (isset($tmp[0]) ? str_replace($d5, $d2, $tmp[0]) : '') . $d1 . (isset($tmp[1]) ? $tmp[1] : '');
 
                     // Look for the parent report.
                     foreach ($amain as $arr) {
@@ -533,7 +538,7 @@ class ReceiveHl7Results
                             "SELECT * FROM procedure_order " .
                             "WHERE lab_id = ? AND control_id = ? " .
                             "ORDER BY procedure_order_id DESC LIMIT 1",
-                            [$lab_id, $external_order_id]
+                            array($lab_id, $external_order_id)
                         );
                     }
 
@@ -553,7 +558,7 @@ class ReceiveHl7Results
                             "SELECT encounter FROM form_encounter WHERE " .
                             "pid = ? AND date <= ? AND DATE_ADD(date, INTERVAL 30 DAY) > ? " .
                             "ORDER BY date DESC, encounter DESC LIMIT 1",
-                            [$patient_id, $datetime_report, $datetime_report]
+                            array($patient_id, $datetime_report, $datetime_report)
                         );
                         if (!empty($encrow)) {
                             $encounter_id = intval($encrow['encounter']);
@@ -591,7 +596,7 @@ class ReceiveHl7Results
                                     "encounter_id   = ?, " .
                                     "control_id     = ?, " .
                                     "external_id    = ?",
-                                [
+                                array(
                                     $datetime_report,
                                     $provider_id,
                                     $lab_id,
@@ -601,7 +606,7 @@ class ReceiveHl7Results
                                     $encounter_id,
                                     $external_order_id,
                                     $external_id
-                                ]
+                                )
                             );
                             // If an encounter was identified then link the order to it.
                             $form_name = ($lab_npi > '' ? $lab_npi : "Auto Result") . "-" . $in_orderid;
@@ -622,7 +627,7 @@ class ReceiveHl7Results
                     $porow = sqlQuery(
                         "SELECT * FROM procedure_order WHERE " .
                         "procedure_order_id = ?",
-                        [$in_orderid]
+                        array($in_orderid)
                     );
                     // The order must already exist. Currently we do not handle electronic
                     // results returned for manual orders.
@@ -653,11 +658,11 @@ class ReceiveHl7Results
                         sqlStatement(
                             "UPDATE procedure_order SET control_id = ? WHERE " .
                             "procedure_order_id = ?",
-                            [$control_id, $in_orderid]
+                            array($control_id, $in_orderid)
                         );
                     }
 
-                    $code_seq_array = [];
+                    $code_seq_array = array();
                 }
 
                 // Find the order line item (procedure code) that matches this result.
@@ -672,7 +677,7 @@ class ReceiveHl7Results
                 $pcquery = "SELECT pc.* FROM procedure_order_code AS pc " .
                     "WHERE pc.procedure_order_id = ? AND pc.procedure_code = ? " .
                     "ORDER BY (procedure_order_seq <= ?), procedure_order_seq LIMIT 1";
-                $pcqueryargs = [$in_orderid, $in_procedure_code, $code_seq_array[$in_procedure_code]];
+                $pcqueryargs = array($in_orderid, $in_procedure_code, $code_seq_array[$in_procedure_code]);
                 $pcrow = sqlQuery($pcquery, $pcqueryargs);
                 if (empty($pcrow)) {
                     // There is no matching procedure in the order, so it must have been
@@ -687,7 +692,7 @@ class ReceiveHl7Results
                         $procedure_order_seq = sqlQuery(
                             "SELECT IFNULL(MAX(procedure_order_seq),0) + 1 AS increment FROM procedure_order_code " .
                             "WHERE procedure_order_id = ? ",
-                            [$in_orderid]
+                            array($in_orderid)
                         );
                         sqlInsert(
                             "INSERT INTO procedure_order_code SET " .
@@ -698,30 +703,30 @@ class ReceiveHl7Results
                             "procedure_type = ?, " .
                             "transport = ?, " .
                             "procedure_source = '2'",
-                            [
+                            array(
                                 $in_orderid,
                                 $procedure_order_seq['increment'],
                                 $in_procedure_code,
                                 $in_procedure_name,
                                 $code_type,
                                 $code_transport
-                            ]
+                            )
                         );
                         $pcrow = sqlQuery($pcquery, $pcqueryargs);
                         sqlCommitTrans();
                     } else {
                         // Dry run, make a dummy procedure_order_code row.
-                        $pcrow = [
+                        $pcrow = array(
                             'procedure_order_id' => $in_orderid,
                             'procedure_order_seq' => 0, // TBD?
-                        ];
+                        );
                     }
                 }
                 if (!empty($a[21])) {
                     $obrPerformingOrganization = $this->getPerformingOrganizationDetails('', $a[21], '', $d2, $commentdelim);
                 }
                 $code_seq_array[$in_procedure_code] = 0 + $pcrow['procedure_order_seq'];
-                $arep = [];
+                $arep = array();
                 $arep['procedure_order_id'] = $in_orderid;
                 $arep['procedure_order_seq'] = $pcrow['procedure_order_seq'];
                 $arep['date_collected'] = $this->rhl7DateTime($a[7]);
@@ -746,10 +751,10 @@ class ReceiveHl7Results
 
                 // Create the main array entry for this report and its results.
                 $i = count($amain);
-                $amain[$i] = [];
+                $amain[$i] = array();
                 $amain[$i]['rep'] = $arep;
                 $amain[$i]['fid'] = $in_filler_id;
-                $amain[$i]['res'] = [];
+                $amain[$i]['res'] = array();
             } elseif ($a[0] == 'NTE' && $context == 'OBR') {
                 // Append this note to those for the most recent report.
                 $amain[count($amain) - 1]['rep']['report_notes'] .= $this->rhl7Text($a[3], true) . "\n";
@@ -778,15 +783,15 @@ class ReceiveHl7Results
                 ) {
                     $amain[$i]['res'][$j]['comments'] =
                         substr(
-                            (string) $amain[$i]['res'][$j]['comments'],
+                            $amain[$i]['res'][$j]['comments'],
                             0,
-                            strlen((string) $amain[$i]['res'][$j]['comments'])
+                            strlen($amain[$i]['res'][$j]['comments'])
                         ) . $this->rhl7Text($a[5] ?? '') . $commentdelim;
                     continue;
                 }
 
                 $context = $a[0];
-                $ares = [];
+                $ares = array();
                 $ares['result_data_type'] = substr($a[2], 0, 1); // N, S, F or E
                 $ares['comments'] = $commentdelim;
                 if ($a[2] == 'ED') {
@@ -829,7 +834,11 @@ class ReceiveHl7Results
                     // The first line of comments is reserved for such things.
                     $ares['result_data_type'] = 'L';
                     $ares['result'] = '';
-                    $vTx = empty($a[5]) ? $this->rhl7Text(str_replace('^', ' ', $a[3])) : $this->rhl7Text($a[5]);
+                    if (empty($a[5])) {
+                        $vTx = $this->rhl7Text(str_replace('^', ' ', $a[3]));
+                    } else {
+                        $vTx = $this->rhl7Text($a[5]);
+                    }
                     $ares['comments'] = $vTx . $commentdelim;
                 } else {
                     $ares['result'] = $this->rhl7Text($a[5]);
@@ -890,7 +899,7 @@ class ReceiveHl7Results
             } elseif ('ZEF' == $a[0] && 'ORU' == $msgtype) {
                 // ZEF segment is treated like an OBX with an embedded Base64-encoded PDF.
                 $context = 'OBX';
-                $ares = [];
+                $ares = array();
                 $ares['result_data_type'] = 'E';
                 $ares['comments'] = $commentdelim;
                 //
@@ -987,9 +996,9 @@ class ReceiveHl7Results
             return false;
         }
         $d0 = "\r";
-        $d1 = substr((string) $hl7, 3, 1); // typically |
+        $d1 = substr($hl7, 3, 1); // typically |
 
-        $segs = explode($d0, (string) $hl7);
+        $segs = explode($d0, $hl7);
         $a = explode($d1, $segs[0]);
         if ($a[0] != 'MSH') {
             unset($segs);
@@ -998,9 +1007,9 @@ class ReceiveHl7Results
 
         unset($segs);
         // CMS has deactivated NPI 1891752424, not sure who AMMON is
-        if ($lab_npi == '1891752424' || strtoupper((string) $lab_npi) == 'AMMON') {
-            if (strtoupper(trim($a[5])) == strtoupper(trim((string) $send_acct))) {
-                $srch = '|' . strtoupper(trim((string) $send_acct)) . '-';
+        if ($lab_npi == '1891752424' || strtoupper($lab_npi) == 'AMMON') {
+            if (strtoupper(trim($a[5])) == strtoupper(trim($send_acct))) {
+                $srch = '|' . strtoupper(trim($send_acct)) . '-';
                 $hl7 = str_replace($srch, "|", $hl7);
                 return true;
             }
@@ -1008,9 +1017,9 @@ class ReceiveHl7Results
         }
 
         if (
-            strtoupper(trim($a[5])) == strtoupper(trim((string) $send_acct))
-            || strtoupper(trim($a[3])) == strtoupper(trim((string) $lab_acct))
-            || strtoupper(trim($a[2])) == strtoupper(trim((string) $lab_app))
+            strtoupper(trim($a[5])) == strtoupper(trim($send_acct))
+            || strtoupper(trim($a[3])) == strtoupper(trim($lab_acct))
+            || strtoupper(trim($a[2])) == strtoupper(trim($lab_app))
         ) {
             return true;
         }
@@ -1024,8 +1033,8 @@ class ReceiveHl7Results
         // Try to parse composites
         foreach ($composites as $key => $composite) {
             // If it is a composite ...
-            if (str_contains((string) $composite, '^')) {
-                $composites[$key] = explode('^', (string) $composite);
+            if (!(strpos($composite, '^') === false)) {
+                $composites[$key] = explode('^', $composite);
             }
         }
 
@@ -1083,7 +1092,7 @@ class ReceiveHl7Results
         // echo " -->\n";
 
         $query = "INSERT INTO $tablename SET";
-        $binds = [];
+        $binds = array();
         $sep = '';
         foreach ($arr as $key => $value) {
             $query .= "$sep `$key` = ?";
@@ -1091,7 +1100,7 @@ class ReceiveHl7Results
             $binds[] = $value;
         }
 
-        $arr = [];
+        $arr = array();
         return sqlInsert($query, $binds);
     }
 
@@ -1114,10 +1123,10 @@ class ReceiveHl7Results
                 unset($ares['obxkey']);
                 // If TX result is not over 10 characters, move it from comments to result field.
                 if ($ares['result'] === '' && $ares['result_data_type'] == 'L') {
-                    $i = strpos((string) $ares['comments'], (string) $commentdelim);
+                    $i = strpos($ares['comments'], $commentdelim);
                     if ($i && $i <= 10) {
-                        $ares['result'] = substr((string) $ares['comments'], 0, $i);
-                        $ares['comments'] = substr((string) $ares['comments'], $i);
+                        $ares['result'] = substr($ares['comments'], 0, $i);
+                        $ares['comments'] = substr($ares['comments'], $i);
                     }
                 }
 
@@ -1135,7 +1144,7 @@ class ReceiveHl7Results
                 $mdm_docname .= '_';
             }
 
-            $mdm_docname .= preg_replace('/[^0-9]/', '', (string) $mdm_datetime);
+            $mdm_docname .= preg_replace('/[^0-9]/', '', $mdm_datetime);
             $filename = $mdm_docname . '.txt';
             $d = new Document();
             $rc = $d->createDocument($patient_id, $mdm_category_id, $filename, 'text/plain', $mdm_text);
@@ -1163,7 +1172,11 @@ class ReceiveHl7Results
         $s = str_replace('\\T\\', '&', $s);
         $s = str_replace('\\X0d\\', "\r", $s);
         $s = str_replace('\\E\\', '\\', $s);
-        $s = $allow_newlines ? str_replace('\\.br\\', "\n", $s) : str_replace('\\.br\\', '~', $s);
+        if ($allow_newlines) {
+            $s = str_replace('\\.br\\', "\n", $s);
+        } else {
+            $s = str_replace('\\.br\\', '~', $s);
+        }
 
         return $s;
     }
@@ -1171,11 +1184,11 @@ class ReceiveHl7Results
     private function rhl7DateTime($s)
     {
         // Remove UTC offset if present.
-        if (preg_match('/^([0-9.]+)[+-]/', (string) $s, $tmp)) {
+        if (preg_match('/^([0-9.]+)[+-]/', $s, $tmp)) {
             $s = $tmp[1];
         }
 
-        $s = preg_replace('/[^0-9]/', '', (string) $s);
+        $s = preg_replace('/[^0-9]/', '', $s);
         if (empty($s)) {
             return '0000-00-00 00:00:00';
         }
@@ -1196,7 +1209,7 @@ class ReceiveHl7Results
     private function rhl7DateTimeZone($s)
     {
         // UTC offset if present always begins with "+" or "-".
-        if (preg_match('/^[0-9.]+([+-].*)$/', (string) $s, $tmp)) {
+        if (preg_match('/^[0-9.]+([+-].*)$/', $s, $tmp)) {
             return trim($tmp[1]);
         }
 
@@ -1205,7 +1218,7 @@ class ReceiveHl7Results
 
     private function rhl7Date($s)
     {
-        return substr((string) $this->rhl7DateTime($s), 0, 10);
+        return substr($this->rhl7DateTime($s), 0, 10);
     }
 
     private function rhl7Abnormal($s)
@@ -1332,7 +1345,7 @@ class ReceiveHl7Results
             return $out;
         }
 
-        $arr = explode($componentdelimiter, (string) $s);
+        $arr = explode($componentdelimiter, $s);
         if (!empty($arr[8])) {
             $out = $arr[8];
         } else {
@@ -1397,7 +1410,7 @@ class ReceiveHl7Results
             // OBX25 Example: "2343242^Knowsalot^Phil^J.^III^Dr.^^^NIST-AA-1&2.16.840.1.113883.3.72.5.30.1&ISO^L^^^DNSPM"
             //             Dr. Phil Knowsalot J. III
             if (!empty($obx25)) {
-                $obx25_segs = explode($componentdelimiter, (string) $obx25);
+                $obx25_segs = explode($componentdelimiter, $obx25);
                 $s .= "$obx25_segs[5] $obx25_segs[2] $obx25_segs[1] $obx25_segs[3] $obx25_segs[4]" . $commentdelim;
             }
 
@@ -1433,7 +1446,7 @@ class ReceiveHl7Results
         $in_fname = $ptarr['fname'];
         $in_lname = $ptarr['lname'];
         $in_dob = $ptarr['DOB'];
-        $in_sex = strtoupper((string) $ptarr['sex']) == 'M' ? 'Male' : 'Female'; // AND sex IS NOT NULL AND sex = ?
+        $in_sex = strtoupper($ptarr['sex']) == 'M' ? 'Male' : 'Female'; // AND sex IS NOT NULL AND sex = ?
 
         $patient_id = 0;
         $res = sqlStatement(
@@ -1447,7 +1460,7 @@ class ReceiveHl7Results
             "lname IS NOT NULL AND lname != '' AND lname = ? OR " .
             "DOB IS NOT NULL AND DOB = ?)) " .
             "ORDER BY ss DESC, pid DESC LIMIT 2",
-            [$in_ss, $in_fname, $in_lname, $in_dob, $in_ss, $in_fname, $in_lname, $in_dob]
+            array($in_ss, $in_fname, $in_lname, $in_dob, $in_ss, $in_fname, $in_lname, $in_dob)
         );
         if (sqlNumRows($res) > 1) {
             // Multiple matches, so ambiguous.
@@ -1465,7 +1478,7 @@ class ReceiveHl7Results
                 "lname IS NOT NULL AND lname != '' AND lname = ?) OR " .
                 "(DOB IS NOT NULL AND DOB = ?) " .
                 "LIMIT 1",
-                [$in_ss, $in_fname, $in_lname, $in_dob]
+                array($in_ss, $in_fname, $in_lname, $in_dob)
             );
             if (!empty($tmp['pid'])) {
                 $patient_id = -1;
@@ -1484,7 +1497,7 @@ class ReceiveHl7Results
             "(procedure_type LIKE 'ord' OR procedure_type LIKE 'pro') AND " .
             "activity = 1 AND procedure_code = ? " .
             "LIMIT 1";
-        $res = sqlQuery($query, [$labid, $procedure_code]);
+        $res = sqlQuery($query, array($labid, $procedure_code));
 
         return $res;
     }
@@ -1508,13 +1521,13 @@ class ReceiveHl7Results
                 "pid = ?, " .
                 "encounter = ?, " .
                 "provider_id = ?",
-                [
-                    date('Y-m-d H:i:s', strtotime((string) $order_date)),
-                    "Generated encounter for " . strtoupper((string) $lab_name) . " result",
+                array(
+                    date('Y-m-d H:i:s', strtotime($order_date)),
+                    "Generated encounter for " . strtoupper($lab_name) . " result",
                     $pid,
                     $encounter,
                     ($provider_id ?? '')
-                ]
+                )
             ),
             "newpatient",
             $pid,
@@ -1553,7 +1566,7 @@ class ReceiveHl7Results
         return sqlInsert(
             "INSERT INTO pnotes (date, body, pid, user, groupname, " .
             "authorized, activity, title, assigned_to, message_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            [
+            array(
                 $datetime,
                 $body,
                 $pid,
@@ -1564,7 +1577,7 @@ class ReceiveHl7Results
                 $title,
                 $notify,
                 $message_status
-            ]
+            )
         );
     }
     /**
@@ -1580,7 +1593,7 @@ class ReceiveHl7Results
         }
 
         $op_lname = $op_fname = '';
-        $op_npi = preg_replace('/[^0-9]/', '', (string) $arr[0]);
+        $op_npi = preg_replace('/[^0-9]/', '', $arr[0]);
         if (!empty($arr[1])) {
             $op_lname = $arr[1];
         }
@@ -1593,14 +1606,14 @@ class ReceiveHl7Results
             if ($op_npi) {
                 if ($op_fname && $op_lname) {
                     $where = "((npi IS NOT NULL AND npi = ?) OR ((npi IS NULL OR npi = ?) AND lname = ? AND fname = ?))";
-                    $qarr = [$op_npi, '', $op_lname, $op_fname];
+                    $qarr = array($op_npi, '', $op_lname, $op_fname);
                 } else {
                     $where = "npi IS NOT NULL AND npi = ?";
-                    $qarr = [$op_npi];
+                    $qarr = array($op_npi);
                 }
             } else {
                 $where = "lname = ? AND fname = ?";
-                $qarr = [$op_lname, $op_fname];
+                $qarr = array($op_lname, $op_fname);
             }
 
             $oprow = sqlQuery(
@@ -1619,10 +1632,10 @@ class ReceiveHl7Results
 
     private function ucname($string)
     {
-        $string = ucwords(strtolower((string) $string));
+        $string = ucwords(strtolower($string));
 
-        foreach (['-', '\''] as $delimiter) {
-            if (str_contains($string, $delimiter)) {
+        foreach (array('-', '\'') as $delimiter) {
+            if (strpos($string, $delimiter) !== false) {
                 $string = implode($delimiter, array_map('ucfirst', explode($delimiter, $string)));
             }
         }
@@ -1635,7 +1648,7 @@ class ReceiveHl7Results
     private function createSkeletonPatient($patient_data)
     {
         global $orphanLog;
-        $employer_data = [];
+        $employer_data = array();
         $tmp = sqlQuery("SELECT MAX(pid)+1 AS pid FROM patient_data");
         $ptid = empty($tmp['pid']) ? 1 : intval($tmp['pid']);
         if (!isset($patient_data['pubpid'])) {
