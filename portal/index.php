@@ -637,7 +637,10 @@ if (!($session->has('password_update') || (!empty($globalsBag->get('portal_two_p
                 <?php if (isset($redirectUrl)) { ?>
                     <input id="redirect" type="hidden" name="redirect" value="<?php echo attr($redirectUrl); ?>" />
                 <?php } ?>
-                
+                <!-- <div class="form-group">
+                    <label for="uname"><?php echo xlt('Username') ?></label>
+                    <input type="text" class="form-control" name="uname" id="uname" autocomplete="none" required />
+                </div> -->
                 <div class="form-group row">
                     <label for="uname" class="col-form-label col-sm-4"><?php echo xlt('Username') ?></label>
                     <div class="col">
