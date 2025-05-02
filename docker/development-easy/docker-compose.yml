@@ -77,8 +77,8 @@ services:
       OPENEMR_SETTING_ccda_alt_service_enable: 3
       OPENEMR_SETTING_couchdb_host: couchdb
       OPENEMR_SETTING_couchdb_port: 6984
-      OPENEMR_SETTING_couchdb_user: admin
-      OPENEMR_SETTING_couchdb_pass: password
+      OPENEMR_SETTING_couchdb_user: ${COUCHDB_USER}
+      OPENEMR_SETTING_couchdb_pass: ${COUCHDB_PASSWORD}
       OPENEMR_SETTING_couchdb_dbase: example
       OPENEMR_SETTING_couchdb_ssl_allow_selfsigned: 1
       OPENEMR_SETTING_gbl_ldap_host: 'ldap://openldap:389'
@@ -153,8 +153,8 @@ services:
     - ../library/couchdb-config-ssl-cert-keys/easy/server-key.pem:/etc/ssl/server-key.pem:ro
     - ./docker_data/couchdbvolume:/opt/couchdb/data
     environment:
-      COUCHDB_USER: admin
-      COUCHDB_PASSWORD: password
+      COUCHDB_USER: ${COUCHDB_USER}
+      COUCHDB_PASSWORD: ${COUCHDB_PASSWORD}
   openldap:
     restart: always
     image: openemr/dev-ldap:easy
