@@ -6,11 +6,11 @@
  * @link    https://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
- * @copyright Copyright (c) 2022 Brad Sharp <brad.sharp@claimrev.com>
+ * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
-    require_once "../../../../globals.php";
+    require_once __DIR__ . "/../../../../globals.php";
 
     use OpenEMR\Common\Acl\AccessDeniedHelper;
     use OpenEMR\Common\Acl\AclMain;
@@ -48,9 +48,11 @@ if ($resultsGuid) {
 }
 
 ?>
+<!DOCTYPE html>
 <html>
     <head>
         <?php Header::setupHeader(['opener']);?>
+        <title><?php echo xlt("Alert"); ?></title>
     </head>
     <body>
     <?php
