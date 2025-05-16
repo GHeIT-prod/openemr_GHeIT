@@ -6,11 +6,7 @@
  * @link      http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
-<<<<<<< HEAD
  * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
-=======
- * @copyright Copyright (c) 2022 Brad Sharp <brad.sharp@claimrev.com>
->>>>>>> d11e3347b (modules setup and UI changes)
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
@@ -30,11 +26,7 @@ class ConnectorApi
         $api_server = ConnectorApi::getServerInfo();
         $url = $api_server . "/api/Orders/v1/SearchOrderStatus";
         $params = [];
-<<<<<<< HEAD
         // Initialize an empty params array
-=======
-// Initialize an empty params array
->>>>>>> d11e3347b (modules setup and UI changes)
 
         if (!empty($originalOrderNumber)) {
             $params['originalOrderNumber'] = $originalOrderNumber;
@@ -82,10 +74,6 @@ class ConnectorApi
         $api_server = ConnectorApi::getServerInfo();
         $url = $api_server . "/api/Orders/v1/GetPendingResults";
         $params = [];
-<<<<<<< HEAD
-=======
-// Initialize an empty params array
->>>>>>> d11e3347b (modules setup and UI changes)
 
         if (!empty($labAccountNumber)) {
             $params['labAccountNumber'] = $labAccountNumber;
@@ -110,10 +98,7 @@ class ConnectorApi
         return $returnData;
     }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> d11e3347b (modules setup and UI changes)
     public static function sendOrder($labGuid, $labAccountNumber, $orderNumber, $patientId, $hl7)
     {
         $api_server = ConnectorApi::getServerInfo();
@@ -142,7 +127,6 @@ class ConnectorApi
         $url = $api_server . "/api/Route/v1/CreateRoute";
         return ConnectorApi::postData($url, $data);
     }
-<<<<<<< HEAD
     public static function getRoutesFromDorn()
     {
         $api_server = ConnectorApi::getServerInfo();
@@ -162,9 +146,6 @@ class ConnectorApi
         $returnData = ConnectorApi::postData($url, $payload);
         return $returnData;
     }
-=======
-
->>>>>>> d11e3347b (modules setup and UI changes)
     public static function getLab($labGuid)
     {
         $api_server = ConnectorApi::getServerInfo();
@@ -259,16 +240,11 @@ class ConnectorApi
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);
-<<<<<<< HEAD
         curl_close($ch);
         if ($result === false) {
             error_log('cURL error: ' . curl_error($ch));
         }
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-=======
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
->>>>>>> d11e3347b (modules setup and UI changes)
         if ($httpcode == 200 || $httpcode == 400) {
             $responseJsonData = json_decode($result);
             return $responseJsonData;
@@ -291,16 +267,11 @@ class ConnectorApi
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);
-<<<<<<< HEAD
         curl_close($ch);
         if ($result === false) {
             error_log('cURL error: ' . curl_error($ch));
         }
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-=======
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
->>>>>>> d11e3347b (modules setup and UI changes)
         if ($httpcode == 200 || $httpcode == 400) {
             $responseJsonData = json_decode($result);
             return $responseJsonData;
@@ -315,10 +286,7 @@ class ConnectorApi
 
     public static function postData($url, $sendData)
     {
-<<<<<<< HEAD
         $error = "";
-=======
->>>>>>> d11e3347b (modules setup and UI changes)
         $headers = ConnectorApi::buildHeader();
         $payload = json_encode($sendData, JSON_UNESCAPED_SLASHES);
         $ch = curl_init();
@@ -328,17 +296,12 @@ class ConnectorApi
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($ch);
-<<<<<<< HEAD
         curl_close($ch);
         if ($result === false) {
             $error = curl_error($ch);
             error_log('cURL error: ' . curl_error($ch));
         }
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-=======
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
->>>>>>> d11e3347b (modules setup and UI changes)
         if ($httpcode == 200 || $httpcode == 400) {
             $responseJsonData = json_decode($result);
             return $responseJsonData;
@@ -346,11 +309,7 @@ class ConnectorApi
         error_log("Error " . "Status Code" . text($httpcode) . " sending in api " . text($url) . " Message " . text($result));
         $response = new ApiResponseViewModel();
         $response->isSuccess = false;
-<<<<<<< HEAD
         $response->responseMessage = "Error Posting Data! " . $error;
-=======
-        $response->responseMessage = "Error Posting Data!";
->>>>>>> d11e3347b (modules setup and UI changes)
         return $response;
     }
 
@@ -405,12 +364,9 @@ class ConnectorApi
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $result = curl_exec($ch);
         curl_close($ch);
-<<<<<<< HEAD
         if ($result === false) {
             error_log('cURL error: ' . curl_error($ch));
         }
-=======
->>>>>>> d11e3347b (modules setup and UI changes)
         $data = json_decode($result);
         $token = "";
         if (property_exists($data, 'access_token')) {
