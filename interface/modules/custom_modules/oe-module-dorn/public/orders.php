@@ -3,7 +3,7 @@
 /**
  *
  * @package   OpenEMR
- * @link      https://www.open-emr.org
+ * @link      http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
  * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
@@ -13,7 +13,7 @@
 /**
  *
  * @package   OpenEMR
- * @link      https://www.open-emr.org
+ * @link      http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
  * @author    Jerry Padgett <sjpadgett@gmail.com>
@@ -24,18 +24,19 @@
 
 require_once __DIR__ . "/../../../../globals.php";
 
-use OpenEMR\Common\Acl\AccessDeniedHelper;
 use OpenEMR\Common\Acl\AclMain;
-use OpenEMR\Core\Header;
-use OpenEMR\Core\OEGlobalsBag;
+use OpenEMR\Common\Csrf\CsrfUtils;
+use OpenEMR\Common\Twig\TwigContainer;
 use OpenEMR\Modules\Dorn\ConnectorApi;
+use OpenEMR\Core\Header;
 
 //this is needed along with setupHeader() to get the pop up to appear
 
 $tab = "orders";
 $pageTitle = xl("DORN Orders");
 if (!AclMain::aclCheckCore('patients', 'lab')) {
-    AccessDeniedHelper::denyWithTemplate("ACL check failed for patients/lab: DORN Orders", $pageTitle);
+    echo (new TwigContainer(null, $GLOBALS['kernel']))->getTwig()->render('core/unauthorized.html.twig', ['pageTitle' => $pageTitle]);
+    exit;
 }
 $primaryInfos = ConnectorApi::getPrimaryInfos('');
 if (!empty($_POST)) {
@@ -60,7 +61,7 @@ if (!empty($_POST)) {
             <?php $datetimepicker_timepicker = false; ?>
             <?php $datetimepicker_showseconds = false; ?>
             <?php $datetimepicker_formatInput = false; ?>
-            <?php require(OEGlobalsBag::getInstance()->get('srcdir') . '/js/xl/jquery-datetimepicker-2-5-4.js.php'); ?>
+            <?php require($GLOBALS['srcdir'] . '/js/xl/jquery-datetimepicker-2-5-4.js.php'); ?>
         });
     });
 </script>

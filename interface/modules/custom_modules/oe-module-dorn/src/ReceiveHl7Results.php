@@ -3,7 +3,7 @@
 /**
  *
  * @package OpenEMR
- * @link    https://www.open-emr.org
+ * @link    http://www.open-emr.org
  *
  * @author    Brad Sharp <brad.sharp@claimrev.com>
  * @copyright Copyright (c) 2022-2025 Brad Sharp <brad.sharp@claimrev.com>
@@ -13,12 +13,7 @@
 namespace OpenEMR\Modules\Dorn;
 
 use Document;
-use OpenEMR\BC\ServiceContainer;
-use OpenEMR\Common\Crypto\KeySource;
-use OpenEMR\Common\Database\QueryUtils;
-use OpenEMR\Common\Logging\EventAuditLogger;
-use OpenEMR\Common\Session\SessionWrapperFactory;
-use OpenEMR\Core\OEGlobalsBag;
+use OpenEMR\Common\Crypto\CryptoGen;
 use OpenEMR\Modules\Dorn\ConnectorApi;
 use OpenEMR\Modules\Dorn\models\ReceiveResultsResponseModel;
 
@@ -52,7 +47,7 @@ class ReceiveHl7Results
     public function receiveSingleResults($result, $rejectResult): ReceiveResultsResponseModel
     {
         $returnValue = new ReceiveResultsResponseModel();
-        $resultPath = OEGlobalsBag::getInstance()->get('OE_SITE_DIR') . "/documents/procedure_results";
+        $resultPath = $GLOBALS['OE_SITE_DIR'] . "/documents/procedure_results";
 
         $orderNumber = $result->orderNumber;
         $patientId = $result->patientId;
@@ -85,7 +80,7 @@ class ReceiveHl7Results
         $remote_host = $record['remote_host'];
         $debug = trim((string) $record['DorP']) === 'D';
 
-        $logpath = OEGlobalsBag::getInstance()->get('OE_SITE_DIR') . "/documents/procedure_results/logs/$lab_npi";
+        $logpath = $GLOBALS['OE_SITE_DIR'] . "/documents/procedure_results/logs/$lab_npi";
         $prpath .= $resultPath . '/' . $ppid . '-' . $lab_npi;
         $file = "result_" . $orderNumber . ".hl7";
 
@@ -262,12 +257,12 @@ class ReceiveHl7Results
         // We'll need the document category IDs for any embedded documents.
         $catrow = sqlQuery(
             "SELECT id FROM categories WHERE name = ?",
-            [OEGlobalsBag::getInstance()->getString('lab_results_category_name')]
+            [$GLOBALS['lab_results_category_name']]
         );
         if (empty($catrow['id'])) {
             return $this->rhl7LogMsg(
                 xl('Document category for lab results does not exist') .
-                ': ' . OEGlobalsBag::getInstance()->getString('lab_results_category_name'),
+                ': ' . $GLOBALS['lab_results_category_name'],
                 true
             );
         } else {
@@ -275,7 +270,7 @@ class ReceiveHl7Results
             $mdm_category_id = $results_category_id;
             $catrow = sqlQuery(
                 "SELECT id FROM categories WHERE name = ?",
-                [OEGlobalsBag::getInstance()->getString('gbl_mdm_category_name')]
+                [$GLOBALS['gbl_mdm_category_name']]
             );
             if (!empty($catrow['id'])) {
                 $mdm_category_id = $catrow['id'];
@@ -687,37 +682,32 @@ class ReceiveHl7Results
                         $lkup = $this->lookupTestCode($lab_id, $in_procedure_code);
                         $code_type = ($lkup['procedure_type'] ?? '') ? trim($lkup['procedure_type']) : '';
                         $code_transport = ($lkup['transport'] ?? '') ? trim($lkup['transport']) : '';
-                        $pcrow = QueryUtils::inTransaction(function () use ($in_orderid, $in_procedure_code, $in_procedure_name, $code_type, $code_transport, $pcquery, $pcqueryargs) {
-                            $procedure_order_seq = sqlQuery(
-                                <<<'SQL'
-                                SELECT IFNULL(MAX(procedure_order_seq), 0) + 1 AS increment
-                                FROM procedure_order_code
-                                WHERE procedure_order_id = ?
-                                SQL,
-                                [$in_orderid]
-                            );
-                            sqlInsert(
-                                <<<'SQL'
-                                INSERT INTO procedure_order_code SET
-                                    procedure_order_id = ?,
-                                    procedure_order_seq = ?,
-                                    procedure_code = ?,
-                                    procedure_name = ?,
-                                    procedure_type = ?,
-                                    transport = ?,
-                                    procedure_source = '2'
-                                SQL,
-                                [
-                                    $in_orderid,
-                                    $procedure_order_seq['increment'],
-                                    $in_procedure_code,
-                                    $in_procedure_name,
-                                    $code_type,
-                                    $code_transport,
-                                ]
-                            );
-                            return sqlQuery($pcquery, $pcqueryargs);
-                        });
+                        sqlBeginTrans();
+                        $procedure_order_seq = sqlQuery(
+                            "SELECT IFNULL(MAX(procedure_order_seq),0) + 1 AS increment FROM procedure_order_code " .
+                            "WHERE procedure_order_id = ? ",
+                            [$in_orderid]
+                        );
+                        sqlInsert(
+                            "INSERT INTO procedure_order_code SET " .
+                            "procedure_order_id = ?, " .
+                            "procedure_order_seq = ?, " .
+                            "procedure_code = ?, " .
+                            "procedure_name = ?, " .
+                            "procedure_type = ?, " .
+                            "transport = ?, " .
+                            "procedure_source = '2'",
+                            [
+                                $in_orderid,
+                                $procedure_order_seq['increment'],
+                                $in_procedure_code,
+                                $in_procedure_name,
+                                $code_type,
+                                $code_transport
+                            ]
+                        );
+                        $pcrow = sqlQuery($pcquery, $pcqueryargs);
+                        sqlCommitTrans();
                     } else {
                         // Dry run, make a dummy procedure_order_code row.
                         $pcrow = [
@@ -848,7 +838,7 @@ class ReceiveHl7Results
                 $ares['result_text'] = $result_text;
                 $ares['date'] = $this->rhl7DateTime($a[14] ?? '');
                 //$ares['facility'] = $this->rhl7Text($a[15]);
-                // Ensoftek: Units may have multiple segments(as seen in MU2 samples), parse and take just first segment.
+                // Ensoftek: Units may have mutiple segments(as seen in MU2 samples), parse and take just first segment.
                 $tmp = explode($d2, ($a[6] ?? ''));
                 $ares['units'] = $this->rhl7Text($tmp[0]);
                 $ares['range'] = $this->rhl7Text($a[7] ?? '');
@@ -1067,11 +1057,10 @@ class ReceiveHl7Results
         if ($fatal) {
             $rhl7_return['mssgs'][] = '*' . $msg;
             $rhl7_return['fatal'] = true;
-            $session = SessionWrapperFactory::getInstance()->getActiveSession();
-            EventAuditLogger::getInstance()->newEvent(
+            EventAuditLogger::instance()->newEvent(
                 "lab-results-error",
-                $session->get('authUser'),
-                $session->get('authProvider'),
+                $_SESSION['authUser'],
+                $_SESSION['authProvider'],
                 0,
                 $msg
             );
@@ -1503,7 +1492,8 @@ class ReceiveHl7Results
     private function createEncounter($pid, $provider_id, $order_date, $lab_name)
     {
         global $orphanLog;
-        $encounter = QueryUtils::generateId();
+        $conn = $GLOBALS['adodb']['db'];
+        $encounter = $conn->GenID("sequences");
         addForm(
             $encounter,
             "Auto Generated Lab Encounter",
@@ -1542,9 +1532,7 @@ class ReceiveHl7Results
             return;
         }
 
-        $session = SessionWrapperFactory::getInstance()->getActiveSession();
-        $authUser = $session->get('authUser');
-        $message_sender = $authUser;
+        $message_sender = $_SESSION['authUser'];
         $message_group = 'Default';
         $authorized = '0';
         $activity = '1';
@@ -1555,7 +1543,7 @@ class ReceiveHl7Results
         }
 
         if (!$assigned_to) {
-            $assigned_to = $authUser;
+            $assigned_to = $_SESSION['authUser'];
         }
         $notify = $assigned_to; //@todo get user lookup
 
@@ -1634,7 +1622,7 @@ class ReceiveHl7Results
 
         foreach (['-', '\''] as $delimiter) {
             if (str_contains($string, $delimiter)) {
-                $string = implode($delimiter, array_map(ucfirst(...), explode($delimiter, $string)));
+                $string = implode($delimiter, array_map('ucfirst', explode($delimiter, $string)));
             }
         }
         return $string;
@@ -1668,8 +1656,8 @@ class ReceiveHl7Results
      */
     private function hl7Crypt($content)
     {
-        if (OEGlobalsBag::getInstance()->getBoolean('drive_encryption')) {
-            $content = (ServiceContainer::getCrypto())->encryptStandard($content, keySource: KeySource::Database);
+        if ($GLOBALS['drive_encryption']) {
+            $content = (new CryptoGen())->encryptStandard($content, null, 'database');
         }
 
         return $content;
