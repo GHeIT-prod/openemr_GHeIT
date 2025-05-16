@@ -77,8 +77,8 @@ class DornLabEvent extends Event
     }
 
     /**
-     * @param string $prefix String to prepend if there are any messages
-     * @param bool   $clear  If true, clears the messages array after building the string
+     * @param string $prefix  String to prepend if there are any messages
+     * @param bool   $clear   If true, clears the messages array after building the string
      * @return string
      */
     public function getMessagesAsString(string $prefix = '', bool $clear = false): string
