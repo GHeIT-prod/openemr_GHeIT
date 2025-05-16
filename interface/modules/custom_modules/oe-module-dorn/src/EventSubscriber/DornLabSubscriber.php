@@ -39,10 +39,9 @@ class DornLabSubscriber implements EventSubscriberInterface
 
     public function onGenBarcode(DornLabEvent $event): void
     {
-        // todo refactor to new use
         try {
             $dorn = new DornGenHl7Order();
-            $msg = '';
+            $msg = $dorn->genHl7OrderBarCode($event->getFormid(), $event->getReqStr());
             $event->addMessage($msg);
         } catch (\Exception $e) {
             $event->addMessage("GEN_BARCODE error: " . $e->getMessage());
@@ -54,8 +53,7 @@ class DornLabSubscriber implements EventSubscriberInterface
         try {
             $dorn = new DornGenHl7Order();
             $msg = $dorn->sendHl7Order($event->getPpid(), $event->getFormid(), $event->getHl7());
-            $event->setSendOrderResponse($msg);
-            $event->addMessage("");
+            $event->addMessage($msg);
         } catch (\Exception $e) {
             $event->addMessage("SEND_ORDER error: " . $e->getMessage());
         }
