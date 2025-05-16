@@ -70,7 +70,7 @@ class DornGenHl7Order extends GenHl7OrderBase
         // why was this the exact same query? not sure but it was.
         $vitals = ProcedureSqlStatements::getVitals($porow['pid'], $porow['encounter']);
 
-        $bill_type = strtoupper(substr((string) $porow['billing_type'], 0, 1));
+        $bill_type = strtoupper(substr($porow['billing_type'], 0, 1));
 
         $out .= $this->createMsh($porow['send_app_id'], $porow['send_fac_id'], $porow['recv_app_id'], $porow['recv_fac_id'], date('YmdHisO', $today), "", $orderid, "T", "", "", "AL", "NE", "", "", "", "");
 
@@ -96,7 +96,7 @@ class DornGenHl7Order extends GenHl7OrderBase
                 if (!empty($payer_address->get_line2())) {
                     $full_address .= "," . $payer_address->get_line2();
                 }
-                $setid += 1;
+                $setid = $setid + 1;
                 $out .= $this->createIn1(
                     $setid,
                     $payer['company']['cms_id'],  // this is a guess
@@ -132,7 +132,11 @@ class DornGenHl7Order extends GenHl7OrderBase
         // GT1 segment
         $guarantors = $this->loadGuarantorInfo($porow['pid'], $porow['date_ordered']);
         foreach ($guarantors as $guarantor) {
-            $gType = $bill_type == "C" ? "C" : "P";
+            if ($bill_type == "C") {
+                $gType = "C";
+            } else {
+                $gType = "P";
+            }
             $out .= $this->createGt1("1", $guarantor['data']['subscriber_fname'], $guarantor['data']['subscriber_lname'], $guarantor['data']['subscriber_mname'], $guarantor['data']['subscriber_street'], "", $guarantor['data']['subscriber_city'], $guarantor['data']['subscriber_state'], $guarantor['data']['subscriber_postal_code'], $gType, $guarantor['data']['subscriber_relationship']);
         }
         if (empty($guarantors)) {
@@ -140,8 +144,8 @@ class DornGenHl7Order extends GenHl7OrderBase
         }
 
         $cntDx = 0;
-        $vvalue = strtoupper((string) $_REQUEST['form_specimen_fasting']) == 'YES' ? "Y" : "N";
-        $isFasting = strtoupper((string) $_REQUEST['form_specimen_fasting']) == 'YES' ? "Y" : "N";
+        $vvalue = strtoupper($_REQUEST['form_specimen_fasting']) == 'YES' ? "Y" : "N";
+        $isFasting = strtoupper($_REQUEST['form_specimen_fasting']) == 'YES' ? "Y" : "N";
         // $ht = str_pad(round($vitals['height']), 3, "0", STR_PAD_LEFT);
         $lb = floor((float)$vitals['weight']);
         $lb = str_pad($lb, 3, "0", STR_PAD_LEFT);
@@ -179,14 +183,14 @@ class DornGenHl7Order extends GenHl7OrderBase
 
             // this gets the order default primary Dx codes from one place
             // saves from having to populate a Dx for each test order which is not required.
-            $defaultCodes = explode(';', (string) $porow['order_diagnosis']);
+            $defaultCodes = explode(';', $porow['order_diagnosis']);
             $defaultCodes = array_unique($defaultCodes);
             if (!$dxFlag && !empty($defaultCodes[0] ?? '')) {
                 foreach ($defaultCodes as $codestring) {
                     if (empty($codestring)) {
                         continue;
                     }
-                    [$codetype, $code] = explode(':', $codestring);
+                    list($codetype, $code) = explode(':', $codestring);
                     $desc = lookup_code_descriptions($codestring);
                     $out .= $this->createDg1(++$cntDx, $code, $desc, $codetype);
                     $hasDiagnosisSegment = true;
@@ -199,12 +203,12 @@ class DornGenHl7Order extends GenHl7OrderBase
             // now get Dx's from this ordered test.
             foreach ($pdrows as $pdrow) {
                 if (!empty($pdrow['diagnoses'])) {
-                    $relcodes = explode(';', (string) $pdrow['diagnoses']);
+                    $relcodes = explode(';', $pdrow['diagnoses']);
                     foreach ($relcodes as $codestring) {
                         if ($codestring === '' || in_array($codestring, $defaultCodes, true)) {
                             continue;
                         }
-                        [$codetype, $code] = explode(':', $codestring);
+                        list($codetype, $code) = explode(':', $codestring);
                         $desc = lookup_code_descriptions($codestring);
                         $out .= $this->createDg1(++$cntDx, $code, $desc, $codetype);
                         $hasDiagnosisSegment = true;
@@ -225,8 +229,8 @@ class DornGenHl7Order extends GenHl7OrderBase
             while ($qrow = sqlFetchArray($qres)) {
                 // Formatting of these answer values may be lab-specific and we'll figure
                 // out how to deal with that as more labs are supported.
-                $answer = trim((string) $qrow['answer']);
-                $qcode = trim((string) $qrow['question_code']);
+                $answer = trim($qrow['answer']);
+                $qcode = trim($qrow['question_code']);
                 $fldtype = $qrow['fldtype'];
                 $datatype = 'ST';
                 if ($qcode == 'FASTIN') {
@@ -244,7 +248,7 @@ class DornGenHl7Order extends GenHl7OrderBase
                 $out .= $this->createObx(++$cntDx, $datatype, $qrow['tips'], $answer, "", "", "F", "", "", "");
             }
 
-            $vvalue = strtoupper((string) $_REQUEST['form_specimen_fasting']) === 'YES' ? "Y" : "N";
+            $vvalue = strtoupper($_REQUEST['form_specimen_fasting']) === 'YES' ? "Y" : "N";
             $C[24] = $vvalue === "Y" ? ($vvalue . '12') : $vvalue;
             $T[$setid] = $this->hl7Text($pcrow['procedure_code']);
             if ($vvalue === "Y" && $fastflag === false) {
@@ -723,7 +727,7 @@ class DornGenHl7Order extends GenHl7OrderBase
             "f.formdir = 'procedure_order' AND " .
             "f.form_id = po.procedure_order_id AND " .
             "pd.pid = f.pid AND " .
-            "u.id = po.provider_id", [$orderId]);
+            "u.id = po.provider_id", array($orderId));
         if (!empty($porow)) {
             $pid = $porow['pid'];
         }
@@ -733,7 +737,7 @@ class DornGenHl7Order extends GenHl7OrderBase
             INNER JOIN mod_dorn_routes AS mdr ON
                 pp.ppid = mdr.ppid
             WHERE pp.ppid = ?";
-        $pprow = sqlQuery($ppSql, [$ppid]);
+        $pprow = sqlQuery($ppSql, array($ppid));
         if (empty($pprow)) {
             return xl('Procedure provider') . " $ppid " . xl('not found');
         }
@@ -759,11 +763,15 @@ class DornGenHl7Order extends GenHl7OrderBase
             exit;
         } else {
             $response = ConnectorApi::sendOrder($labGuid, $labAccountNumber, $orderId, $pid, $out);
-            $responseMessage = !$response->isSuccess ? $response->responseMessage : $response;
+            if (!$response->isSuccess) {
+                $responseMessage = $response->responseMessage;
+            } else {
+                $responseMessage = $response;
+            }
         }
 
         // Falling through to here indicates success.
-        EventAuditLogger::getInstance()->newEvent("proc_order_xmit", $_SESSION['authUser'], $_SESSION['authProvider'], 1, "ID: $msgid Protocol: $protocol Host: DORN");
+        EventAuditLogger::instance()->newEvent("proc_order_xmit", $_SESSION['authUser'], $_SESSION['authProvider'], 1, "ID: $msgid Protocol: $protocol Host: DORN");
         return $responseMessage;
     }
 }
