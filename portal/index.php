@@ -647,7 +647,6 @@ if (!($session->has('password_update') || (!empty($globalsBag->get('portal_two_p
                         <input type="text" class="form-control" id="uname" name="uname" autocomplete="none" required>
                     </div>
                 </div>
-                
                     <div id="standard-auth-password" class="form-group row">
                         <label for="pass" class="col-form-label col-sm-4" style="margin-left: 50px;"><?php echo xlt('Password') ?></label>
                         <div class="col input-group" style="margin-left: -120px !important;margin-right: 160px;">
