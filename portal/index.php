@@ -139,7 +139,7 @@ if (!empty($_REQUEST['service_auth'] ?? null)) {
                 '0'
             );
             // do we want a separate message that their token has expired?
-            SessionUtil::portalSessionCookieDestroy();
+            OpenEMR\Common\Session\SessionUtil::portalSessionCookieDestroy();
             header('Location: ' . $landingpage . '&oe');
             exit();
         } catch (OneTimeAuthException $exception) {
@@ -150,7 +150,7 @@ if (!empty($_REQUEST['service_auth'] ?? null)) {
                 '',
                 '0'
             );
-            SessionUtil::portalSessionCookieDestroy();
+            OpenEMR\Common\Session\SessionUtil::portalSessionCookieDestroy();
             header('Location: ' . $landingpage . '&oi');
             exit();
         }
@@ -269,7 +269,7 @@ if (!empty($_GET['forward_email_verify'])) {
     if ($auth === false) {
         error_log("PORTAL ERROR: " . errorLogEscape('One time reset:' . $_GET['forward']), 0);
         $logit->portalLog('login attempt', '', ($_GET['forward'] . ':invalid one time'), '', '0');
-        SessionUtil::portalSessionCookieDestroy();
+        OpenEMR\Common\Session\SessionUtil::portalSessionCookieDestroy();
         header('Location: ' . $landingpage . '&w&u');
         exit();
     }
@@ -278,7 +278,7 @@ if (!empty($_GET['forward_email_verify'])) {
     if ($validate <= time()) {
         error_log("PORTAL ERROR: " . errorLogEscape('One time reset link expired. Dying.'), 0);
         $logit->portalLog('password reset attempt', '', ($_POST['uname'] . ':link expired'), '', '0');
-        SessionUtil::portalSessionCookieDestroy();
+        OpenEMR\Common\Session\SessionUtil::portalSessionCookieDestroy();
         die(xlt("Your one time credential reset link has expired. Reset and try again.") . "time:$validate time:" . time());
     }
     SessionUtil::setSession([
@@ -621,15 +621,27 @@ if (!($session->has('password_update') || ($globalsBag->getBoolean('portal_two_p
                 <?php if (isset($redirectUrl)) { ?>
                     <input id="redirect" type="hidden" name="redirect" value="<?php echo attr($redirectUrl); ?>" />
                 <?php } ?>
-                
+                <!-- <div class="form-group">
+                    <label for="uname"><?php echo xlt('Username') ?></label>
+                    <input type="text" class="form-control" name="uname" id="uname" autocomplete="none" required />
+                </div> -->
                 <div class="form-group row">
                     <label for="uname" class="col-form-label col-sm-4" style="margin-left: 50px;"><?php echo xlt('Username') ?></label>
                     <div class="col" style="margin-left: -120px !important;margin-right: 160px;">
                         <input type="text" class="form-control" id="uname" name="uname" autocomplete="none" required>
                     </div>
                 </div>
-                    
-                    
+                    <!-- <div id="standard-auth-password" class="form-group">
+                        <label for="pass"><?php echo xlt('Password') ?></label>
+                        <div class="input-group">
+                            <input class="form-control" name="pass" id="pass" type="password" required autocomplete="none" />
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="fa fa-eye" id="password-icon" style="cursor: pointer;"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div> -->
                     <div id="standard-auth-password" class="form-group row">
                         <label for="pass" class="col-form-label col-sm-4" style="margin-left: 50px;"><?php echo xlt('Password') ?></label>
                         <div class="col input-group" style="margin-left: -120px !important;margin-right: 160px;">
