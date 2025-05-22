@@ -668,6 +668,17 @@ if (!($session->has('password_update') || ($globalsBag->getBoolean('portal_two_p
                                 </span>
                             </div>
                         </div>
+                    </div> -->
+                    <div id="standard-auth-password" class="form-group row">
+                        <label for="pass" class="col-form-label col-sm-4" style="margin-left: 50px;"><?php echo xlt('Password') ?></label>
+                        <div class="col input-group" style="margin-left: -120px !important;margin-right: 160px;">
+                            <input class="form-control" name="pass" id="pass" type="password" required autocomplete="none" />
+                            <div class="input-group-append">
+                                <span class="input-group-text">
+                                    <i class="fa fa-eye" id="password-icon" style="cursor: pointer;"></i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 <?php if ($globalsBag->getBoolean('enforce_signin_email')) { ?>
                     <div class="form-group row" style="display: none;">
