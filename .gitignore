@@ -1,3 +1,8 @@
+docker/gheit-local/docker_data
+docker/gheit-dev/docker_data
+docker/gheit-prod/docker_data
+openemr.sh
+
 # logs
 /logs
 
@@ -41,3 +46,7 @@ tmp-phpstan/*
 docker/development-easy/docker-compose.override.yml
 docker/development-easy-light/docker-compose.override.yml
 docker/development-easy-redis/docker-compose.override.yml
+
+public/images/logos/custom/*
+
+openemr-keys/pubsub.json
