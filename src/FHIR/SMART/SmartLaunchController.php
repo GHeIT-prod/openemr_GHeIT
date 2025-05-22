@@ -4,7 +4,7 @@
  * SmartLaunchController handles the display and launching of SMART apps from the user interface.
  *
  * @package openemr
- * @link      https://www.open-emr.org
+ * @link      http://www.open-emr.org
  * @author    Stephen Nielson <stephen@nielson.org>
  * @copyright Copyright (c) 2020 Stephen Nielson <stephen@nielson.org>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
@@ -17,16 +17,15 @@ use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Auth\OpenIDConnect\Entities\ClientEntity;
 use OpenEMR\Common\Auth\OpenIDConnect\Repositories\ClientRepository;
 use OpenEMR\Common\Csrf\CsrfUtils;
-use OpenEMR\Common\Session\SessionWrapperFactory;
 use OpenEMR\Common\Twig\TwigContainer;
 use OpenEMR\Common\Uuid\UuidRegistry;
-use OpenEMR\Core\OEGlobalsBag;
 use OpenEMR\Events\PatientDemographics\RenderEvent;
-use OpenEMR\FHIR\Config\ServerConfig;
 use OpenEMR\Services\AppointmentService;
 use OpenEMR\Services\EncounterService;
 use OpenEMR\Services\PatientService;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use OpenEMR\Services\UserService;
+use Symfony\Component\EventDispatcher\EventDispatcher;
+use OpenEMR\FHIR\Config\ServerConfig;
 
 // not sure I really like this here... it seems like some of this
 // should be encapsulated in a class that autoloading can reach.
@@ -40,18 +39,24 @@ class SmartLaunchController
     const CLIENT_APP_REQUIRED_LAUNCH_SCOPE = 'launch';
     const CLIENT_APP_STANDALONE_LAUNCH_SCOPE = 'launch/patient';
 
-    public function __construct(private readonly ?EventDispatcherInterface $dispatcher = null)
+    /**
+     * @var EventDispatcher
+     */
+    private $dispatcher;
+
+    public function __construct(?EventDispatcher $dispatcher = null)
     {
+        $this->dispatcher = $dispatcher;
     }
 
     public function registerContextEvents()
     {
-        $this->dispatcher->addListener(RenderEvent::EVENT_SECTION_LIST_RENDER_AFTER, $this->renderPatientSmartLaunchSection(...));
+        $this->dispatcher->addListener(RenderEvent::EVENT_SECTION_LIST_RENDER_AFTER, [$this, 'renderPatientSmartLaunchSection']);
     }
 
     public function renderPatientSmartLaunchSection(RenderEvent $event)
     {
-        if (empty(OEGlobalsBag::getInstance()->get('rest_fhir_api'))) {
+        if (empty($GLOBALS['rest_fhir_api'])) {
             // do not show patient summary widget if fhir portal is off
             return;
         }
@@ -77,7 +82,7 @@ class SmartLaunchController
         // issuer and audience are the same in a EHR SMART Launch
             $issuer = (new ServerConfig())->getFhirUrl();
             $viewArgs = [
-                        'title' => xl('SMART Applications Console'),
+                        'title' => xl('Third Party Apps'),
                         'card_container_class_list' => ['flex-fill', 'mx-1', 'card'],
                         'id' => 'smart',
                         'forceAlwaysOpen' => false,
@@ -90,18 +95,15 @@ class SmartLaunchController
                         'intent' => SMARTLaunchToken::INTENT_PATIENT_DEMOGRAPHICS_DIALOG
             ];
 
-            $twig = (new TwigContainer(null, OEGlobalsBag::getInstance()->getKernel()))->getTwig();
+            $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
             echo $twig->render("patient/card/smart_launch.html.twig", $viewArgs);
             $this->renderLaunchScript();
     }
 
-    /**
-     * @param literal-string $launchText
-     */
-    public function renderLaunchButton(ClientEntity $client, string $issuer, SMARTLaunchToken $launchToken, string $launchText = "Launch")
+    public function renderLaunchButton(ClientEntity $client, string $issuer, SMARTLaunchToken $launchToken, $launchText = "Launch")
     {
         $launchCode = $launchToken->serialize();
-        $launchParams = "?launch=" . urlencode((string) $launchCode) . "&iss=" . urlencode($issuer) . "&aud=" . urlencode($issuer);
+        $launchParams = "?launch=" . urlencode($launchCode) . "&iss=" . urlencode($issuer) . "&aud=" . urlencode($issuer);
         ?>
         <button class='btn btn-primary btn-sm smart-launch-btn' data-smart-name="<?php echo attr($client->getName()); ?>"
                             data-intent="<?php echo attr(SMARTLaunchToken::INTENT_PATIENT_DEMOGRAPHICS_DIALOG); ?>"
@@ -118,20 +120,17 @@ class SmartLaunchController
         if (empty($client)) {
             throw new \Exception("Invalid client id");
         }
-        $session = SessionWrapperFactory::getInstance()->getActiveSession();
-        CsrfUtils::verifyCsrfToken($csrf_token, session: $session);
+        CsrfUtils::verifyCsrfToken($csrf_token);
         $puuid = null;
         $euuid = null;
-        $pid = $session->get('pid');
-        if (!empty($pid)) {
+        if (isset($_SESSION['pid'])) {
             // grab the patient puuid
             $patientService = new PatientService();
-            $puuid = UuidRegistry::uuidToString($patientService->getUuid($pid));
+            $puuid = UuidRegistry::uuidToString($patientService->getUuid($_SESSION['pid']));
         }
-        $encounter = $session->get('encounter');
-        if (!empty($encounter)) {
+        if (!empty($_SESSION['encounter'])) {
             // grab the encounter euuid
-            $euuid = UuidRegistry::uuidToString(EncounterService::getUuidById($encounter, 'form_encounter', 'encounter'));
+            $euuid = UuidRegistry::uuidToString(EncounterService::getUuidById($_SESSION['encounter'], 'form_encounter', 'encounter'));
         }
         $appointmentUuid = null;
         if (!empty($intentData)) {
@@ -152,9 +151,9 @@ class SmartLaunchController
                 }
             }
         }
-        if (!empty($encounter)) {
+        if (!empty($_SESSION['encounter'])) {
             // grab the encounter euuid
-            $euuid = UuidRegistry::uuidToString(EncounterService::getUuidById($encounter, 'form_encounter', 'encounter'));
+            $euuid = UuidRegistry::uuidToString(EncounterService::getUuidById($_SESSION['encounter'], 'form_encounter', 'encounter'));
         }
 
         $issuer = (new ServerConfig())->getFhirUrl();
@@ -164,7 +163,7 @@ class SmartLaunchController
             $launchCode->setAppointmentUuid($appointmentUuid);
         }
         $serializedCode = $launchCode->serialize();
-        $launchParams = "?launch=" . urlencode((string) $serializedCode) . "&iss=" . urlencode($issuer) . "&aud=" . urlencode($issuer);
+        $launchParams = "?launch=" . urlencode($serializedCode) . "&iss=" . urlencode($issuer) . "&aud=" . urlencode($issuer);
         $redirectUrl = $client->getLaunchUri($launchParams);
         header("Location: " . $redirectUrl);
         exit;
@@ -201,7 +200,7 @@ class SmartLaunchController
     {
         $token = new SMARTLaunchToken($patientUUID, $encounterId);
         $token->setIntent($intent);
-        if ($intent === null) {
+        if (empty($intent)) {
             $intent = SMARTLaunchToken::INTENT_PATIENT_DEMOGRAPHICS_DIALOG;
         }
         $token->setIntent($intent);

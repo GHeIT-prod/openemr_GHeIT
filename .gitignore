@@ -1,8 +1,6 @@
-#docker mount bind data directory
-docker/gheit-local/docker_data/
-docker/gheit-dev/docker_data/
-docker/gheit-prod/docker_data/
-docker/development-easy/docker_data/
+docker/gheit-local/docker_data
+docker/gheit-dev/docker_data
+docker/gheit-prod/docker_data
 openemr.sh
 
 # logs
@@ -34,21 +32,8 @@ ccdaservice/node_modules
 
 # testing
 .phpunit.result.cache
-
-# dev tool local overrides
-phpcs.xml
-phpstan.neon
 coverage/js-unit
-
-# phpstan
-tmp-phpstan/*
-
-# easy dev worktree support
-.worktrees.json
-docker/development-easy/docker-compose.override.yml
-docker/development-easy-light/docker-compose.override.yml
-docker/development-easy-redis/docker-compose.override.yml
 
 public/images/logos/custom/*
 
-openemr-keys/pubsub.json
+openemr-keys/
