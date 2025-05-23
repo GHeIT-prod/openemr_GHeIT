@@ -50,8 +50,6 @@ services:
       MYSQL_ROOT_PASS: root
       MYSQL_USER: openemr
       MYSQL_PASS: openemr
-      DOMAIN: openemrdev.shoprideon.com
-      EMAIL: bijita.kc@asteriskhubs.com
       OE_USER: admin
       OE_PASS: pass
       EASY_DEV_MODE: "yes"
