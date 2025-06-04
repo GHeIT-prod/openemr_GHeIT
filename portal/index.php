@@ -683,8 +683,8 @@ if (!($session->has('password_update') || (!empty($globalsBag->get('portal_two_p
                     <?php }
                 } ?>
                 </div>
-                <div class="col col-md col-sm">
-                    <button class="btn btn-success btn-block" type="submit"><?php echo xlt('Log In'); ?></button>
+                <div class="col col-md col-sm" style="max-width: 20%; margin-left: 470px;">
+                    <button class="btn btn-success btn-block patientportal" type="submit"><?php echo xlt('Log In'); ?></button>
                     <?php if (!empty($globalsBag->get('portal_onsite_two_register')) && !empty($globalsBag->get('google_recaptcha_site_key')) && !empty($globalsBag->get('google_recaptcha_secret_key'))) { ?>
                         <button class="btn btn-secondary btn-block" onclick="location.replace('./account/verify.php?site=<?php echo attr_url($session->get('site_id')); ?>')"><?php echo xlt('Register'); ?></button>
                     <?php } ?>
