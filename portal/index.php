@@ -856,12 +856,6 @@ if (!($session->has('password_update') || (!empty($globalsBag->get('portal_two_p
             var patientEmail = $('#passaddon').val(patientUser);
         });
 
-
-        $('.patientportal').click(function(){
-            var patientUser = $('#uname').val();
-            var patientEmail = $('#passaddon').val(patientUser);
-        });
-
     </script>
 </body>
 </html>
