@@ -3108,7 +3108,8 @@ $GLOBALS_METADATA = [
             xl('Portal Default Theme'),
             [
                 'style_light.css' => xl('Light'),
-                'style_dark.css' => xl('Dark')
+                'style_dark.css' => xl('Dark'),
+                'style_rideon_blue.css' => xl('Rideon blue')
             ],
             'style_light.css',
             xl('Pick a default portal theme.')
