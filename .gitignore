@@ -1,7 +1,7 @@
 #docker mount bind data directory
-docker/gheit-prod/docker_data
-docker/development-easy/docker_data
-docker/gheit-local/docker_data
+docker/gheit-prod/docker_data/
+docker/development-easy/docker_data/
+docker/gheit-local/docker_data/
 openemr.sh
 
 # logs
