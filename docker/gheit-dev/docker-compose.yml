@@ -31,6 +31,8 @@ services:
     - ../../templates:/var/www/localhost/htdocs/openemr/templates
     - ./docker_data/sitesvolume:/var/www/localhost/htdocs/openemr/sites:rw
     - ../../portal:/var/www/localhost/htdocs/openemr/portal
+    - ../../library:/var/www/localhost/htdocs/openemr/library
+
       #- ./docker_data/nodemodules:/var/www/localhost/htdocs/openemr/node_modules:rw
       #- ./docker_data/vendordir:/var/www/localhost/htdocs/openemr/vendor:rw
       #- ./docker_data/ccdanodemodules:/var/www/localhost/htdocs/openemr/ccdaservice/node_modules:rw
