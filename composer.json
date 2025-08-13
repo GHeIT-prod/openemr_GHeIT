@@ -175,7 +175,8 @@
     "autoload-dev": {
         "psr-4": {
             "OpenEMR\\PHPStan\\Rules\\": ".phpstan",
-            "OpenEMR\\Tests\\": "tests\\Tests"
+            "OpenEMR\\Tests\\": "tests\\Tests",
+            "OpenEMR\\Modules\\CustomModuleGheit\\": "interface/modules/custom_module/oe-module-custom-gheit/src/"
         }
     },
     "config": {
