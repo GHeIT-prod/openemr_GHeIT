@@ -185,7 +185,8 @@
         "psr-4": {
             "OpenEMR\\PHPStan\\Rules\\": "tests/PHPStan/Rules",
             "OpenEMR\\Rector\\Rules\\": "tests/Rector/Rules",
-            "OpenEMR\\Tests\\": "tests/Tests"
+            "OpenEMR\\Tests\\": "tests/Tests",
+            "OpenEMR\\Modules\\CustomModuleGheit\\": "interface/modules/custom_module/oe-module-custom-gheit/src/"
         }
     },
     "config": {

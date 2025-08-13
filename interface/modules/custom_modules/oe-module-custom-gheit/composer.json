@@ -1,0 +1,32 @@
+{
+  "name": "krishna/oe-module-custom-gheit",
+  "description": "GHEIT Custom Module",
+  "type": "openemr-module",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "Krishna Chaudhary",
+      "email": "krishna.chaudahry@asteriskhubs.com",
+      "role": "Developer"
+    }
+  ],
+  "keywords": ["openemr", "openemr-module"],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {"OpenEMR\\Modules\\CustomModuleGheit\\": "src/"}
+  },
+  "require": {
+    "openemr/oe-module-installer-plugin": "^0.1.0",
+    "php": ">= 7.4",
+    "symfony/event-dispatcher": "^6.4.13",
+    "nyholm/psr7": "^1.4"
+  },
+  "conflict": {
+    "openemr/openemr": "<6.0.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "openemr/oe-module-installer-plugin": true
+    }
+  }
+}
