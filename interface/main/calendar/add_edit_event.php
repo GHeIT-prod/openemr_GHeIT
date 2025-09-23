@@ -1055,8 +1055,8 @@ function set_display() {
             style_prefcat.display = '';
             f.form_apptstatus.style.display = 'none';
             f.form_prefcat.style.display = '';
-            f.form_duration.disabled = false;
-            f.form_duration.value = 0;
+            f.form_duration.disabled = true;
+            f.form_duration.value = 15;
             document.getElementById('tdallday4').style.color = 'var(--gray)';
         } else {
             style_prefcat.display = 'none';

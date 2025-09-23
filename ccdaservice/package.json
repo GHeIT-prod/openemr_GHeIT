@@ -1,11 +1,12 @@
 {
     "name": "ccdaservice",
     "version": "7.0.4",
-    "description": "OpenEMR C-CDA templating generator service",
-    "main": "serveccda.js",
-    "author": "sjpadgett@gmail.com",
-    "license": "GPL-3.0",
     "private": true,
+    "description": "OpenEMR C-CDA templating generator service",
+    "license": "GPL-3.0",
+    "author": "sjpadgett@gmail.com",
+    "type": "commonjs",
+    "main": "serveccda.js",
     "workspaces": [
         "packages/*"
     ],
