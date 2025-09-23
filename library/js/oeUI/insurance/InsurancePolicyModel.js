@@ -197,13 +197,16 @@ export class InsurancePolicyModel {
             data.accept_assignment = "FALSE";
         }
         if (this.date) {
-            data.date = this.date.toISOString().slice(0,10);
+            // data.date = this.date.toISOString().slice(0,10);
+            data.date = this.date.toLocaleDateString('en-CA');
         }
         if (this.date_end) {
-            data.date_end = this.date_end.toISOString().slice(0,10);
+            // data.date_end = this.date_end.toISOString().slice(0,10);
+            data.date_end = this.date_end.toLocaleDateString('en-CA');
         }
         if (this.subscriber_DOB) {
-            data.subscriber_DOB = this.subscriber_DOB.toISOString().slice(0,10);
+            // data.subscriber_DOB = this.subscriber_DOB.toISOString().slice(0,10);
+            data.subscriber_DOB = this.subscriber_DOB.toLocaleDateString('en-CA');
         }
         // clear out this property so it doesn't get saved.
         if (data['#hasChanged']) {
