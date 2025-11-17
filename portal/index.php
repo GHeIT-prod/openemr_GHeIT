@@ -838,5 +838,53 @@ if (!($session->has('password_update') || ($globalsBag->getBoolean('portal_two_p
         });
 
     </script>
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "<?php echo htmlspecialchars($_ENV['FIREBASE_API_KEY'] ?? ''); ?>",
+            authDomain: "<?php echo htmlspecialchars($_ENV['FIREBASE_AUTH_DOMAIN'] ?? ''); ?>",
+            projectId: "<?php echo htmlspecialchars($_ENV['FIREBASE_PROJECT_ID'] ?? ''); ?>",
+            storageBucket: "<?php echo htmlspecialchars($_ENV['FIREBASE_STORAGE_BUCKET'] ?? ''); ?>",
+            messagingSenderId: "<?php echo htmlspecialchars($_ENV['FIREBASE_MESSAGING_SENDER_ID'] ?? ''); ?>",
+            appId: "<?php echo htmlspecialchars($_ENV['FIREBASE_APP_ID'] ?? ''); ?>",
+            measurementId: "<?php echo htmlspecialchars($_ENV['FIREBASE_MEASUREMENT_ID'] ?? ''); ?>"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Attach click handler to Google login button
+        const googleBtn = document.getElementById('google-login-btn');
+        googleBtn.addEventListener('click', async () => {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const idToken = await result.user.getIdToken();
+            
+            const response = await fetch('firebase_verify.php', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ firebase_token: idToken })
+            });
+            const data = await response.json();
+
+            if (data.status === 'success') {
+            // Redirect to portal home page
+                window.location.href = 'home.php';
+                // alert('Login successful!');
+            } else {
+                alert('Login failed: ' + data.message);
+            }
+
+        } catch (err) {
+            console.error(err);
+            alert('Google login failed.');
+        }
+        });
+    </script>
 </body>
 </html>
