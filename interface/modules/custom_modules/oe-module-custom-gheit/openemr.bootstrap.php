@@ -16,6 +16,10 @@
 
 namespace OpenEMR\Modules\CustomModuleGheit;
 
+require_once __DIR__ . '/src/Bootstrap.php';
+
+use OpenEMR\Modules\CustomModuleGheit\Bootstrap;
+
 
 /**
  * @global OpenEMR\Core\ModulesClassLoader $classLoader

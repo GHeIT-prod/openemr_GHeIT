@@ -149,7 +149,7 @@ class Bootstrap
     public function registerDemographicsEvents()
     {
         if ($this->getGlobalConfig()->getGlobalSetting(GlobalConfig::CONFIG_ENABLE_ELIGIBILITY_CARD)) {
-            $this->eventDispatcher->addListener(pRenderEvent::EVENT_SECTION_LIST_RENDER_AFTER, $this->renderEligibilitySection(...));
+            $this->eventDispatcher->addListener(pRenderEvent::EVENT_SECTION_LIST_RENDER_BEFORE, $this->renderEligibilitySection(...));
         }
     }
 

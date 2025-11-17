@@ -35,6 +35,10 @@ use OpenEMR\Common\Twig\TwigContainer;
 use OpenEMR\Core\Header;
 use OpenEMR\Core\OEGlobalsBag;
 use OpenEMR\Services\LogoService;
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+$dotenv->safeLoad();
 
 // Will start the (patient) portal OpenEMR session/cookie.
 //  Need access to classes, so run autoloader now instead of in globals.php.
@@ -684,7 +688,14 @@ if (!($session->has('password_update') || (!empty($globalsBag->get('portal_two_p
                 } ?>
                 </div>
                 <div class="col col-md col-sm" style="max-width: 20%; margin-left: 470px;">
-                    <button class="btn btn-success btn-block patientportal" type="submit"><?php echo xlt('Log In'); ?></button>
+                    <button class="btn btn-success btn-block patientportal" style="background-color:#24488e; border-color:#24488e" type="submit"><?php echo xlt('Log In'); ?></button>
+                    <div>
+                        <button id="google-login-btn" class="text-center mt-3">
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" style="height: 20px;">
+                            Sign in with Google
+                        </button>
+                    </div>
+                    
                     <?php if (!empty($globalsBag->get('portal_onsite_two_register')) && !empty($globalsBag->get('google_recaptcha_site_key')) && !empty($globalsBag->get('google_recaptcha_secret_key'))) { ?>
                         <button class="btn btn-secondary btn-block" onclick="location.replace('./account/verify.php?site=<?php echo attr_url($session->get('site_id')); ?>')"><?php echo xlt('Register'); ?></button>
                     <?php } ?>
@@ -825,6 +836,54 @@ if (!($session->has('password_update') || (!empty($globalsBag->get('portal_two_p
             var patientEmail = $('#passaddon').val(patientUser);
         });
 
+    </script>
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "<?php echo htmlspecialchars($_ENV['FIREBASE_API_KEY'] ?? ''); ?>",
+            authDomain: "<?php echo htmlspecialchars($_ENV['FIREBASE_AUTH_DOMAIN'] ?? ''); ?>",
+            projectId: "<?php echo htmlspecialchars($_ENV['FIREBASE_PROJECT_ID'] ?? ''); ?>",
+            storageBucket: "<?php echo htmlspecialchars($_ENV['FIREBASE_STORAGE_BUCKET'] ?? ''); ?>",
+            messagingSenderId: "<?php echo htmlspecialchars($_ENV['FIREBASE_MESSAGING_SENDER_ID'] ?? ''); ?>",
+            appId: "<?php echo htmlspecialchars($_ENV['FIREBASE_APP_ID'] ?? ''); ?>",
+            measurementId: "<?php echo htmlspecialchars($_ENV['FIREBASE_MEASUREMENT_ID'] ?? ''); ?>"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        // Attach click handler to Google login button
+        const googleBtn = document.getElementById('google-login-btn');
+        googleBtn.addEventListener('click', async () => {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const idToken = await result.user.getIdToken();
+            
+            const response = await fetch('firebase_verify.php', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ firebase_token: idToken })
+            });
+            const data = await response.json();
+
+            if (data.status === 'success') {
+            // Redirect to portal home page
+                window.location.href = 'home.php';
+                // alert('Login successful!');
+            } else {
+                alert('Login failed: ' + data.message);
+            }
+
+        } catch (err) {
+            console.error(err);
+            alert('Google login failed.');
+        }
+        });
     </script>
 </body>
 </html>
