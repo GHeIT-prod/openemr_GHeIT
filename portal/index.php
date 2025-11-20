@@ -491,6 +491,11 @@ if (!($session->has('password_update') || (!empty($globalsBag->get('portal_two_p
                 max-width: 25.33333333%;
             }
         }
+        @media (min-width: 320px) and (max-width: 576px) {
+            .google-login-button {
+                width: 30% !important;
+            }
+        }
     </style>
 </head>
 <body class="login">
@@ -607,7 +612,7 @@ if (!($session->has('password_update') || (!empty($globalsBag->get('portal_two_p
             <!-- Optionally show two logos, and in either order -->
             <?php if ($globalsBag->get('secondary_portal_logo_position') === 'second') { ?>
                 <?php if ($globalsBag->get('show_portal_primary_logo')) { ?>
-                    <div class="img-fluid text-center" style="margin-bottom: -3rem !important;"><img class="login-logo" src='<?php echo $logoSrc; ?>'></div>
+                    <div class="img-fluid text-center" style="margin-bottom: -6rem !important;"><img class="login-logo" src='<?php echo $logoSrc; ?>'></div>
                 <?php } ?>
                 <?php if ($globalsBag->get('extra_portal_logo_login')) { ?>
                     <div class="img-fluid text-center"><img class="login-logo" src='<?php echo $logo2ndSrc; ?>'></div>
@@ -697,12 +702,21 @@ if (!($session->has('password_update') || (!empty($globalsBag->get('portal_two_p
                     <?php }
                 } ?>
                 </div>
-                <div class="col col-md col-sm" style="max-width: 20%; margin-left: 470px;">
-                    <button class="btn btn-success btn-block patientportal" style="background-color:#24488e; border-color:#24488e" type="submit"><?php echo xlt('Log In'); ?></button>
-                    <div>
-                        <button id="google-login-btn" class="text-center mt-3">
-                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" style="height: 20px;">
-                            Sign in with Google
+                <div class="col col-md col-sm">
+                    <div class="d-flex justify-content-end align-items-center" style="gap: 10px;">
+                        <!-- Google Button -->
+                        <div class="google-login-button" style="width:24%;">
+                            <button id="google-login-btn" class="text-center w-100" style="min-height:42px;">
+                                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                                    alt="Google logo" style="height: 20px;">
+                                 Google Sign-In
+                            </button>
+                        </div>
+                        <!-- Login Button -->
+                        <button class="btn btn-success btn-block patientportal"
+                                style="background-color:#24488e; border-color:#24488e; width:24%; padding-top: 1px; margin-right: -7px; min-height:42px; padding:8px 12px;"
+                                type="submit">
+                            <?php echo xlt('Log In'); ?>
                         </button>
                     </div>
                     
