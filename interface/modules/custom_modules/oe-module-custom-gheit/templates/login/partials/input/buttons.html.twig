@@ -11,10 +11,17 @@ Render the login button, and google signin button, if set
 @copyright Copyright (c) 2023 Providence Healthtech
 @license https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
 #}
+<style>
+    @media (min-width: 320px) and (max-width: 576px) {
+        #login-button {
+            width: 36% !important;
+        }
+    }
+</style>
 {% block buttons %}
 <div class="{{ button_container_class_list|default(['form-group', 'd-flex','justify-content-between'])|join(' ') }}">
     <div class="flex-fill"></div>
-    <button id="login-button" class="btn btn-primary" type="submit" onclick="transmit_form(this)">{{ "Login"|xlt }}</button>
+    <button id="login-button" class="btn btn-primary" style="width:24%; padding-top: 1px; min-height:42px; padding:8px 12px;" type="submit" onclick="transmit_form(this)">{{ "Login"|xlt }}</button>
     {% if displayGoogleSignin %}
         <div class="g_id_signin flex-fill" data-type="standard"></div>
     {% endif %}

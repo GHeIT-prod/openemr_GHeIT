@@ -495,6 +495,11 @@ if (!($session->has('password_update') || ($globalsBag->getBoolean('portal_two_p
                 max-width: 25.33333333%;
             }
         }
+        @media (min-width: 320px) and (max-width: 576px) {
+            .google-login-button {
+                width: 30% !important;
+            }
+        }
     </style>
 </head>
 <body class="login">
@@ -611,7 +616,7 @@ if (!($session->has('password_update') || ($globalsBag->getBoolean('portal_two_p
             <!-- Optionally show two logos, and in either order -->
             <?php if ($globalsBag->get('secondary_portal_logo_position') === 'second') { ?>
                 <?php if ($globalsBag->getBoolean('show_portal_primary_logo')) { ?>
-                    <div class="img-fluid text-center" style="margin-bottom: -3rem !important;"><img class="login-logo" src='<?php echo $logoSrc; ?>'></div>
+                    <div class="img-fluid text-center" style="margin-bottom: -6rem !important;"><img class="login-logo" src='<?php echo $logoSrc; ?>'></div>
                 <?php } ?>
                 <?php if ($globalsBag->getBoolean('extra_portal_logo_login')) { ?>
                     <div class="img-fluid text-center"><img class="login-logo" src='<?php echo $logo2ndSrc; ?>'></div>
@@ -704,9 +709,24 @@ if (!($session->has('password_update') || ($globalsBag->getBoolean('portal_two_p
                 } ?>
                 </div>
                 <div class="col col-md col-sm">
-                    <button class="btn btn-success btn-block" type="submit"><?php echo xlt('Log In'); ?></button>
+                    <div class="d-flex justify-content-end align-items-center" style="gap: 10px;">
+                        <!-- Google Button -->
+                        <div class="google-login-button" style="width:24%;">
+                            <button id="google-login-btn" class="text-center w-100" style="min-height:42px;">
+                                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                                    alt="Google logo" style="height: 20px;">
+                                 Google Sign-In
+                            </button>
+                        </div>
+                        <!-- Login Button -->
+                        <button class="btn btn-success btn-block patientportal"
+                                style="background-color:#24488e; border-color:#24488e; width:24%; padding-top: 1px; margin-right: -7px; min-height:42px; padding:8px 12px;"
+                                type="submit">
+                            <?php echo xlt('Log In'); ?>
+                        </button>
+                    </div>
                     <?php if ($globalsBag->getBoolean('portal_onsite_two_register') && !empty($globalsBag->getString('google_recaptcha_site_key')) && !empty($globalsBag->getString('google_recaptcha_secret_key'))) { ?>
-                        <button class="btn btn-secondary btn-block" onclick="location.replace('./account/verify.php?site=<?php echo attr_url($session->get('site_id')); ?>')"><?php echo xlt('Register'); ?></button>
+                        <button class="btn btn-secondary btn-block" onclick="location.replace('./account/verify.php?site=<?php echo attr_url($_SESSION['site_id']); ?>')"><?php echo xlt('Register'); ?></button>
                     <?php } ?>
                     <?php if ($globalsBag->getBoolean('portal_two_pass_reset') && !empty($globalsBag->getString('google_recaptcha_site_key')) && !empty($globalsBag->getString('google_recaptcha_secret_key')) && isset($_GET['w']) && (isset($_GET['u']) || isset($_GET['p']))) { ?>
                         <button class="btn btn-danger btn-block" onclick="location.replace('./index.php?requestNew=1&site=<?php echo attr_url($session->get('site_id')); ?><?php if (!empty($redirectUrl)) {
