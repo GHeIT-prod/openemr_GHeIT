@@ -500,6 +500,11 @@ if (!($session->has('password_update') || ($globalsBag->getBoolean('portal_two_p
                 width: 30% !important;
             }
         }
+        @media (max-width: 1366px) and (max-height: 768px) {
+            .login {
+                zoom: 0.8;
+            }
+        }
     </style>
 </head>
 <body class="login">
