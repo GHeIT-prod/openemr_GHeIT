@@ -709,12 +709,13 @@ if (!($session->has('password_update') || (!empty($globalsBag->get('portal_two_p
                 </div>
                 <div class="col col-md col-sm">
                     <div class="d-flex justify-content-end align-items-center" style="gap: 10px;">
-                        <!-- Google Button -->
+                        <!-- Auth0 Login Button -->
                         <div class="google-login-button" style="width:24%;">
-                            <button id="google-login-btn" class="text-center w-100" style="min-height:42px;">
-                                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                                    alt="Google logo" style="height: 20px;">
-                                 Google Sign-In
+                            <button class="text-center w-100" style="min-height:42px;">
+                                <a href="auth_login.php">
+                                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" class="google-icon" style="height: 20px;">
+                                    Google Sign-In
+                                </a>
                             </button>
                         </div>
                         <!-- Login Button -->
@@ -865,54 +866,6 @@ if (!($session->has('password_update') || (!empty($globalsBag->get('portal_two_p
             var patientEmail = $('#passaddon').val(patientUser);
         });
 
-    </script>
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "<?php echo htmlspecialchars($_ENV['FIREBASE_API_KEY'] ?? ''); ?>",
-            authDomain: "<?php echo htmlspecialchars($_ENV['FIREBASE_AUTH_DOMAIN'] ?? ''); ?>",
-            projectId: "<?php echo htmlspecialchars($_ENV['FIREBASE_PROJECT_ID'] ?? ''); ?>",
-            storageBucket: "<?php echo htmlspecialchars($_ENV['FIREBASE_STORAGE_BUCKET'] ?? ''); ?>",
-            messagingSenderId: "<?php echo htmlspecialchars($_ENV['FIREBASE_MESSAGING_SENDER_ID'] ?? ''); ?>",
-            appId: "<?php echo htmlspecialchars($_ENV['FIREBASE_APP_ID'] ?? ''); ?>",
-            measurementId: "<?php echo htmlspecialchars($_ENV['FIREBASE_MEASUREMENT_ID'] ?? ''); ?>"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
-
-        // Attach click handler to Google login button
-        const googleBtn = document.getElementById('google-login-btn');
-        googleBtn.addEventListener('click', async () => {
-        try {
-            const result = await signInWithPopup(auth, provider);
-            const idToken = await result.user.getIdToken();
-            
-            const response = await fetch('firebase_verify.php', {
-            method: 'POST',
-            credentials: 'include',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ firebase_token: idToken })
-            });
-            const data = await response.json();
-
-            if (data.status === 'success') {
-            // Redirect to portal home page
-                window.location.href = 'home.php';
-                // alert('Login successful!');
-            } else {
-                alert('Login failed: ' + data.message);
-            }
-
-        } catch (err) {
-            console.error(err);
-            alert('Google login failed.');
-        }
-        });
     </script>
 </body>
 </html>
