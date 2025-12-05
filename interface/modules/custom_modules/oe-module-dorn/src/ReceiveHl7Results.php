@@ -12,6 +12,7 @@
 
 namespace OpenEMR\Modules\Dorn;
 
+use Document;
 use OpenEMR\Common\Crypto\CryptoGen;
 use OpenEMR\Common\Database\QueryUtils;
 use OpenEMR\Common\Logging\EventAuditLogger;
@@ -58,12 +59,12 @@ class ReceiveHl7Results
 
 
         $sql = "SELECT pp.name, pp.npi, pp.protocol, pp.remote_host, pp.send_fac_id, pp.recv_fac_id,
-                pp.recv_app_id,pp.DorP, pp.direction, r.* 
+                pp.recv_app_id,pp.DorP, pp.direction, r.*
                 FROM mod_dorn_routes r
                 INNER JOIN procedure_providers pp ON
                     r.ppid = pp.ppid
-                WHERE lab_guid = ? 
-                AND lab_account_number = ? 
+                WHERE lab_guid = ?
+                AND lab_account_number = ?
                 LIMIT 1;";
         $record = sqlQuery($sql, [$result->labGuid, $result->accountNumber]);
 

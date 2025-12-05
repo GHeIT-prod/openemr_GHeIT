@@ -71,6 +71,10 @@ use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Cookie;
 use SessionHandlerInterface;
 use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
+use OpenEMR\Common\Session\SessionConfigurationBuilder;
+
+require __DIR__ . '/../../../vendor/autoload.php';
+
 
 class SessionUtil
 {
