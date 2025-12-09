@@ -15,6 +15,8 @@ use Juggernaut\OpenEMR\Modules\PriorAuthModule\Controller\ListAuthorizations;
 use OpenEMR\Core\Header;
 use OpenEMR\Common\Csrf\CsrfUtils;
 
+require_once dirname(__DIR__, 5) . '/vendor/autoload.php';
+
 $pid = $_SESSION['pid'] ?? null;
 function isValid($date, $format = 'Y-m-d'): bool
 {
