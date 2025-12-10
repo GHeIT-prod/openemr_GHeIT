@@ -165,7 +165,7 @@ class Bootstrap
      */
     public function registerDemographicsEvents(): void
     {
-        $this->eventDispatcher->addListener(pRenderEvent::EVENT_SECTION_LIST_RENDER_BEFORE, $this->renderWenoSection(...),20);
+        $this->eventDispatcher->addListener(pRenderEvent::EVENT_SECTION_LIST_RENDER_BEFORE, $this->renderWenoSection(...));
     }
 
     /**
