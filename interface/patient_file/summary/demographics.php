@@ -1336,20 +1336,15 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
                     endif;
 
                     $sectionRenderEvents = $ed->dispatch(new SectionEvent('primary'), SectionEvent::EVENT_HANDLE);
-                    
-                    // To keep Insurance card and ClaimRev Card together
-                    if (!in_array('card_insurance', $hiddenCards)) {
-                        $sectionRenderEvents->addCard(new InsuranceViewCard($pid, ['dispatcher' => $ed]));
-                    }
                     $sectionRenderEvents->addCard(new DemographicsViewCard($result, $result2, ['dispatcher' => $ed]));
 
                     if (!$GLOBALS['hide_billing_widget']) {
                         $sectionRenderEvents->addCard(new BillingViewCard($pid, $insco_name, $result['billing_note'], $result3, ['dispatcher' => $ed]));
                     }
 
-                    // if (!in_array('card_insurance', $hiddenCards)) {
-                    //     $sectionRenderEvents->addCard(new InsuranceViewCard($pid, ['dispatcher' => $ed]));
-                    // }
+                    if (!in_array('card_insurance', $hiddenCards)) {
+                        $sectionRenderEvents->addCard(new InsuranceViewCard($pid, ['dispatcher' => $ed]));
+                    }
 
                     // Get the cards to render
                     $sectionCards = $sectionRenderEvents->getCards();
