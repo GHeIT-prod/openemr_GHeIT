@@ -38,8 +38,8 @@ services:
       #- ./docker_data/ccdanodemodules:/var/www/localhost/htdocs/openemr/ccdaservice/node_modules:rw
     - ./docker_data/logvolume:/var/log/www
     - ./docker_data/couchdbvolume:/couchdb/data
-    - /etc/letsencrypt/live/neocarex.shoprideon.com/fullchain.pem:/etc/letsencrypt/live/neocarex.shoprideon.com/fullchain.pem:ro
-    - /etc/letsencrypt/live/neocarex.shoprideon.com/privkey.pem:/etc/letsencrypt/live/neocarex.shoprideon.com/privkey.pem:ro
+    - /etc/letsencrypt/live/openemrdev.gheit.co/fullchain.pem:/etc/letsencrypt/live/openemrdev.gheit.co/fullchain.pem:ro
+    - /etc/letsencrypt/live/openemrdev.gheit.co/privkey.pem:/etc/letsencrypt/live/openemrdev.gheit.co/privkey.pem:ro
     environment:
       DEBUG_COLORS: "true"
       TERM: xterm-256color
