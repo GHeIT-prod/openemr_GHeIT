@@ -1039,7 +1039,7 @@ $oemr_ui = new OemrUI($arrOeUiSettings);
       }
 
       .section-header-dynamic {
-        border-bottom: none;
+        border-bottom: none !important;
       }
     </style>
     <title><?php echo xlt("Dashboard{{patient file}}"); ?></title>
