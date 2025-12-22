@@ -583,13 +583,153 @@ return [
 
         return $return;
     },
+    /**
+     * Schema for the message request
+     *
+     *  @OA\Schema(
+     *      schema="api_message_request",
+     *      @OA\Property(
+     *          property="body",
+     *          description="The body of message.",
+     *          type="string"
+     *      ),
+     *      @OA\Property(
+     *          property="groupname",
+     *          description="The group name (usually is 'Default').",
+     *          type="string"
+     *      ),
+     *      @OA\Property(
+     *          property="from",
+     *          description="The sender of the message.",
+     *          type="string"
+     *      ),
+     *      @OA\Property(
+     *          property="to",
+     *          description="The recipient of the message.",
+     *          type="string"
+     *      ),
+     *      @OA\Property(
+     *          property="title",
+     *          description="use an option from resource=/api/list/note_type",
+     *          type="string"
+     *      ),
+     *      @OA\Property(
+     *          property="message_status",
+     *          description="use an option from resource=/api/list/message_status",
+     *          type="string"
+     *      ),
+     *      required={"body", "groupname", "from", "to", "title", "message_status"},
+     *      example={
+     *          "body": "Test 456",
+     *          "groupname": "Default",
+     *          "from": "Matthew",
+     *          "to": "admin",
+     *          "title": "Other",
+     *          "message_status": "New"
+     *      }
+     *  )
+     */
+    /**
+     *  @OA\Post(
+     *      path="/api/patient/{pid}/message",
+     *      description="Submits a pnote message",
+     *      tags={"standard"},
+     *      @OA\Parameter(
+     *          name="pid",
+     *          in="path",
+     *          description="The id for the patient.",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(ref="#/components/schemas/api_message_request")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          ref="#/components/responses/standard"
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          ref="#/components/responses/badrequest"
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          ref="#/components/responses/unauthorized"
+     *      ),
+     *      security={{"openemr_auth":{}}}
+     *  )
+     */
+    // "POST /api/patient/:pid/message" => function ($pid, HttpRestRequest $request) {
+    //     RestConfig::request_authorization_check($request, "patients", "notes");
+    //     $data = (array) (json_decode(file_get_contents("php://input")));
+    //     $return = (new MessageRestController())->post($pid, $data);
+
+    //     return $return;
+    // },
     "POST /api/patient/:pid/message" => function ($pid, HttpRestRequest $request) {
         RestConfig::request_authorization_check($request, "patients", "notes");
-        $data = (array) (json_decode(file_get_contents("php://input")));
-        $return = (new MessageRestController())->post($pid, $data);
+        $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+        $rawBody = file_get_contents('php://input');
 
-        return $return;
+        // ✅ JSON only if content-type is json AND body is not empty
+        if (
+            stripos($contentType, 'application/json') !== false
+            && !empty(trim($rawBody))
+        ) {
+            $data = json_decode($rawBody, true);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                http_response_code(400);
+                return [
+                    'error' => 'Invalid JSON',
+                    'details' => json_last_error_msg()
+                ];
+            }
+        }
+        // ✅ form-data or x-www-form-urlencoded
+        else {
+            $data = $_POST ?? [];
+        }
+
+        return (new MessageRestController())->post($pid, $data);
     },
+
+    /**
+     *  @OA\Get(
+     *      path="/api/patient/{pid}/transaction",
+     *      description="Get Transactions for a patient",
+     *      tags={"standard"},
+     *      @OA\Parameter(
+     *          name="pid",
+     *          in="path",
+     *          description="The pid for the patient",
+     *          required=true,
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response="200",
+     *          ref="#/components/responses/standard"
+     *      ),
+     *      @OA\Response(
+     *          response="400",
+     *          ref="#/components/responses/badrequest"
+     *      ),
+     *      @OA\Response(
+     *          response="401",
+     *          ref="#/components/responses/unauthorized"
+     *      ),
+     *      security={{"openemr_auth":{}}}
+     *  )
+     */
+
     "GET /api/patient/:pid/transaction" => function ($pid, HttpRestRequest $request) {
         RestConfig::request_authorization_check($request, "patients", "trans");
         $cont = new TransactionRestController();

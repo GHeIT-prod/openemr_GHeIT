@@ -16,7 +16,11 @@
 
 namespace OpenEMR\Services;
 
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 use Particle\Validator\Validator;
+use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
 
 class MessageService
 {
@@ -116,5 +120,101 @@ class MessageService
         $sql = "UPDATE pnotes SET deleted=1 WHERE pid=? AND id=?";
 
         return sqlStatement($sql, [$pid, $mid]);
+    }
+
+    public function s3DocumentHandler($pid, array $input)
+    {
+        // Placeholder for S3 document handling logic
+        // ---------- CONFIG ----------
+        $bucket = $_ENV['AWS_BUCKET_NAME'];
+        $region = $_ENV['AWS_DEFAULT_REGION'];
+        $maxSize = 10 * 1024 * 1024; // 10 MB
+
+        $allowedMimeTypes = [
+            'application/pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'application/vnd.ms-excel',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/vnd.ms-powerpoint',
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+            'text/plain',
+            'text/csv',
+            'image/jpeg',
+            'image/png'
+        ];
+
+        $allowedExtensions = ['pdf','doc','docx','xls','xlsx','ppt','pptx','txt','csv','jpg','jpeg','png'];
+
+        // ---------- INPUT ----------
+
+        if (!$input) {
+            http_response_code(400);
+            exit(json_encode(['error' => 'Invalid JSON']));
+        }
+
+        if (!isset($_FILES['file'])) {
+            return ['error' => 'No file uploaded'];
+        }
+
+        $file = $_FILES['file'];
+
+        $filename    = $file['name'];
+        $contentType = mime_content_type($file['tmp_name']);
+        $fileSize    = $file['size'];
+
+        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+
+        if (!in_array($contentType, $allowedMimeTypes)) {
+            http_response_code(415);
+            exit(json_encode(['error' => 'Unsupported file type']));
+        }
+
+        if (!in_array($extension, $allowedExtensions)) {
+            http_response_code(415);
+            exit(json_encode(['error' => 'Invalid file extension']));
+        }
+
+        if ($fileSize > $maxSize) {
+            http_response_code(413);
+            exit(json_encode(['error' => 'File too large']));
+        }
+
+        // ---------- S3 CLIENT ----------
+        $s3 = new S3Client([
+            'version' => 'latest',
+            'region'  => $region,
+        ]);
+
+        // ---------- OBJECT KEY ----------
+        $uuid = bin2hex(random_bytes(16));
+        $key = "patients/{$pid}/documents/{$uuid}.{$extension}";
+
+        // ---------- PRESIGNED REQUEST ----------
+        try {
+            $cmd = $s3->getCommand('PutObject', [
+                'Bucket' => $bucket,
+                'Key' => $key,
+                'ContentType' => $contentType,
+                'ContentLength' => $fileSize,
+                'ACL' => 'private',
+                'ServerSideEncryption' => 'AES256'
+            ]);
+
+            $request = $s3->createPresignedRequest($cmd, '+5 minutes');
+
+            echo json_encode([
+                'upload_url' => (string) $request->getUri(),
+                's3_key' => $key,
+                'expires_in' => 3000
+            ]);
+
+        } catch (AwsException $e) {
+            http_response_code(500);
+            echo json_encode([
+                'error' => 'Failed to generate presigned URL',
+                'details' => $e->getMessage()
+            ]);
+        }
     }
 }
