@@ -47,7 +47,10 @@ class MessageRestController
         }
 
         $serviceResult = $this->messageService->insert($pid, $data);
-        return RestControllerHelper::responseHandler($serviceResult, ["mid" => $serviceResult], 201);
+        if (isset($_FILES['file'])) {
+            $s3DocumentResult = $this->messageService->s3DocumentHandler($pid, $data);
+        }
+        return RestControllerHelper::responseHandler($serviceResult, ["mid" => $serviceResult, "s3DocumentResult" => isset($_FILES['file']) ? $s3DocumentResult : null], 201);
     }
 
     public function delete($pid, $mid)

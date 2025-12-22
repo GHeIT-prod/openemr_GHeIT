@@ -6475,12 +6475,39 @@ return [
      *      security={{"openemr_auth":{}}}
      *  )
      */
+    // "POST /api/patient/:pid/message" => function ($pid, HttpRestRequest $request) {
+    //     RestConfig::request_authorization_check($request, "patients", "notes");
+    //     $data = (array) (json_decode(file_get_contents("php://input")));
+    //     $return = (new MessageRestController())->post($pid, $data);
+
+    //     return $return;
+    // },
     "POST /api/patient/:pid/message" => function ($pid, HttpRestRequest $request) {
         RestConfig::request_authorization_check($request, "patients", "notes");
-        $data = (array) (json_decode(file_get_contents("php://input")));
-        $return = (new MessageRestController())->post($pid, $data);
+        $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+        $rawBody = file_get_contents('php://input');
 
-        return $return;
+        // ✅ JSON only if content-type is json AND body is not empty
+        if (
+            stripos($contentType, 'application/json') !== false
+            && !empty(trim($rawBody))
+        ) {
+            $data = json_decode($rawBody, true);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                http_response_code(400);
+                return [
+                    'error' => 'Invalid JSON',
+                    'details' => json_last_error_msg()
+                ];
+            }
+        }
+        // ✅ form-data or x-www-form-urlencoded
+        else {
+            $data = $_POST ?? [];
+        }
+
+        return (new MessageRestController())->post($pid, $data);
     },
 
     /**
