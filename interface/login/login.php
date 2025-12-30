@@ -27,7 +27,7 @@
 
 // prevent UI redressing
 Header("X-Frame-Options: DENY");
-Header("Content-Security-Policy: frame-ancestors 'none'");
+Header("Content-Security-Policy: frame-ancestors 'self' https://mycarex.gheit.co");
 
 use OpenEMR\Core\OEGlobalsBag;
 use OpenEMR\Common\Twig\TwigContainer;

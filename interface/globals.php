@@ -739,6 +739,13 @@ if (($ignoreAuth_onsite_portal === true) && ($globalsBag->getInt('portal_onsite_
     $ignoreAuth = true;
 }
 
+// SSO login bypasses normal authentication
+if ($_SESSION['provider_sso'] === 'provider_sso') {
+    $ignoreAuth = true;
+}
+if ($_SERVER['SCRIPT_NAME'] === '/interface/logout.php') {
+    $ignoreAuth = false;
+}
 if (!$ignoreAuth) {
     require_once("$srcdir/auth.inc.php");
     $globalsBag->set('incoming_site_id', $GLOBALS['incoming_site_id'] ?? null);

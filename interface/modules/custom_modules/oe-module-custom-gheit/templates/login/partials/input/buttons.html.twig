@@ -19,9 +19,17 @@ Render the login button, and google signin button, if set
     }
 </style>
 {% block buttons %}
-<div class="{{ button_container_class_list|default(['form-group', 'd-flex','justify-content-between'])|join(' ') }}">
+<div class="{{ button_container_class_list|default(['form-group', 'd-flex','justify-content-between'])|join(' ') }}" style="gap: 10px;">
     <div class="flex-fill"></div>
-    <button id="login-button" class="btn btn-primary" style="width:24%; padding-top: 1px; min-height:42px; padding:8px 12px;" type="submit" onclick="transmit_form(this)">{{ "Login"|xlt }}</button>
+    <div class="google-login-button" style="width:26%;">
+        <button class="text-center w-100" style="min-height:42px;">
+            <a href="provider_auth_login.php">
+                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" class="google-icon" style="height: 20px;">
+                Google Sign-In
+            </a>
+        </button>
+    </div>
+    <button id="login-button" class="btn btn-primary" style="width:26%; padding-top: 1px; min-height:42px; padding:8px 12px;" type="submit" onclick="transmit_form(this)">{{ "Login"|xlt }}</button>
     {% if displayGoogleSignin %}
         <div class="g_id_signin flex-fill" data-type="standard"></div>
     {% endif %}
