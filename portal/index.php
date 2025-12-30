@@ -18,7 +18,7 @@
 
 // prevent UI redressing
 Header("X-Frame-Options: DENY");
-Header("Content-Security-Policy: frame-ancestors 'none'");
+Header("Content-Security-Policy: frame-ancestors 'self' https://mycarex.gheit.co");
 
 //setting the session & other config options
 

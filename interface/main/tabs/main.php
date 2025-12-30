@@ -18,6 +18,8 @@
 */
 
 $sessionAllowWrite = true;
+$ignoreAuth = true;
+
 require_once(__DIR__ . '/../../globals.php');
 require_once $GLOBALS['srcdir'] . '/ESign/Api.php';
 
