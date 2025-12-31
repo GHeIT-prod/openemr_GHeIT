@@ -184,30 +184,40 @@ class MessageService
         $s3 = new S3Client([
             'version' => 'latest',
             'region'  => $region,
+            'credentials' => [
+                'key'    => $_ENV['AWS_ACCESS_KEY_ID'],
+                'secret' => $_ENV['AWS_SECRET_ACCESS_KEY'],
+            ],
         ]);
 
         // ---------- OBJECT KEY ----------
         $uuid = bin2hex(random_bytes(16));
-        $key = "patients/{$pid}/documents/{$uuid}.{$extension}";
+        $key = "attachments/patients/{$pid}/documents/{$uuid}.{$extension}";
 
         // ---------- PRESIGNED REQUEST ----------
         try {
-            $cmd = $s3->getCommand('PutObject', [
+
+            $s3->putObject([
                 'Bucket' => $bucket,
-                'Key' => $key,
-                'ContentType' => $contentType,
-                'ContentLength' => $fileSize,
-                'ACL' => 'private',
+                'Key'    => $key,
+                'Body'   => fopen($file['tmp_name'], 'r'),
+                'ContentType' => mime_content_type($file['tmp_name']),
                 'ServerSideEncryption' => 'AES256'
             ]);
 
-            $request = $s3->createPresignedRequest($cmd, '+5 minutes');
-
-            echo json_encode([
-                'upload_url' => (string) $request->getUri(),
-                's3_key' => $key,
-                'expires_in' => 3000
+            // //View URL (GET)
+            $getCmd = $s3->getCommand('GetObject', [
+                'Bucket' => $bucket,
+                'Key' => $key,
             ]);
+
+            $viewRequest = $s3->createPresignedRequest($getCmd, '+60 minutes');
+            $viewUrl = (string) $viewRequest->getUri();
+
+            return [
+                'view_url'   => $viewUrl,
+                's3_key'     => $key
+            ];
 
         } catch (AwsException $e) {
             http_response_code(500);
