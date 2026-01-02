@@ -230,7 +230,11 @@ $simpleSearch = $_GET['simple_search'] ?? null;
             <?php if ($pubpid_matched) { ?>
                 <input class='btn btn-primary' type='button' value='<?php echo xla('Cancel'); ?>' onclick='dlgclose();' />
             <?php } else { ?>
-                <button id='confirmCreate' class='btn btn-primary my-1' type='button' value='true' onclick='dlgclose("srcConfirmSave", false);'><?php echo xla('Confirm Create New Patient'); ?></button>
+                <?php if (count($result) >= 1) { ?>
+                    <button disabled id='confirmCreate' class='btn btn-primary my-1' type='button' value='true' onclick='dlgclose("srcConfirmSave", false);'><?php echo xla('Confirm Create New Patient'); ?></button>
+                <?php } else { ?>
+                    <button id='confirmCreate' class='btn btn-primary my-1' type='button' value='true' onclick='dlgclose("srcConfirmSave", false);'><?php echo xla('Confirm Create New Patient'); ?></button>
+                <?php } ?>
                 <button class='btn btn-primary my-1' type='button' value='Cancel' onclick='dlgclose();'><?php echo xla('Cancel'); ?></button>
             <?php } ?>
         </div>

@@ -15,6 +15,7 @@ services:
       - ../../templates:/var/www/localhost/htdocs/openemr/templates
       - ../../portal:/var/www/localhost/htdocs/openemr/portal
       - ../../library:/var/www/localhost/htdocs/openemr/library
+      - ../../apis:/var/www/localhost/htdocs/openemr/apis
         # - ./docker_data/nodemodules:/var/www/localhost/htdocs/openemr/node_modules:rw
         #- ./docker_data/vendordir:/var/www/localhost/htdocs/openemr/vendor:rw
         # - ./docker_data/ccdanodemodules:/var/www/localhost/htdocs/openemr/ccdaservice/node_modules:rw

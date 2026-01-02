@@ -29,6 +29,7 @@ services:
     - ../../interface:/var/www/localhost/htdocs/openemr/interface
     - ../../src:/var/www/localhost/htdocs/openemr/src
     - ../../templates:/var/www/localhost/htdocs/openemr/templates
+    - ../../apis:/var/www/localhost/htdocs/openemr/apis
     - ./docker_data/sitesvolume:/var/www/localhost/htdocs/openemr/sites:rw
     - ../../portal:/var/www/localhost/htdocs/openemr/portal
     - ../../library:/var/www/localhost/htdocs/openemr/library
