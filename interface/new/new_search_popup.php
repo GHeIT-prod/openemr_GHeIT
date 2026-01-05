@@ -128,15 +128,30 @@ $simpleSearch = $_GET['simple_search'] ?? null;
                 continue;
             }
             // pubpid requires special treatment.  Match on that is fatal.
-            if ($fldname === 'pubpid') {
-                $relevance .= " + 1000 * ( `" . $escapedColumn . "` LIKE ? )";
-                array_push($sqlBindArray, $value);
+            // if ($fldname == 'pubpid') {
+            //     $relevance .= " + 1000 * ( " . add_escape_custom($fldname) . " LIKE ? )";
+            //     array_push($sqlBindArray, $value);
+            // } else {
+            //     $relevance .= " + ( " . add_escape_custom($fldname) . " LIKE ? )";
+            //     array_push($sqlBindArray, $value);
+            // }
+            // $where .= " OR " . add_escape_custom($fldname) . " LIKE ?";
+            // array_push($sqlBindArraySpecial, $value);
+
+            // // The following is an alternate approach that gives special treatment to pubpid
+            if ($fldname == 'pubpid') {
+                $relevance .= " + 1000 * ( " . add_escape_custom($fldname) . " LIKE ? )";
             } else {
-                $relevance .= " + ( `" . $escapedColumn . "` LIKE ? )";
-                array_push($sqlBindArray, $value);
+                $relevance .= " + ( " . add_escape_custom($fldname) . " LIKE ? )";
             }
-            $where .= " OR `" . $escapedColumn . "` LIKE ?";
-            array_push($sqlBindArraySpecial, $value);
+            array_push($sqlBindArray, $value);
+
+            // Only include certain fields in WHERE
+            if (in_array($fldname, ['email', 'email_direct'])) {
+                $where .= " OR " . add_escape_custom($fldname) . " LIKE ?";
+                array_push($sqlBindArraySpecial, $value);
+            }
+            
             echo "<input type='hidden' name='" . attr($key) . "' value='" . attr($value) . "' />\n";
             ++$numfields;
         }
