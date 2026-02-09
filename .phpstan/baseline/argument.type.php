@@ -612,11 +612,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../controllers/C_Document.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$binds of function sqlStatement expects array, float\\|int\\|string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../controllers/C_Document.class.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$category_id of method Document\\:\\:createDocument\\(\\) expects int, float\\|int\\|string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../controllers/C_Document.class.php',
@@ -5973,7 +5968,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$message of function error_log expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/globals.php',
 ];
 $ignoreErrors[] = [
@@ -6008,11 +6003,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function array_key_exists expects array, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/globals.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$binds of function sqlQueryNoLog expects array, false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/globals.php',
 ];
@@ -18877,11 +18867,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/edit_globals.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$bindvars of function sqlGetAssoc expects array\\<string\\>, false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/edit_globals.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$haystack of function in_array expects array, mixed given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/super/edit_globals.php',
@@ -30282,11 +30267,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/ClinicalDecisionRules/Interface/RulesPlanMappingEventHandlers.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$binds of function sqlStatement expects array, null given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../src/ClinicalDecisionRules/Interface/RulesPlanMappingEventHandlers.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_push expects array, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../src/Common/Acl/AclExtended.php',
@@ -31893,11 +31873,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$limit of method OpenEMR\\\\Common\\\\Uuid\\\\UuidRegistry\\:\\:getUnusedUuidBatch\\(\\) expects int, mixed given\\.$#',
-    'count' => 1,
+    'count' => 2,
     'path' => __DIR__ . '/../../src/Common/Uuid/UuidRegistry.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$r of function sqlFetchArray expects ADORecordSet\\|false, recordset given\\.$#',
+    'message' => '#^Parameter \\#1 \\$resultSet of static method OpenEMR\\\\Common\\\\Database\\\\QueryUtils\\:\\:fetchArrayFromResultSet\\(\\) expects OpenEMR\\\\Common\\\\Database\\\\ADORecordSet\\|false, OpenEMR\\\\Common\\\\Database\\\\recordset given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../src/Common/Uuid/UuidRegistry.php',
 ];
@@ -31924,11 +31904,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#',
     'count' => 9,
-    'path' => __DIR__ . '/../../src/Common/Uuid/UuidRegistry.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$binds of function sqlStatementNoLog expects array, false given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../src/Common/Uuid/UuidRegistry.php',
 ];
 $ignoreErrors[] = [
@@ -64132,11 +64107,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/DocumentService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$binds of function sqlQuery expects array, string given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../src/Services/DocumentService.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$category_id of method Document\\:\\:createDocument\\(\\) expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/DocumentService.php',
@@ -72027,11 +71997,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/PhoneNumberService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$binds of function sqlQuery expects array, int given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Services/PhoneNumberService.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$r of function sqlFetchArray expects ADORecordSet\\|false, OpenEMR\\\\Common\\\\Database\\\\recordset given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/PractitionerRoleService.php',
@@ -73203,11 +73168,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$r of function sqlFetchArray expects ADORecordSet\\|false, recordset given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Services/Utils/TranslationService.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$binds of function sqlStatement expects array, int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/Utils/TranslationService.php',
 ];
