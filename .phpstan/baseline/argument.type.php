@@ -167,11 +167,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../ccr/createCCR.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../ccr/createCCR.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../ccr/createCCR.php',
@@ -282,11 +277,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../ccr/display.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../ccr/display.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$stream of function fgets expects resource, mixed given\\.$#',
     'count' => 7,
     'path' => __DIR__ . '/../../ccr/transmitCCD.php',
@@ -372,11 +362,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../contrib/util/dupecheck/index.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../contrib/util/dupecheck/index.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pid of function addPnote expects int, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../contrib/util/dupecheck/mergerecords.php',
@@ -399,11 +384,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 6,
-    'path' => __DIR__ . '/../../contrib/util/dupecheck/mergerecords.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../contrib/util/dupecheck/mergerecords.php',
 ];
 $ignoreErrors[] = [
@@ -602,11 +582,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../controllers/C_Document.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../controllers/C_Document.class.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$length of function fread expects int\\<1, max\\>, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../controllers/C_Document.class.php',
@@ -702,22 +677,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../controllers/C_DocumentCategory.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../controllers/C_DocumentCategory.class.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$message of class Parser_HL7v2 constructor expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../controllers/C_Hl7.class.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string1 of function strcasecmp expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../controllers/C_InsuranceCompany.class.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../controllers/C_InsuranceCompany.class.php',
 ];
@@ -740,11 +705,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$search_string of method C_PatientFinder\\:\\:search_by_fName\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../controllers/C_PatientFinder.class.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../controllers/C_PracticeSettings.class.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$address of method PHPMailer\\\\PHPMailer\\\\PHPMailer\\:\\:addAddress\\(\\) expects string, mixed given\\.$#',
@@ -818,11 +778,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$context of method Twig\\\\Environment\\:\\:render\\(\\) expects array, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../controllers/C_Prescription.class.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../controllers/C_Prescription.class.php',
 ];
@@ -1182,11 +1137,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../custom/import_xml.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../custom/import_xml.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$value of static method OpenEMR\\\\Common\\\\Acl\\\\AclMain\\:\\:aclCheckCore\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../custom/import_xml.php',
@@ -1347,11 +1297,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../gacl/admin/about.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../gacl/admin/about.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_keys expects array, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../gacl/admin/acl_admin.php',
@@ -1367,16 +1312,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../gacl/admin/acl_admin.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../gacl/admin/acl_admin.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../gacl/admin/acl_debug.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../gacl/admin/acl_debug.php',
@@ -1387,22 +1322,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../gacl/admin/acl_debug.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../gacl/admin/acl_list.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../gacl/admin/acl_test.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../gacl/admin/acl_test2.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../gacl/admin/acl_test2.php',
 ];
@@ -1410,16 +1330,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../gacl/admin/acl_test3.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../gacl/admin/acl_test3.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../gacl/admin/assign_group.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
@@ -1427,27 +1337,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../gacl/admin/edit_group.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../gacl/admin/edit_group.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../gacl/admin/edit_object_sections.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../gacl/admin/edit_object_sections.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../gacl/admin/edit_objects.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../gacl/admin/edit_objects.php',
 ];
@@ -1475,16 +1370,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../gacl/admin/gacl_admin.inc.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../gacl/admin/group_admin.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../gacl/admin/object_search.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_pop expects array, mixed given\\.$#',
@@ -1652,18 +1537,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/batchcom/batchcom.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/batchcom/batchcom.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 3,
-    'path' => __DIR__ . '/../../interface/batchcom/emailnotification.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/batchcom/emailnotification.php',
 ];
 $ignoreErrors[] = [
@@ -1672,18 +1547,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/batchcom/settingsnotification.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/batchcom/settingsnotification.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 3,
-    'path' => __DIR__ . '/../../interface/batchcom/smsnotification.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/batchcom/smsnotification.php',
 ];
 $ignoreErrors[] = [
@@ -1707,24 +1572,9 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/billing_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/billing_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/billing/billing_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/billing_tracker.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/clear_log.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoGen\\:\\:cryptCheckStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
@@ -1733,11 +1583,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoGen\\:\\:decryptStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/customize_log.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/customize_log.php',
 ];
@@ -1807,11 +1652,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/edi_271.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/edih_view.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$data of method OpenEMR\\\\PaymentProcessing\\\\Recorder\\:\\:recordActivity\\(\\) expects array\\{patientId\\: string, encounterId\\: string, codeType\\: string, code\\: string, modifier\\: string, payerType\\: string, postUser\\: string, sessionId\\: string, \\.\\.\\.\\}, array\\{patientId\\: string, encounterId\\: string, codeType\\: string, code\\: string, modifier\\: string, payerType\\: string, postUser\\: string, sessionId\\: string, \\.\\.\\.\\} given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/edit_payment.php',
@@ -1852,11 +1692,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/edit_payment.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/edit_payment.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/edit_payment.php',
@@ -1873,11 +1708,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/era_payments.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/era_payments.php',
 ];
@@ -1902,11 +1732,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/indigent_patients_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/indigent_patients_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$s of function add_escape_custom expects string, int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/new_payment.php',
@@ -1918,11 +1743,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function urlencode expects string, \\(float\\|int\\) given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/new_payment.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/new_payment.php',
 ];
@@ -1977,11 +1797,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/print_billing_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/print_billing_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/print_billing_report.php',
@@ -2003,11 +1818,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/print_daysheet_report_num1.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/print_daysheet_report_num1.php',
 ];
@@ -2037,11 +1847,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/print_daysheet_report_num2.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/print_daysheet_report_num2.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/billing/print_daysheet_report_num2.php',
@@ -2063,11 +1868,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/print_daysheet_report_num3.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/print_daysheet_report_num3.php',
 ];
@@ -2099,11 +1899,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 7,
-    'path' => __DIR__ . '/../../interface/billing/search_payments.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/search_payments.php',
 ];
 $ignoreErrors[] = [
@@ -2507,11 +2302,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/sl_eob_search.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/sl_eob_search.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$message of function emailLogin expects non\\-empty\\-string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/sl_eob_search.php',
@@ -2572,11 +2362,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/sl_receipts_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/sl_receipts_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/billing/sl_receipts_report.php',
@@ -2622,11 +2407,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/ub04_helpers.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/code_systems/dataloads_ajax.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 6,
     'path' => __DIR__ . '/../../interface/code_systems/list_installed.php',
@@ -2667,11 +2447,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/drugs/add_edit_drug.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/drugs/add_edit_drug.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$s of function add_escape_custom expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/drugs/add_edit_lot.php',
@@ -2692,11 +2467,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/drugs/add_edit_lot.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/drugs/add_edit_lot.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/drugs/add_edit_lot.php',
@@ -2707,17 +2477,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/drugs/destroy_lot.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/drugs/destroy_lot.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$address of method PHPMailer\\\\PHPMailer\\\\PHPMailer\\:\\:addAddress\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/drugs/dispense_drug.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/drugs/dispense_drug.php',
 ];
@@ -2764,11 +2524,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#',
     'count' => 6,
-    'path' => __DIR__ . '/../../interface/drugs/drug_inventory.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/drugs/drug_inventory.php',
 ];
 $ignoreErrors[] = [
@@ -3128,11 +2883,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$filename of function fopen expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/CAMOS/admin.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/CAMOS/admin.php',
 ];
@@ -3512,22 +3262,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/clinical_notes/new.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/clinical_notes/new.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_filter expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/clinical_notes/report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$formid of method OpenEMR\\\\Services\\\\ClinicalNotesService\\:\\:getClinicalNotesForPatientForm\\(\\) expects int, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/clinical_notes/report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/clinical_notes/report.php',
 ];
@@ -4757,11 +4497,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/newpatient/C_EncounterVisitForm.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/newpatient/C_EncounterVisitForm.class.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/forms/newpatient/C_EncounterVisitForm.class.php',
@@ -4770,11 +4505,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$value of static method OpenEMR\\\\Common\\\\Acl\\\\AclMain\\:\\:aclCheckCore\\(\\) expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/forms/newpatient/C_EncounterVisitForm.class.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Forms\\\\NewPatient\\\\C_EncounterVisitForm constructor expects OpenEMR\\\\Core\\\\Kernel, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/newpatient/common.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$issueTypes of class OpenEMR\\\\Forms\\\\NewPatient\\\\C_EncounterVisitForm constructor expects array, mixed given\\.$#',
@@ -4808,11 +4538,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/newpatient/report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/newpatient/report.php',
 ];
@@ -4892,27 +4617,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/note/view.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/observation/delete.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/observation/new.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Controllers\\\\Interface\\\\Forms\\\\Observation\\\\ObservationController\\:\\:reportAction\\(\\) expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/observation/report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$encounter of method OpenEMR\\\\Controllers\\\\Interface\\\\Forms\\\\Observation\\\\ObservationController\\:\\:reportAction\\(\\) expects int, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/observation/report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/observation/report.php',
 ];
@@ -4925,11 +4635,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#4 \\$id of method OpenEMR\\\\Controllers\\\\Interface\\\\Forms\\\\Observation\\\\ObservationController\\:\\:reportAction\\(\\) expects int\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/observation/report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/observation/save.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
@@ -5077,11 +4782,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/procedure_order/delete.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/procedure_order/delete.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$formid of function deleteRemovedSpecimens expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/procedure_order/procedure_order_save_functions.php',
@@ -5148,11 +4848,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$formid of static method OpenEMR\\\\Common\\\\Forms\\\\CoreFormToPortalUtility\\:\\:confirmFormBootstrapPatient\\(\\) expects int, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/questionnaire_assessments/questionnaire_assessments.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/questionnaire_assessments/questionnaire_assessments.php',
 ];
@@ -5427,11 +5122,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/vitals/C_FormVitals.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/vitals/C_FormVitals.class.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$length of function array_slice expects int\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/vitals/C_FormVitals.class.php',
@@ -5588,11 +5278,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$haystack of function array_search expects array, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms_admin/forms_admin.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms_admin/forms_admin.php',
 ];
@@ -5832,11 +5517,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/logview/logview.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/logview/logview.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function preg_replace expects array\\<float\\|int\\|string\\>\\|string, string\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/logview/logview.php',
@@ -6042,11 +5722,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/backup.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/backup.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$p_compress of class Archive_Tar constructor expects string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/backup.php',
@@ -6122,11 +5797,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/calendar/add_edit_event.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/calendar/add_edit_event.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 6,
     'path' => __DIR__ . '/../../interface/main/calendar/add_edit_event.php',
@@ -6168,11 +5838,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$baseTimestamp of function strtotime expects int\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/calendar/find_appt_popup.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/calendar/find_appt_popup.php',
 ];
@@ -6832,11 +6497,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/display_documents.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/display_documents.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/main/display_documents.php',
@@ -6888,11 +6548,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$binds of function sqlQuery expects array, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/finder/dynamic_finder.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/finder/dynamic_finder.php',
 ];
@@ -7142,11 +6797,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/holidays/import_holidays.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/holidays/import_holidays.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$s of function add_escape_custom expects string, \\(float\\|int\\<min, 12\\>\\) given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/main/ippf_export.php',
@@ -7154,11 +6804,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$s of function add_escape_custom expects string, mixed given\\.$#',
     'count' => 7,
-    'path' => __DIR__ . '/../../interface/main/ippf_export.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/main/ippf_export.php',
 ];
 $ignoreErrors[] = [
@@ -7407,11 +7052,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/messages/templates/linked_documents.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/messages/templates/linked_documents.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/messages/trusted-messages-ajax.php',
@@ -7427,11 +7067,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/onotes/office_comments.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/onotes/office_comments.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$datetime of class DateTime constructor expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/onotes/office_comments_full.php',
@@ -7442,19 +7077,9 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/onotes/office_comments_full.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/onotes/office_comments_full.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/main/pwd_expires_alert.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$dispatcher of class OpenEMR\\\\Menu\\\\MainMenuRole constructor expects Symfony\\\\Component\\\\EventDispatcher\\\\EventDispatcherInterface, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/tabs/main.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$path of function realpath expects string, string\\|null given\\.$#',
@@ -7463,11 +7088,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/tabs/main.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/tabs/main.php',
 ];
@@ -7487,18 +7107,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/EraDownload.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/EraDownload.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 19,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/claims.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/claims.php',
 ];
 $ignoreErrors[] = [
@@ -7507,24 +7117,9 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/debug-info.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/debug-info.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/era.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/era.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/index.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
@@ -7532,18 +7127,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/setup.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/setup.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 3,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/x12Tracker.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/x12Tracker.php',
 ];
 $ignoreErrors[] = [
@@ -7577,11 +7162,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/src/Bootstrap.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$eventDispatcher of class OpenEMR\\\\Modules\\\\ClaimRevConnector\\\\Bootstrap constructor expects Symfony\\\\Component\\\\EventDispatcher\\\\EventDispatcherInterface, mixed given\\.$#',
-    'count' => 9,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/src/ClaimRevApi.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$json of function json_decode expects string, bool\\|string given\\.$#',
     'count' => 8,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/src/ClaimRevApi.php',
@@ -7605,11 +7185,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$value of function curl_setopt expects non\\-empty\\-string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/src/ClaimRevApi.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$eventDispatcher of class OpenEMR\\\\Modules\\\\ClaimRevConnector\\\\Bootstrap constructor expects Symfony\\\\Component\\\\EventDispatcher\\\\EventDispatcherInterface, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/src/ConnectivityInfo.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$flags of function json_encode expects int, true given\\.$#',
@@ -7762,16 +7337,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/openemr.bootstrap.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class Comlink\\\\OpenEMR\\\\Modules\\\\TeleHealthModule\\\\Bootstrap constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/openemr.bootstrap.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$eventDispatcher of class Comlink\\\\OpenEMR\\\\Modules\\\\TeleHealthModule\\\\Bootstrap constructor expects Symfony\\\\Contracts\\\\EventDispatcher\\\\EventDispatcherInterface, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/public/index-portal.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$path of function dirname expects string, string\\|false\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/public/index-portal.php',
@@ -7780,21 +7345,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function urlencode expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/public/index-portal.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class Comlink\\\\OpenEMR\\\\Modules\\\\TeleHealthModule\\\\Bootstrap constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/public/index-portal.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$eventDispatcher of class Comlink\\\\OpenEMR\\\\Modules\\\\TeleHealthModule\\\\Bootstrap constructor expects Symfony\\\\Contracts\\\\EventDispatcher\\\\EventDispatcherInterface, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/public/index.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class Comlink\\\\OpenEMR\\\\Modules\\\\TeleHealthModule\\\\Bootstrap constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/public/index.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$assetPath of class Comlink\\\\OpenEMR\\\\Modules\\\\TeleHealthModule\\\\Controller\\\\TeleHealthFrontendSettingsController constructor expects string, mixed given\\.$#',
@@ -8362,16 +7912,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/tests/Tests/Unit/TeleconferenceRoomControllerTest.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$eventDispatcher of class Comlink\\\\OpenEMR\\\\Modules\\\\TeleHealthModule\\\\Bootstrap constructor expects Symfony\\\\Contracts\\\\EventDispatcher\\\\EventDispatcherInterface, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/welcome.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class Comlink\\\\OpenEMR\\\\Modules\\\\TeleHealthModule\\\\Bootstrap constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/welcome.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$modId of static method ModuleManagerListener\\:\\:setModuleState\\(\\) expects int\\|string, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dashboard-context/ModuleManagerListener.php',
@@ -8497,38 +8037,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/openemr.bootstrap.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Modules\\\\Dorn\\\\Bootstrap constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/openemr.bootstrap.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/ack_lab_results.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/get_lab_results.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 11,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/lab_setup.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/lab_setup.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 5,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/orders.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/orders.php',
 ];
 $ignoreErrors[] = [
@@ -8542,28 +8057,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/primary_config.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/primary_config.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/primary_config_edit.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/primary_config_edit.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 5,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/results.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/results.php',
 ];
 $ignoreErrors[] = [
@@ -8577,18 +8077,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/route_edit.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/route_edit.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 7,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/routes.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/routes.php',
 ];
 $ignoreErrors[] = [
@@ -8625,11 +8115,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$dataType of class OpenEMR\\\\Services\\\\Globals\\\\GlobalSetting constructor expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/src/Bootstrap.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$eventDispatcher of class OpenEMR\\\\Modules\\\\Dorn\\\\Bootstrap constructor expects Symfony\\\\Component\\\\EventDispatcher\\\\EventDispatcherInterface, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/src/ConnectorApi.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$json of function json_decode expects string, bool\\|string given\\.$#',
@@ -8867,16 +8352,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/openemr.bootstrap.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of static method OpenEMR\\\\Modules\\\\EhiExporter\\\\Bootstrap\\:\\:instantiate\\(\\) expects OpenEMR\\\\Core\\\\Kernel, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/openemr.bootstrap.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$eventDispatcher of static method OpenEMR\\\\Modules\\\\EhiExporter\\\\Bootstrap\\:\\:instantiate\\(\\) expects Symfony\\\\Contracts\\\\EventDispatcher\\\\EventDispatcherInterface, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/public/index.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/public/index.php',
@@ -8887,18 +8362,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/public/index.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of static method OpenEMR\\\\Modules\\\\EhiExporter\\\\Bootstrap\\:\\:instantiate\\(\\) expects OpenEMR\\\\Core\\\\Kernel, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/public/index.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$path of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects string\\|null, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/src/Bootstrap.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/src/Bootstrap.php',
 ];
 $ignoreErrors[] = [
@@ -9535,11 +9000,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of static method OpenEMR\\\\Modules\\\\FaxSMS\\\\Enums\\\\ServiceType\\:\\:fromValue\\(\\) expects int\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/messageUI.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Modules\\\\FaxSMS\\\\Events\\\\NotificationEventListener constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/openemr.bootstrap.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
@@ -10727,11 +10187,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/scripts/update_pharmacy.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/scripts/update_pharmacy.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$message of function error_log expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/scripts/weno_log_sync.php',
@@ -10743,11 +10198,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, string\\|false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/scripts/weno_pharmacy_search.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/scripts/weno_pharmacy_search.php',
 ];
@@ -11067,11 +10517,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/download_log_viewer.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/download_log_viewer.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/download_log_viewer.php',
@@ -11087,28 +10532,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/indexrx.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/indexrx.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/indexrx.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/pharmacy_list_display.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 5,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/pharmacy_list_form.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/pharmacy_list_form.php',
 ];
 $ignoreErrors[] = [
@@ -11119,11 +10549,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 4,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/setup_facilities.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/setup_facilities.php',
 ];
 $ignoreErrors[] = [
@@ -11147,18 +10572,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/weno_fragment.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/weno_setup.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 5,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/weno_users.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/weno_users.php',
 ];
 $ignoreErrors[] = [
@@ -11608,11 +11023,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$foreign_id of static method Document\\:\\:getDocumentsForForeignReferenceId\\(\\) expects int, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Controller/EncountermanagerController.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Controller/EncountermanagerController.php',
 ];
@@ -12662,11 +12072,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/new/new_comprehensive.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/new/new_comprehensive.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$contactId of method OpenEMR\\\\Services\\\\ContactAddressService\\:\\:saveAddressesForContact\\(\\) expects int, int\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/new/new_comprehensive_save.php',
@@ -12807,11 +12212,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/orders/list_reports.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/orders/list_reports.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$value of function getListItem expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/list_reports.php',
@@ -12857,11 +12257,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/orders/load_compendium.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/orders/load_compendium.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$s of function myCellText expects string, int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/order_manifest.php',
@@ -12874,11 +12269,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 5,
-    'path' => __DIR__ . '/../../interface/orders/order_manifest.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/order_manifest.php',
 ];
 $ignoreErrors[] = [
@@ -12907,11 +12297,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/orders/orders_results.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/orders/orders_results.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/orders_results.php',
@@ -12932,11 +12317,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/orders/pending_followup.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/orders/pending_followup.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$selected of function dropdown_facility expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/pending_orders.php',
@@ -12944,11 +12324,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 7,
-    'path' => __DIR__ . '/../../interface/orders/pending_orders.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/pending_orders.php',
 ];
 $ignoreErrors[] = [
@@ -12962,11 +12337,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/orders/procedure_provider_edit.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/orders/procedure_provider_edit.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/procedure_provider_list.php',
@@ -12974,11 +12344,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 3,
-    'path' => __DIR__ . '/../../interface/orders/procedure_provider_list.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/procedure_provider_list.php',
 ];
 $ignoreErrors[] = [
@@ -12998,11 +12363,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$asof of function getAge expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/orders/procedure_stats.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/procedure_stats.php',
 ];
@@ -13227,18 +12587,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/orders/single_order_results.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/orders/single_order_results.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$assets of static method OpenEMR\\\\Core\\\\Header\\:\\:setupAssets\\(\\) expects array, string given\\.$#',
     'count' => 1,
-    'path' => __DIR__ . '/../../interface/orders/types.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../interface/orders/types.php',
 ];
 $ignoreErrors[] = [
@@ -13457,11 +12807,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/encounter/delete_form.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/encounter/delete_form.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pid of function getPatientData expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/diagnosis.php',
@@ -13647,11 +12992,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/encounter/forms.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/encounter/forms.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/forms.php',
@@ -13678,11 +13018,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$search of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/encounter/load_form.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/load_form.php',
 ];
@@ -13787,11 +13122,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/encounter/superbill_custom_full.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/encounter/superbill_custom_full.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$search_term of function main_code_set_search expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/superbill_custom_full.php',
@@ -13813,11 +13143,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$formDir of method OpenEMR\\\\Common\\\\Forms\\\\FormLocator\\:\\:findFile\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/encounter/view_form.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/view_form.php',
 ];
@@ -13923,11 +13248,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/history/edit_billnote.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/history/edit_billnote.php',
 ];
@@ -14222,11 +13542,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/manage_dup_patients.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/manage_dup_patients.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$id of class Document constructor expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/merge_patients.php',
@@ -14249,11 +13564,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 4,
-    'path' => __DIR__ . '/../../interface/patient_file/merge_patients.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/merge_patients.php',
 ];
 $ignoreErrors[] = [
@@ -14367,11 +13677,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$description of function ippfReceiptDetailLine expects string, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
@@ -14472,11 +13777,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_normal.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_normal.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#',
     'count' => 6,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_normal.php',
@@ -14529,11 +13829,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 7,
-    'path' => __DIR__ . '/../../interface/patient_file/problem_encounter.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/problem_encounter.php',
 ];
 $ignoreErrors[] = [
@@ -14662,11 +13957,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/reminder/patient_reminders.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/reminder/patient_reminders.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$patient_id of function collect_rule expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/reminder/patient_reminders.php',
@@ -14772,11 +14062,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/report/custom_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/report/custom_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$offset of function substr expects int, int\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/report/custom_report.php',
@@ -14807,11 +14092,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/report/patient_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/report/patient_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/report/patient_report.php',
@@ -14838,11 +14118,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/add_edit_amendments.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/patient_file/summary/add_edit_amendments.php',
 ];
@@ -14982,11 +14257,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/demographics.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$dispatcher of class OpenEMR\\\\FHIR\\\\SMART\\\\SmartLaunchController constructor expects Symfony\\\\Component\\\\EventDispatcher\\\\EventDispatcherInterface\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/demographics.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$dobYMD of function getPatientAgeDisplay expects type, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/demographics.php',
@@ -15094,11 +14364,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/demographics.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/demographics.php',
 ];
 $ignoreErrors[] = [
@@ -15282,11 +14547,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/disclosure_full.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/disclosure_full.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$datetime of class DateTime constructor expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/summary/immunizations.php',
@@ -15342,11 +14602,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/insurance_edit.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/insurance_edit.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$value of static method OpenEMR\\\\Common\\\\Acl\\\\AclMain\\:\\:aclCheckCore\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/insurance_edit.php',
@@ -15377,11 +14632,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/labdata.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/labdata.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\.\\.\\.\\$rest of function array_multisort expects array\\|int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/labdata.php',
@@ -15394,11 +14644,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/list_amendments.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/list_amendments.php',
 ];
 $ignoreErrors[] = [
@@ -15617,22 +14862,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/print_amendments.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/print_amendments.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/print_amendments.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/record_disclosure.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/record_disclosure.php',
 ];
@@ -15747,11 +14982,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/stats_full.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/stats_full.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$value of static method OpenEMR\\\\Common\\\\Acl\\\\AclMain\\:\\:aclCheckCore\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/stats_full.php',
@@ -15810,11 +15040,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/transaction/print_referral.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/transaction/record_request.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$constant of function xl expects string, mixed given\\.$#',
@@ -16262,11 +15487,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/amc_full_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/amc_full_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/reports/amc_tracking.php',
@@ -16274,11 +15494,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../interface/reports/amc_tracking.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/amc_tracking.php',
 ];
 $ignoreErrors[] = [
@@ -16337,11 +15552,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/appointments_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/appointments_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/appointments_report.php',
@@ -16369,11 +15579,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 14,
-    'path' => __DIR__ . '/../../interface/reports/appt_encounter_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/appt_encounter_report.php',
 ];
 $ignoreErrors[] = [
@@ -16412,11 +15617,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/audit_log_tamper_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/audit_log_tamper_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$key of function xlt expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/background_services.php',
@@ -16425,16 +15625,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/background_services.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/background_services.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/reports/cdr_log.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$r of function sqlFetchArray expects ADORecordSet\\|false, OpenEMR\\\\Services\\\\recordset given\\.$#',
@@ -16482,11 +15672,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/clinical_reports.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/clinical_reports.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$haystack of function str_contains expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/collections_report.php',
@@ -16518,11 +15703,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/collections_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/collections_report.php',
 ];
@@ -16587,11 +15767,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/cqm.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/reports/cqm.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$filename of function file_exists expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/criteria.tab.php',
@@ -16619,11 +15794,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 14,
-    'path' => __DIR__ . '/../../interface/reports/custom_report_range.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/custom_report_range.php',
 ];
 $ignoreErrors[] = [
@@ -16657,11 +15827,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/daily_summary_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/daily_summary_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../interface/reports/daily_summary_report.php',
@@ -16687,11 +15852,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/direct_message_log.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/direct_message_log.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$selected of function dropdown_facility expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/encounters_report.php',
@@ -16699,11 +15859,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 11,
-    'path' => __DIR__ . '/../../interface/reports/encounters_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/encounters_report.php',
 ];
 $ignoreErrors[] = [
@@ -16723,11 +15878,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/front_receipts_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/front_receipts_report.php',
 ];
@@ -16757,11 +15907,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/immunization_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/immunization_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, int\\<1, max\\> given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/insurance_allocation_report.php',
@@ -16769,11 +15914,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 3,
-    'path' => __DIR__ . '/../../interface/reports/insurance_allocation_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/insurance_allocation_report.php',
 ];
 $ignoreErrors[] = [
@@ -16799,11 +15939,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 29,
-    'path' => __DIR__ . '/../../interface/reports/inventory_activity.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/inventory_activity.php',
 ];
 $ignoreErrors[] = [
@@ -16877,11 +16012,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/inventory_list.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/inventory_list.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$targetObject of function date_diff expects DateTimeInterface, DateTime\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/inventory_list.php',
@@ -16917,11 +16047,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/inventory_transactions.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/inventory_transactions.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$r of function sqlFetchArray expects ADORecordSet\\|false, recordset\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/ip_tracker.php',
@@ -16929,11 +16054,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 3,
-    'path' => __DIR__ . '/../../interface/reports/ip_tracker.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/ip_tracker.php',
 ];
 $ignoreErrors[] = [
@@ -16967,11 +16087,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/ippf_cyp_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/ippf_cyp_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/ippf_cyp_report.php',
@@ -16999,11 +16114,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../interface/reports/ippf_daily.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/ippf_daily.php',
 ];
 $ignoreErrors[] = [
@@ -17038,11 +16148,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$asof of function getAge expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/ippf_statistics.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/ippf_statistics.php',
 ];
@@ -17088,11 +16193,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$haystack of function in_array expects array, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/non_reported.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/non_reported.php',
 ];
@@ -17144,11 +16244,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 3,
-    'path' => __DIR__ . '/../../interface/reports/pat_ledger.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/pat_ledger.php',
 ];
 $ignoreErrors[] = [
@@ -17292,11 +16387,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/patient_list_creation.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/reports/patient_list_creation.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$from of static method OpenEMR\\\\PaymentProcessing\\\\PaymentProcessing\\:\\:fetchAudit\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/payment_processing_report.php',
@@ -17314,11 +16404,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 12,
-    'path' => __DIR__ . '/../../interface/reports/payment_processing_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/payment_processing_report.php',
 ];
 $ignoreErrors[] = [
@@ -17382,11 +16467,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/prescriptions_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/prescriptions_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$constant of function xl expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/receipts_by_method_report.php',
@@ -17419,11 +16499,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$encounter_id of function receiptsByMethodLineItem expects int, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../interface/reports/receipts_by_method_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/receipts_by_method_report.php',
 ];
 $ignoreErrors[] = [
@@ -17472,11 +16547,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/referrals_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/referrals_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$method of static method OpenEMR\\\\ClinicalDecisionRules\\\\AMC\\\\CertificationReportTypes\\:\\:isAMCReportType\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/report_results.php',
@@ -17489,11 +16559,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 5,
-    'path' => __DIR__ . '/../../interface/reports/report_results.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/report_results.php',
 ];
 $ignoreErrors[] = [
@@ -17534,11 +16599,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$encounter_id of function salesByItemLineItem expects int, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../interface/reports/sales_by_item.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/sales_by_item.php',
 ];
 $ignoreErrors[] = [
@@ -17594,11 +16654,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 12,
-    'path' => __DIR__ . '/../../interface/reports/svc_code_financial_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/svc_code_financial_report.php',
 ];
 $ignoreErrors[] = [
@@ -17692,11 +16747,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/edit_globals.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/edit_globals.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$user of function setUserSetting expects int\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/super/edit_globals.php',
@@ -17767,11 +16817,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/edit_layout.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/edit_layout.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function asort expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/super/edit_layout_props.php',
@@ -17807,11 +16852,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/edit_layout_props.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/edit_layout_props.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$key of function xlt expects string, mixed given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/super/edit_list.php',
@@ -17842,11 +16882,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/edit_list.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/edit_list.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$filename of function fopen expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/super/layout_service_codes.php',
@@ -17868,11 +16903,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, list\\<string\\|null\\>\\|false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/layout_service_codes.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/super/layout_service_codes.php',
 ];
@@ -17908,11 +16938,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/load_codes.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/super/load_codes.php',
 ];
@@ -17957,11 +16982,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/manage_document_templates.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/manage_document_templates.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$filename of function file_get_contents expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/super/manage_site_files.php',
@@ -17990,16 +17010,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$haystack of function in_array expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/super/manage_site_files.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/manage_site_files.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/super/rules/index.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
@@ -18152,11 +17162,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/usergroup/addrbook_edit.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/addrbook_edit.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$assets of static method OpenEMR\\\\Core\\\\Header\\:\\:setupAssets\\(\\) expects array, string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/addrbook_list.php',
@@ -18170,16 +17175,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 11,
     'path' => __DIR__ . '/../../interface/usergroup/addrbook_list.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/addrbook_list.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/adminacl.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$key of function xlt expects string, mixed given\\.$#',
@@ -18202,28 +17197,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/usergroup/facilities.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/facilities.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/facilities_add.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/usergroup/facilities_add.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/facility_admin.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../interface/usergroup/facility_admin.php',
 ];
 $ignoreErrors[] = [
@@ -18237,11 +17217,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/usergroup/facility_user.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/facility_user.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$constant of function xl_layout_label expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/facility_user_admin.php',
@@ -18249,11 +17224,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../interface/usergroup/facility_user_admin.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/facility_user_admin.php',
 ];
 $ignoreErrors[] = [
@@ -18332,22 +17302,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/usergroup/ssl_certificates_admin.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/ssl_certificates_admin.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$constant of function xl_gacl_group expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/user_admin.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$constant of function xl_list_label expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/user_admin.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$dispatcher of class OpenEMR\\\\Menu\\\\MainMenuRole constructor expects Symfony\\\\Component\\\\EventDispatcher\\\\EventDispatcherInterface, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/user_admin.php',
 ];
@@ -18379,11 +17339,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$haystack of function in_array expects array, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../interface/usergroup/user_admin.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/user_admin.php',
 ];
 $ignoreErrors[] = [
@@ -18437,11 +17392,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin.php',
@@ -18457,11 +17407,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin_add.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$dispatcher of class OpenEMR\\\\Menu\\\\MainMenuRole constructor expects Symfony\\\\Component\\\\EventDispatcher\\\\EventDispatcherInterface, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin_add.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 11,
     'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin_add.php',
@@ -18473,11 +17418,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$haystack of function in_array expects array, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin_add.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin_add.php',
 ];
@@ -19057,11 +17997,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/ajax/messages/validate_messages_document_ajax.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/ajax/messages/validate_messages_document_ajax.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../library/ajax/payment_ajax.php',
@@ -19549,11 +18484,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$compile_check of method Smarty_Internal_TemplateBase\\:\\:setCompileCheck\\(\\) expects int, true given\\.$#',
     'count' => 1,
-    'path' => __DIR__ . '/../../library/classes/Controller.class.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../library/classes/Controller.class.php',
 ];
 $ignoreErrors[] = [
@@ -20194,11 +19124,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$context of method Twig\\\\Environment\\:\\:render\\(\\) expects array, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../library/classes/postmaster.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../library/classes/postmaster.php',
 ];
 $ignoreErrors[] = [
@@ -21339,11 +20264,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$id of class Document constructor expects int, string given\\.$#',
     'count' => 1,
-    'path' => __DIR__ . '/../../library/dicom_frame.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../library/dicom_frame.php',
 ];
 $ignoreErrors[] = [
@@ -24172,11 +23092,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/templates/address_display.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/templates/address_display.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$contactId of method OpenEMR\\\\Services\\\\ContactAddressService\\:\\:getAddressesForContact\\(\\) expects int, int\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/templates/address_form.php',
@@ -24188,11 +23103,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$foreignId of method OpenEMR\\\\Services\\\\ContactService\\:\\:getOrCreateForEntity\\(\\) expects int, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/templates/address_form.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/templates/address_form.php',
 ];
@@ -24267,11 +23177,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/templates/relation_display.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/templates/relation_display.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$foreignTable of method OpenEMR\\\\Services\\\\ContactService\\:\\:getOrCreateForEntity\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/templates/relation_form.php',
@@ -24282,11 +23187,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/templates/relation_form.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/templates/relation_form.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$contactId of method OpenEMR\\\\Services\\\\ContactTelecomService\\:\\:getTelecomsForContact\\(\\) expects int, int\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/templates/telecom_display.php',
@@ -24302,11 +23202,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/templates/telecom_display.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/templates/telecom_display.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$contactId of method OpenEMR\\\\Services\\\\ContactTelecomService\\:\\:getTelecomsForContact\\(\\) expects int, int\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/templates/telecom_form.php',
@@ -24318,11 +23213,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$foreignId of method OpenEMR\\\\Services\\\\ContactService\\:\\:getOrCreateForEntity\\(\\) expects int, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/templates/telecom_form.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/templates/telecom_form.php',
 ];
@@ -29884,11 +28774,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#',
     'count' => 3,
-    'path' => __DIR__ . '/../../src/Controllers/Interface/Forms/Observation/ObservationController.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../src/Controllers/Interface/Forms/Observation/ObservationController.php',
 ];
 $ignoreErrors[] = [
@@ -59267,11 +58152,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/FHIR/SMART/SmartLaunchController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/FHIR/SMART/SmartLaunchController.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_push expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Forms/FeeSheet/Review/CodeInfo.php',
@@ -59493,11 +58373,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$page_id of class OpenEMR\\\\Events\\\\UserInterface\\\\PageHeadingRenderEvent constructor expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/OeUI/OemrUI.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/OeUI/OemrUI.php',
 ];
@@ -61438,11 +60313,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\.\\.\\.\\$arrays of function array_merge expects array, bool given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Services/Cda/CdaValidateDocuments.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/Cda/CdaValidateDocuments.php',
 ];
@@ -64077,7 +62947,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/FHIR/FhirDocRefService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientService\\:\\:getUuid\\(\\) expects string, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientService\\:\\:getUuid\\(\\) expects string, int\\<min, \\-1\\>\\|int\\<1, max\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/FHIR/FhirDocRefService.php',
 ];
@@ -64093,11 +62963,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Services/FHIR/FhirDocRefService.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$foreign_id of static method Document\\:\\:getDocumentsForForeignReferenceId\\(\\) expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/FHIR/FhirDocRefService.php',
 ];
@@ -69368,11 +68233,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$username of method OpenEMR\\\\Events\\\\Patient\\\\Summary\\\\PortalCredentialsUpdatedEvent\\:\\:setUsername\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Services/PatientAccessOnsiteService.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$kernel of class OpenEMR\\\\Common\\\\Twig\\\\TwigContainer constructor expects OpenEMR\\\\Core\\\\Kernel\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/PatientAccessOnsiteService.php',
 ];
