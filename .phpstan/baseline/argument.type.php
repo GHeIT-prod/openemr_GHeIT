@@ -1397,6 +1397,16 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../gacl/admin/acl_debug.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$s of method ADOConnection\\:\\:qStr\\(\\) expects string, mixed given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../gacl/admin/acl_list.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$page of method ADOConnection\\:\\:PageExecute\\(\\) expects int, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../gacl/admin/acl_list.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../gacl/admin/acl_test2.php',
@@ -1405,6 +1415,16 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../gacl/admin/acl_test3.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$s of method ADOConnection\\:\\:qStr\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../gacl/admin/assign_group.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$page of method ADOConnection\\:\\:PageExecute\\(\\) expects int, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../gacl/admin/assign_group.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
@@ -4782,11 +4802,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/observation/report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 47,
-    'path' => __DIR__ . '/../../interface/forms/phq9/common.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$num1 of function intdiv expects int, float\\|int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/phq9/report.php',
@@ -7493,7 +7508,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$object_or_class of function property_exists expects object\\|string, mixed given\\.$#',
-    'count' => 35,
+    'count' => 6,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/templates/quick_info.php',
 ];
 $ignoreErrors[] = [
@@ -13172,16 +13187,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/encounter/forms.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$pid of function getPatientData expects int, float\\|int\\|string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/encounter/forms.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Events\\\\Encounter\\\\EncounterFormsListRenderEvent\\:\\:setPid\\(\\) expects int\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/patient_file/encounter/forms.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/forms.php',
@@ -13194,11 +13199,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/encounter/forms.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$attendantType of class OpenEMR\\\\Events\\\\Encounter\\\\EncounterFormsListRenderEvent constructor expects string, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/forms.php',
 ];
 $ignoreErrors[] = [
