@@ -192,8 +192,18 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../ccr/createCCRActor.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$value of method DOMDocument\\:\\:createElement\\(\\) expects string, mixed given\\.$#',
+    'count' => 27,
+    'path' => __DIR__ . '/../../ccr/createCCRActor.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$datetime of function date_create expects string, mixed given\\.$#',
     'count' => 1,
+    'path' => __DIR__ . '/../../ccr/createCCRAlerts.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$node of method DOMNode\\:\\:appendChild\\(\\) expects TNode of DOMNode, mixed given\\.$#',
+    'count' => 3,
     'path' => __DIR__ . '/../../ccr/createCCRAlerts.php',
 ];
 $ignoreErrors[] = [
@@ -202,12 +212,32 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../ccr/createCCRAlerts.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$value of method DOMDocument\\:\\:createElement\\(\\) expects string, mixed given\\.$#',
+    'count' => 7,
+    'path' => __DIR__ . '/../../ccr/createCCRAlerts.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$value of method DOMDocument\\:\\:createElement\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../ccr/createCCRHeader.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$datetime of function date_create expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../ccr/createCCRImmunization.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$node of method DOMNode\\:\\:appendChild\\(\\) expects TNode of DOMNode, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../ccr/createCCRImmunization.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$r of function sqlFetchArray expects ADORecordSet\\|false, mixed given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../ccr/createCCRImmunization.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$value of method DOMDocument\\:\\:createElement\\(\\) expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../ccr/createCCRImmunization.php',
 ];
@@ -217,8 +247,18 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../ccr/createCCRMedication.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$node of method DOMNode\\:\\:appendChild\\(\\) expects TNode of DOMNode, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../ccr/createCCRMedication.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$r of function sqlFetchArray expects ADORecordSet\\|false, mixed given\\.$#',
     'count' => 2,
+    'path' => __DIR__ . '/../../ccr/createCCRMedication.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$value of method DOMDocument\\:\\:createElement\\(\\) expects string, mixed given\\.$#',
+    'count' => 9,
     'path' => __DIR__ . '/../../ccr/createCCRMedication.php',
 ];
 $ignoreErrors[] = [
@@ -232,8 +272,18 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../ccr/createCCRProblem.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$node of method DOMNode\\:\\:appendChild\\(\\) expects TNode of DOMNode, mixed given\\.$#',
+    'count' => 4,
+    'path' => __DIR__ . '/../../ccr/createCCRProblem.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$r of function sqlFetchArray expects ADORecordSet\\|false, mixed given\\.$#',
     'count' => 2,
+    'path' => __DIR__ . '/../../ccr/createCCRProblem.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$value of method DOMDocument\\:\\:createElement\\(\\) expects string, mixed given\\.$#',
+    'count' => 5,
     'path' => __DIR__ . '/../../ccr/createCCRProblem.php',
 ];
 $ignoreErrors[] = [
@@ -242,8 +292,18 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../ccr/createCCRProcedure.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$node of method DOMNode\\:\\:appendChild\\(\\) expects TNode of DOMNode, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../ccr/createCCRProcedure.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$r of function sqlFetchArray expects ADORecordSet\\|false, mixed given\\.$#',
     'count' => 2,
+    'path' => __DIR__ . '/../../ccr/createCCRProcedure.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$value of method DOMDocument\\:\\:createElement\\(\\) expects string, mixed given\\.$#',
+    'count' => 8,
     'path' => __DIR__ . '/../../ccr/createCCRProcedure.php',
 ];
 $ignoreErrors[] = [
@@ -252,8 +312,18 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../ccr/createCCRResult.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$node of method DOMNode\\:\\:appendChild\\(\\) expects TNode of DOMNode, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../ccr/createCCRResult.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$r of function sqlFetchArray expects ADORecordSet\\|false, mixed given\\.$#',
     'count' => 2,
+    'path' => __DIR__ . '/../../ccr/createCCRResult.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$value of method DOMDocument\\:\\:createElement\\(\\) expects string, mixed given\\.$#',
+    'count' => 8,
     'path' => __DIR__ . '/../../ccr/createCCRResult.php',
 ];
 $ignoreErrors[] = [
