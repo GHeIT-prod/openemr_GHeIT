@@ -5367,11 +5367,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/globals.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$message of function error_log expects string, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/globals.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$path of function realpath expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/globals.php',
