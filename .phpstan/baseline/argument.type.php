@@ -152,6 +152,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../ccdaservice/ccda_gateway.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of function transmitCCD expects int, mixed given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../ccr/createCCR.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$r of function sqlFetchArray expects ADORecordSet\\|false, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../ccr/createCCR.php',
@@ -167,6 +172,16 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../ccr/createCCR.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$ccd_out of function transmitCCD expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../ccr/createCCR.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$ccd_out of function transmitCCD expects string, string\\|false given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../ccr/createCCR.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../ccr/createCCR.php',
@@ -174,6 +189,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, string\\|false given\\.$#',
     'count' => 1,
+    'path' => __DIR__ . '/../../ccr/createCCR.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#4 \\$requested_by of function transmitCCD expects string, mixed given\\.$#',
+    'count' => 2,
     'path' => __DIR__ . '/../../ccr/createCCR.php',
 ];
 $ignoreErrors[] = [
@@ -369,11 +389,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#5 \\$comments of method OpenEMR\\\\Common\\\\Logging\\\\EventAuditLogger\\:\\:newEvent\\(\\) expects string, string\\|false given\\.$#',
     'count' => 4,
-    'path' => __DIR__ . '/../../ccr/transmitCCD.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#6 \\$patient_id of method OpenEMR\\\\Common\\\\Logging\\\\EventAuditLogger\\:\\:newEvent\\(\\) expects int\\|null, mixed given\\.$#',
-    'count' => 3,
     'path' => __DIR__ . '/../../ccr/transmitCCD.php',
 ];
 $ignoreErrors[] = [
@@ -7262,7 +7277,47 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/messages/templates/linked_documents.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$message of function transmitMessage expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/trusted-messages-ajax.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of function transmitCCD expects int, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/trusted-messages-ajax.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/trusted-messages-ajax.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$ccd_out of function transmitCCD expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/trusted-messages-ajax.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$recipient of function transmitMessage expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/trusted-messages-ajax.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$recipient of function transmitCCD expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/trusted-messages-ajax.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#4 \\$requested_by of function transmitCCD expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/trusted-messages-ajax.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#7 \\$message of function transmitCCD expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/trusted-messages-ajax.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#8 \\$filename of function transmitCCD expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/messages/trusted-messages-ajax.php',
 ];
@@ -11667,6 +11722,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncountermanagerTable.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of function transmitCCD expects int, string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncountermanagerTable.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$str of method Dompdf\\\\Dompdf\\:\\:loadHtml\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncountermanagerTable.php',
@@ -11693,6 +11753,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoGen\\:\\:decryptStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncountermanagerTable.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$ccd_out of function transmitCCD expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncountermanagerTable.php',
 ];
