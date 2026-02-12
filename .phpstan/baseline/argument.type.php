@@ -60982,11 +60982,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/DeviceService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$json of function json_decode expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Services/DeviceService.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$row of method OpenEMR\\\\Services\\\\DeviceService\\:\\:createResultRecordFromDatabaseResult\\(\\) expects array\\<string, mixed\\>, array\\<mixed\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/DeviceService.php',
