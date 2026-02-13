@@ -7452,11 +7452,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/src/ClaimRevApi.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#3 \\$value of function curl_setopt expects non\\-empty\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/src/ClaimRevApi.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$flags of function json_encode expects int, true given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/src/EligibilityObjectCreator.php',
