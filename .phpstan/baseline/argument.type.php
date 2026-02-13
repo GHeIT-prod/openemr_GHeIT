@@ -963,7 +963,17 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 7,
+    'count' => 4,
+    'path' => __DIR__ . '/../../custom/chart_tracker.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$text of function text expects string, string\\|null given\\.$#',
+    'count' => 3,
+    'path' => __DIR__ . '/../../custom/chart_tracker.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, mixed given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../custom/chart_tracker.php',
 ];
 $ignoreErrors[] = [
@@ -3382,6 +3392,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/clinical_notes/new.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientService\\:\\:findByPid\\(\\) expects int, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/forms/clinical_notes/new.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$callback of function array_filter expects \\(callable\\(mixed\\)\\: bool\\)\\|null, Closure\\(mixed\\)\\: mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/clinical_notes/new.php',
@@ -4697,6 +4712,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/newpatient/report.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, mixed given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../interface/forms/newpatient/report.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$value of static method OpenEMR\\\\Common\\\\Acl\\\\AclMain\\:\\:aclCheckCore\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/newpatient/report.php',
@@ -4713,6 +4733,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientIssuesService\\:\\:replaceIssuesForEncounter\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/forms/newpatient/save.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientService\\:\\:findByPid\\(\\) expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/newpatient/save.php',
 ];
@@ -7302,6 +7327,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/messages/trusted-messages-ajax.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientService\\:\\:findByPid\\(\\) expects int, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/trusted-messages.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$datetime of class DateTime constructor expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/onotes/office_comments.php',
@@ -7697,16 +7727,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Bootstrap.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$firstName of method Comlink\\\\OpenEMR\\\\Modules\\\\TeleHealthModule\\\\Models\\\\UserVideoRegistrationRequest\\:\\:setFirstName\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/Admin/TeleHealthPatientAdminController.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$lastName of method Comlink\\\\OpenEMR\\\\Modules\\\\TeleHealthModule\\\\Models\\\\UserVideoRegistrationRequest\\:\\:setLastName\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/Admin/TeleHealthPatientAdminController.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$registrationCode of method Comlink\\\\OpenEMR\\\\Modules\\\\TeleHealthModule\\\\Models\\\\TeleHealthUser\\:\\:setRegistrationCode\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/Admin/TeleHealthPatientAdminController.php',
@@ -7732,12 +7752,22 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleHealthCalendarController.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleHealthVideoRegistrationController.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$username of method Comlink\\\\OpenEMR\\\\Modules\\\\TeleHealthModule\\\\Controller\\\\TeleHealthVideoRegistrationController\\:\\:resumeUser\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleHealthVideoRegistrationController.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$username of method Comlink\\\\OpenEMR\\\\Modules\\\\TeleHealthModule\\\\Controller\\\\TeleHealthVideoRegistrationController\\:\\:suspendUser\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleHealthVideoRegistrationController.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$username of method OpenEMR\\\\Services\\\\UserService\\:\\:getUserByUsername\\(\\) expects string, string\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleHealthVideoRegistrationController.php',
 ];
@@ -7792,6 +7822,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleconferenceRoomController.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientService\\:\\:findByPid\\(\\) expects int, mixed given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleconferenceRoomController.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientService\\:\\:getUuid\\(\\) expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleconferenceRoomController.php',
@@ -7804,6 +7839,16 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, string\\|false given\\.$#',
     'count' => 3,
+    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleconferenceRoomController.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, mixed given\\.$#',
+    'count' => 3,
+    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleconferenceRoomController.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$username of method OpenEMR\\\\Services\\\\UserService\\:\\:getUserByUsername\\(\\) expects string, mixed given\\.$#',
+    'count' => 6,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleconferenceRoomController.php',
 ];
 $ignoreErrors[] = [
@@ -7900,6 +7945,11 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$facility of method OpenEMR\\\\Services\\\\UserService\\:\\:getUsersForCalendar\\(\\) expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Repository/TeleHealthProviderRepository.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientService\\:\\:findByPid\\(\\) expects int, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Repository/TeleHealthSessionRepository.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$registrationCode of method Comlink\\\\OpenEMR\\\\Modules\\\\TeleHealthModule\\\\Models\\\\TeleHealthUser\\:\\:setRegistrationCode\\(\\) expects string\\|null, mixed given\\.$#',
@@ -8058,6 +8108,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$length of static method OpenEMR\\\\Common\\\\Utils\\\\RandomGenUtils\\:\\:createUniqueToken\\(\\) expects int, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Services/TelehealthRegistrationCodeService.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientService\\:\\:findByPid\\(\\) expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Services/TelehealthRegistrationCodeService.php',
 ];
@@ -11452,6 +11507,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/CcdaServiceDocumentRequestor.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientService\\:\\:findByPid\\(\\) expects int, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/CcdaServiceRequestModelGenerator.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function htmlspecialchars expects string, int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/CcdaServiceRequestModelGenerator.php',
@@ -11568,6 +11628,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientAdvanceDirectiveService\\:\\:getPatientAdvanceDirectives\\(\\) expects int, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncounterccdadispatchTable.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientService\\:\\:findByPid\\(\\) expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncounterccdadispatchTable.php',
 ];
@@ -13242,6 +13307,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/encounter/forms.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$username of method OpenEMR\\\\Services\\\\UserService\\:\\:getUserByUsername\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/encounter/forms.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/forms.php',
@@ -14467,6 +14537,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/advancedirectives.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/advancedirectives.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pid of function getPatientData expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/browse.php',
@@ -14547,11 +14622,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/demographics.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$patient of method OpenEMR\\\\Services\\\\PatientService\\:\\:touchRecentPatientList\\(\\) expects array, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/demographics.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$patient_id of function active_alert_summary expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/demographics.php',
@@ -14583,6 +14653,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pid of function getPatientData expects int, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/demographics.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientService\\:\\:findByPid\\(\\) expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/demographics.php',
 ];
@@ -14993,7 +15068,17 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 11,
+    'count' => 9,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$text of function text expects string, string\\|null given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, mixed given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
 ];
 $ignoreErrors[] = [
@@ -15752,6 +15837,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/amc_full_report.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, float\\|int\\|string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/reports/amc_full_report.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/reports/amc_tracking.php',
@@ -16433,7 +16523,17 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 10,
+    'count' => 9,
+    'path' => __DIR__ . '/../../interface/reports/message_list.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$text of function text expects string, string\\|null given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/reports/message_list.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, mixed given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/message_list.php',
 ];
 $ignoreErrors[] = [
@@ -17608,7 +17708,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 8,
+    'count' => 5,
+    'path' => __DIR__ . '/../../interface/usergroup/user_admin.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$text of function text expects string, string\\|null given\\.$#',
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/usergroup/user_admin.php',
 ];
 $ignoreErrors[] = [
@@ -17662,6 +17767,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$username of static method OpenEMR\\\\Common\\\\Acl\\\\AclExtended\\:\\:iHavePermissionsOf\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin.php',
@@ -17688,7 +17798,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 11,
+    'count' => 8,
+    'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin_add.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$text of function text expects string, string\\|null given\\.$#',
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin_add.php',
 ];
 $ignoreErrors[] = [
@@ -26767,6 +26882,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Billing/Claim.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientService\\:\\:findByPid\\(\\) expects int, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Billing/Claim.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function strtolower expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../src/Billing/Claim.php',
@@ -26784,6 +26904,16 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
     'count' => 36,
+    'path' => __DIR__ . '/../../src/Billing/Claim.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, int\\|string\\|null given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Billing/Claim.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, mixed given\\.$#',
+    'count' => 4,
     'path' => __DIR__ . '/../../src/Billing/Claim.php',
 ];
 $ignoreErrors[] = [
@@ -27782,6 +27912,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Auth/OneTimeAuth.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of method OpenEMR\\\\Services\\\\PatientService\\:\\:findByPid\\(\\) expects int, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Common/Auth/OneTimeAuth.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$str of function strtok expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Auth/OneTimeAuth.php',
@@ -27793,6 +27928,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Common/Auth/OneTimeAuth.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, int\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Auth/OneTimeAuth.php',
 ];
@@ -27863,11 +28003,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$clientIdentifier of method League\\\\OAuth2\\\\Server\\\\Repositories\\\\ClientRepositoryInterface\\:\\:validateClient\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/Grant/CustomClientCredentialsGrant.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#3 \\$userIdentifier of method League\\\\OAuth2\\\\Server\\\\Grant\\\\AbstractGrant\\:\\:issueAccessToken\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/Grant/CustomClientCredentialsGrant.php',
 ];
@@ -28157,11 +28292,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Command/GenerateAccessTokenCommand.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$identifier of method League\\\\OAuth2\\\\Server\\\\Entities\\\\TokenInterface\\:\\:setUserIdentifier\\(\\) expects int\\|string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Command/GenerateAccessTokenCommand.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$key of method League\\\\OAuth2\\\\Server\\\\ResponseTypes\\\\AbstractResponseType\\:\\:setEncryptionKey\\(\\) expects Defuse\\\\Crypto\\\\Key\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Command/GenerateAccessTokenCommand.php',
@@ -28178,6 +28308,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$token of method OpenEMR\\\\Common\\\\Command\\\\GenerateAccessTokenCommand\\:\\:generateRefreshToken\\(\\) expects OpenEMR\\\\Common\\\\Auth\\\\OpenIDConnect\\\\Entities\\\\AccessTokenEntity, League\\\\OAuth2\\\\Server\\\\Entities\\\\AccessTokenEntityInterface given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Common/Command/GenerateAccessTokenCommand.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$username of method OpenEMR\\\\Services\\\\UserService\\:\\:getUserByUsername\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Command/GenerateAccessTokenCommand.php',
 ];
@@ -58222,6 +58357,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/FHIR/SMART/ClientAdminController.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$uuid of method OpenEMR\\\\Services\\\\UserService\\:\\:getUserByUUID\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/FHIR/SMART/ClientAdminController.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$uuid of static method OpenEMR\\\\Common\\\\Uuid\\\\UuidRegistry\\:\\:getRegistryRecordForUuid\\(\\) expects OpenEMR\\\\Common\\\\Uuid\\\\binary\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/FHIR/SMART/ClientAdminController.php',
@@ -58942,7 +59082,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/RestControllers/Authorization/LocalApiAuthorizationController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$userUUIDString of method OpenEMR\\\\Common\\\\Http\\\\HttpRestRequest\\:\\:setRequestUser\\(\\) expects string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/RestControllers/Authorization/LocalApiAuthorizationController.php',
 ];
@@ -58957,7 +59097,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/RestControllers/Authorization/OAuth2PublicJsonWebKeyController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$userUUIDString of method OpenEMR\\\\Common\\\\Http\\\\HttpRestRequest\\:\\:setRequestUser\\(\\) expects string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/RestControllers/Authorization/SkipAuthorizationStrategy.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$requestUser of method OpenEMR\\\\Common\\\\Http\\\\HttpRestRequest\\:\\:setRequestUser\\(\\) expects array, array\\<string, int\\|string\\|null\\>\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/RestControllers/Authorization/SkipAuthorizationStrategy.php',
 ];
@@ -59123,6 +59268,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$userId of class OpenEMR\\\\Common\\\\Auth\\\\UuidUserAccount constructor expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/RestControllers/AuthorizationController.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/RestControllers/AuthorizationController.php',
 ];
@@ -59857,6 +60007,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/RestControllers/SMART/PatientContextSearchController.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$uuid of method OpenEMR\\\\Services\\\\UserService\\:\\:getUserByUUID\\(\\) expects string, mixed given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../src/RestControllers/SMART/PatientContextSearchController.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$user of static method OpenEMR\\\\Common\\\\Acl\\\\AclMain\\:\\:aclCheckCore\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/RestControllers/SMART/PatientContextSearchController.php',
@@ -60017,6 +60172,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/RestControllers/UserRestController.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$uuid of method OpenEMR\\\\Services\\\\UserService\\:\\:getUserByUUID\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/RestControllers/UserRestController.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/RestControllers/UserRestController.php',
@@ -60103,6 +60263,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$timestamp of method DateTime\\:\\:setTimestamp\\(\\) expects int, int\\|false given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/AppointmentService.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/AppointmentService.php',
 ];
@@ -61173,6 +61338,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$row of method OpenEMR\\\\Services\\\\BaseService\\:\\:createResultRecordFromDatabaseResult\\(\\) expects array\\<string, mixed\\>, array\\<mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/DrugSalesService.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$username of method OpenEMR\\\\Services\\\\UserService\\:\\:getUserByUsername\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/DrugSalesService.php',
 ];
@@ -67307,6 +67477,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/FHIR/Organization/FhirOrganizationFacilityService.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$uuid of method OpenEMR\\\\Services\\\\UserService\\:\\:getUserByUUID\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/FHIR/Organization/FhirOrganizationFacilityService.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\FHIR\\\\R4\\\\FHIRElement\\\\FHIRId\\:\\:setValue\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/FHIR/Organization/FhirOrganizationFacilityService.php',
@@ -68717,7 +68892,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/PatientService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$binds of function sqlQuery expects array, mixed given\\.$#',
+    'message' => '#^Parameter \\#2 \\$binds of function sqlQuery expects array, int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/PatientService.php',
 ];
@@ -71358,11 +71533,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#7 \\$path_depth of method Document\\:\\:createDocument\\(\\) expects string, int given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../tests/Tests/Services/DocumentTest.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#8 \\$owner of method Document\\:\\:createDocument\\(\\) expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../tests/Tests/Services/DocumentTest.php',
 ];
