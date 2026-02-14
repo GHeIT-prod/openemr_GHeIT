@@ -1482,6 +1482,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../gacl/admin/gacl_admin.inc.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$options of class OpenEMR\\\\Gacl\\\\GaclAdminApi constructor expects array\\|null, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../gacl/admin/gacl_admin.inc.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$template_dir of method Smarty\\:\\:setTemplateDir\\(\\) expects array\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../gacl/admin/gacl_admin.inc.php',
@@ -58482,7 +58487,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Gacl/Gacl.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$array of function reset expects array\\|object, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$array of function reset expects array\\|object, array\\|bool given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Gacl/Gacl.php',
 ];
@@ -58502,7 +58507,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Gacl/Gacl.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#',
+    'message' => '#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, array\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Gacl/Gacl.php',
 ];
@@ -58537,8 +58542,18 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array, array\\|bool given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array, array\\|true given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function implode expects array, mixed given\\.$#',
-    'count' => 4,
+    'count' => 1,
     'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
 ];
 $ignoreErrors[] = [
