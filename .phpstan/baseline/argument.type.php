@@ -19147,11 +19147,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/classes/POSRef.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$s of function escape_table_name expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/classes/Patient.class.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$foreignId of method OpenEMR\\\\Services\\\\PhoneNumberService\\:\\:getPhonesByForeignId\\(\\) expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/classes/Pharmacy.class.php',
@@ -19200,6 +19195,11 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/classes/Prescription.class.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$s of function escape_table_name expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/classes/PrescriptionPatient.class.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$s of function add_escape_custom expects string, mixed given\\.$#',
@@ -25912,13 +25912,23 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/patient/libs/Controller/PatientController.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$message of method AppBasePortalController\\:\\:RenderErrorJSON\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/patient/libs/Controller/PatientController.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$phreezer of class Patient constructor expects Phreezer, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/patient/libs/Controller/PatientController.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$property of method Criteria\\:\\:SetOrder\\(\\) expects string, array\\|string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/patient/libs/Controller/PatientController.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../portal/patient/libs/Controller/PatientController.php',
 ];
 $ignoreErrors[] = [
@@ -25957,8 +25967,23 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/patient/libs/Controller/PatientController.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$default of method AppBasePortalController\\:\\:SafeGetVal\\(\\) expects string, date given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../portal/patient/libs/Controller/PatientController.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$default of method AppBasePortalController\\:\\:SafeGetVal\\(\\) expects string, int given\\.$#',
+    'count' => 4,
+    'path' => __DIR__ . '/../../portal/patient/libs/Controller/PatientController.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$default of method AppBasePortalController\\:\\:SafeGetVal\\(\\) expects string, longtext given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/patient/libs/Controller/PatientController.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$default of method AppBasePortalController\\:\\:SafeGetVal\\(\\) expects string, mixed given\\.$#',
-    'count' => 93,
+    'count' => 49,
     'path' => __DIR__ . '/../../portal/patient/libs/Controller/PatientController.php',
 ];
 $ignoreErrors[] = [
