@@ -6132,11 +6132,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/calendar/includes/pnAPI.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$db of function ADONewConnection expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/calendar/includes/pnAPI.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pattern of function preg_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/main/calendar/includes/pnAPI.php',
@@ -6452,7 +6447,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnadminapi.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function trim expects string, prepared given\\.$#',
+    'message' => '#^Parameter \\#1 \\$sql of method Doctrine\\\\DBAL\\\\Connection\\:\\:executeStatement\\(\\) expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnadminapi.php',
 ];
@@ -6599,11 +6594,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$providerID of method OpenEMR\\\\Events\\\\Appointments\\\\CalendarUserGetEventsFilter\\:\\:setProviderID\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnuserapi.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnuserapi.php',
 ];
 $ignoreErrors[] = [
