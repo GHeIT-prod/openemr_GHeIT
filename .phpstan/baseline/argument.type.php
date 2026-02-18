@@ -1247,6 +1247,16 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../custom/qrda_category1.inc.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, array\\|non\\-empty\\-array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../custom/qrda_category1.inc.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$haystack of function in_array expects array, non\\-empty\\-array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../custom/qrda_category1.inc.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$itemized_test_id of function collectItemizedPatientsCdrReport expects int, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../custom/qrda_category1.inc.php',
