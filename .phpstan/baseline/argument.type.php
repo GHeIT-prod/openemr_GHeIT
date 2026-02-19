@@ -1132,6 +1132,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../custom/export_labworks.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$s of function hl7Sex expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../custom/export_labworks.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$stream of function fclose expects resource, resource\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../custom/export_labworks.php',
@@ -1225,6 +1230,11 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../custom/export_registry_xml.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$s of function hl7Sex expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../custom/export_xml.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
@@ -4907,6 +4917,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/procedure_order/common.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of function labcorp_ereqForm expects int\\|string, mixed given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../interface/forms/procedure_order/common.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$ptid of function generate_qoe_html expects int, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/forms/procedure_order/common.php',
@@ -4952,7 +4967,27 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/procedure_order/common.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$out of function send_hl7_order expects string, string\\|null given\\.$#',
+    'message' => '#^Parameter \\#2 \\$encounter of function labcorp_ereqForm expects int\\|string, mixed given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../interface/forms/procedure_order/common.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$out of function default_send_hl7_order expects string, string\\|null given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/forms/procedure_order/common.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$out of function labcorp_send_hl7_order expects string, string\\|null given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/forms/procedure_order/common.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$out of function quest_send_hl7_order expects string, string\\|null given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/forms/procedure_order/common.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$out of function universal_send_hl7_order expects string, string\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/procedure_order/common.php',
 ];
@@ -12462,7 +12497,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/orders/find_order_popup.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$pid of function loadPayerInfo expects int, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$pid of function default_loadPayerInfo expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/gen_hl7_order.inc.php',
 ];
@@ -12527,7 +12562,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/orders/gen_hl7_order.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$orderid of function gen_hl7_order expects int, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$orderid of function default_gen_hl7_order expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/list_reports.php',
 ];
@@ -13927,13 +13962,23 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$patient_id of function ippf_generate_receipt expects int\\|string, mixed given\\.$#',
+    'count' => 3,
+    'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$patient_id of static method OpenEMR\\\\Billing\\\\SLEOB\\:\\:arPostPayment\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of function getPatientData expects int, int\\|string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pid of function getPatientData expects int, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
 ];
 $ignoreErrors[] = [
@@ -13947,13 +13992,18 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$text of function text expects string, array\\|float\\|int\\|string\\|false\\|null given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, int\\|string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 56,
+    'count' => 55,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
 ];
 $ignoreErrors[] = [
@@ -13984,6 +14034,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$code of function ippfReceiptDetailLine expects string, mixed given\\.$#',
     'count' => 3,
+    'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$encounter of function ippf_generate_receipt expects int\\|string, mixed given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
 ];
 $ignoreErrors[] = [
@@ -14062,8 +14117,18 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_normal.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$patient_id of function normal_generate_receipt expects int\\|string, mixed given\\.$#',
+    'count' => 3,
+    'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_normal.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of function getPatientData expects int, int\\|string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_normal.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pid of function getPatientData expects int, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_normal.php',
 ];
 $ignoreErrors[] = [
@@ -14093,6 +14158,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$description of function receiptDetailLine expects string, mixed given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_normal.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$encounter of function normal_generate_receipt expects int\\|string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_normal.php',
 ];
@@ -15562,7 +15632,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/procedure_tools/ereqs/ereq_universal_form.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$pid of function loadPayerInfo expects int, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$pid of function universal_loadPayerInfo expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/procedure_tools/gen_universal_hl7/gen_hl7_order.inc.php',
 ];
@@ -15632,18 +15702,38 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/procedure_tools/labcorp/ereq_form.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pid of function labcorp_ereqForm expects int\\|string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/procedure_tools/labcorp/ereq_form.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/procedure_tools/labcorp/ereq_form.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$text of function text expects string, int\\|string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/procedure_tools/labcorp/ereq_form.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 29,
+    'count' => 28,
+    'path' => __DIR__ . '/../../interface/procedure_tools/labcorp/ereq_form.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$encounter of function labcorp_ereqForm expects int\\|string, mixed given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/procedure_tools/labcorp/ereq_form.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 3,
+    'path' => __DIR__ . '/../../interface/procedure_tools/labcorp/ereq_form.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$form_id of function labcorp_ereqForm expects int\\|string, mixed given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/procedure_tools/labcorp/ereq_form.php',
 ];
 $ignoreErrors[] = [
@@ -15662,7 +15752,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/procedure_tools/labcorp/gen_hl7_order.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$pid of function loadPayerInfo expects int, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$pid of function labcorp_loadPayerInfo expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/procedure_tools/labcorp/gen_hl7_order.inc.php',
 ];
@@ -15742,7 +15832,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/procedure_tools/libs/labs_ajax.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$pid of function loadPayerInfo expects int, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$pid of function quest_loadPayerInfo expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/procedure_tools/quest/gen_hl7_order.inc.php',
 ];
@@ -16172,6 +16262,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/daily_summary_report.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$row of function destroyed_mapToTable expects array, array\\|string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/reports/destroyed_drugs_report.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 8,
     'path' => __DIR__ . '/../../interface/reports/destroyed_drugs_report.php',
@@ -16450,6 +16545,21 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#7 \\$irnumber of function cypReportLineItem expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/ippf_cyp_report.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$data of function ippf_daily_genAnyCell expects array\\|string, float\\|int\\|string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/reports/ippf_daily.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$data of function ippf_daily_genAnyCell expects array\\|string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/reports/ippf_daily.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$data of function ippf_daily_genHeadCell expects array\\|string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/reports/ippf_daily.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
@@ -22327,11 +22437,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/patient_tracker.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$s of function escape_table_name expects string, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../library/payment.inc.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 6,
     'path' => __DIR__ . '/../../library/payment.inc.php',
@@ -24137,12 +24242,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/add_edit_event_user.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$timestamp of function getdate expects int\\|null, float\\|int given\\.$#',
+    'message' => '#^Parameter \\#1 \\$catid of function portal_doOneDay expects int\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/find_appt_popup_user.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$baseTimestamp of function strtotime expects int\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$timestamp of function getdate expects int\\|null, float\\|int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/find_appt_popup_user.php',
 ];
@@ -24157,7 +24262,27 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/find_appt_popup_user.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$udate of function portal_doOneDay expects int, int\\|false given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/find_appt_popup_user.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$starttime of function portal_doOneDay expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/find_appt_popup_user.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#4 \\$duration of function portal_doOneDay expects int\\|string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/find_appt_popup_user.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#4 \\$month of function mktime expects int\\|null, string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/find_appt_popup_user.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#5 \\$prefcatid of function portal_doOneDay expects int\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/find_appt_popup_user.php',
 ];
@@ -26147,6 +26272,16 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/report/pat_ledger.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$enc of function portal_GetAllCredits expects string, mixed given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../portal/report/pat_ledger.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$pat of function portal_GetAllUnapplied expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/report/pat_ledger.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, \\(float\\|int\\) given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/report/pat_ledger.php',
@@ -26154,6 +26289,21 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 23,
+    'path' => __DIR__ . '/../../portal/report/pat_ledger.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$thisData of function portal_List_Look expects string, mixed given\\.$#',
+    'count' => 3,
+    'path' => __DIR__ . '/../../portal/report/pat_ledger.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$pat of function portal_GetAllCredits expects string, mixed given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../portal/report/pat_ledger.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$pat of function portal_PrintCreditDetail expects string, mixed given\\.$#',
+    'count' => 3,
     'path' => __DIR__ . '/../../portal/report/pat_ledger.php',
 ];
 $ignoreErrors[] = [
