@@ -4832,6 +4832,16 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/observation/report.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$form_id of method C_AbstractClickmap\\:\\:report_action\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/forms/painmap/report.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$form_id of method C_AbstractClickmap\\:\\:view_action\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/forms/painmap/view.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$num1 of function intdiv expects int, float\\|int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/phq9/report.php',
@@ -6202,7 +6212,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/common.api.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function nl2br expects string, prepared given\\.$#',
+    'message' => '#^Parameter \\#1 \\$string of function nl2br expects string, list\\<string\\|null\\>\\|string\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/common.api.php',
 ];
@@ -6297,7 +6307,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/plugins/function.pc_filter.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$value of method pnHTML\\:\\:FormHidden\\(\\) expects string, prepared given\\.$#',
+    'message' => '#^Parameter \\#2 \\$value of method pnHTML\\:\\:FormHidden\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/plugins/function.pc_filter.php',
 ];
@@ -6312,7 +6322,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/plugins/function.pc_form_nav_open.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function strtolower expects string, prepared given\\.$#',
+    'message' => '#^Parameter \\#1 \\$string of function strtolower expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/plugins/function.pc_form_nav_open.php',
 ];
@@ -6347,7 +6357,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/plugins/function.pc_url.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function strtolower expects string, prepared given\\.$#',
+    'message' => '#^Parameter \\#1 \\$string of function strtolower expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/plugins/function.pc_url.php',
 ];
@@ -6412,7 +6422,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnadmin.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function trim expects string, prepared given\\.$#',
+    'message' => '#^Parameter \\#1 \\$string of function trim expects string, list\\<string\\>\\|string given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnadmin.php',
 ];
@@ -6512,12 +6522,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnuser.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$s of function add_escape_custom expects string, prepared given\\.$#',
+    'message' => '#^Parameter \\#1 \\$s of function add_escape_custom expects string, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnuser.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$s of function escape_identifier expects string, prepared given\\.$#',
+    'message' => '#^Parameter \\#1 \\$s of function escape_identifier expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnuser.php',
 ];
@@ -6527,7 +6537,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnuser.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function strtolower expects string, prepared given\\.$#',
+    'message' => '#^Parameter \\#1 \\$string of function strtolower expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnuser.php',
 ];
@@ -6547,7 +6557,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnuser.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$string of function explode expects string, prepared given\\.$#',
+    'message' => '#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnuser.php',
 ];
@@ -20657,28 +20667,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/direct_message_check.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$filename of function file_get_contents expects string, the given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../library/direct_message_check.inc.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$filename of function filesize expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/direct_message_check.inc.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$filename of function filesize expects string, the given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/direct_message_check.inc.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$filename of function unlink expects string, mixed given\\.$#',
     'count' => 1,
-    'path' => __DIR__ . '/../../library/direct_message_check.inc.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$filename of function unlink expects string, the given\\.$#',
-    'count' => 4,
     'path' => __DIR__ . '/../../library/direct_message_check.inc.php',
 ];
 $ignoreErrors[] = [
@@ -24707,17 +24702,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/util/Mime_Types.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$html of function convert_html_to_text expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/patient/fwk/libs/util/class.html2text.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$message of method Exception\\:\\:__construct\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../portal/patient/fwk/libs/util/html2text.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$source of method DOMDocument\\:\\:loadHTML\\(\\) expects string, the given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../portal/patient/fwk/libs/util/html2text.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/util/html2text.php',
 ];
