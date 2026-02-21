@@ -29062,21 +29062,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Utils/FormatMoney.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$decimals of function number_format expects int, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Utils/FormatMoney.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#3 \\$decimal_separator of function number_format expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Utils/FormatMoney.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#4 \\$thousands_separator of function number_format expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Utils/FormatMoney.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$requestParams of method OpenEMR\\\\Common\\\\Utils\\\\PaginationUtils\\:\\:buildQueryParams\\(\\) expects array, array\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Utils/PaginationUtils.php',
