@@ -33642,6 +33642,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Crypto/CryptoGen.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$length of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoGen\\:\\:getRandomBytes\\(\\) expects int\\<1, max\\>, int given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Common/Crypto/CryptoGen.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function rtrim expects string, string\\|false given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../src/Common/Crypto/CryptoGen.php',
