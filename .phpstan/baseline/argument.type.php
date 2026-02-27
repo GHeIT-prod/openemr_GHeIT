@@ -13158,27 +13158,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$dbname of static method OpenEMR\\\\Common\\\\Database\\\\DbUtils\\:\\:buildMysqlDsn\\(\\) expects string, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/config/autoload/global.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$serviceLocator of method Laminas\\\\Db\\\\Adapter\\\\AdapterAbstractServiceFactory\\:\\:createServiceWithName\\(\\) expects Laminas\\\\ServiceManager\\\\ServiceLocatorInterface, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/config/autoload/global.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoGen\\:\\:cryptCheckStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/config/autoload/global.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoGen\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/config/autoload/global.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$host of static method OpenEMR\\\\Common\\\\Database\\\\DbUtils\\:\\:buildMysqlDsn\\(\\) expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/config/autoload/global.php',
 ];
 $ignoreErrors[] = [
@@ -13187,22 +13172,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/config/autoload/global.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$username of class PDO constructor expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/config/autoload/global.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#3 \\$password of class PDO constructor expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/config/autoload/global.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$port of static method OpenEMR\\\\Common\\\\Database\\\\DbUtils\\:\\:buildMysqlDsn\\(\\) expects string, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/config/autoload/global.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#3 \\$requestedName of method Laminas\\\\Db\\\\Adapter\\\\AdapterAbstractServiceFactory\\:\\:createServiceWithName\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/config/autoload/global.php',
 ];
@@ -14585,51 +14555,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$features of method Laminas\\\\Db\\\\TableGateway\\\\TableGateway\\:\\:__construct\\(\\) expects array\\<Laminas\\\\Db\\\\TableGateway\\\\Feature\\\\AbstractFeature\\>\\|Laminas\\\\Db\\\\TableGateway\\\\Feature\\\\AbstractFeature\\|Laminas\\\\Db\\\\TableGateway\\\\Feature\\\\FeatureSet\\|null, array\\<Installer\\\\Model\\\\Feature\\\\AbstractFeature\\>\\|Installer\\\\Model\\\\Feature\\\\AbstractFeature\\|Installer\\\\Model\\\\Feature\\\\FeatureSet\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Model/InstModuleTableGateway.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$MultipledbTable of class Multipledb\\\\Controller\\\\MultipledbController constructor expects Multipledb\\\\Model\\\\MultipledbTable, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Multipledb/config/module.config.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$arrayObjectPrototype of method Laminas\\\\Db\\\\ResultSet\\\\ResultSet\\:\\:setArrayObjectPrototype\\(\\) expects ArrayObject, Multipledb\\\\Model\\\\Multipledb given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Multipledb/config/module.config.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$adapter of class Laminas\\\\Db\\\\TableGateway\\\\TableGateway constructor expects Laminas\\\\Db\\\\Adapter\\\\AdapterInterface, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Multipledb/config/module.config.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function substr expects string, int given\\.$#',
-    'count' => 4,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Multipledb/src/Multipledb/Controller/MultipledbController.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#3 \\$user of static method OpenEMR\\\\Common\\\\Acl\\\\AclMain\\:\\:aclCheckCore\\(\\) expects string, false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Multipledb/src/Multipledb/Controller/MultipledbController.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#4 \\$return_value of static method OpenEMR\\\\Common\\\\Acl\\\\AclMain\\:\\:aclCheckCore\\(\\) expects array\\|string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Multipledb/src/Multipledb/Controller/MultipledbController.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$input of method Laminas\\\\InputFilter\\\\InputFilter\\<mixed\\>\\:\\:add\\(\\) expects array\\{type\\?\\: string, name\\?\\: \\(int\\|string\\), required\\?\\: bool, allow_empty\\?\\: bool, continue_if_empty\\?\\: bool, error_message\\?\\: string\\|null, fallback_value\\?\\: mixed, break_on_failure\\?\\: bool, \\.\\.\\.\\}\\|Laminas\\\\InputFilter\\\\InputFilterInterface\\|Laminas\\\\InputFilter\\\\InputInterface\\|Traversable, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Multipledb/src/Multipledb/Model/Multipledb.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$object of function get_object_vars expects object, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Multipledb/src/Multipledb/Model/MultipledbTable.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoGen\\:\\:encryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Multipledb/src/Multipledb/Model/MultipledbTable.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#',
