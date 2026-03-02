@@ -13182,16 +13182,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/config/autoload/global.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$adapter of class Acl\\\\Model\\\\AclTable constructor expects Laminas\\\\Db\\\\Adapter\\\\Adapter, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Acl/Module.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$adapter of class Acl\\\\Model\\\\AclTable constructor expects Laminas\\\\Db\\\\Adapter\\\\Adapter, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Acl/config/module.config.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$htmlEscaper of class Acl\\\\Controller\\\\AclController constructor expects Laminas\\\\View\\\\Helper\\\\HelperInterface, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Acl/config/module.config.php',
@@ -13237,24 +13227,9 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Acl/src/Acl/Controller/AclController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$arrayObjectPrototype of method Laminas\\\\Db\\\\ResultSet\\\\ResultSet\\:\\:setArrayObjectPrototype\\(\\) expects ArrayObject, Acl\\\\Model\\\\Acl given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Acl/src/Acl/Model/AclTable.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/ajax/reporting_period_handler.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$applicationTable of class Application\\\\Controller\\\\IndexController constructor expects Application\\\\Model\\\\ApplicationTable, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/config/module.config.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$applicationTable of class Application\\\\Controller\\\\SendtoController constructor expects Application\\\\Model\\\\ApplicationTable, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/config/module.config.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$encounterCCDADispatchController of class Application\\\\Controller\\\\SoapController constructor expects Carecoordination\\\\Controller\\\\EncounterccdadispatchController, mixed given\\.$#',
@@ -13267,9 +13242,14 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/config/module.config.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$sendToTable of class Application\\\\Controller\\\\SendtoController constructor expects Application\\\\Model\\\\SendtoTable, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$sendToTable of class Application\\\\Controller\\\\SendtoController constructor expects Application\\\\Model\\\\SendtoTable, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/config/module.config.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$str of method Application\\\\Listener\\\\Listener\\:\\:z_xlt\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/src/Application/Controller/IndexController.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$object of method Laminas\\\\Soap\\\\Server\\:\\:setObject\\(\\) expects object, mixed given\\.$#',
@@ -13327,22 +13307,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/src/Application/Listener/ModuleMenuSubscriber.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$arrayObjectPrototype of method Laminas\\\\Db\\\\ResultSet\\\\ResultSet\\:\\:setArrayObjectPrototype\\(\\) expects ArrayObject, Application\\\\Model\\\\Application given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/src/Application/Model/ApplicationTable.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$datetime of class DateTime constructor expects string, string\\|null given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/src/Application/Model/ApplicationTable.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$e of method Application\\\\Model\\\\ApplicationTable\\:\\:errorHandler\\(\\) expects Application\\\\Model\\\\type, Throwable given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/src/Application/Model/ApplicationTable.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of method Laminas\\\\Escaper\\\\Escaper\\:\\:escapeHtml\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/src/Application/Model/ApplicationTable.php',
 ];
@@ -13357,7 +13322,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/src/Application/Plugin/CommonPlugin.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$input_date of method Application\\\\Model\\\\ApplicationTable\\:\\:fixDate\\(\\) expects string, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$input_date of static method Application\\\\Model\\\\ApplicationTable\\:\\:fixDate\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/src/Application/Plugin/CommonPlugin.php',
 ];
@@ -13390,11 +13355,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$callback of function spl_autoload_register expects \\(callable\\(string\\)\\: void\\)\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/autoload_register.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$applicationTable of class Carecoordination\\\\Model\\\\EncounterccdadispatchTable constructor expects Application\\\\Model\\\\ApplicationTable, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/config/module.config.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$ccdTable of class Carecoordination\\\\Controller\\\\CcdController constructor expects Carecoordination\\\\Model\\\\CcdTable, mixed given\\.$#',
@@ -13842,11 +13802,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncounterccdadispatchTable.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$id of class Carecoordination\\\\Model\\\\GeneratedCcdaResult constructor expects int, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncounterccdadispatchTable.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$input_date of static method Application\\\\Model\\\\ApplicationTable\\:\\:fixDate\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncounterccdadispatchTable.php',
@@ -13953,17 +13908,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function xmlEscape expects string, mixed given\\.$#',
-    'count' => 417,
+    'count' => 416,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncounterccdadispatchTable.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function xmlEscape expects string, string\\|null given\\.$#',
     'count' => 14,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncounterccdadispatchTable.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, Application\\\\Model\\\\type given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncounterccdadispatchTable.php',
 ];
 $ignoreErrors[] = [
@@ -14003,11 +13953,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$foreignId of method OpenEMR\\\\Services\\\\ContactService\\:\\:getOrCreateForEntity\\(\\) expects int, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncounterccdadispatchTable.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$params of method Application\\\\Model\\\\ApplicationTable\\:\\:zQuery\\(\\) expects array, string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncounterccdadispatchTable.php',
 ];
@@ -14107,37 +14052,17 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncountermanagerTable.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$array of function array_shift expects array, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/MapperTable.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$params of method Application\\\\Model\\\\ApplicationTable\\:\\:zQuery\\(\\) expects array, mixed given\\.$#',
+    'message' => '#^Parameter \\#2 \\$binds of static method OpenEMR\\\\Common\\\\Database\\\\QueryUtils\\:\\:sqlStatementThrowException\\(\\) expects array\\<mixed\\>, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/MapperTable.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$array of function array_shift expects array, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/SetupTable.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$params of method Application\\\\Model\\\\ApplicationTable\\:\\:zQuery\\(\\) expects array, mixed given\\.$#',
+    'message' => '#^Parameter \\#2 \\$binds of static method OpenEMR\\\\Common\\\\Database\\\\QueryUtils\\:\\:sqlStatementThrowException\\(\\) expects array\\<mixed\\>, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/SetupTable.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$arrayObjectPrototype of method Laminas\\\\Db\\\\ResultSet\\\\ResultSet\\:\\:setArrayObjectPrototype\\(\\) expects ArrayObject, Ccr\\\\Model\\\\Ccr given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Ccr/config/module.config.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$ccrTable of class Ccr\\\\Controller\\\\CcrController constructor expects Ccr\\\\Model\\\\CcrTable, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Ccr/config/module.config.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$adapter of class Laminas\\\\Db\\\\TableGateway\\\\TableGateway constructor expects Laminas\\\\Db\\\\Adapter\\\\AdapterInterface, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Ccr/config/module.config.php',
 ];
@@ -14312,17 +14237,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/FHIR/src/FHIR/Listener/UuidMappingEventsSubscriber.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$arrayObjectPrototype of method Laminas\\\\Db\\\\ResultSet\\\\ResultSet\\:\\:setArrayObjectPrototype\\(\\) expects ArrayObject, Immunization\\\\Model\\\\Immunization given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Immunization/config/module.config.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$table of class Immunization\\\\Controller\\\\ImmunizationController constructor expects Immunization\\\\Model\\\\ImmunizationTable, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Immunization/config/module.config.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$adapter of class Laminas\\\\Db\\\\TableGateway\\\\TableGateway constructor expects Laminas\\\\Db\\\\Adapter\\\\AdapterInterface, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Immunization/config/module.config.php',
 ];
@@ -14512,11 +14427,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Controller/InstallerController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$dataSource of method Laminas\\\\Db\\\\ResultSet\\\\AbstractResultSet\\:\\:initialize\\(\\) expects array\\|Iterator\\|IteratorAggregate, Application\\\\Model\\\\type given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Model/InstModuleTable.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$filename of function file expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Model/InstModuleTable.php',
@@ -14532,18 +14442,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Model/InstModuleTable.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$sql of method Application\\\\Model\\\\ApplicationTable\\:\\:zQuery\\(\\) expects string, string\\|null given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Model/InstModuleTable.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function errorLogEscape expects string, mixed given\\.$#',
     'count' => 3,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Model/InstModuleTable.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, Application\\\\Model\\\\type given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Model/InstModuleTable.php',
 ];
 $ignoreErrors[] = [
@@ -14573,16 +14473,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$PatientDataTable of class Patientvalidation\\\\Controller\\\\PatientvalidationController constructor expects Patientvalidation\\\\Model\\\\PatientDataTable, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Patientvalidation/config/module.config.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$arrayObjectPrototype of method Laminas\\\\Db\\\\ResultSet\\\\ResultSet\\:\\:setArrayObjectPrototype\\(\\) expects ArrayObject, Patientvalidation\\\\Model\\\\PatientData given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Patientvalidation/config/module.config.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$adapter of class Laminas\\\\Db\\\\TableGateway\\\\TableGateway constructor expects Laminas\\\\Db\\\\Adapter\\\\AdapterInterface, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Patientvalidation/config/module.config.php',
 ];
@@ -65812,11 +65702,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/Cda/CdaTemplateImportDispose.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, Application\\\\Model\\\\type given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Services/Cda/CdaTemplateImportDispose.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../src/Services/Cda/CdaTemplateImportDispose.php',
@@ -65827,7 +65712,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/Cda/CdaTemplateImportDispose.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$encounter of method OpenEMR\\\\Services\\\\PatientIssuesService\\:\\:linkIssueToEncounter\\(\\) expects string, mixed given\\.$#',
+    'message' => '#^Parameter \\#2 \\$encounter of method OpenEMR\\\\Services\\\\PatientIssuesService\\:\\:linkIssueToEncounter\\(\\) expects string, int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/Cda/CdaTemplateImportDispose.php',
 ];
