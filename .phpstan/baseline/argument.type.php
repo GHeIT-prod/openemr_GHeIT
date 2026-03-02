@@ -11352,11 +11352,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/messageUI.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of static method OpenEMR\\\\Modules\\\\FaxSMS\\\\Enums\\\\ServiceType\\:\\:fromValue\\(\\) expects int\\|string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/messageUI.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_js expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/openemr.bootstrap.php',
