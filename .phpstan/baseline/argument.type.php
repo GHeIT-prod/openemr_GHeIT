@@ -7192,16 +7192,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/logview/logview.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$sValue of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoGen\\:\\:aes256DecryptOne\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/logview/logview.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$sValue of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoGen\\:\\:aes256DecryptTwo\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/logview/logview.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function mb_convert_encoding expects array\\|string, string\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/logview/logview.php',
@@ -7232,7 +7222,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/logview/logview.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#3 \\$subject of function preg_replace expects array\\<float\\|int\\|string\\>\\|string, string\\|false given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of static method OpenEMR\\\\Common\\\\Crypto\\\\KeyVersion\\:\\:from\\(\\) expects int\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/logview/logview.php',
 ];
@@ -19372,22 +19362,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/audit_log_tamper_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$sValue of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoGen\\:\\:aes256DecryptOne\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/audit_log_tamper_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$sValue of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoGen\\:\\:aes256DecryptTwo\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/audit_log_tamper_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function mb_convert_encoding expects array\\|string, string\\|null given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/audit_log_tamper_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function trim expects string, string\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/audit_log_tamper_report.php',
 ];
@@ -19408,6 +19383,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoGen\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/reports/audit_log_tamper_report.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$value of static method OpenEMR\\\\Common\\\\Crypto\\\\KeyVersion\\:\\:from\\(\\) expects int\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/audit_log_tamper_report.php',
 ];
