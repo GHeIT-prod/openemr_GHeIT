@@ -16567,18 +16567,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/manage_dup_patients.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_js expects string, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/patient_file/manage_dup_patients.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/manage_dup_patients.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 8,
+    'message' => '#^Parameter \\#3 \\$row of function displayRow expects array\\<string, string\\>, array given\\.$#',
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/manage_dup_patients.php',
 ];
 $ignoreErrors[] = [
