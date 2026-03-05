@@ -64362,11 +64362,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/RestControllers/EmployerRestController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$processingResult of static method OpenEMR\\\\RestControllers\\\\RestControllerHelper\\:\\:handleProcessingResult\\(\\) expects OpenEMR\\\\Validators\\\\ProcessingResult, mixed given\\.$#',
-    'count' => 6,
-    'path' => __DIR__ . '/../../src/RestControllers/EncounterRestController.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../src/RestControllers/EncounterRestController.php',
