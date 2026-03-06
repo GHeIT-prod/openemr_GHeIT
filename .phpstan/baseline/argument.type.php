@@ -30503,7 +30503,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$exception of method AppBasePortalController\\:\\:RenderExceptionJSON\\(\\) expects Exception, Throwable given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../portal/patient/libs/Controller/OnsiteActivityViewController.php',
 ];
 $ignoreErrors[] = [
