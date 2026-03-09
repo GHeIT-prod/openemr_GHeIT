@@ -64577,8 +64577,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/RestControllers/Subscriber/SiteSetupListener.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$web_root of class OpenEMR\\\\Common\\\\Http\\\\HttpSessionFactory constructor expects string, mixed given\\.$#',
-    'count' => 2,
+    'message' => '#^Parameter \\#2 \\$webroot of method OpenEMR\\\\RestControllers\\\\Subscriber\\\\SiteSetupListener\\:\\:setupApiSession\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/RestControllers/Subscriber/SiteSetupListener.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$webroot of method OpenEMR\\\\RestControllers\\\\Subscriber\\\\SiteSetupListener\\:\\:setupCoreSessionBridge\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../src/RestControllers/Subscriber/SiteSetupListener.php',
 ];
 $ignoreErrors[] = [
