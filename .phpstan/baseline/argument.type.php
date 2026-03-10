@@ -417,6 +417,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../ccr/transmitCCD.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$name of static method Monolog\\\\Level\\:\\:fromName\\(\\) expects \'ALERT\'\\|\'Alert\'\\|\'alert\'\\|\'CRITICAL\'\\|\'Critical\'\\|\'critical\'\\|\'DEBUG\'\\|\'Debug\'\\|\'debug\'\\|\'EMERGENCY\'\\|\'Emergency\'\\|\'emergency\'\\|\'ERROR\'\\|\'Error\'\\|\'error\'\\|\'INFO\'\\|\'Info\'\\|\'info\'\\|\'NOTICE\'\\|\'Notice\'\\|\'notice\'\\|\'WARNING\'\\|\'Warning\'\\|\'warning\', mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../config/services.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$num of function ceil expects float\\|int, string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../contrib/util/billing/load_fee_schedule.php',
