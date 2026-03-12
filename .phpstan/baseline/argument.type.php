@@ -73517,7 +73517,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/ProcedureProviderService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$context of method OpenEMR\\\\Common\\\\Logging\\\\SystemLogger\\:\\:error\\(\\) expects array, OpenEMR\\\\Services\\\\Search\\\\SearchFieldException given\\.$#',
+    'message' => '#^Parameter \\#2 \\$context of method Psr\\\\Log\\\\LoggerInterface\\:\\:error\\(\\) expects array\\<mixed\\>, OpenEMR\\\\Services\\\\Search\\\\SearchFieldException given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/ProcedureProviderService.php',
 ];
