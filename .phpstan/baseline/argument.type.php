@@ -617,13 +617,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../controllers/C_Document.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$haystack of function str_contains expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../controllers/C_Document.class.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$haystack of function str_contains expects string, string\\|false given\\.$#',
-    'count' => 1,
+    'count' => 2,
     'path' => __DIR__ . '/../../controllers/C_Document.class.php',
 ];
 $ignoreErrors[] = [
@@ -693,7 +688,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function strlen expects string, mixed given\\.$#',
-    'count' => 6,
+    'count' => 4,
     'path' => __DIR__ . '/../../controllers/C_Document.class.php',
 ];
 $ignoreErrors[] = [
@@ -782,7 +777,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../controllers/C_Document.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#5 \\$data of method Document\\:\\:createDocument\\(\\) expects string, mixed given\\.$#',
+    'message' => '#^Parameter \\#5 \\$data of method Document\\:\\:createDocument\\(\\) expects string, string\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../controllers/C_Document.class.php',
 ];
@@ -8588,11 +8583,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/main/main_screen.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$customPassword of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/main_screen.php',
 ];
@@ -13887,17 +13877,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Documents/src/Documents/Controller/DocumentsController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Documents/src/Documents/Controller/DocumentsController.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$category_id of method Document\\:\\:createDocument\\(\\) expects int, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Documents/src/Documents/Controller/DocumentsController.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$customPassword of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Documents/src/Documents/Controller/DocumentsController.php',
 ];
@@ -32223,11 +32203,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../src/Common/Auth/MfaUtils.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$customPassword of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Auth/MfaUtils.php',
 ];
@@ -76392,8 +76367,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../tests/Tests/Unit/Common/Auth/OpenIDConnect/Repositories/ScopeRepositoryTest.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$prefix of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringStartsWith\\(\\) expects non\\-empty\\-string, mixed given\\.$#',
-    'count' => 8,
+    'message' => '#^Parameter \\#1 \\$prefix of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringStartsWith\\(\\) expects non\\-empty\\-string, string given\\.$#',
+    'count' => 6,
     'path' => __DIR__ . '/../../tests/Tests/Unit/Common/Crypto/CryptoGenTest.php',
 ];
 $ignoreErrors[] = [
