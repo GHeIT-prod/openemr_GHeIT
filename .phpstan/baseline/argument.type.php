@@ -737,11 +737,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../controllers/C_Document.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$entryname of method ZipArchive\\:\\:addFile\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../controllers/C_Document.class.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$length of function fread expects int\\<1, max\\>, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../controllers/C_Document.class.php',
