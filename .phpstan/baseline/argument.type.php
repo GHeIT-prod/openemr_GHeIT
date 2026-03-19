@@ -33167,6 +33167,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Logging/SystemLogger.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$context of method Psr\\\\Log\\\\LoggerInterface\\:\\:log\\(\\) expects array\\<mixed\\>, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Common/Logging/SystemLogger.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$s of function escape_table_name expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/ORDataObject/Address.php',
