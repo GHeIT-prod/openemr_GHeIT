@@ -7242,6 +7242,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/backup.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$str of closure expects string, mixed given\\.$#',
+    'count' => 4,
+    'path' => __DIR__ . '/../../interface/main/backup.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$stream of function fclose expects resource, resource\\|false given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/main/backup.php',
