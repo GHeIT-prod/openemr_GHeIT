@@ -478,12 +478,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 8,
-    'path' => __DIR__ . '/../../contrib/util/dupecheck/index.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
+    'count' => 7,
     'path' => __DIR__ . '/../../contrib/util/dupecheck/index.php',
 ];
 $ignoreErrors[] = [
@@ -508,7 +503,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../contrib/util/dupecheck/mergerecords.php',
 ];
 $ignoreErrors[] = [
@@ -977,16 +972,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../controllers/C_X12Partner.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../controllers/C_X12Partner.class.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:encryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../controllers/C_X12Partner.class.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$filename of function chmod expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../custom/BillingExport.csv.php',
@@ -1048,7 +1033,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../custom/chart_tracker.php',
 ];
 $ignoreErrors[] = [
@@ -1167,11 +1152,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../custom/download_qrda.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../custom/download_qrda.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../custom/download_qrda.php',
@@ -1247,11 +1227,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../custom/export_qrda_xml.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../custom/export_qrda_xml.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../custom/export_qrda_xml.php',
@@ -1312,11 +1287,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../custom/import_xml.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../custom/import_xml.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$value of static method OpenEMR\\\\Common\\\\Acl\\\\AclMain\\:\\:aclCheckCore\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../custom/import_xml.php',
@@ -1324,16 +1294,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$report_id of function collectItemizedPatientsCdrReport expects int, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../custom/qrda_category1.inc.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, array\\|non\\-empty\\-array given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../custom/qrda_category1.inc.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$haystack of function in_array expects array, non\\-empty\\-array given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../custom/qrda_category1.inc.php',
 ];
 $ignoreErrors[] = [
@@ -1582,11 +1542,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../gacl/admin/gacl_admin.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$options of class OpenEMR\\\\Gacl\\\\GaclAdminApi constructor expects array\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../gacl/admin/gacl_admin.inc.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$template_dir of method Smarty\\:\\:setTemplateDir\\(\\) expects array\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../gacl/admin/gacl_admin.inc.php',
@@ -1747,18 +1702,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/batchcom/batchcom.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/batchcom/batchcom.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/batchcom/batchcom.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 5,
+    'count' => 4,
     'path' => __DIR__ . '/../../interface/batchcom/emailnotification.php',
 ];
 $ignoreErrors[] = [
@@ -1768,7 +1718,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 7,
+    'count' => 6,
     'path' => __DIR__ . '/../../interface/batchcom/settingsnotification.php',
 ];
 $ignoreErrors[] = [
@@ -1778,7 +1728,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/batchcom/smsnotification.php',
 ];
 $ignoreErrors[] = [
@@ -1823,7 +1773,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 23,
+    'count' => 21,
     'path' => __DIR__ . '/../../interface/billing/billing_report.php',
 ];
 $ignoreErrors[] = [
@@ -1838,12 +1788,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/billing_report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/billing/billing_report.php',
 ];
 $ignoreErrors[] = [
@@ -1855,16 +1805,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/billing/billing_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/billing_tracker.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/billing_tracker.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:cryptCheckStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
@@ -1898,7 +1838,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 5,
+    'count' => 4,
     'path' => __DIR__ . '/../../interface/billing/edi_270.php',
 ];
 $ignoreErrors[] = [
@@ -1933,7 +1873,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/edi_271.php',
 ];
 $ignoreErrors[] = [
@@ -1955,16 +1895,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/edi_271.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 9,
-    'path' => __DIR__ . '/../../interface/billing/edih_view.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 8,
-    'path' => __DIR__ . '/../../interface/billing/edih_view.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$data of method OpenEMR\\\\PaymentProcessing\\\\Recorder\\:\\:recordActivity\\(\\) expects array\\{patientId\\: string, encounterId\\: string, codeType\\: string, code\\: string, modifier\\: string, payerType\\: string, postUser\\: string, sessionId\\: string, \\.\\.\\.\\}, array\\{patientId\\: string, encounterId\\: string, codeType\\: string, code\\: string, modifier\\: string, payerType\\: string, postUser\\: string, sessionId\\: string, \\.\\.\\.\\} given\\.$#',
@@ -2053,7 +1983,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 7,
+    'count' => 6,
     'path' => __DIR__ . '/../../interface/billing/era_payments.php',
 ];
 $ignoreErrors[] = [
@@ -2063,7 +1993,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/era_payments.php',
 ];
 $ignoreErrors[] = [
@@ -2083,7 +2013,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/billing/indigent_patients_report.php',
 ];
 $ignoreErrors[] = [
@@ -2363,7 +2293,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 20,
+    'count' => 19,
     'path' => __DIR__ . '/../../interface/billing/sl_eob_invoice.php',
 ];
 $ignoreErrors[] = [
@@ -2453,7 +2383,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/sl_eob_patient_note.php',
 ];
 $ignoreErrors[] = [
@@ -2493,7 +2423,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 10,
+    'count' => 9,
     'path' => __DIR__ . '/../../interface/billing/sl_eob_process.php',
 ];
 $ignoreErrors[] = [
@@ -2763,17 +2693,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 14,
+    'count' => 13,
     'path' => __DIR__ . '/../../interface/billing/sl_eob_search.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_js expects string, mixed given\\.$#',
     'count' => 3,
-    'path' => __DIR__ . '/../../interface/billing/sl_eob_search.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../interface/billing/sl_eob_search.php',
 ];
 $ignoreErrors[] = [
@@ -2848,7 +2773,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 5,
+    'count' => 4,
     'path' => __DIR__ . '/../../interface/billing/sl_receipts_report.php',
 ];
 $ignoreErrors[] = [
@@ -2993,7 +2918,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 19,
+    'count' => 18,
     'path' => __DIR__ . '/../../interface/drugs/add_edit_drug.php',
 ];
 $ignoreErrors[] = [
@@ -3013,7 +2938,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 10,
+    'count' => 9,
     'path' => __DIR__ . '/../../interface/drugs/add_edit_lot.php',
 ];
 $ignoreErrors[] = [
@@ -3048,7 +2973,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 5,
+    'count' => 4,
     'path' => __DIR__ . '/../../interface/drugs/destroy_lot.php',
 ];
 $ignoreErrors[] = [
@@ -3180,11 +3105,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function array_key_exists expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/eRx.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/eRxGlobals.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function array_key_exists expects array, mixed given\\.$#',
@@ -3357,19 +3277,9 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/eRx_xml.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/easipro/pro.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/easipro/pro.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/expand_contract_js.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$command of function escapeshellcmd expects string, string\\|false given\\.$#',
@@ -3413,16 +3323,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/fax/fax_dispatch.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/fax/fax_dispatch.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/fax/fax_dispatch.php',
 ];
@@ -3497,16 +3402,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/fax/faxq.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 5,
-    'path' => __DIR__ . '/../../interface/fax/faxq.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 5,
-    'path' => __DIR__ . '/../../interface/fax/faxq.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/fax/faxq.php',
@@ -3518,11 +3413,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$filename of function fopen expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/CAMOS/admin.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/CAMOS/admin.php',
 ];
@@ -3603,7 +3493,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/CAMOS/new.php',
 ];
 $ignoreErrors[] = [
@@ -3613,7 +3503,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 12,
+    'count' => 11,
     'path' => __DIR__ . '/../../interface/forms/CAMOS/new.php',
 ];
 $ignoreErrors[] = [
@@ -3638,7 +3528,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/forms/CAMOS/notegen.php',
 ];
 $ignoreErrors[] = [
@@ -3677,18 +3567,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/CAMOS/notegen.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/CAMOS/print.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/forms/CAMOS/report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 14,
+    'count' => 12,
     'path' => __DIR__ . '/../../interface/forms/CAMOS/rx_print.php',
 ];
 $ignoreErrors[] = [
@@ -3713,7 +3598,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/forms/CAMOS/view.php',
 ];
 $ignoreErrors[] = [
@@ -3803,7 +3688,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 7,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/forms/LBF/new.php',
 ];
 $ignoreErrors[] = [
@@ -3893,7 +3778,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 6,
+    'count' => 5,
     'path' => __DIR__ . '/../../interface/forms/aftercare_plan/new.php',
 ];
 $ignoreErrors[] = [
@@ -3922,11 +3807,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/aftercare_plan/report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/ankleinjury/new.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/ankleinjury/report.php',
@@ -3943,7 +3823,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 9,
+    'count' => 8,
     'path' => __DIR__ . '/../../interface/forms/ankleinjury/view.php',
 ];
 $ignoreErrors[] = [
@@ -3957,11 +3837,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/ankleinjury/view.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/bronchitis/new.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/bronchitis/report.php',
@@ -3978,7 +3853,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 11,
+    'count' => 10,
     'path' => __DIR__ . '/../../interface/forms/bronchitis/view.php',
 ];
 $ignoreErrors[] = [
@@ -3993,7 +3868,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 41,
+    'count' => 40,
     'path' => __DIR__ . '/../../interface/forms/care_plan/new.php',
 ];
 $ignoreErrors[] = [
@@ -4053,7 +3928,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/clinic_note/new.php',
 ];
 $ignoreErrors[] = [
@@ -4078,7 +3953,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/clinic_note/view.php',
 ];
 $ignoreErrors[] = [
@@ -4090,11 +3965,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/forms/clinic_note/view.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/clinical_instructions/new.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, int given\\.$#',
@@ -4192,11 +4062,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/clinical_notes/save.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/dictation/new.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/dictation/report.php',
@@ -4210,11 +4075,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/dictation/report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/dictation/view.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
@@ -5313,7 +5173,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/forms/fee_sheet/review/initialize_review.php',
 ];
 $ignoreErrors[] = [
@@ -5328,7 +5188,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 5,
+    'count' => 4,
     'path' => __DIR__ . '/../../interface/forms/functional_cognitive_status/new.php',
 ];
 $ignoreErrors[] = [
@@ -5348,7 +5208,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/forms/gad7/new.php',
 ];
 $ignoreErrors[] = [
@@ -5378,7 +5238,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/forms/gad7/view.php',
 ];
 $ignoreErrors[] = [
@@ -5448,7 +5308,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 14,
+    'count' => 13,
     'path' => __DIR__ . '/../../interface/forms/misc_billing_options/new.php',
 ];
 $ignoreErrors[] = [
@@ -5513,7 +5373,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 11,
+    'count' => 10,
     'path' => __DIR__ . '/../../interface/forms/newGroupEncounter/common.php',
 ];
 $ignoreErrors[] = [
@@ -5743,7 +5603,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/forms/note/new.php',
 ];
 $ignoreErrors[] = [
@@ -5778,7 +5638,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/forms/note/view.php',
 ];
 $ignoreErrors[] = [
@@ -5823,7 +5683,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/phq9/common.php',
 ];
 $ignoreErrors[] = [
@@ -5853,7 +5713,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/forms/physical_exam/edit_diagnoses.php',
 ];
 $ignoreErrors[] = [
@@ -5873,7 +5733,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 11,
+    'count' => 10,
     'path' => __DIR__ . '/../../interface/forms/physical_exam/new.php',
 ];
 $ignoreErrors[] = [
@@ -5968,7 +5828,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 22,
+    'count' => 21,
     'path' => __DIR__ . '/../../interface/forms/procedure_order/common.php',
 ];
 $ignoreErrors[] = [
@@ -5983,7 +5843,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 10,
+    'count' => 6,
     'path' => __DIR__ . '/../../interface/forms/procedure_order/common.php',
 ];
 $ignoreErrors[] = [
@@ -6073,7 +5933,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/procedure_order/delete.php',
 ];
 $ignoreErrors[] = [
@@ -6158,7 +6018,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 11,
+    'count' => 10,
     'path' => __DIR__ . '/../../interface/forms/questionnaire_assessments/questionnaire_assessments.php',
 ];
 $ignoreErrors[] = [
@@ -6277,11 +6137,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/requisition/new.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/reviewofs/new.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/reviewofs/report.php',
@@ -6300,11 +6155,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/reviewofs/report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/reviewofs/view.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
@@ -6333,7 +6183,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 16,
+    'count' => 15,
     'path' => __DIR__ . '/../../interface/forms/sdoh/new.php',
 ];
 $ignoreErrors[] = [
@@ -6437,11 +6287,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/track_anything/history.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/track_anything/history.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/forms/track_anything/history.php',
@@ -6513,7 +6358,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/forms/transfer_summary/new.php',
 ];
 $ignoreErrors[] = [
@@ -6548,7 +6393,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 7,
+    'count' => 6,
     'path' => __DIR__ . '/../../interface/forms/treatment_plan/new.php',
 ];
 $ignoreErrors[] = [
@@ -6753,12 +6598,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 8,
+    'count' => 7,
     'path' => __DIR__ . '/../../interface/forms_admin/forms_admin.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 8,
+    'count' => 4,
     'path' => __DIR__ . '/../../interface/forms_admin/forms_admin.php',
 ];
 $ignoreErrors[] = [
@@ -6842,11 +6687,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/language/csv/load_csv_file.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/language/csv/load_csv_file.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/language/csv/load_csv_file.php',
@@ -6903,11 +6743,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/language/lang_constant.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/language/lang_constant.php',
 ];
@@ -6928,12 +6763,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 11,
-    'path' => __DIR__ . '/../../interface/language/lang_definition.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 9,
     'path' => __DIR__ . '/../../interface/language/lang_definition.php',
 ];
 $ignoreErrors[] = [
@@ -6943,23 +6773,8 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/language/lang_language.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/language/lang_language.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/language/lang_manage.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/language/lang_manage.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
@@ -6968,18 +6783,8 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/language/language.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 5,
-    'path' => __DIR__ . '/../../interface/language/language.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function urlencode expects string, string\\|false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/login/login.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
@@ -7013,16 +6818,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function strlen expects string, string\\|false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/logview/erx_logview.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/logview/erx_logview.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/logview/erx_logview.php',
 ];
@@ -7063,7 +6858,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 9,
+    'count' => 8,
     'path' => __DIR__ . '/../../interface/logview/logview.php',
 ];
 $ignoreErrors[] = [
@@ -7077,23 +6872,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/logview/logview.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/logview/logview.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of static method OpenEMR\\\\Common\\\\Crypto\\\\KeyVersion\\:\\:from\\(\\) expects int\\|string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/logview/logview.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pid of function getPatientData expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/authorizations/authorizations.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/main/authorizations/authorizations.php',
 ];
 $ignoreErrors[] = [
@@ -7103,7 +6888,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
-    'count' => 4,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/main/authorizations/authorizations.php',
 ];
 $ignoreErrors[] = [
@@ -7118,7 +6903,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/main/authorizations/authorizations_full.php',
 ];
 $ignoreErrors[] = [
@@ -7283,7 +7068,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/main/backup.php',
 ];
 $ignoreErrors[] = [
@@ -7478,7 +7263,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/main/calendar/find_group_popup.php',
 ];
 $ignoreErrors[] = [
@@ -8057,16 +7842,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/dated_reminders/dated_reminders.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/dated_reminders/dated_reminders.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/dated_reminders/dated_reminders.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function mb_strlen expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/main/dated_reminders/dated_reminders_add.php',
@@ -8078,7 +7853,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/main/dated_reminders/dated_reminders_add.php',
 ];
 $ignoreErrors[] = [
@@ -8103,17 +7878,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/main/dated_reminders/dated_reminders_log.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 7,
-    'path' => __DIR__ . '/../../interface/main/dated_reminders/dated_reminders_log.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
-    'count' => 4,
     'path' => __DIR__ . '/../../interface/main/dated_reminders/dated_reminders_log.php',
 ];
 $ignoreErrors[] = [
@@ -8178,17 +7948,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 7,
+    'count' => 6,
     'path' => __DIR__ . '/../../interface/main/finder/document_select.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 4,
-    'path' => __DIR__ . '/../../interface/main/finder/document_select.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/main/finder/document_select.php',
 ];
 $ignoreErrors[] = [
@@ -8198,11 +7963,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, Prior given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/finder/dynamic_finder.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/finder/dynamic_finder.php',
 ];
@@ -8263,7 +8023,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/main/finder/multi_patients_finder.php',
 ];
 $ignoreErrors[] = [
@@ -8348,12 +8108,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 12,
+    'count' => 11,
     'path' => __DIR__ . '/../../interface/main/finder/patient_select.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 6,
+    'count' => 5,
     'path' => __DIR__ . '/../../interface/main/finder/patient_select.php',
 ];
 $ignoreErrors[] = [
@@ -8482,16 +8242,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/holidays/Holidays_Csv.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/main/holidays/import_holidays.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/holidays/import_holidays.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/holidays/import_holidays.php',
@@ -8503,11 +8253,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, int given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/ippf_export.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/ippf_export.php',
 ];
@@ -8568,7 +8313,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 5,
+    'count' => 4,
     'path' => __DIR__ . '/../../interface/main/main_screen.php',
 ];
 $ignoreErrors[] = [
@@ -8578,11 +8323,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/main_screen.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/main_screen.php',
 ];
@@ -8698,12 +8438,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 15,
+    'count' => 14,
     'path' => __DIR__ . '/../../interface/main/messages/messages.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/main/messages/messages.php',
 ];
 $ignoreErrors[] = [
@@ -8842,27 +8582,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/messages/templates/linked_documents.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/messages/templates/linked_documents.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/messages/templates/linked_documents.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$message of function transmitMessage expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/messages/trusted-messages-ajax.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pid of function transmitCCD expects int, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/messages/trusted-messages-ajax.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/messages/trusted-messages-ajax.php',
 ];
@@ -8903,7 +8628,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/main/messages/trusted-messages.php',
 ];
 $ignoreErrors[] = [
@@ -8938,7 +8663,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 25,
+    'count' => 21,
     'path' => __DIR__ . '/../../interface/main/onotes/office_comments_full.php',
 ];
 $ignoreErrors[] = [
@@ -8973,7 +8698,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 12,
+    'count' => 10,
     'path' => __DIR__ . '/../../interface/main/tabs/main.php',
 ];
 $ignoreErrors[] = [
@@ -9010,11 +8735,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/era.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/setup.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
@@ -9075,11 +8795,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/src/EraPage.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/src/GlobalConfig.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$datetime of function date_create expects string, mixed given\\.$#',
@@ -9208,11 +8923,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function trim expects string, string\\|false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/moduleConfig.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/moduleConfig.php',
 ];
@@ -9567,11 +9277,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Repository/TeleHealthUserRepository.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Repository/TeleHealthUserRepository.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$datetime of static method DateTime\\:\\:createFromFormat\\(\\) expects string, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Repository/TeleHealthUserRepository.php',
@@ -9767,11 +9472,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/TelehealthGlobalConfig.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/TelehealthGlobalConfig.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$beforeSection of method OpenEMR\\\\Services\\\\Globals\\\\GlobalsService\\:\\:createSection\\(\\) expects bool, string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/TelehealthGlobalConfig.php',
@@ -9832,11 +9532,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dashboard-context/ModuleManagerListener.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dashboard-context/public/admin.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$roleType of method OpenEMR\\\\Modules\\\\DashboardContext\\\\Services\\\\DashboardContextAdminService\\:\\:setRoleDefaultContext\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dashboard-context/src/Controller/AdminController.php',
@@ -9888,11 +9583,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, int given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dashboard-context/src/Controller/ContextWidgetController.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dashboard-context/src/Controller/ContextWidgetController.php',
 ];
@@ -9982,11 +9672,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/lab_setup.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/lab_setup.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 11,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/lab_setup.php',
@@ -10017,23 +9702,18 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/primary_config.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/primary_config.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 9,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/primary_config.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 11,
+    'count' => 10,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/primary_config_edit.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/primary_config_edit.php',
 ];
 $ignoreErrors[] = [
@@ -10052,11 +9732,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/results.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/results.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/results.php',
@@ -10068,12 +9743,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 10,
+    'count' => 9,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/route_edit.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/route_edit.php',
 ];
 $ignoreErrors[] = [
@@ -10255,11 +9930,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/src/GenHl7OrderBase.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/src/GlobalConfig.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$r of function sqlFetchArray expects ADORecordSet\\|false, mixed given\\.$#',
@@ -10843,7 +10513,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 11,
+    'count' => 10,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/contact.php',
 ];
 $ignoreErrors[] = [
@@ -10988,7 +10658,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 18,
+    'count' => 15,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/library/setup_services.php',
 ];
 $ignoreErrors[] = [
@@ -11008,12 +10678,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 6,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/library/utility.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 1,
+    'count' => 5,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/library/utility.php',
 ];
 $ignoreErrors[] = [
@@ -11053,11 +10718,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$status of static method OpenEMR\\\\Modules\\\\FaxSMS\\\\Utils\\\\SignalWireWebhookValidator\\:\\:validateFaxStatus\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/library/webhook_receiver.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/library/webhook_receiver.php',
 ];
@@ -11194,16 +10854,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 8,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/src/Controller/AppDispatch.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/src/Controller/AppDispatch.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:encryptStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/src/Controller/AppDispatch.php',
 ];
 $ignoreErrors[] = [
@@ -11827,16 +11477,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/src/Controller/RCFaxClient.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/src/Controller/RCFaxClient.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:encryptStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/src/Controller/RCFaxClient.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$category_id of method Document\\:\\:createDocument\\(\\) expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/src/Controller/RCFaxClient.php',
@@ -12117,21 +11757,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/src/Controller/VoiceClient.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/src/Controller/VoiceClient.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/src/Controller/VoiceClient.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:encryptStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/src/Controller/VoiceClient.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$clientSecret of class RingCentral\\\\SDK\\\\SDK constructor expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-faxsms/src/Controller/VoiceClient.php',
@@ -12282,11 +11907,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-prior-authorizations/public/index.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-prior-authorizations/public/index.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, string\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-prior-authorizations/public/index.php',
@@ -12294,11 +11914,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_js expects string, mixed given\\.$#',
     'count' => 3,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-prior-authorizations/public/index.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-prior-authorizations/public/index.php',
 ];
 $ignoreErrors[] = [
@@ -12637,16 +12252,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/src/Services/ModuleService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/src/Services/ModuleService.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:encryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/src/Services/ModuleService.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$json of function json_decode expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/src/Services/PharmacyService.php',
@@ -12673,11 +12278,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_js expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/src/Services/TransmitProperties.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/src/Services/TransmitProperties.php',
 ];
@@ -12798,7 +12398,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/pharmacy_list_form.php',
 ];
 $ignoreErrors[] = [
@@ -12823,7 +12423,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/setup_facilities.php',
 ];
 $ignoreErrors[] = [
@@ -12848,7 +12448,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 6,
+    'count' => 5,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/weno_fragment.php',
 ];
 $ignoreErrors[] = [
@@ -12863,7 +12463,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 6,
+    'count' => 5,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/weno_setup.php',
 ];
 $ignoreErrors[] = [
@@ -12873,7 +12473,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-weno/templates/weno_users.php',
 ];
 $ignoreErrors[] = [
@@ -13722,11 +13322,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncountermanagerTable.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncountermanagerTable.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncountermanagerTable.php',
@@ -14162,23 +13757,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Syndromicsurveillance/src/Syndromicsurveillance/Model/SyndromicsurveillanceTable.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$id of function session_id expects string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/public/index.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/public/index.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$subject of function preg_match expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/public/index.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/new/new.php',
 ];
 $ignoreErrors[] = [
@@ -14208,7 +13788,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 23,
+    'count' => 22,
     'path' => __DIR__ . '/../../interface/new/new_comprehensive.php',
 ];
 $ignoreErrors[] = [
@@ -14218,11 +13798,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, int\\<1, 3\\> given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/new/new_comprehensive.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/new/new_comprehensive.php',
 ];
@@ -14293,7 +13868,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/new/new_search_popup.php',
 ];
 $ignoreErrors[] = [
@@ -14607,11 +14182,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/orders/patient_match_dialog.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/orders/patient_match_dialog.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_js expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/patient_match_dialog.php',
@@ -14623,7 +14193,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/orders/pending_followup.php',
 ];
 $ignoreErrors[] = [
@@ -14643,7 +14213,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/orders/pending_orders.php',
 ];
 $ignoreErrors[] = [
@@ -14658,12 +14228,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 14,
+    'count' => 13,
     'path' => __DIR__ . '/../../interface/orders/procedure_provider_edit.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/procedure_provider_edit.php',
 ];
 $ignoreErrors[] = [
@@ -14679,11 +14249,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_js expects string, mixed given\\.$#',
     'count' => 1,
-    'path' => __DIR__ . '/../../interface/orders/procedure_provider_list.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../interface/orders/procedure_provider_list.php',
 ];
 $ignoreErrors[] = [
@@ -14708,7 +14273,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/orders/procedure_stats.php',
 ];
 $ignoreErrors[] = [
@@ -14982,11 +14547,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/orders/single_order_results.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/orders/single_order_results.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$assets of static method OpenEMR\\\\Core\\\\Header\\:\\:setupAssets\\(\\) expects array, string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/types.php',
@@ -15068,7 +14628,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 12,
+    'count' => 11,
     'path' => __DIR__ . '/../../interface/orders/types_edit.php',
 ];
 $ignoreErrors[] = [
@@ -15143,17 +14703,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/birthday_alert/birthday_pop.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/deleter.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 9,
+    'count' => 8,
     'path' => __DIR__ . '/../../interface/patient_file/deleter.php',
 ];
 $ignoreErrors[] = [
@@ -15228,7 +14783,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/education.php',
 ];
 $ignoreErrors[] = [
@@ -15272,11 +14827,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/encounter/coding.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/encounter/copay.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/copay.php',
@@ -15288,7 +14838,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/delete_form.php',
 ];
 $ignoreErrors[] = [
@@ -15304,11 +14854,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 7,
-    'path' => __DIR__ . '/../../interface/patient_file/encounter/diagnosis.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/diagnosis.php',
 ];
 $ignoreErrors[] = [
@@ -15333,7 +14878,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/diagnosis_full.php',
 ];
 $ignoreErrors[] = [
@@ -15384,11 +14929,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
     'count' => 5,
-    'path' => __DIR__ . '/../../interface/patient_file/encounter/find_code_dynamic.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/find_code_dynamic.php',
 ];
 $ignoreErrors[] = [
@@ -15458,7 +14998,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/find_code_popup.php',
 ];
 $ignoreErrors[] = [
@@ -15553,7 +15093,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 16,
+    'count' => 9,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/forms.php',
 ];
 $ignoreErrors[] = [
@@ -15602,23 +15142,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/encounter/load_form.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/encounter/other.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$s of function escape_limit expects string, int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/search_code.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/encounter/search_code.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 8,
+    'count' => 7,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/search_code.php',
 ];
 $ignoreErrors[] = [
@@ -15652,18 +15182,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/encounter/select_codes.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/encounter/select_codes.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/select_codes.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 6,
+    'count' => 5,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/superbill_codes.php',
 ];
 $ignoreErrors[] = [
@@ -15708,7 +15233,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 22,
+    'count' => 21,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/superbill_custom_full.php',
 ];
 $ignoreErrors[] = [
@@ -15753,7 +15278,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 5,
+    'count' => 4,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/trend_form.php',
 ];
 $ignoreErrors[] = [
@@ -15798,7 +15323,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 14,
+    'count' => 9,
     'path' => __DIR__ . '/../../interface/patient_file/front_payment.php',
 ];
 $ignoreErrors[] = [
@@ -15809,11 +15334,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../interface/patient_file/front_payment.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/front_payment.php',
 ];
 $ignoreErrors[] = [
@@ -15834,11 +15354,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$amount of function calcTaxes expects float, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../interface/patient_file/front_payment.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$patientIdCc of class OpenEMR\\\\PaymentProcessing\\\\Sphere\\\\SpherePayment constructor expects int, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/front_payment.php',
 ];
 $ignoreErrors[] = [
@@ -15880,11 +15395,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/front_payment_terminal.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/history/edit_billnote.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, \\(float\\|int\\) given\\.$#',
@@ -15973,7 +15483,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/history/encounters.php',
 ];
 $ignoreErrors[] = [
@@ -16037,11 +15547,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/history/history_full.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/history/history_full.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/history/history_full.php',
@@ -16073,7 +15578,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 11,
+    'count' => 10,
     'path' => __DIR__ . '/../../interface/patient_file/history/history_sdoh.php',
 ];
 $ignoreErrors[] = [
@@ -16103,11 +15608,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$row of static method OpenEMR\\\\Services\\\\SDOH\\\\HistorySdohService\\:\\:concernsFromAssessmentV3\\(\\) expects array, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/history/history_sdoh_health_concerns.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/history/history_sdoh_health_concerns.php',
 ];
@@ -16208,12 +15708,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 5,
-    'path' => __DIR__ . '/../../interface/patient_file/letter.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 1,
+    'count' => 4,
     'path' => __DIR__ . '/../../interface/patient_file/letter.php',
 ];
 $ignoreErrors[] = [
@@ -16232,23 +15727,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/letter.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:cryptCheckStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/patient_file/letter.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/patient_file/letter.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$replace of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 36,
     'path' => __DIR__ . '/../../interface/patient_file/letter.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
-    'count' => 6,
+    'count' => 4,
     'path' => __DIR__ . '/../../interface/patient_file/letter.php',
 ];
 $ignoreErrors[] = [
@@ -16262,18 +15747,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/manage_dup_patients.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/patient_file/manage_dup_patients.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
     'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/manage_dup_patients.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#3 \\$row of function displayRow expects array\\<string, string\\>, array given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/manage_dup_patients.php',
 ];
 $ignoreErrors[] = [
@@ -16294,11 +15769,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, int\\<min, \\-1\\>\\|int\\<1, max\\>\\|string given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../interface/patient_file/merge_patients.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/merge_patients.php',
 ];
 $ignoreErrors[] = [
@@ -16393,7 +15863,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 12,
+    'count' => 11,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
 ];
 $ignoreErrors[] = [
@@ -16418,7 +15888,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 8,
+    'count' => 7,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
 ];
 $ignoreErrors[] = [
@@ -16593,7 +16063,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 12,
+    'count' => 11,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_normal.php',
 ];
 $ignoreErrors[] = [
@@ -16613,7 +16083,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 8,
+    'count' => 7,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_normal.php',
 ];
 $ignoreErrors[] = [
@@ -16698,7 +16168,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 6,
+    'count' => 5,
     'path' => __DIR__ . '/../../interface/patient_file/problem_encounter.php',
 ];
 $ignoreErrors[] = [
@@ -16773,7 +16243,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 6,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/patient_file/reminder/clinical_reminders.php',
 ];
 $ignoreErrors[] = [
@@ -16858,7 +16328,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 5,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/reminder/patient_reminders.php',
 ];
 $ignoreErrors[] = [
@@ -17038,7 +16508,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/patient_file/rules/patient_data.php',
 ];
 $ignoreErrors[] = [
@@ -17063,7 +16533,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 6,
+    'count' => 5,
     'path' => __DIR__ . '/../../interface/patient_file/summary/add_edit_amendments.php',
 ];
 $ignoreErrors[] = [
@@ -17108,7 +16578,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 10,
+    'count' => 9,
     'path' => __DIR__ . '/../../interface/patient_file/summary/add_edit_issue.php',
 ];
 $ignoreErrors[] = [
@@ -17129,11 +16599,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
     'count' => 4,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/add_edit_issue.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/add_edit_issue.php',
 ];
 $ignoreErrors[] = [
@@ -17182,11 +16647,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/advancedirectives.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/advancedirectives.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/summary/advancedirectives.php',
@@ -17209,11 +16669,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, float\\|int\\|string given\\.$#',
     'count' => 25,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/browse.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/summary/browse.php',
 ];
 $ignoreErrors[] = [
@@ -17245,11 +16700,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#5 \\$user of function clinical_summary_widget expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/clinical_reminders_fragment.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/create_portallogin.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
@@ -17408,7 +16858,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 23,
+    'count' => 15,
     'path' => __DIR__ . '/../../interface/patient_file/summary/demographics.php',
 ];
 $ignoreErrors[] = [
@@ -17513,12 +16963,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/demographics_full.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/patient_file/summary/demographics_full.php',
 ];
 $ignoreErrors[] = [
@@ -17642,11 +17092,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/disclosure_full.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/disclosure_full.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 6,
     'path' => __DIR__ . '/../../interface/patient_file/summary/disclosure_full.php',
@@ -17688,17 +17133,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 35,
-    'path' => __DIR__ . '/../../interface/patient_file/summary/immunizations.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 34,
     'path' => __DIR__ . '/../../interface/patient_file/summary/immunizations.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/immunizations.php',
 ];
 $ignoreErrors[] = [
@@ -17778,7 +17218,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/labdata.php',
 ];
 $ignoreErrors[] = [
@@ -17948,7 +17388,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 26,
+    'count' => 24,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
 ];
 $ignoreErrors[] = [
@@ -17973,7 +17413,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
 ];
 $ignoreErrors[] = [
@@ -18063,7 +17503,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 8,
+    'count' => 6,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
 ];
 $ignoreErrors[] = [
@@ -18163,7 +17603,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/patient_file/summary/record_disclosure.php',
 ];
 $ignoreErrors[] = [
@@ -18293,7 +17733,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/summary/stats_full.php',
 ];
 $ignoreErrors[] = [
@@ -18328,12 +17768,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 6,
-    'path' => __DIR__ . '/../../interface/patient_file/transaction/add_transaction.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
+    'count' => 5,
     'path' => __DIR__ . '/../../interface/patient_file/transaction/add_transaction.php',
 ];
 $ignoreErrors[] = [
@@ -18378,7 +17813,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/transaction/record_request.php',
 ];
 $ignoreErrors[] = [
@@ -18394,11 +17829,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../interface/patient_file/transaction/transactions.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/transaction/transactions.php',
 ];
 $ignoreErrors[] = [
@@ -18443,7 +17873,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 25,
+    'count' => 21,
     'path' => __DIR__ . '/../../interface/patient_tracker/patient_tracker.php',
 ];
 $ignoreErrors[] = [
@@ -18458,12 +17888,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 8,
-    'path' => __DIR__ . '/../../interface/patient_tracker/patient_tracker.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 1,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/patient_tracker/patient_tracker.php',
 ];
 $ignoreErrors[] = [
@@ -18483,7 +17908,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_tracker/patient_tracker.php',
 ];
 $ignoreErrors[] = [
@@ -18522,13 +17947,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_tracker/patient_tracker.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_tracker/patient_tracker_status.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_tracker/patient_tracker_status.php',
 ];
 $ignoreErrors[] = [
@@ -18598,12 +18018,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 7,
+    'count' => 6,
     'path' => __DIR__ . '/../../interface/practice/ins_search.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/practice/ins_search.php',
 ];
 $ignoreErrors[] = [
@@ -18928,17 +18348,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 10,
+    'count' => 9,
     'path' => __DIR__ . '/../../interface/reports/amc_tracking.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_js expects string, mixed given\\.$#',
     'count' => 8,
-    'path' => __DIR__ . '/../../interface/reports/amc_tracking.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 4,
     'path' => __DIR__ . '/../../interface/reports/amc_tracking.php',
 ];
 $ignoreErrors[] = [
@@ -18978,17 +18393,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 11,
+    'count' => 10,
     'path' => __DIR__ . '/../../interface/reports/appointments_report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 13,
-    'path' => __DIR__ . '/../../interface/reports/appointments_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/appointments_report.php',
 ];
 $ignoreErrors[] = [
@@ -19028,7 +18438,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/reports/appt_encounter_report.php',
 ];
 $ignoreErrors[] = [
@@ -19058,22 +18468,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 7,
+    'count' => 6,
     'path' => __DIR__ . '/../../interface/reports/audit_log_tamper_report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 9,
-    'path' => __DIR__ . '/../../interface/reports/audit_log_tamper_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/audit_log_tamper_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of static method OpenEMR\\\\Common\\\\Crypto\\\\KeyVersion\\:\\:from\\(\\) expects int\\|string, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/audit_log_tamper_report.php',
 ];
 $ignoreErrors[] = [
@@ -19093,7 +18493,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/chart_location_activity.php',
 ];
 $ignoreErrors[] = [
@@ -19128,7 +18528,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/clinical_reports.php',
 ];
 $ignoreErrors[] = [
@@ -19178,7 +18578,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 11,
+    'count' => 10,
     'path' => __DIR__ . '/../../interface/reports/collections_report.php',
 ];
 $ignoreErrors[] = [
@@ -19313,7 +18713,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 5,
+    'count' => 4,
     'path' => __DIR__ . '/../../interface/reports/custom_report_range.php',
 ];
 $ignoreErrors[] = [
@@ -19338,7 +18738,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/daily_summary_report.php',
 ];
 $ignoreErrors[] = [
@@ -19368,7 +18768,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/destroyed_drugs_report.php',
 ];
 $ignoreErrors[] = [
@@ -19388,7 +18788,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/direct_message_log.php',
 ];
 $ignoreErrors[] = [
@@ -19403,7 +18803,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 8,
+    'count' => 7,
     'path' => __DIR__ . '/../../interface/reports/encounters_report.php',
 ];
 $ignoreErrors[] = [
@@ -19428,7 +18828,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/reports/front_receipts_report.php',
 ];
 $ignoreErrors[] = [
@@ -19463,12 +18863,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
-    'path' => __DIR__ . '/../../interface/reports/immunization_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/reports/immunization_report.php',
 ];
 $ignoreErrors[] = [
@@ -19488,7 +18883,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/insurance_allocation_report.php',
 ];
 $ignoreErrors[] = [
@@ -19513,7 +18908,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/reports/inventory_activity.php',
 ];
 $ignoreErrors[] = [
@@ -19587,16 +18982,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/inventory_list.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$s of function escape_limit expects string, int\\<1, max\\> given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/inventory_list.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$s of function escape_limit expects string, mixed given\\.$#',
-    'count' => 4,
-    'path' => __DIR__ . '/../../interface/reports/inventory_list.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, float\\|int\\|string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/inventory_list.php',
@@ -19608,7 +18993,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/inventory_list.php',
 ];
 $ignoreErrors[] = [
@@ -19647,23 +19032,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/inventory_list.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#',
-    'count' => 6,
-    'path' => __DIR__ . '/../../interface/reports/inventory_list.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#3 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/reports/inventory_list.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/inventory_transactions.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/inventory_transactions.php',
 ];
 $ignoreErrors[] = [
@@ -19693,16 +19068,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 7,
+    'count' => 6,
     'path' => __DIR__ . '/../../interface/reports/ip_tracker.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_js expects string, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/reports/ip_tracker.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/reports/ip_tracker.php',
 ];
@@ -19728,7 +19098,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/reports/ippf_cyp_report.php',
 ];
 $ignoreErrors[] = [
@@ -19803,7 +19173,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/ippf_daily.php',
 ];
 $ignoreErrors[] = [
@@ -19853,7 +19223,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/reports/ippf_statistics.php',
 ];
 $ignoreErrors[] = [
@@ -19888,7 +19258,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/message_list.php',
 ];
 $ignoreErrors[] = [
@@ -19923,7 +19293,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/reports/non_reported.php',
 ];
 $ignoreErrors[] = [
@@ -19973,7 +19343,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 10,
+    'count' => 9,
     'path' => __DIR__ . '/../../interface/reports/pat_ledger.php',
 ];
 $ignoreErrors[] = [
@@ -20058,7 +19428,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/patient_edu_web_lookup.php',
 ];
 $ignoreErrors[] = [
@@ -20093,7 +19463,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 12,
+    'count' => 11,
     'path' => __DIR__ . '/../../interface/reports/patient_flow_board_report.php',
 ];
 $ignoreErrors[] = [
@@ -20123,7 +19493,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/patient_list.php',
 ];
 $ignoreErrors[] = [
@@ -20163,7 +19533,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 9,
+    'count' => 6,
     'path' => __DIR__ . '/../../interface/reports/patient_list_creation.php',
 ];
 $ignoreErrors[] = [
@@ -20213,7 +19583,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 5,
+    'count' => 4,
     'path' => __DIR__ . '/../../interface/reports/payment_processing_report.php',
 ];
 $ignoreErrors[] = [
@@ -20278,7 +19648,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/prescriptions_report.php',
 ];
 $ignoreErrors[] = [
@@ -20318,7 +19688,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 7,
+    'count' => 6,
     'path' => __DIR__ . '/../../interface/reports/receipts_by_method_report.php',
 ];
 $ignoreErrors[] = [
@@ -20388,7 +19758,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/referrals_report.php',
 ];
 $ignoreErrors[] = [
@@ -20412,11 +19782,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/report_results.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/report_results.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
     'count' => 9,
     'path' => __DIR__ . '/../../interface/reports/report_results.php',
@@ -20425,11 +19790,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/reports/report_results.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/rwt_2026_report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$desc of function display_desc expects string, int given\\.$#',
@@ -20453,7 +19813,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 5,
+    'count' => 4,
     'path' => __DIR__ . '/../../interface/reports/sales_by_item.php',
 ];
 $ignoreErrors[] = [
@@ -20518,7 +19878,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/services_by_category.php',
 ];
 $ignoreErrors[] = [
@@ -20538,7 +19898,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 6,
+    'count' => 5,
     'path' => __DIR__ . '/../../interface/reports/svc_code_financial_report.php',
 ];
 $ignoreErrors[] = [
@@ -20558,7 +19918,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/unique_seen_patients_report.php',
 ];
 $ignoreErrors[] = [
@@ -20648,7 +20008,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 15,
+    'count' => 14,
     'path' => __DIR__ . '/../../interface/super/edit_globals.php',
 ];
 $ignoreErrors[] = [
@@ -20657,28 +20017,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/edit_globals.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/edit_globals.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 4,
-    'path' => __DIR__ . '/../../interface/super/edit_globals.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:cryptCheckStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/super/edit_globals.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/super/edit_globals.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:encryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../interface/super/edit_globals.php',
 ];
 $ignoreErrors[] = [
@@ -20743,7 +20083,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$s of function escape_table_name expects string, mixed given\\.$#',
-    'count' => 7,
+    'count' => 6,
     'path' => __DIR__ . '/../../interface/super/edit_layout.php',
 ];
 $ignoreErrors[] = [
@@ -20763,7 +20103,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 40,
+    'count' => 36,
     'path' => __DIR__ . '/../../interface/super/edit_layout.php',
 ];
 $ignoreErrors[] = [
@@ -20777,23 +20117,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/edit_layout.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_js expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/edit_layout.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 7,
-    'path' => __DIR__ . '/../../interface/super/edit_layout.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 1,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/super/edit_layout.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 18,
+    'count' => 17,
     'path' => __DIR__ . '/../../interface/super/edit_layout.php',
 ];
 $ignoreErrors[] = [
@@ -20823,7 +20153,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 10,
+    'count' => 9,
     'path' => __DIR__ . '/../../interface/super/edit_layout_props.php',
 ];
 $ignoreErrors[] = [
@@ -20893,7 +20223,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 36,
+    'count' => 35,
     'path' => __DIR__ . '/../../interface/super/edit_list.php',
 ];
 $ignoreErrors[] = [
@@ -20923,11 +20253,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$stream of function fclose expects resource, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/layout_service_codes.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/super/layout_service_codes.php',
 ];
@@ -20967,11 +20292,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/load_codes.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/load_codes.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, int\\<0, max\\> given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/super/load_codes.php',
@@ -21007,11 +20327,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/manage_document_templates.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/manage_document_templates.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:cryptCheckStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/super/manage_document_templates.php',
@@ -21038,7 +20353,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 5,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/super/manage_site_files.php',
 ];
 $ignoreErrors[] = [
@@ -21298,7 +20613,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 33,
+    'count' => 32,
     'path' => __DIR__ . '/../../interface/usergroup/addrbook_edit.php',
 ];
 $ignoreErrors[] = [
@@ -21308,7 +20623,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/usergroup/addrbook_edit.php',
 ];
 $ignoreErrors[] = [
@@ -21332,11 +20647,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/usergroup/addrbook_list.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/addrbook_list.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_js expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/addrbook_list.php',
@@ -21350,11 +20660,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 11,
     'path' => __DIR__ . '/../../interface/usergroup/addrbook_list.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 5,
-    'path' => __DIR__ . '/../../interface/usergroup/adminacl.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
@@ -21413,18 +20718,13 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/usergroup/facility_user_admin.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/usergroup/facility_user_admin.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/mfa_registrations.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_js expects string, mixed given\\.$#',
@@ -21447,32 +20747,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/usergroup/mfa_totp.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/mfa_totp.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/mfa_totp.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:encryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/mfa_totp.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$_username of class Totp constructor expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/mfa_totp.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$request of method u2flib_server\\\\U2F\\:\\:doRegister\\(\\) expects u2flib_server\\\\RegisterRequest, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/mfa_u2f.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/mfa_u2f.php',
 ];
@@ -21522,11 +20802,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/usergroup/ssl_certificates_admin.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/usergroup/ssl_certificates_admin.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/ssl_certificates_admin.php',
@@ -21563,7 +20838,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 29,
+    'count' => 28,
     'path' => __DIR__ . '/../../interface/usergroup/user_admin.php',
 ];
 $ignoreErrors[] = [
@@ -21598,7 +20873,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/user_info.php',
 ];
 $ignoreErrors[] = [
@@ -21623,7 +20898,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin.php',
 ];
 $ignoreErrors[] = [
@@ -21633,16 +20908,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function errorLogEscape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin.php',
 ];
@@ -21688,12 +20958,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 16,
+    'count' => 13,
     'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin_add.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin_add.php',
 ];
 $ignoreErrors[] = [
@@ -22002,11 +21272,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/MedEx/API.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$from_date of method MedExApi\\\\Display\\:\\:get_recalls\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/MedEx/API.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/MedEx/API.php',
@@ -22033,7 +21298,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 63,
+    'count' => 60,
     'path' => __DIR__ . '/../../library/MedEx/API.php',
 ];
 $ignoreErrors[] = [
@@ -22077,16 +21342,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/MedEx/API.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$to_date of method MedExApi\\\\Display\\:\\:get_recalls\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/MedEx/API.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#3 \\$rcb_facility of method MedExApi\\\\Display\\:\\:get_recalls\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/MedEx/API.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../library/MedEx/API.php',
@@ -22112,11 +21367,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/MedEx/API.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#4 \\$rcb_provider of method MedExApi\\\\Display\\:\\:get_recalls\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/MedEx/API.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#5 \\$day of function mktime expects int\\|null, int\\|string given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../library/MedEx/API.php',
@@ -22129,16 +21379,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#5 \\$day of function mktime expects int\\|null, string given\\.$#',
     'count' => 4,
-    'path' => __DIR__ . '/../../library/MedEx/API.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#5 \\$patient_id of method MedExApi\\\\Display\\:\\:get_recalls\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/MedEx/API.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#6 \\$patient_name of method MedExApi\\\\Display\\:\\:get_recalls\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../library/MedEx/API.php',
 ];
 $ignoreErrors[] = [
@@ -22332,11 +21572,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/ajax/execute_pat_reminder.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/ajax/facility_ajax_jav.inc.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/ajax/graph_track_anything.php',
@@ -22445,11 +21680,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 9,
     'path' => __DIR__ . '/../../library/ajax/payment_ajax.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/ajax/payment_ajax_jav.inc.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_keys expects array, mixed given\\.$#',
@@ -24663,7 +23893,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 5,
+    'count' => 4,
     'path' => __DIR__ . '/../../library/custom_template/custom_template.php',
 ];
 $ignoreErrors[] = [
@@ -24743,7 +23973,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 2,
     'path' => __DIR__ . '/../../library/dicom_frame.php',
 ];
 $ignoreErrors[] = [
@@ -25073,7 +24303,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../library/edihistory/edih_997_error.php',
 ];
 $ignoreErrors[] = [
@@ -25258,7 +24488,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 180,
+    'count' => 116,
     'path' => __DIR__ . '/../../library/edihistory/edih_csv_data.php',
 ];
 $ignoreErrors[] = [
@@ -26397,16 +25627,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/options.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/options.js.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/options_listadd.inc.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$data of method OpenEMR\\\\Services\\\\PatientService\\:\\:databaseUpdate\\(\\) expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/patient.inc.php',
@@ -26630,11 +25850,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 14,
     'path' => __DIR__ . '/../../library/report_database.inc.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function urlencode expects string, string\\|false given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../library/restoreSession.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, int given\\.$#',
@@ -27533,7 +26748,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../library/specialty_forms.php',
 ];
 $ignoreErrors[] = [
@@ -28167,11 +27382,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/account/account.lib.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../portal/account/account.lib.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$name of method PHPMailer\\\\PHPMailer\\\\PHPMailer\\:\\:addReplyTo\\(\\) expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../portal/account/account.lib.php',
@@ -28253,7 +27463,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 6,
+    'count' => 5,
     'path' => __DIR__ . '/../../portal/account/verify.php',
 ];
 $ignoreErrors[] = [
@@ -28443,7 +27653,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../portal/get_patient_documents.php',
 ];
 $ignoreErrors[] = [
@@ -28523,7 +27733,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 14,
+    'count' => 13,
     'path' => __DIR__ . '/../../portal/import_template.php',
 ];
 $ignoreErrors[] = [
@@ -28568,7 +27778,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 31,
+    'count' => 30,
     'path' => __DIR__ . '/../../portal/import_template_ui.php',
 ];
 $ignoreErrors[] = [
@@ -28593,7 +27803,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../portal/import_template_ui.php',
 ];
 $ignoreErrors[] = [
@@ -28658,7 +27868,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 12,
+    'count' => 11,
     'path' => __DIR__ . '/../../portal/index.php',
 ];
 $ignoreErrors[] = [
@@ -28684,16 +27894,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 3,
-    'path' => __DIR__ . '/../../portal/index.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:cryptCheckStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../portal/index.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../portal/index.php',
 ];
 $ignoreErrors[] = [
@@ -28748,11 +27948,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#5 \\$comments of method OpenEMR\\\\Common\\\\Logging\\\\EventAuditLogger\\:\\:recordLogItem\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../portal/lib/appsql.class.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#6 \\$patientId of method OpenEMR\\\\Common\\\\Logging\\\\EventAuditLogger\\:\\:recordLogItem\\(\\) expects int\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/lib/appsql.class.php',
 ];
@@ -28837,16 +28032,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/lib/paylib.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../portal/lib/paylib.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:encryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../portal/lib/paylib.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$rec of method ApplicationTable\\:\\:portalAudit\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../portal/lib/paylib.php',
@@ -28898,7 +28083,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../portal/messaging/messages.php',
 ];
 $ignoreErrors[] = [
@@ -29263,16 +28448,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$data of function unserialize expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Authentication/Authenticator.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of method OpenEMR\\\\Common\\\\Session\\\\SessionWrapperInterface\\:\\:get\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Authentication/Authenticator.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of method OpenEMR\\\\Common\\\\Session\\\\SessionWrapperInterface\\:\\:set\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Authentication/Authenticator.php',
 ];
@@ -29867,11 +29042,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Phreeze/Phreezer.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$guid of static method Authenticator\\:\\:ClearAuthentication\\(\\) expects string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Phreeze/PortalController.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$haystack of function strpos expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Phreeze/PortalController.php',
@@ -29904,11 +29074,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$qs_username_field of method PortalController\\:\\:Get401AuthUsername\\(\\) expects string, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Phreeze/PortalController.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of static method VerySimpleStringUtil\\:\\:EncodeSpecialCharacters\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Phreeze/PortalController.php',
 ];
 $ignoreErrors[] = [
@@ -30372,13 +29537,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/patient/libs/Controller/ProviderController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../portal/patient/templates/OnsiteActivityViewListView.tpl.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 1,
     'path' => __DIR__ . '/../../portal/patient/templates/OnsiteDocumentListView.tpl.php',
 ];
 $ignoreErrors[] = [
@@ -30393,7 +29553,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 18,
+    'count' => 16,
     'path' => __DIR__ . '/../../portal/patient/templates/OnsiteDocumentListView.tpl.php',
 ];
 $ignoreErrors[] = [
@@ -30453,22 +29613,17 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 13,
+    'count' => 11,
     'path' => __DIR__ . '/../../portal/portal_payment.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 8,
+    'count' => 7,
     'path' => __DIR__ . '/../../portal/portal_payment.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 30,
-    'path' => __DIR__ . '/../../portal/portal_payment.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 3,
     'path' => __DIR__ . '/../../portal/portal_payment.php',
 ];
 $ignoreErrors[] = [
@@ -30813,7 +29968,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 13,
+    'count' => 3,
     'path' => __DIR__ . '/../../setup.php',
 ];
 $ignoreErrors[] = [
@@ -30862,11 +30017,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../sites/default/LBF/LBFgcac.plugin.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:encryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../sites/default/config.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function ksort expects array, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../sites/default/statement.inc.php',
@@ -30879,11 +30029,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 17,
-    'path' => __DIR__ . '/../../sites/default/statement.inc.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../sites/default/statement.inc.php',
 ];
 $ignoreErrors[] = [
@@ -30933,11 +30078,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../sphere/process_response.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:encryptStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../sphere/process_response.php',
 ];
@@ -31058,11 +30198,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function htmlspecialchars expects string, OpenEMR\\\\Common\\\\Compatibility\\\\warning\\|false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../sql_upgrade.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../sql_upgrade.php',
 ];
@@ -31228,11 +30363,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$username of method phpseclib3\\\\Net\\\\SSH2\\:\\:login\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Billing/BillingProcessor/X12RemoteTracker.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Billing/BillingProcessor/X12RemoteTracker.php',
 ];
@@ -31404,11 +30534,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../src/Billing/EDI270.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../src/Billing/EDI270.php',
 ];
 $ignoreErrors[] = [
@@ -32047,11 +31172,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Auth/AuthGlobal.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:encryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Auth/AuthGlobal.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$hash of function password_get_info expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Auth/AuthHash.php',
@@ -32192,11 +31312,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Auth/MfaUtils.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Auth/MfaUtils.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$registrations of method u2flib_server\\\\U2F\\:\\:doAuthenticate\\(\\) expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Auth/MfaUtils.php',
@@ -32205,11 +31320,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$response of method u2flib_server\\\\U2F\\:\\:doAuthenticate\\(\\) expects object, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Auth/MfaUtils.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../src/Common/Auth/OAuth2KeyConfig.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$datetime of class DateTime constructor expects string, mixed given\\.$#',
@@ -32279,16 +31389,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, int\\|null given\\.$#',
     'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Auth/OneTimeAuth.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:cryptCheckStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../src/Common/Auth/OneTimeAuth.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../src/Common/Auth/OneTimeAuth.php',
 ];
 $ignoreErrors[] = [
@@ -32453,16 +31553,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/Repositories/ClientRepository.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/Repositories/ClientRepository.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:encryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/Repositories/ClientRepository.php',
 ];
@@ -32750,11 +31840,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$code of method Exception\\:\\:__construct\\(\\) expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Csrf/CsrfInvalidException.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$known_string of function hash_equals expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Csrf/CsrfUtils.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$user_string of function hash_equals expects string, mixed given\\.$#',
@@ -33302,32 +32387,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Session/SessionTracker.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$id of function session_id expects string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../src/Common/Session/SessionUtil.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$name of function setcookie expects string, string\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Session/SessionUtil.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$webRoot of static method OpenEMR\\\\Common\\\\Session\\\\SessionConfigurationBuilder\\:\\:forCore\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Session/SessionUtil.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$webRoot of static method OpenEMR\\\\Common\\\\Session\\\\SessionConfigurationBuilder\\:\\:forOAuth\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Session/SessionUtil.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$context of method Psr\\\\Log\\\\LoggerInterface\\:\\:debug\\(\\) expects array\\<mixed\\>, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../src/Common/Session/SessionUtil.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$readOnly of static method OpenEMR\\\\Common\\\\Session\\\\SessionConfigurationBuilder\\:\\:forCore\\(\\) expects bool, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Session/SessionUtil.php',
 ];
@@ -33348,11 +32413,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$arrOeUiSettings of class OpenEMR\\\\OeUI\\\\OemrUI constructor expects array, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Twig/TwigExtension.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Twig/TwigExtension.php',
 ];
@@ -62772,11 +61832,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/FHIR/SMART/SMARTLaunchToken.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:encryptStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/FHIR/SMART/SMARTLaunchToken.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$context of method Psr\\\\Log\\\\LoggerInterface\\:\\:debug\\(\\) expects array\\<mixed\\>, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/FHIR/SMART/SMARTLaunchToken.php',
@@ -62852,11 +61907,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Gacl/Gacl.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\.\\.\\.\\$arrays of function array_merge expects array, array\\|null given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Gacl/Gacl.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#4 \\$aro_value of method OpenEMR\\\\Gacl\\\\Gacl\\:\\:acl_check\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Gacl/Gacl.php',
@@ -62879,16 +61929,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 4,
-    'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$array of function implode expects array, array\\|bool given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$array of function implode expects array, array\\|true given\\.$#',
-    'count' => 1,
     'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
 ];
 $ignoreErrors[] = [
@@ -63077,11 +62117,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/OeUI/OemrUI.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/OeUI/OemrUI.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/OeUI/OemrUI.php',
@@ -63212,16 +62247,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/PaymentProcessing/PaymentProcessing.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/PaymentProcessing/PaymentProcessing.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:encryptStandard\\(\\) expects string\\|null, string\\|false given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../src/PaymentProcessing/PaymentProcessing.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(array\\<string, mixed\\>\\)\\: mixed\\)\\|null, Closure\\(array\\{id\\: string, code\\: string, codeType\\: string, amount\\: array\\{amount\\: numeric\\-string, currency\\: non\\-empty\\-string\\}\\}\\)\\: OpenEMR\\\\PaymentProcessing\\\\Rainforest\\\\EncounterData given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/PaymentProcessing/Rainforest/Metadata.php',
@@ -63247,24 +62272,9 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/PaymentProcessing/Sphere/SpherePayment.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/PaymentProcessing/Sphere/SpherePayment.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 6,
     'path' => __DIR__ . '/../../src/PaymentProcessing/Sphere/SpherePayment.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/PaymentProcessing/Sphere/SphereRevert.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_url expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/PaymentProcessing/Sphere/SphereRevert.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
@@ -63608,11 +62618,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/RestControllers/AuthorizationController.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/RestControllers/AuthorizationController.php',
 ];
@@ -64437,11 +63442,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/RestControllers/TokenIntrospectionRestController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/RestControllers/TokenIntrospectionRestController.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$client of method OpenEMR\\\\Services\\\\JWTClientAuthenticationService\\:\\:validateJWTClientAssertion\\(\\) expects OpenEMR\\\\Common\\\\Auth\\\\OpenIDConnect\\\\Entities\\\\ClientEntity, OpenEMR\\\\Common\\\\Auth\\\\OpenIDConnect\\\\Entities\\\\ClientEntity\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/RestControllers/TokenIntrospectionRestController.php',
@@ -64658,11 +63658,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$filename of function file_get_contents expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Services/CDADocumentService.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/CDADocumentService.php',
 ];
@@ -65457,11 +64452,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/DocumentService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$filename of function file_get_contents expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Services/DocumentService.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$id of class Document constructor expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/DocumentService.php',
@@ -65488,11 +64478,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$category_id of method Document\\:\\:createDocument\\(\\) expects int, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Services/DocumentService.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#3 \\$filename of method Document\\:\\:createDocument\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/DocumentService.php',
 ];
@@ -73193,16 +72178,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../src/Services/PatientService.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$binds of function sqlInsert expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/PatientService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$binds of function sqlQuery expects array, int given\\.$#',
+    'message' => '#^Parameter \\#2 \\$binds of function sqlInsert expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/PatientService.php',
 ];
@@ -74403,7 +73383,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 10,
+    'count' => 7,
     'path' => __DIR__ . '/../../src/Services/Utils/SQLUpgradeService.php',
 ];
 $ignoreErrors[] = [
@@ -74615,11 +73595,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$paths of method SebastianBergmann\\\\FileIterator\\\\Facade\\:\\:getFilesAsArray\\(\\) expects list\\<non\\-empty\\-string\\>\\|non\\-empty\\-string, string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Tools/Coverage/CoverageHelper.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Crypto\\\\CryptoInterface\\:\\:decryptStandard\\(\\) expects string\\|null, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../src/USPS/USPSAddressVerifyV3.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_push expects array, mixed given\\.$#',
@@ -74853,7 +73828,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 6,
+    'count' => 4,
     'path' => __DIR__ . '/../../templates/super/rules/controllers/log/view.php',
 ];
 $ignoreErrors[] = [
@@ -74868,7 +73843,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../templates/super/rules/controllers/review/view.php',
 ];
 $ignoreErrors[] = [
@@ -75572,11 +74547,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../tests/Tests/Isolated/library/classes/InstallerTest.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$values of method Symfony\\\\Component\\\\HttpFoundation\\\\HeaderBag\\:\\:set\\(\\) expects array\\<string\\>\\|string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../tests/Tests/RestControllers/Authorization/LocalApiAuthorizationControllerTest.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertContains\\(\\) expects iterable, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../tests/Tests/RestControllers/Authorization/OAuth2DiscoveryControllerTest.php',
@@ -75728,11 +74698,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$string of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertStringStartsWith\\(\\) expects string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../tests/Tests/RestControllers/SMART/SMARTAuthorizationControllerTest.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$value of method Symfony\\\\Component\\\\HttpFoundation\\\\InputBag\\:\\:set\\(\\) expects array\\|bool\\|float\\|int\\|string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../tests/Tests/RestControllers/SMART/SMARTAuthorizationControllerTest.php',
 ];
@@ -76417,11 +75382,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../tests/Tests/Unit/FHIR/SMART/ClientAdminControllerTest.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$value of method Symfony\\\\Component\\\\HttpFoundation\\\\InputBag\\:\\:set\\(\\) expects array\\|bool\\|float\\|int\\|string\\|null, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../tests/Tests/Unit/FHIR/SMART/ExternalClinicalDecisionSupport/RouteControllerTest.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$resource of method OpenEMR\\\\FHIR\\\\SMART\\\\ResourceConstraintFilterer\\:\\:canAccessResource\\(\\) expects OpenEMR\\\\FHIR\\\\R4\\\\FHIRResource\\\\FHIRDomainResource, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../tests/Tests/Unit/FHIR/SMART/ResourceConstraintFiltererTest.php',
@@ -76462,18 +75422,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../tests/api/InternalApiTest.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../tests/api/InternalApiTest.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$assets of static method OpenEMR\\\\Core\\\\Header\\:\\:setupAssets\\(\\) expects array, string given\\.$#',
     'count' => 1,
-    'path' => __DIR__ . '/../../tests/api/InternalFhirTest.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../tests/api/InternalFhirTest.php',
 ];
 $ignoreErrors[] = [
