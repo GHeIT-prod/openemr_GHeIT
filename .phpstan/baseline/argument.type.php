@@ -22917,16 +22917,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/classes/Company.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$array of function array_key_first expects array, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../library/classes/Controller.class.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$array of function array_keys expects array, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/classes/Controller.class.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$compile_check of method Smarty_Internal_TemplateBase\\:\\:setCompileCheck\\(\\) expects int, true given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/classes/Controller.class.php',
