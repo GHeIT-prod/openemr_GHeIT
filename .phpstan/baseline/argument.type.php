@@ -32392,11 +32392,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Session/SessionUtil.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$webRoot of static method OpenEMR\\\\Common\\\\Session\\\\SessionConfigurationBuilder\\:\\:forOAuth\\(\\) expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Common/Session/SessionUtil.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$command of method OpenEMR\\\\Common\\\\System\\\\System\\:\\:escapeshellcmd\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/System/System.php',
