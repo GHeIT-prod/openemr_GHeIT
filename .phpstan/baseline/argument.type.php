@@ -17,11 +17,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../acl_upgrade.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$mysql of function mysqli_close expects mysqli, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../admin.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$mysql of function mysqli_query expects mysqli, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../admin.php',
@@ -462,7 +457,17 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../contrib/util/chart_review_pids.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_intersect expects an array of values castable to string, list given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../contrib/util/chart_review_pids.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../contrib/util/chart_review_pids.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$arrays of function array_intersect expects an array of values castable to string, list given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../contrib/util/chart_review_pids.php',
 ];
@@ -942,8 +947,18 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../controllers/C_Prescription.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
+    'path' => __DIR__ . '/../../controllers/C_Prescription.class.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<int\\<0, max\\>, mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../controllers/C_Prescription.class.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list\\<int, mixed\\> given\\.$#',
+    'count' => 2,
     'path' => __DIR__ . '/../../controllers/C_Prescription.class.php',
 ];
 $ignoreErrors[] = [
@@ -1092,7 +1107,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../custom/code_types.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../custom/code_types.inc.php',
 ];
@@ -1292,6 +1307,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../custom/import_xml.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, list given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../custom/qrda_category1.inc.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$report_id of function collectItemizedPatientsCdrReport expects int, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../custom/qrda_category1.inc.php',
@@ -1474,6 +1494,16 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 12,
+    'path' => __DIR__ . '/../../gacl/admin/acl_list.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed, mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../gacl/admin/acl_list.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list\\<mixed\\> given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../gacl/admin/acl_list.php',
 ];
 $ignoreErrors[] = [
@@ -1852,6 +1882,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/edi_270.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/billing/edi_270.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/edi_270.php',
@@ -1912,11 +1947,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/edit_payment.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/edit_payment.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, \\(float\\|int\\) given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/edit_payment.php',
@@ -1972,7 +2002,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/edit_payment.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/billing/edit_payment.php',
 ];
@@ -2022,7 +2052,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/indigent_patients_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/billing/indigent_patients_report.php',
 ];
@@ -2237,11 +2267,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/search_payments.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
-    'count' => 14,
-    'path' => __DIR__ . '/../../interface/billing/search_payments.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 12,
     'path' => __DIR__ . '/../../interface/billing/search_payments.php',
@@ -2437,7 +2462,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/sl_eob_process.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/billing/sl_eob_process.php',
 ];
@@ -2787,7 +2812,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/sl_receipts_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/sl_receipts_report.php',
 ];
@@ -2962,7 +2987,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/drugs/add_edit_lot.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/drugs/add_edit_lot.php',
 ];
@@ -3037,7 +3062,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/drugs/drug_inventory.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../interface/drugs/drug_inventory.php',
 ];
@@ -3212,7 +3237,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/eRxXMLBuilder.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/eRxXMLBuilder.php',
 ];
@@ -3697,7 +3722,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/LBF/new.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/forms/LBF/new.php',
 ];
@@ -3752,7 +3777,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/LBF/printable.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/forms/LBF/printable.php',
 ];
@@ -4017,7 +4042,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/clinical_notes/save.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\|bool\\|float\\|int\\|resource\\|string\\|null, int\\=\\)\\: int given\\.$#',
+    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, int\\=\\)\\: int given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/forms/clinical_notes/save.php',
 ];
@@ -4188,6 +4213,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_reverse expects array, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/forms/eye_mag/php/eye_mag_functions.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, list given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/eye_mag/php/eye_mag_functions.php',
 ];
@@ -4557,7 +4587,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/eye_mag/report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$FIELDS of function start_your_engines expects string, array given\\.$#',
+    'message' => '#^Parameter \\#1 \\$FIELDS of function start_your_engines expects string, array\\<mixed\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/eye_mag/save.php',
 ];
@@ -4827,7 +4857,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/eye_mag/view.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/eye_mag/view.php',
 ];
@@ -5437,6 +5467,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/newGroupEncounter/save.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed, mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/forms/newGroupEncounter/save.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/newGroupEncounter/save.php',
@@ -5577,7 +5612,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/newpatient/save.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/newpatient/save.php',
 ];
@@ -6572,7 +6607,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/vitals/report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/forms/vitals/report.php',
 ];
@@ -6777,8 +6812,23 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/language/lang_language.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_diff expects an array of values castable to string, array\\<int\\<0, max\\>, mixed\\> given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../interface/language/lang_manage.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, list given\\.$#',
+    'count' => 4,
+    'path' => __DIR__ . '/../../interface/language/lang_manage.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 16,
+    'path' => __DIR__ . '/../../interface/language/lang_manage.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$arrays of function array_diff expects an array of values castable to string, array\\<int\\<0, max\\>, mixed\\> given\\.$#',
+    'count' => 2,
     'path' => __DIR__ . '/../../interface/language/lang_manage.php',
 ];
 $ignoreErrors[] = [
@@ -7053,11 +7103,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$stream of function gzwrite expects resource, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/backup.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/backup.php',
 ];
@@ -7597,6 +7642,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnadmin.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed, mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnadmin.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$value of method pnHTML\\:\\:FormHidden\\(\\) expects string, \\(float\\|int\\) given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnadmin.php',
@@ -7752,7 +7802,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnuserapi.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|GMP\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/main/calendar/modules/PostCalendar/pnuserapi.php',
 ];
@@ -7842,11 +7892,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/dated_reminders/dated_reminders.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function mb_strlen expects string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/main/dated_reminders/dated_reminders_add.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, int given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../interface/main/dated_reminders/dated_reminders_add.php',
@@ -7867,7 +7912,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/dated_reminders/dated_reminders_add.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../interface/main/dated_reminders/dated_reminders_add.php',
 ];
@@ -8007,7 +8052,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/finder/dynamic_finder_ajax.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/main/finder/dynamic_finder_ajax.php',
 ];
@@ -8288,11 +8333,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$secret of class Totp constructor expects bool, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/main/main_screen.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/main_screen.php',
 ];
@@ -8792,7 +8832,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/src/EligibilityObjectCreator.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/src/EraPage.php',
 ];
@@ -9062,7 +9102,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleHealthCalendarController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleHealthCalendarController.php',
 ];
@@ -9167,7 +9207,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleconferenceRoomController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 19,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Controller/TeleconferenceRoomController.php',
 ];
@@ -9292,7 +9332,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Services/FormattedPatientService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/Services/ParticipantListService.php',
 ];
@@ -9467,7 +9507,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/TelehealthGlobalConfig.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-comlink-telehealth/src/TelehealthGlobalConfig.php',
 ];
@@ -9882,7 +9922,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/src/DornGenHl7Order.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/src/DornGenHl7Order.php',
 ];
@@ -9918,6 +9958,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string1 of function strcmp expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/src/GenHl7OrderBase.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/src/GenHl7OrderBase.php',
 ];
@@ -9992,7 +10037,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/src/ReceiveHl7Results.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 6,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/src/ReceiveHl7Results.php',
 ];
@@ -10042,7 +10087,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/public/index.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/public/index.php',
 ];
@@ -10057,12 +10102,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/src/Bootstrap.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\|bool\\|float\\|int\\|resource\\|string\\|null, int\\=\\)\\: int given\\.$#',
+    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, int\\=\\)\\: int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/src/Models/EhiExportJob.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\|bool\\|float\\|int\\|resource\\|string\\|null, int\\=\\)\\: int given\\.$#',
+    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, int\\=\\)\\: int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/src/Models/EhiExportJobTask.php',
 ];
@@ -10247,7 +10292,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/src/Services/EhiExporter.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/src/Services/EhiExporter.php',
 ];
@@ -10392,6 +10437,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/src/TableDefinitions/ExportOnsiteMailTableDefinition.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$keys of function array_combine expects an array of values castable to string, array\\<mixed, mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/src/TableDefinitions/ExportOnsiteMessagesTableDefinition.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$keys of function array_combine expects array\\<int\\|string\\>, array\\<mixed, mixed\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/src/TableDefinitions/ExportOnsiteMessagesTableDefinition.php',
@@ -10468,6 +10518,16 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, int\\|string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/src/TableDefinitions/ExportTableDefinition.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/src/TableDefinitions/ExportTableDefinition.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-ehi-exporter/src/TableDefinitions/ExportTableDefinition.php',
 ];
@@ -11952,6 +12012,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-prior-authorizations/public/reports/list_report.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_diff expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-prior-authorizations/src/Controller/ListAuthorizations.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_push expects array, array\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-prior-authorizations/src/Controller/ListAuthorizations.php',
@@ -12652,6 +12717,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/src/Application/Plugin/CommonPlugin.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed, mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/src/Application/Plugin/CommonPlugin.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_ireplace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/src/Application/Plugin/CommonPlugin.php',
@@ -12967,6 +13037,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/CarecoordinationTable.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<string, mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/CarecoordinationTable.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#',
     'count' => 11,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/CarecoordinationTable.php',
@@ -12992,7 +13067,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/CcdaGenerator.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/CcdaGlobalsConfiguration.php',
 ];
@@ -13032,7 +13107,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/CcdaServiceRequestModelGenerator.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/CcdaServiceRequestModelGenerator.php',
 ];
@@ -13072,7 +13147,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncounterccdadispatchTable.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\|bool\\|float\\|int\\|resource\\|string\\|null, int\\=\\)\\: int given\\.$#',
+    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, int\\=\\)\\: int given\\.$#',
     'count' => 8,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncounterccdadispatchTable.php',
 ];
@@ -13217,7 +13292,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncounterccdadispatchTable.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Carecoordination/src/Carecoordination/Model/EncounterccdadispatchTable.php',
 ];
@@ -13507,7 +13582,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Documents/src/Documents/Plugin/Documents.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/FHIR/src/FHIR/Listener/CalculatedObservationEventsSubscriber.php',
 ];
@@ -13662,6 +13737,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Controller/InstallerController.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Controller/InstallerController.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$callback of function usort expects callable\\(non\\-falsy\\-string, non\\-falsy\\-string\\)\\: int, \\(Closure\\(string, string, string\\|null\\)\\: \\(bool\\|null\\)\\)\\|\\(Closure\\(string, string, string\\|null\\=\\)\\: \\(bool\\|int\\)\\) given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Controller/InstallerController.php',
@@ -13687,6 +13767,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Controller/InstallerController.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, list given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Model/InstModuleTable.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$filename of function file expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Model/InstModuleTable.php',
@@ -13709,6 +13794,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 4,
+    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Model/InstModuleTable.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<int\\<0, max\\>, mixed\\> given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Installer/src/Installer/Model/InstModuleTable.php',
 ];
 $ignoreErrors[] = [
@@ -13982,7 +14072,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/orders/gen_hl7_order.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/orders/gen_hl7_order.inc.php',
 ];
@@ -14087,7 +14177,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/orders/load_compendium.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/orders/load_compendium.php',
 ];
@@ -14112,7 +14202,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/orders/order_manifest.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/orders/order_manifest.php',
 ];
@@ -14397,7 +14487,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/orders/receive_hl7_results.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 6,
     'path' => __DIR__ . '/../../interface/orders/receive_hl7_results.inc.php',
 ];
@@ -14957,7 +15047,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/encounter/find_code_dynamic_ajax.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/patient_file/encounter/find_code_dynamic_ajax.php',
 ];
@@ -15347,7 +15437,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/front_payment.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/front_payment.php',
 ];
@@ -15782,7 +15872,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/merge_patients.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../interface/patient_file/merge_patients.php',
 ];
@@ -15932,7 +16022,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 7,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_ippf.php',
 ];
@@ -16038,11 +16128,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pid of function getPatientData expects int, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_normal.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/pos_checkout_normal.php',
 ];
@@ -16452,7 +16537,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/report/custom_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../interface/patient_file/report/custom_report.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/report/custom_report.php',
 ];
@@ -16500,11 +16590,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/report/patient_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/patient_file/rules/patient_data.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
@@ -16882,7 +16967,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/demographics.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/summary/demographics.php',
 ];
@@ -17177,6 +17262,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/insurance_edit.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, list given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/labdata.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(string\\)\\: lowercase\\-string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/labdata.php',
@@ -17307,7 +17397,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes.php',
 ];
@@ -17432,7 +17522,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
 ];
@@ -17532,7 +17622,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
 ];
@@ -18107,7 +18197,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/procedure_tools/gen_universal_hl7/gen_hl7_order.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/procedure_tools/gen_universal_hl7/gen_hl7_order.inc.php',
 ];
@@ -18232,7 +18322,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/procedure_tools/labcorp/gen_hl7_order.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/procedure_tools/labcorp/gen_hl7_order.inc.php',
 ];
@@ -18307,7 +18397,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/procedure_tools/quest/gen_hl7_order.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/procedure_tools/quest/gen_hl7_order.inc.php',
 ];
@@ -18343,7 +18433,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/amc_tracking.php',
 ];
 $ignoreErrors[] = [
@@ -18402,7 +18492,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/appointments_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/appointments_report.php',
 ];
@@ -18473,7 +18563,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 9,
+    'count' => 8,
     'path' => __DIR__ . '/../../interface/reports/audit_log_tamper_report.php',
 ];
 $ignoreErrors[] = [
@@ -18509,11 +18599,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$selected of function dropdown_facility expects string, mixed given\\.$#',
     'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/clinical_reports.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function strlen expects string, mixed given\\.$#',
-    'count' => 5,
     'path' => __DIR__ . '/../../interface/reports/clinical_reports.php',
 ];
 $ignoreErrors[] = [
@@ -18673,7 +18758,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/cqm.php',
 ];
 $ignoreErrors[] = [
@@ -18820,6 +18905,11 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 7,
     'path' => __DIR__ . '/../../interface/reports/external_data.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/reports/front_receipts_report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$selected of function dropdown_facility expects string, mixed given\\.$#',
@@ -19017,7 +19107,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/inventory_list.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../interface/reports/inventory_list.php',
 ];
@@ -19457,11 +19547,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/patient_flow_board_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function strlen expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/patient_flow_board_report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 11,
     'path' => __DIR__ . '/../../interface/reports/patient_flow_board_report.php',
@@ -19477,7 +19562,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/patient_flow_board_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/patient_flow_board_report.php',
 ];
@@ -19512,9 +19597,14 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/patient_list.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/patient_list.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, list given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/reports/patient_list_creation.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$s of function escape_identifier expects string, mixed given\\.$#',
@@ -20182,7 +20272,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/edit_layout_props.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/super/edit_layout_props.php',
 ];
@@ -20232,7 +20322,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/edit_list.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/super/edit_list.php',
 ];
@@ -20893,7 +20983,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
-    'count' => 48,
+    'count' => 46,
     'path' => __DIR__ . '/../../interface/usergroup/usergroup_admin.php',
 ];
 $ignoreErrors[] = [
@@ -21187,7 +21277,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/FeeSheet.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 15,
     'path' => __DIR__ . '/../../library/FeeSheet.class.php',
 ];
@@ -21627,7 +21717,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/ajax/messages/validate_messages_document_ajax.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/ajax/messages/validate_messages_document_ajax.php',
 ];
@@ -21718,6 +21808,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/ajax/person_search_ajax.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/ajax/person_search_ajax.php',
 ];
@@ -22142,7 +22237,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/classes/Company.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|GMP\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/classes/Company.class.php',
 ];
@@ -22322,7 +22417,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/classes/Installer.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/classes/Installer.class.php',
 ];
@@ -22437,7 +22532,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/classes/Pharmacy.class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|GMP\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/classes/Pharmacy.class.php',
 ];
@@ -22448,6 +22543,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$s of function escape_table_name expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/classes/Prescription.class.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/classes/Prescription.class.php',
 ];
@@ -22722,7 +22822,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/classes/php-barcode.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 14,
     'path' => __DIR__ . '/../../library/classes/php-barcode.php',
 ];
@@ -22777,7 +22877,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/classes/rulesets/Amc/library/AbstractAmcReport.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../library/classes/rulesets/Amc/library/AbstractAmcReport.php',
 ];
@@ -23022,17 +23122,17 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/classes/rulesets/Cqm/reports/NQF_0013/InitialPatientPopulation.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/classes/rulesets/Cqm/reports/NQF_0024/InitialPatientPopulation1.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/classes/rulesets/Cqm/reports/NQF_0024/InitialPatientPopulation2.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/classes/rulesets/Cqm/reports/NQF_0024/InitialPatientPopulation3.php',
 ];
@@ -23055,6 +23155,11 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/classes/rulesets/Cqm/reports/NQF_0028a/Numerator.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/classes/rulesets/Cqm/reports/NQF_0028b/Denominator.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$baseTimestamp of function strtotime expects int\\|null, int\\|false given\\.$#',
@@ -23112,12 +23217,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/classes/rulesets/Cqm/reports/NQF_0421/Exclusion.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/classes/rulesets/Cqm/reports/NQF_0421/InitialPatientPopulation.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/classes/rulesets/Cqm/reports/NQF_0421/InitialPatientPopulation2.php',
 ];
@@ -23365,6 +23470,21 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function errorLogEscape expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/classes/thumbnail/ThumbnailGenerator.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../library/classes/thumbnail/ThumbnailGenerator.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_diff expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/clinical_rules.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, list given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/clinical_rules.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$comp of function convertCompSql expects string, mixed given\\.$#',
@@ -23957,9 +24077,14 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/dated_reminder_functions.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../library/dated_reminder_functions.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function natsort expects an array of values castable to string, array\\<mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/daysheet.inc.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#6 \\$patient_id of method OpenEMR\\\\Common\\\\Logging\\\\EventAuditLogger\\:\\:newEvent\\(\\) expects int\\|null, mixed given\\.$#',
@@ -24342,6 +24467,16 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/edihistory/edih_archive.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, array\\<mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/edihistory/edih_archive.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, list\\<mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/edihistory/edih_archive.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$directory of function scandir expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../library/edihistory/edih_archive.php',
@@ -24522,6 +24657,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/edihistory/edih_csv_data.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_diff expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/edihistory/edih_csv_inc.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$baseObject of function date_diff expects DateTimeInterface, DateTime\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/edihistory/edih_csv_inc.php',
@@ -24657,8 +24797,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/edihistory/edih_csv_inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|GMP\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 2,
+    'path' => __DIR__ . '/../../library/edihistory/edih_csv_inc.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$arrays of function array_diff expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../library/edihistory/edih_csv_inc.php',
 ];
 $ignoreErrors[] = [
@@ -24727,13 +24872,8 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/edihistory/edih_csv_parse.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, array\\|string given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../library/edihistory/edih_csv_parse.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
-    'count' => 6,
+    'count' => 8,
     'path' => __DIR__ . '/../../library/edihistory/edih_csv_parse.php',
 ];
 $ignoreErrors[] = [
@@ -24803,11 +24943,6 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function strlen expects string, string\\|false\\|null given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/edihistory/edih_io.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function trim expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/edihistory/edih_io.php',
 ];
@@ -25062,6 +25197,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/edihistory/edih_x12file_class.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, list given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/edihistory/edih_x12file_class.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function end expects array\\|object, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/edihistory/edih_x12file_class.php',
@@ -25142,13 +25282,18 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/edihistory/edih_x12file_class.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|GMP\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/edihistory/edih_x12file_class.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function array_key_exists expects array, mixed given\\.$#',
     'count' => 3,
+    'path' => __DIR__ . '/../../library/edihistory/edih_x12file_class.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../library/edihistory/edih_x12file_class.php',
 ];
 $ignoreErrors[] = [
@@ -25259,6 +25404,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 3,
+    'path' => __DIR__ . '/../../library/encounter_events.inc.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed, mixed\\> given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../library/encounter_events.inc.php',
 ];
 $ignoreErrors[] = [
@@ -25582,12 +25732,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/options.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../library/options.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|GMP\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/options.inc.php',
 ];
@@ -25702,7 +25852,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/patient_tracker.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 6,
     'path' => __DIR__ . '/../../library/payment.inc.php',
 ];
@@ -25849,6 +25999,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 14,
+    'path' => __DIR__ . '/../../library/report_database.inc.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../library/report_database.inc.php',
 ];
 $ignoreErrors[] = [
@@ -26039,6 +26194,16 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function implode expects array, mixed given\\.$#',
     'count' => 3,
+    'path' => __DIR__ . '/../../library/smarty_legacy/smarty/Smarty_Compiler_Legacy.class.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../library/smarty_legacy/smarty/Smarty_Compiler_Legacy.class.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
+    'count' => 4,
     'path' => __DIR__ . '/../../library/smarty_legacy/smarty/Smarty_Compiler_Legacy.class.php',
 ];
 $ignoreErrors[] = [
@@ -26517,7 +26682,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/smarty_legacy/smarty/plugins/function.fetch.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(bool\\|float\\|int\\|resource\\|string\\|null\\)\\: string given\\.$#',
+    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(bool\\|float\\|GMP\\|int\\|resource\\|string\\|null\\)\\: string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/smarty_legacy/smarty/plugins/function.html_checkboxes.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/smarty_legacy/smarty/plugins/function.html_checkboxes.php',
 ];
@@ -26527,7 +26697,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/smarty_legacy/smarty/plugins/function.html_checkboxes.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(bool\\|float\\|int\\|resource\\|string\\|null\\)\\: string given\\.$#',
+    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(bool\\|float\\|GMP\\|int\\|resource\\|string\\|null\\)\\: string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/smarty_legacy/smarty/plugins/function.html_options.php',
 ];
@@ -26535,6 +26705,11 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$haystack of function in_array expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/smarty_legacy/smarty/plugins/function.html_options.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/smarty_legacy/smarty/plugins/function.html_radios.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$subject of function preg_match expects string, int\\<1, max\\> given\\.$#',
@@ -27522,7 +27697,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/add_edit_event_user.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/add_edit_event_user.php',
 ];
@@ -27862,11 +28037,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/index.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function strlen expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../portal/index.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 11,
     'path' => __DIR__ . '/../../portal/index.php',
@@ -27905,11 +28075,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../portal/index.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$separator of function explode expects non\\-empty\\-string, string given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../portal/lib/appsql.class.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$success of method OpenEMR\\\\Common\\\\Logging\\\\EventAuditLogger\\:\\:recordLogItem\\(\\) expects int, mixed given\\.$#',
@@ -27972,7 +28137,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/lib/doc_lib.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../portal/lib/doc_lib.php',
 ];
@@ -28257,6 +28422,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/savant/Savant3/resources/Savant3_Plugin_date.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed, mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/patient/fwk/libs/savant/Savant3/resources/Savant3_Plugin_htmlAttribs.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$arg of function escapeshellarg expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/util/Mime_Types.php',
@@ -28329,11 +28499,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function array_key_exists expects array, mixed given\\.$#',
     'count' => 1,
-    'path' => __DIR__ . '/../../portal/patient/fwk/libs/util/parsecsv.lib.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list\\<Processed\\> given\\.$#',
-    'count' => 2,
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/util/parsecsv.lib.php',
 ];
 $ignoreErrors[] = [
@@ -28429,6 +28594,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$timestamp of function getdate expects int\\|null, mixed given\\.$#',
     'count' => 1,
+    'path' => __DIR__ . '/../../portal/patient/fwk/libs/util/zip.lib.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 2,
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/util/zip.lib.php',
 ];
 $ignoreErrors[] = [
@@ -28577,6 +28747,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/HTTP/RequestUtil.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/HTTP/RequestUtil.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$length of function fread expects int\\<1, max\\>, int\\<0, max\\>\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/HTTP/RequestUtil.php',
@@ -28619,6 +28794,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$fieldname of static method RequestUtil\\:\\:Get\\(\\) expects string, mixed given\\.$#',
     'count' => 2,
+    'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Phreeze/ActionRouter.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Phreeze/ActionRouter.php',
 ];
 $ignoreErrors[] = [
@@ -28757,6 +28937,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Phreeze/ExportUtility.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$arrays of function array_diff expects an array of values castable to string, array\\<string, mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Phreeze/ExportUtility.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$fieldname of static method RequestUtil\\:\\:Get\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Phreeze/GenericRouter.php',
@@ -28774,6 +28959,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function array_key_exists expects array, mixed given\\.$#',
     'count' => 2,
+    'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Phreeze/GenericRouter.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed, mixed\\> given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Phreeze/GenericRouter.php',
 ];
 $ignoreErrors[] = [
@@ -29153,6 +29343,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function array_key_exists expects array, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Phreeze/QueryBuilder.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/patient/fwk/libs/verysimple/Phreeze/QueryBuilder.php',
 ];
@@ -29537,6 +29732,31 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/patient/libs/Controller/ProviderController.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/patient/libs/Model/OnsiteActivityView.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/patient/libs/Model/OnsiteDocument.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/patient/libs/Model/OnsitePortalActivity.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/patient/libs/Model/Patient.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../portal/patient/libs/Model/User.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/patient/templates/OnsiteDocumentListView.tpl.php',
@@ -29842,7 +30062,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../portal/report/portal_custom_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../portal/report/portal_custom_report.php',
 ];
@@ -30432,7 +30652,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Billing/BillingUtilities.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Billing/BillingUtilities.php',
 ];
@@ -30533,6 +30753,16 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../src/Billing/EDI270.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<int, mixed\\> given\\.$#',
+    'count' => 6,
+    'path' => __DIR__ . '/../../src/Billing/EDI270.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../src/Billing/EDI270.php',
 ];
@@ -30647,7 +30877,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Billing/ParseERA.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../src/Billing/ParseERA.php',
 ];
@@ -30735,6 +30965,11 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_push expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/ClinicalDecisionRules/Interface/BaseController.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/ClinicalDecisionRules/Interface/Common.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$json of function json_decode expects string, string\\|false given\\.$#',
@@ -31412,6 +31647,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/Entities/ResourceScopeEntityList.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$keys of function array_combine expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/Entities/ServerScopeListEntity.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$keys of function array_combine expects array\\<int\\|string\\>, array given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/Entities/ServerScopeListEntity.php',
@@ -31457,12 +31697,22 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/Grant/CustomRefreshTokenGrant.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/Grant/CustomRefreshTokenGrant.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$client of method OpenEMR\\\\Services\\\\JWTClientAuthenticationService\\:\\:validateJWTClientAssertion\\(\\) expects OpenEMR\\\\Common\\\\Auth\\\\OpenIDConnect\\\\Entities\\\\ClientEntity, League\\\\OAuth2\\\\Server\\\\Entities\\\\ClientEntityInterface given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/Grant/CustomRefreshTokenGrant.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$subject of method Lcobucci\\\\JWT\\\\Builder\\:\\:relatedTo\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/IdTokenSMARTResponse.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/IdTokenSMARTResponse.php',
 ];
@@ -31552,7 +31802,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/Repositories/ClientRepository.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/Repositories/ClientRepository.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed, mixed\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Auth/OpenIDConnect/Repositories/ClientRepository.php',
 ];
@@ -31712,6 +31967,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Command/CreateReleaseChangelogCommand.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, array given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../src/Common/Command/GenerateAccessTokenCommand.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(string\\)\\: OpenEMR\\\\Common\\\\Auth\\\\OpenIDConnect\\\\Entities\\\\ScopeEntity given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Command/GenerateAccessTokenCommand.php',
@@ -31767,7 +32027,22 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Command/GenerateAccessTokenCommand.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Common/Command/RegisterApiTestClientCommand.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$clientIdentifier of method OpenEMR\\\\Common\\\\Auth\\\\OpenIDConnect\\\\Repositories\\\\ClientRepository\\:\\:getClientEntity\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Common/Command/RegisterApiTestClientCommand.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Common/Command/RegisterApiTestClientCommand.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<int, mixed\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Command/RegisterApiTestClientCommand.php',
 ];
@@ -31974,6 +32249,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 2,
+    'path' => __DIR__ . '/../../src/Common/Forms/Types/SmokingStatusType.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<int, mixed\\> given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Forms/Types/SmokingStatusType.php',
 ];
 $ignoreErrors[] = [
@@ -32252,7 +32532,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/ORDataObject/Address.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|GMP\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/ORDataObject/Address.php',
 ];
@@ -32342,7 +32622,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/ORDataObject/ORDataObject.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function strval expects bool\\|float\\|GMP\\|int\\|resource\\|string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../src/Common/ORDataObject/ORDataObject.php',
 ];
@@ -32355,6 +32635,11 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/ORDataObject/ORDataObject.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<int, mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Common/ORDataObject/Person.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$datetime of static method DateTime\\:\\:createFromFormat\\(\\) expects string, mixed given\\.$#',
@@ -32372,7 +32657,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Session/PatientSessionUtil.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Session/PatientSessionUtil.php',
 ];
@@ -32457,7 +32742,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Utils/FileUtils.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Utils/FormatMoney.php',
 ];
@@ -32532,6 +32817,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Controllers/Interface/Forms/Observation/ObservationController.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_diff expects an array of values castable to string, array\\<mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Controllers/Interface/Forms/Observation/ObservationController.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\)\\: array given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../src/Controllers/Interface/Forms/Observation/ObservationController.php',
@@ -32547,13 +32837,23 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Controllers/Interface/Forms/Observation/ObservationController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Controllers/Interface/Forms/Observation/ObservationController.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#',
     'count' => 3,
+    'path' => __DIR__ . '/../../src/Controllers/Interface/Forms/Observation/ObservationController.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Controllers/Interface/Forms/Observation/ObservationController.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$arrays of function array_diff expects an array of values castable to string, array\\<mixed\\> given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../src/Controllers/Interface/Forms/Observation/ObservationController.php',
 ];
 $ignoreErrors[] = [
@@ -32585,6 +32885,11 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\.\\.\\.\\$values of function sprintf expects bool\\|float\\|int\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Core/AbstractModuleActionListener.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_diff expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Core/Header.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$assets of static method OpenEMR\\\\Core\\\\Header\\:\\:setupAssets\\(\\) expects array, array\\|string given\\.$#',
@@ -32635,6 +32940,11 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, string\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Core/Header.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Core/ModulesApplication.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$config of class Laminas\\\\Mvc\\\\Service\\\\ServiceManagerConfig constructor expects array, mixed given\\.$#',
@@ -32922,6 +33232,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Events/PatientDocuments/PatientDocumentCreateCCDAEvent.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Events/PatientDocuments/PatientDocumentCreateCCDAEvent.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$appointment of method OpenEMR\\\\Events\\\\PatientPortal\\\\AppointmentFilterEvent\\:\\:setAppointment\\(\\) expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Events/PatientPortal/AppointmentFilterEvent.php',
@@ -32930,6 +33245,11 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$dbRecord of method OpenEMR\\\\Events\\\\PatientPortal\\\\AppointmentFilterEvent\\:\\:setDbRecord\\(\\) expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Events/PatientPortal/AppointmentFilterEvent.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Events/Services/DornLabEvent.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$section of static method OpenEMR\\\\Common\\\\Acl\\\\AclMain\\:\\:aclCheckCore\\(\\) expects string, mixed given\\.$#',
@@ -61772,8 +62092,23 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/FHIR/R4/PHPFHIRResponseParser.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/FHIR/SMART/ActionUrlBuilder.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$ex of method OpenEMR\\\\FHIR\\\\SMART\\\\ClientAdminController\\:\\:returnFailedToSaveClientResponse\\(\\) expects Exception, Throwable given\\.$#',
     'count' => 2,
+    'path' => __DIR__ . '/../../src/FHIR/SMART/ClientAdminController.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<int, mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/FHIR/SMART/ClientAdminController.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed, mixed\\> given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../src/FHIR/SMART/ClientAdminController.php',
 ];
 $ignoreErrors[] = [
@@ -61902,13 +62237,28 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Gacl/Gacl.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed, mixed\\> given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../src/Gacl/Gacl.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#4 \\$aro_value of method OpenEMR\\\\Gacl\\\\Gacl\\:\\:acl_check\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Gacl/Gacl.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_diff expects an array of values castable to string, array given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_keys expects array, mixed given\\.$#',
     'count' => 1,
+    'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, array\\<mixed, mixed\\> given\\.$#',
+    'count' => 3,
     'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
 ];
 $ignoreErrors[] = [
@@ -61922,13 +62272,28 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function implode expects array, mixed given\\.$#',
     'count' => 1,
+    'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 8,
+    'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed, mixed\\> given\\.$#',
+    'count' => 3,
+    'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$arrays of function array_diff expects an array of values castable to string, array\\<mixed, mixed\\> given\\.$#',
+    'count' => 2,
     'path' => __DIR__ . '/../../src/Gacl/GaclApi.php',
 ];
 $ignoreErrors[] = [
@@ -62372,6 +62737,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Reports/RealWorldTesting.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../src/Reports/RealWorldTesting.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$processingResult of static method OpenEMR\\\\RestControllers\\\\RestControllerHelper\\:\\:handleProcessingResult\\(\\) expects OpenEMR\\\\Validators\\\\ProcessingResult, mixed given\\.$#',
     'count' => 6,
     'path' => __DIR__ . '/../../src/RestControllers/AllergyIntoleranceRestController.php',
@@ -62429,6 +62799,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of method OpenEMR\\\\Common\\\\Http\\\\HttpRestRequest\\:\\:setPatientUuidString\\(\\) expects string\\|null, mixed given\\.$#',
     'count' => 2,
+    'path' => __DIR__ . '/../../src/RestControllers/Authorization/BearerTokenAuthorizationStrategy.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../src/RestControllers/Authorization/BearerTokenAuthorizationStrategy.php',
 ];
 $ignoreErrors[] = [
@@ -62542,7 +62917,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/RestControllers/AuthorizationController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$dsiTypeName of method OpenEMR\\\\Services\\\\DecisionSupportInterventionService\\:\\:getDsiTypeForStringName\\(\\) expects string, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$dsiTypeName of method OpenEMR\\\\Services\\\\DecisionSupportInterventionService\\:\\:getDsiTypeForStringName\\(\\) expects string, bool\\|float\\|int\\|string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/RestControllers/AuthorizationController.php',
 ];
@@ -62622,7 +62997,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/RestControllers/AuthorizationController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$clientName of method OpenEMR\\\\RestControllers\\\\AuthorizationController\\:\\:createDecisionSupportInterventionServiceForType\\(\\) expects string, mixed given\\.$#',
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/RestControllers/AuthorizationController.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$clientName of method OpenEMR\\\\RestControllers\\\\AuthorizationController\\:\\:createDecisionSupportInterventionServiceForType\\(\\) expects string, bool\\|float\\|int\\|string\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/RestControllers/AuthorizationController.php',
 ];
@@ -62642,7 +63022,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/RestControllers/AuthorizationController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#',
+    'message' => '#^Parameter \\#2 \\$string of function explode expects string, list\\<string\\>\\|string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/RestControllers/AuthorizationController.php',
 ];
@@ -63432,7 +63812,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/RestControllers/TokenIntrospectionRestController.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/RestControllers/TokenIntrospectionRestController.php',
 ];
@@ -63607,6 +63987,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/BaseService.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$keys of function array_combine expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/BaseService.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$keys of function array_combine expects array\\<int\\|string\\>, array given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/BaseService.php',
@@ -63627,12 +64012,17 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/BaseService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/BaseService.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function implode expects array, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/BaseService.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<int, mixed\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/BaseService.php',
 ];
@@ -63677,7 +64067,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/CarePlanService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../src/Services/CarePlanService.php',
 ];
@@ -63697,7 +64087,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/CareTeamService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 11,
     'path' => __DIR__ . '/../../src/Services/CareTeamService.php',
 ];
@@ -63903,6 +64293,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function array_key_exists expects array, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/Cda/CdaTemplateParse.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<int, mixed\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/Cda/CdaTemplateParse.php',
 ];
@@ -64427,6 +64822,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/DemographicsRelatedPersonsService.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$keys of function array_fill_keys expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/DemographicsRelatedPersonsService.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$diagnosis of method OpenEMR\\\\Services\\\\BaseService\\:\\:addCoding\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/DeviceService.php',
@@ -64697,7 +65097,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/EncounterService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/EncounterService.php',
 ];
@@ -66982,6 +67382,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/FHIR/FhirGoalService.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list\\<mixed\\> given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../src/Services/FHIR/FhirGoalService.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$datetime of static method DateTime\\:\\:createFromFormat\\(\\) expects string, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../src/Services/FHIR/FhirGoalService.php',
@@ -67205,6 +67610,11 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$user of static method OpenEMR\\\\Common\\\\Acl\\\\AclMain\\:\\:aclCheckCore\\(\\) expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../src/Services/FHIR/FhirLocationService.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_intersect expects an array of values castable to string, array\\<mixed\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/FHIR/FhirMediaService.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$contentType of method OpenEMR\\\\FHIR\\\\R4\\\\FHIRElement\\\\FHIRAttachment\\:\\:setContentType\\(\\) expects OpenEMR\\\\FHIR\\\\R4\\\\FHIRElement\\\\FHIRCode, mixed given\\.$#',
@@ -69222,6 +69632,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/FHIR/Observation/FhirObservationHistorySdohService.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_intersect expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/FHIR/Observation/FhirObservationHistorySdohService.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_keys expects array, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/FHIR/Observation/FhirObservationHistorySdohService.php',
@@ -69288,6 +69703,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$issued of method OpenEMR\\\\FHIR\\\\R4\\\\FHIRDomainResource\\\\FHIRObservation\\:\\:setIssued\\(\\) expects OpenEMR\\\\FHIR\\\\R4\\\\FHIRElement\\\\FHIRInstant, OpenEMR\\\\FHIR\\\\R4\\\\FHIRElement\\\\FHIRDateTime given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/FHIR/Observation/FhirObservationHistorySdohService.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$keys of function array_combine expects an array of values castable to string, array given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/FHIR/Observation/FhirObservationHistorySdohService.php',
 ];
@@ -69388,6 +69808,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/FHIR/Observation/FhirObservationHistorySdohService.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$arrays of function array_intersect expects an array of values castable to string, array\\<mixed\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/FHIR/Observation/FhirObservationHistorySdohService.php',
 ];
@@ -69613,6 +70038,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$versionId of method OpenEMR\\\\FHIR\\\\R4\\\\FHIRElement\\\\FHIRMeta\\:\\:setVersionId\\(\\) expects OpenEMR\\\\FHIR\\\\R4\\\\FHIRElement\\\\FHIRId, string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/FHIR/Observation/FhirObservationLaboratoryService.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/FHIR/Observation/FhirObservationLaboratoryService.php',
 ];
@@ -70667,7 +71097,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/FHIR/Observation/FhirObservationVitalsService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../src/Services/FHIR/Observation/FhirObservationVitalsService.php',
 ];
@@ -71497,6 +71927,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/Globals/UserSettingsService.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$keys of function array_combine expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/GroupService.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$keys of function array_combine expects array\\<int\\|string\\>, array given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/GroupService.php',
@@ -71637,7 +72072,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/ImmunizationService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/ImmunizationService.php',
 ];
@@ -71872,7 +72307,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/ObservationService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/ObservationService.php',
 ];
@@ -71957,6 +72392,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/PatientAccessOnsiteService.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, list given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/PatientAdvanceDirectiveService.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(OpenEMR\\\\Services\\\\Search\\\\TokenSearchValue\\)\\: \\(float\\|int\\|string\\) given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/PatientAdvanceDirectiveService.php',
@@ -72024,6 +72464,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$data of method OpenEMR\\\\Services\\\\BaseService\\:\\:filterData\\(\\) expects array, mixed given\\.$#',
     'count' => 2,
+    'path' => __DIR__ . '/../../src/Services/PatientIssuesService.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$keys of function array_combine expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../src/Services/PatientIssuesService.php',
 ];
 $ignoreErrors[] = [
@@ -72112,13 +72557,18 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/PatientService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\|bool\\|float\\|int\\|resource\\|string\\|null, int\\=\\)\\: int given\\.$#',
+    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, int\\=\\)\\: int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/PatientService.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$data of function unserialize expects string, mixed given\\.$#',
     'count' => 2,
+    'path' => __DIR__ . '/../../src/Services/PatientService.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$keys of function array_combine expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../src/Services/PatientService.php',
 ];
 $ignoreErrors[] = [
@@ -72172,7 +72622,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/PatientService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/PatientService.php',
 ];
@@ -72343,6 +72793,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_push expects array, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/PractitionerService.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$keys of function array_combine expects an array of values castable to string, array given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/PractitionerService.php',
 ];
@@ -72657,7 +73112,17 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/Qdm/Services/SymptomService.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_diff expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/Qrda/AggregateCount.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of function array_map expects array, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/Qrda/AggregateCount.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$arrays of function array_diff expects an array of values castable to string, list given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/Qrda/AggregateCount.php',
 ];
@@ -72697,7 +73162,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/Qrda/Cat1.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/Qrda/Cat1.php',
 ];
@@ -73032,6 +73497,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/QuestionnaireService.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/QuestionnaireService.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$fields of function fputcsv expects array\\<int\\|string, bool\\|float\\|int\\|string\\|null\\>, array\\<int, mixed\\> given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../src/Services/QuestionnaireService.php',
@@ -73108,6 +73578,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$modifier of method OpenEMR\\\\Services\\\\Search\\\\BasicSearchField\\:\\:setModifier\\(\\) expects string, string\\|null given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/Search/BasicSearchField.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/Search/BasicSearchField.php',
 ];
@@ -73227,12 +73702,17 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/Search/SearchFieldStatementResolver.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../src/Services/Search/SearchQueryConfig.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$fragment of method OpenEMR\\\\Services\\\\Search\\\\SearchQueryFragment\\:\\:setFragment\\(\\) expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/Search/SearchQueryFragment.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/Search/SearchQueryFragment.php',
 ];
@@ -73302,7 +73782,12 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/SurgeryService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/TrustedUserService.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array\\<mixed, mixed\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/TrustedUserService.php',
 ];
@@ -73337,7 +73822,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/Utils/DateFormatterUtils.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\|bool\\|float\\|int\\|resource\\|string\\|null, int\\=\\)\\: int given\\.$#',
+    'message' => '#^Parameter \\#1 \\$callback of function array_map expects \\(callable\\(mixed\\)\\: mixed\\)\\|null, Closure\\(array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, int\\=\\)\\: int given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/Utils/SQLUpgradeService.php',
 ];
@@ -73387,7 +73872,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/Utils/SQLUpgradeService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../src/Services/Utils/SQLUpgradeService.php',
 ];
@@ -73442,6 +73927,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/VersionService.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_intersect expects an array of values castable to string, array given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../src/Services/VitalsCalculatedService.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$calculationUuid of method OpenEMR\\\\Services\\\\VitalsCalculatedService\\:\\:saveCalculationComponents\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/VitalsCalculatedService.php',
@@ -73487,18 +73977,23 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/VitalsCalculatedService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function floatval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/VitalsCalculatedService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/VitalsCalculatedService.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\.\\.\\.\\$arrays of function array_merge expects array, mixed given\\.$#',
     'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/VitalsCalculatedService.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$arrays of function array_intersect expects an array of values castable to string, array given\\.$#',
+    'count' => 2,
     'path' => __DIR__ . '/../../src/Services/VitalsCalculatedService.php',
 ];
 $ignoreErrors[] = [
@@ -73597,7 +74092,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Validators/BaseValidator.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Validators/BaseValidator.php',
 ];
@@ -73872,6 +74367,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../tests/Tests/Api/AuthorizationGrantFlowTest.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../tests/Tests/Api/AuthorizationGrantFlowTest.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\<mixed\\>\\|ArrayAccess\\<\\(int\\|string\\), mixed\\>, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../tests/Tests/Api/AuthorizationGrantFlowTest.php',
@@ -73909,6 +74409,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$array of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertArrayHasKey\\(\\) expects array\\<mixed\\>\\|ArrayAccess\\<\\(int\\|string\\), mixed\\>, mixed given\\.$#',
     'count' => 4,
+    'path' => __DIR__ . '/../../tests/Tests/Api/CapabilityFhirTest.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$arrays of function array_diff expects an array of values castable to string, list given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../tests/Tests/Api/CapabilityFhirTest.php',
 ];
 $ignoreErrors[] = [
@@ -74242,7 +74747,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../tests/Tests/Fixtures/BaseFixtureManager.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../tests/Tests/Fixtures/BaseFixtureManager.php',
 ];
@@ -74302,7 +74807,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../tests/Tests/Fixtures/FixtureManager.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../tests/Tests/Fixtures/FixtureManager.php',
 ];
@@ -74392,7 +74897,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../tests/Tests/Fixtures/PractitionerFixtureManager.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../tests/Tests/Fixtures/PractitionerFixtureManager.php',
 ];
@@ -74497,6 +75002,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../tests/Tests/Isolated/Validators/ProcessingResultTest.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../tests/Tests/Isolated/library/classes/InstallerTest.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$haystack of function str_contains expects string, mixed given\\.$#',
     'count' => 4,
     'path' => __DIR__ . '/../../tests/Tests/Isolated/library/classes/InstallerTest.php',
@@ -74528,6 +75038,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$string of function strlen expects string, mixed given\\.$#',
+    'count' => 2,
+    'path' => __DIR__ . '/../../tests/Tests/Isolated/library/classes/InstallerTest.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../tests/Tests/Isolated/library/classes/InstallerTest.php',
 ];
@@ -74699,6 +75214,11 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_column expects array, mixed given\\.$#',
     'count' => 3,
+    'path' => __DIR__ . '/../../tests/Tests/Services/Billing/MiscBillingOptionsTest.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_unique expects an array of values castable to string, list given\\.$#',
+    'count' => 2,
     'path' => __DIR__ . '/../../tests/Tests/Services/Billing/MiscBillingOptionsTest.php',
 ];
 $ignoreErrors[] = [
@@ -74952,6 +75472,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../tests/Tests/Services/FHIR/Observation/FhirObservationAdvanceDirectiveServiceUSCore8Test.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, list given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../tests/Tests/Services/FHIR/Observation/FhirObservationAdvanceDirectiveServiceUSCore8Test.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$callback of function array_reduce expects callable\\(array, mixed\\)\\: array, Closure\\(array, string\\)\\: non\\-empty\\-array given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../tests/Tests/Services/FHIR/Observation/FhirObservationAdvanceDirectiveServiceUSCore8Test.php',
@@ -75167,6 +75692,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../tests/Tests/Services/ObservationServiceTest.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../tests/Tests/Services/ObservationServiceTest.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../tests/Tests/Services/ObservationServiceTest.php',
@@ -75317,6 +75847,16 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../tests/Tests/Unit/Common/Auth/OpenIDConnect/IdTokenSMARTResponseTest.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$array of function array_diff expects an array of values castable to string, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../tests/Tests/Unit/Common/Auth/OpenIDConnect/Repositories/ScopeRepositoryTest.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$arrays of function array_diff expects an array of values castable to string, list given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../tests/Tests/Unit/Common/Auth/OpenIDConnect/Repositories/ScopeRepositoryTest.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$haystack of method PHPUnit\\\\Framework\\\\Assert\\:\\:assertCount\\(\\) expects Countable\\|iterable, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../tests/Tests/Unit/Common/Auth/OpenIDConnect/Repositories/ScopeRepositoryTest.php',
@@ -75382,6 +75922,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../tests/Tests/Unit/FHIR/SMART/ResourceConstraintFiltererTest.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$array of function implode expects array\\<string\\>, array given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../tests/Tests/Unit/FHIR/SMART/ResourceConstraintFiltererTest.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../tests/Tests/Unit/FHIR/SMART/ResourceConstraintFiltererTest.php',
@@ -75397,7 +75942,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../tests/Tests/Validators/PatientValidatorTest.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|int\\|resource\\|string\\|null, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$value of function intval expects array\\|bool\\|float\\|GMP\\|int\\|resource\\|SimpleXMLElement\\|string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../tests/Tests/Validators/PatientValidatorTest.php',
 ];
