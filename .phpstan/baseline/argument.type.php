@@ -14782,12 +14782,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/birthday_alert/birthday_pop.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr_url expects string, mixed given\\.$#',
-    'count' => 8,
-    'path' => __DIR__ . '/../../interface/patient_file/deleter.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$text of function js_escape expects string, int\\<min, \\-1\\>\\|int\\<1, max\\> given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/deleter.php',
 ];
@@ -14797,7 +14792,32 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/deleter.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$text of function text expects string, int\\<min, \\-1\\>\\|int\\<1, max\\> given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/deleter.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$binds of function deleter_row_delete expects list\\<bool\\|float\\|int\\|string\\>, array\\{int, mixed\\} given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/deleter.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$binds of function deleter_row_delete expects list\\<bool\\|float\\|int\\|string\\>, array\\{mixed, mixed, mixed, mixed, mixed\\} given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/deleter.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$binds of function deleter_row_delete expects list\\<bool\\|float\\|int\\|string\\>, array\\{mixed, mixed\\} given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/deleter.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$binds of function deleter_row_delete expects list\\<bool\\|float\\|int\\|string\\>, array\\{mixed\\} given\\.$#',
+    'count' => 16,
+    'path' => __DIR__ . '/../../interface/patient_file/deleter.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#4 \\$binds of function deleter_row_modify expects list\\<bool\\|float\\|int\\|string\\>, array\\{int, mixed, mixed\\} given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/deleter.php',
 ];
