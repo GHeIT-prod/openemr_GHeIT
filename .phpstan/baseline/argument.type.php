@@ -8288,6 +8288,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$id of function checkPnotesNoteId expects int, mixed given\\.$#',
+    'count' => 3,
+    'path' => __DIR__ . '/../../interface/main/messages/messages.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$id of function deletePnote expects int\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/messages/messages.php',
 ];
@@ -8298,6 +8303,16 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$id of function getPnoteById expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/messages.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$id of function updatePnote expects int\\|string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/messages.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$id of function updatePnoteMessageStatus expects int\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/messages/messages.php',
 ];
@@ -8382,7 +8397,17 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/messages/messages.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$message_status of function updatePnoteMessageStatus expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/messages.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$newtext of function addPnote expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/messages.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$newtext of function updatePnote expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/messages/messages.php',
 ];
@@ -8393,11 +8418,16 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$user of function checkPnotesNoteId expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 4,
     'path' => __DIR__ . '/../../interface/main/messages/messages.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$authorized of function addPnote expects int, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/messages.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$title of function updatePnote expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/messages/messages.php',
 ];
@@ -8417,12 +8447,22 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/main/messages/messages.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#5 \\$message_status of function updatePnote expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/messages.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#5 \\$sortby of function getPnotesByUser expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/messages/messages.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#5 \\$title of function addPnote expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/main/messages/messages.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#6 \\$datetime of function updatePnote expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/main/messages/messages.php',
 ];
@@ -17167,6 +17207,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$id of function disappearPnote expects int\\|string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_fragment.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$pid of function getPatientData expects int, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_fragment.php',
@@ -17187,6 +17232,11 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_fragment.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$pid of function disappearPnote expects int\\|null, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_fragment.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_fragment.php',
@@ -17202,8 +17252,18 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$id of function deletePnote expects int\\|string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$id of function getPnoteById expects string, mixed given\\.$#',
     'count' => 2,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$id of function updatePnote expects int\\|string, mixed given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
 ];
 $ignoreErrors[] = [
@@ -17287,6 +17347,26 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$newtext of function updatePnote expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$pid of function deletePnote expects int\\|null, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$pid of function disappearPnote expects int\\|null, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$pid of function reappearPnote expects int\\|null, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
@@ -17302,7 +17382,17 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$title of function updatePnote expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#4 \\$activity of function addPnote expects int, string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#4 \\$assigned_to of function updatePnote expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
 ];
@@ -17317,13 +17407,33 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#6 \\$datetime of function updatePnote expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#7 \\$datetime of function addPnote expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#7 \\$pid of function updatePnote expects int\\|null, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$id of function deletePnote expects int\\|string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$id of function getPnoteById expects string, mixed given\\.$#',
     'count' => 2,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$id of function updatePnote expects int\\|string, mixed given\\.$#',
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
 ];
 $ignoreErrors[] = [
@@ -17387,6 +17497,26 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$newtext of function updatePnote expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$pid of function deletePnote expects int\\|null, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$pid of function disappearPnote expects int\\|null, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$pid of function reappearPnote expects int\\|null, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$value of static method OpenEMR\\\\Common\\\\Acl\\\\AclMain\\:\\:aclCheckCore\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
@@ -17397,7 +17527,17 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#3 \\$title of function updatePnote expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#4 \\$activity of function addPnote expects int, string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#4 \\$assigned_to of function updatePnote expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
 ];
@@ -17408,6 +17548,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#6 \\$assigned_to of function addPnote expects string, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#7 \\$pid of function updatePnote expects int\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/patient_file/summary/pnotes_full_add.php',
 ];
@@ -25567,18 +25712,23 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/payment.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$id of function getAssignedToById expects string, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$id of function getAssignedToById expects string, int\\|string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/pnotes.inc.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$id of function getMessageStatusById expects string, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$id of function getMessageStatusById expects string, int\\|string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/pnotes.inc.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$id of function getPnoteById expects string, int\\|string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/pnotes.inc.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$id of function getPnoteById expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../library/pnotes.inc.php',
 ];
 $ignoreErrors[] = [
@@ -25592,8 +25742,13 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/pnotes.inc.php',
 ];
 $ignoreErrors[] = [
+    'message' => '#^Parameter \\#1 \\$text of function text expects string, int\\|string given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../library/pnotes.inc.php',
+];
+$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../library/pnotes.inc.php',
 ];
 $ignoreErrors[] = [
