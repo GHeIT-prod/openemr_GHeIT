@@ -987,16 +987,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../custom/BillingExport.csv.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$report_id of function collectReportDatabase expects int, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../custom/ajax_download.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../custom/ajax_download.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../custom/ajax_download.php',
