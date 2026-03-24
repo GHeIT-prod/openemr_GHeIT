@@ -8662,11 +8662,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/public/x12Tracker.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$globalsArray of class OpenEMR\\\\Modules\\\\ClaimRevConnector\\\\GlobalConfig constructor expects array, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/src/Bootstrap.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-claimrev-connect/src/Bootstrap.php',
@@ -9680,11 +9675,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/public/routes.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$globalsArray of class OpenEMR\\\\Modules\\\\Dorn\\\\GlobalConfig constructor expects array, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/custom_modules/oe-module-dorn/src/Bootstrap.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
