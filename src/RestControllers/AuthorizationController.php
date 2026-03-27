@@ -1346,8 +1346,28 @@ class AuthorizationController
         $this->getSystemLogger()->debug("AuthorizationController->oauthAuthorizeToken() starting request");
         $response = $this->createServerResponse();
 
+        $allowedOrigins = [
+            'http://localhost:5000/',
+            'https://rpm.gheit.co/',
+            'https://flutterdev.gheit.co/',
+            'https://rideon.gheit.co/'
+        ];
+
+        $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+        if (in_array($origin, $allowedOrigins)) {
+            $response = $response->withHeader('Access-Control-Allow-Origin', $origin)
+                                ->withHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+                                ->withHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+                                ->withHeader('Access-Control-Allow-Credentials', 'true');
+        }
+
         if ($request->getMethod() == 'OPTIONS') {
             // nothing to do here, just return
+            $response = $response->withHeader('Access-Control-Allow-Origin', $origin)
+                         ->withHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
+                         ->withHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+                         ->withHeader('Access-Control-Allow-Credentials', 'true');
             return $response->withStatus(Response::HTTP_OK);
         }
 

@@ -34,6 +34,7 @@ use OpenEMR\Validators\{
     CoverageValidator,
     ProcessingResult,
 };
+use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 
 class InsuranceService extends BaseService
 {
@@ -304,6 +305,12 @@ class InsuranceService extends BaseService
                 $uuid
             ]
         );
+
+        require_once __DIR__ . '/../../vendor/autoload.php';
+        require_once __DIR__ . '/../../interface/modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        $pubSubController = new PubSub();
+        $pubSubController->publishPubsub('Coverage', 'coverage_updated', 'coverage_data', $data);
+
         if ($results) {
             $serviceSavePostEvent = new ServiceSaveEvent($this, $data);
             $this->getEventDispatcher()->dispatch($serviceSavePostEvent, ServiceSaveEvent::EVENT_POST_SAVE);

@@ -30,6 +30,9 @@ use OpenEMR\Services\Search\ISearchField;
 use OpenEMR\Services\Utils\DateFormatterUtils;
 use OpenEMR\Validators\ProcessingResult;
 use Exception;
+use Google\Cloud\PubSub\PubSubClient;
+use Ramsey\Uuid\Uuid;
+use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 
 class ObservationService extends BaseService
 {
@@ -554,6 +557,12 @@ class ObservationService extends BaseService
         ];
 
         if (!empty($observationData['id'])) {
+
+            require_once __DIR__ . '/../../vendor/autoload.php';
+            require_once __DIR__ . '/../../interface/modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+            $pubSubController = new PubSub();
+            $pubSubController->publishPubsub('Observation', 'observation_updated', 'observation_data', $observationData);
+
             $sql = "UPDATE `form_observation` SET $sets WHERE id = ? AND pid = ? AND encounter = ?";
             $sqlBindArray[] = $observationData['id'];
             // we make sure updates are not done to other patients/encounters
@@ -564,6 +573,13 @@ class ObservationService extends BaseService
                 $sqlBindArray
             );
         } else {
+
+            $observationData['uuid'] = Uuid::fromBytes($observationData['uuid'])->toString();
+            require_once __DIR__ . '/../../vendor/autoload.php';
+            require_once __DIR__ . '/../../interface/modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+            $pubSubController = new PubSub();
+            $pubSubController->publishPubsub('Observation', 'observation_created', 'observation_data', $observationData);
+
             $sql = "INSERT INTO `form_observation` SET $sets";
             $observationData['id'] = QueryUtils::sqlInsert(
                 $sql,

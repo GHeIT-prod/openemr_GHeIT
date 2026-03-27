@@ -34,6 +34,7 @@ use OpenEMR\Core\Header;
 use OpenEMR\Events\Services\DornLabEvent;
 use OpenEMR\Events\Services\QuestLabTransmitEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 
 if (!$encounter) { // comes from globals.php
     die("Internal error: we do not seem to be in an encounter!");
@@ -269,6 +270,39 @@ if (($_POST['bn_save'] ?? null) || !empty($_POST['bn_xmit']) || !empty($_POST['b
 
     require_once(__DIR__ . "/procedure_order_save_functions.php");
 
+    $orderData = $_POST;
+
+    $patientData = sqlQuery("SELECT * FROM patient_data WHERE pid = ?", [$pid]);
+    if (!empty($patientData['uuid'])) {
+        $patientData['uuid'] = UuidRegistry::uuidToString($patientData['uuid']);
+    }
+    $orderData['pid'] = $patientData;
+    
+    $orderData['encounter'] = $encounter;
+    $encounterData = sqlQuery("SELECT * FROM form_encounter WHERE encounter = ?", [$encounter]);
+    if (!empty($encounterData['uuid'])) {
+        $encounterData['uuid'] = UuidRegistry::uuidToString($encounterData['uuid']);
+    }
+    $orderData['encounter'] = $encounterData;
+
+    $labData = sqlQuery("SELECT * FROM procedure_providers WHERE ppid = ?", [$ppid]);
+    if (!empty($labData['uuid'])) {
+        $labData['uuid'] = UuidRegistry::uuidToString($labData['uuid']);
+    }
+    $orderData['ppid'] = $labData;
+
+    $providerData = sqlQuery("SELECT * FROM users WHERE id = ?", [$_POST['form_provider_id']]);
+    if (!empty($providerData['uuid'])) {
+        $providerData['uuid'] = UuidRegistry::uuidToString($providerData['uuid']);
+    }
+    $orderData['form_provider_id'] = $providerData;
+
+    $collectorData = sqlQuery("SELECT * FROM users WHERE id = ?", [$_POST['form_collector_id']]);
+    if (!empty($collectorData['uuid'])) {
+        $collectorData['uuid'] = UuidRegistry::uuidToString($collectorData['uuid']);
+    }
+    $orderData['form_collector_id'] = $collectorData;
+
     if ($formid) {
         $query = "UPDATE procedure_order SET $sets WHERE procedure_order_id = ?";
         $set_array_temp = $set_array;
@@ -280,6 +314,12 @@ if (($_POST['bn_save'] ?? null) || !empty($_POST['bn_xmit']) || !empty($_POST['b
         $lab_title = $gbl_lab_title . "-$tmp-$formid-$order_date";
         $query = "UPDATE forms SET form_name = ? WHERE encounter = ? AND form_id = ? AND formdir = ?";
         sqlStatement($query, [$lab_title, $encounter, $formid, 'procedure_order']);
+
+        require_once __DIR__ . '/../../../vendor/autoload.php';
+        require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        $pubSubController = new PubSub();
+        $pubSubController->publishPubsub('Procedure', 'procedure_updated', 'procedure_data', $orderData);
+
     } else {
         $query = "INSERT INTO procedure_order SET $sets";
         $formid = sqlInsert($query, $set_array);
@@ -291,6 +331,11 @@ if (($_POST['bn_save'] ?? null) || !empty($_POST['bn_xmit']) || !empty($_POST['b
         addForm($encounter, $lab_title, $formid, "procedure_order", $pid, $userauthorized);
         $mode = 'update';
         $viewmode = true;
+
+        require_once __DIR__ . '/../../../vendor/autoload.php';
+        require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        $pubSubController = new PubSub();
+        $pubSubController->publishPubsub('Procedure', 'procedure_created', 'procedure_data', $orderData);
     }
 
     $lab_name = normalizeDirectoryName(get_lab_name($ppid ?? 0));

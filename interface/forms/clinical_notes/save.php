@@ -21,6 +21,7 @@ require_once("$srcdir/forms.inc.php");
 
 use OpenEMR\Common\Csrf\CsrfUtils;
 use OpenEMR\Services\ClinicalNotesService;
+use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 
 if (!CsrfUtils::verifyCsrfToken($_POST["csrf_token_form"])) {
     CsrfUtils::csrfNotVerified();
@@ -131,6 +132,39 @@ if (!empty($count)) {
         }
         // End AI Generated
     }
+
+    $diagnosticReportData = [
+        'id' => $clinicalNoteId,
+        'form_id' => $form_id,
+        'code' => $code[0] ?? '',
+        'codetext' => $code_text[0] ?? '',
+        'description' => $code_des[0] ?? '',
+        'clinical_notes_type' => $clinical_notes_type[0] ?? '',
+        'clinical_notes_category' => $clinical_notes_category[0] ?? '',
+        'note_related_to' => parse_note($code_des[0] ?? ''),
+        'pid' => $_SESSION['pid'],
+        'encounter' => $_SESSION['encounter'],
+        'authorized' => $userauthorized,
+        'date' => $code_date[0] ?? '',
+        'groupname' => $_SESSION["authProvider"],
+        'activity' => ClinicalNotesService::ACTIVITY_ACTIVE,
+        'linked_documents' => [
+            'clinicalNoteId' => $clinicalNoteId,
+            'documentsData' => $documentsData ?? [],
+            'user' => $_SESSION["authUser"]
+        ],
+        'linked_results' => [
+            'clinicalNoteId' => $clinicalNoteId,
+            'resultsData' => $resultsData ?? [],
+            'user' => $_SESSION["authUser"]
+        ],
+    ];
+
+    require_once __DIR__ . '/../../../vendor/autoload.php';
+    require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+    $pubSubController = new PubSub();
+    $pubSubController->publishPubsub('DiagnosticReport', 'diagnostic_report_generated', 'diagnostic_report_data', $diagnosticReportData);
+
 }
 
 formHeader("Redirecting....");

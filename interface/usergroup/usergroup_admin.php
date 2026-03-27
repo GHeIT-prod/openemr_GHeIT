@@ -33,6 +33,7 @@ use OpenEMR\Core\Header;
 use OpenEMR\Services\UserService;
 use OpenEMR\Events\User\UserUpdatedEvent;
 use OpenEMR\Events\User\UserCreatedEvent;
+use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 
 if (!empty($_REQUEST)) {
     if (!CsrfUtils::verifyCsrfToken($_REQUEST["csrf_token_form"])) {
@@ -315,6 +316,11 @@ if (isset($_POST["privatemode"]) && $_POST["privatemode"] == "user_admin") {
             ($_POST['lname'] ?? '')
         );
 
+        require_once __DIR__ . '/../../vendor/autoload.php';
+        require_once __DIR__ . '/../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        $pubSubController = new PubSub();
+        $pubSubController->publishPubsub('Practitioner', 'practitioner_updated', 'practitioner_data', $_POST);
+
         // TODO: why are we sending $user_data here when its overwritten with just the 'username' of the user updated
         // instead of the entire user data?  This makes the pre event data not very useful w/o doing a database hit...
         $userUpdatedEvent = new UserUpdatedEvent($user_data, $_POST);
@@ -452,6 +458,12 @@ if (isset($_POST["mode"])) {
 
         // this event should only fire if we actually succeeded in creating the user...
         if ($success) {
+        
+            require_once __DIR__ . '/../../vendor/autoload.php';
+            require_once __DIR__ . '/../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+            $pubSubController = new PubSub();
+            $pubSubController->publishPubsub('Practitioner', 'practitioner_created', 'practitioner_data', $_POST);
+
             // let's make sure we send on our uuid alongside the id of the user
             $submittedData = $_POST;
             $submittedData['uuid'] = $uuid ?? null;
