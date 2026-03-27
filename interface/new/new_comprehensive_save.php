@@ -21,6 +21,7 @@ use OpenEMR\Core\OEGlobalsBag;
 use OpenEMR\Events\Patient\PatientBeforeCreatedAuxEvent;
 use OpenEMR\Services\ContactAddressService;
 use OpenEMR\Services\ContactService;
+use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 
 $session = SessionWrapperFactory::getInstance()->getActiveSession();
 CsrfUtils::checkCsrfInput(INPUT_POST, dieOnFail: true);
@@ -71,6 +72,11 @@ while ($frow = sqlFetchArray($fres)) {
         $newdata[$tblname][$colname] = $value;
     }
 }
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+$pubSubController = new PubSub();
+$pubSubController->publishPubsub('Patient', 'patient_created', 'patient_data', $newdata);
 
 // Use the global helper to use the PatientService to create a new patient
 // The result contains the pid, so use that to set the global session pid

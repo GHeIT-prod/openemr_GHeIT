@@ -30,6 +30,9 @@ use OpenEMR\Common\Uuid\UuidRegistry;
 use OpenEMR\Core\OEGlobalsBag;
 use OpenEMR\Events\PatientDocuments\PatientDocumentStoreOffsite;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Google\Cloud\PubSub\PubSubClient;
+use Ramsey\Uuid\Uuid;
+use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 
 class Document extends ORDataObject
 {
@@ -1097,6 +1100,35 @@ class Document extends ORDataObject
             $sql = "REPLACE INTO categories_to_documents SET category_id = ?, document_id = ?";
             $this->_db->Execute($sql, [$category_id, $this->get_id()]);
         }
+
+        $documentCategory = sqlQuery("SELECT * FROM categories WHERE id = ?", [$category_id]);
+        $documentData = [
+            'id' => $this->get_id(),
+            'uuid' =>  Uuid::fromBytes($this->get_uuid())->toString(),
+            'name' => $this->get_name(),
+            'foreign_id' => $this->get_foreign_id(),
+            'type' => $this->get_type(),
+            'size' => $this->get_size(),
+            'date' => $this->get_date(),
+            'url' => $this->get_url(),
+            'mimetype' => $this->get_mimetype(),
+            'pages' => $this->get_pages(),
+            'owner' => $this->get_owner(),
+            'revision' => $this->revision,
+            'docdate' => $this->get_docdate(),
+            'hash' => $this->get_hash(),
+            'date_expires' => $this->get_date_expires(),
+            'list_id' => $this->get_list_id(),
+            'encounter_id' => $this->get_encounter_id(),
+            'encounter_check' => $this->get_encounter_check(),
+            'document_category' => $documentCategory,
+        ];
+
+        require_once __DIR__ . '/../../vendor/autoload.php';
+        require_once __DIR__ . '/../../interface/modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        $pubSubController = new PubSub();
+        $pubSubController->publishPubsub('DocumentReference', 'document_uploaded', 'document_data', $documentData);
+
 
         return '';
     }

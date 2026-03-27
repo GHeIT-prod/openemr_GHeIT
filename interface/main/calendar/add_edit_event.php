@@ -63,6 +63,8 @@ use OpenEMR\Core\OEGlobalsBag;
 use OpenEMR\Events\Appointments\AppointmentDialogCloseEvent;
 use OpenEMR\Events\Appointments\AppointmentRenderEvent;
 use OpenEMR\Events\Appointments\AppointmentSetEvent;
+use OpenEMR\Common\Logging\SystemLogger;
+use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 
  //Check access control
 if (!AclMain::aclCheckCore('patients', 'appt', '', ['write','wsome'])) {
@@ -788,6 +790,11 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
         // end Update Multi providers case
         // =======================================
 
+        require_once __DIR__ . '/../../../vendor/autoload.php';
+        require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        $pubSubController = new PubSub();
+        $pubSubController->publishPubsub('Appointment', 'appointment_updated', 'appointment_data', $_POST);
+
         // EVENTS TO FACILITIES
         $e2f = (int)$eid;
         //Tell subscribers that a new multi appointment has been set
@@ -798,6 +805,11 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
         /* =======================================================
      *                    INSERT NEW EVENT(S)
      * ======================================================*/
+
+        require_once __DIR__ . '/../../../vendor/autoload.php';
+        require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        $pubSubController = new PubSub();
+        $pubSubController->publishPubsub('Appointment', 'appointment_created', 'appointment_data', $_POST);
 
         $eid = InsertEventFull();
         //Tell subscribers that a new single appointment has been set

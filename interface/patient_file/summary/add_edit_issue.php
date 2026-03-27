@@ -30,6 +30,7 @@ use OpenEMR\Core\OEGlobalsBag;
 use OpenEMR\MedicalDevice\MedicalDevice;
 use OpenEMR\Services\PatientIssuesService;
 use OpenEMR\Services\Utils\DateFormatterUtils;
+use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 
 $session = SessionWrapperFactory::getInstance()->getActiveSession();
 
@@ -254,6 +255,22 @@ if (!empty($_POST['form_save'])) {
         $issueRecord['medication'] = $_POST['form_medication'];
         $issueRecord['medication']['medication_adherence_date_asserted'] = !empty($issueRecord['medication']['medication_adherence_date_asserted']) ? DateTimeToYYYYMMDDHHMMSS($issueRecord['medication']['medication_adherence_date_asserted']) : null;
     }
+
+    //pubsub implementation
+    if ($issueRecord['type'] == 'medical_problem') { 
+        $resource = 'Condition';
+        $event = $issue ? 'condition_updated' : 'condition_created';
+        $resourceDataName = 'condition_data';
+    } elseif($issueRecord['type'] == 'medication') { 
+        $resource = 'MedicationRequest';
+        $event = $issue ? 'medication_request_updated' : 'medication_request_created';
+        $resourceDataName = 'medication_request_data';
+    }
+
+    require_once __DIR__ . '/../../../vendor/autoload.php';
+    require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+    $pubSubController = new PubSub();
+    $pubSubController->publishPubsub($resource, $event, $resourceDataName, $issueRecord);
 
     $patientIssuesService = new PatientIssuesService();
     if ($issue) {
