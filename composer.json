@@ -128,7 +128,8 @@
         "auth0/auth0-php": "^8.17",
         "steampixel/simple-php-router": "^0.7.1",
         "kreait/firebase-php": "^7.0",
-        "aws/aws-sdk-php": "^3.368"
+        "aws/aws-sdk-php": "^3.368",
+        "google/cloud-pubsub": "^2.18"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.48",

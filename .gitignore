@@ -42,3 +42,5 @@ tmp-phpstan/*
 public/images/logos/custom/*
 
 portal/firebase/firebase-service-account.json
+
+openemr-keys/pubsub.json
