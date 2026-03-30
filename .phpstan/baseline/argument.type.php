@@ -1002,11 +1002,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../custom/ajax_download.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function attr expects string, int given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../custom/chart_tracker.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../custom/chart_tracker.php',
@@ -31367,7 +31362,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Auth/OneTimeAuth.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, int\\|null given\\.$#',
+    'message' => '#^Parameter \\#1 \\$userId of method OpenEMR\\\\Services\\\\UserService\\:\\:getUser\\(\\) expects int\\|string, string\\|null given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Auth/OneTimeAuth.php',
 ];
@@ -62577,7 +62572,7 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/RestControllers/Authorization/SkipAuthorizationStrategy.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#2 \\$requestUser of method OpenEMR\\\\Common\\\\Http\\\\HttpRestRequest\\:\\:setRequestUser\\(\\) expects array, array\\<string, int\\|string\\|null\\>\\|false given\\.$#',
+    'message' => '#^Parameter \\#2 \\$requestUser of method OpenEMR\\\\Common\\\\Http\\\\HttpRestRequest\\:\\:setRequestUser\\(\\) expects array, array\\<string, string\\|null\\>\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/RestControllers/Authorization/SkipAuthorizationStrategy.php',
 ];
@@ -74928,6 +74923,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#7 \\$path_depth of method Document\\:\\:createDocument\\(\\) expects string, int given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../tests/Tests/Services/DocumentTest.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#8 \\$owner of method Document\\:\\:createDocument\\(\\) expects int, string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../tests/Tests/Services/DocumentTest.php',
 ];
