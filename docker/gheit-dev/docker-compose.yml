@@ -41,6 +41,7 @@ services:
     - ./docker_data/couchdbvolume:/couchdb/data
     - /etc/letsencrypt/live/openemrdev.gheit.co/fullchain.pem:/etc/letsencrypt/live/openemrdev.gheit.co/fullchain.pem:ro
     - /etc/letsencrypt/live/openemrdev.gheit.co/privkey.pem:/etc/letsencrypt/live/openemrdev.gheit.co/privkey.pem:ro
+    - ../../openemr-keys/pubsub.json:/var/www/keys/pubsub.json
     environment:
       DEBUG_COLORS: "true"
       TERM: xterm-256color

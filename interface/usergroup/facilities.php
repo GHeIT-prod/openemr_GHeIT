@@ -21,6 +21,7 @@ use OpenEMR\Common\Csrf\CsrfUtils;
 use OpenEMR\Common\Twig\TwigContainer;
 use OpenEMR\Core\Header;
 use OpenEMR\Services\FacilityService;
+use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 
 if (!AclMain::aclCheckCore('admin', 'users')) {
     echo (new TwigContainer(null, $GLOBALS['kernel']))->getTwig()->render('core/unauthorized.html.twig', ['pageTitle' => xl("Facilities")]);
@@ -80,14 +81,28 @@ foreach ($columns as $c => $v) {
     $values[$c] = trim($_POST[$k] ?? '');
 }
 
+$pubSubEvent = $_POST['newmode']=="admin_facility" ? 'organization_updated':'organization_created';
+
 /*      Inserting New facility                  */
 if (($_POST["mode"] ?? "") == "facility" && (empty($_POST["newmode"]) || ($_POST["newmode"] != "admin_facility"))) {
+
+    require_once __DIR__ . '/../../vendor/autoload.php';
+    require_once __DIR__ . '/../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+    $pubSubController = new PubSub();
+    $pubSubController->publishPubsub('Organization', $pubSubEvent, 'organization_data', $values);
+
     $insert_id = $facilityService->insertFacility($values);
     exit(); // sjp 12/20/17 for ajax save
 }
 
 /*      Editing existing facility                   */
 if (($_POST["mode"] ?? "") == "facility" && $_POST["newmode"] == "admin_facility") {
+
+    require_once __DIR__ . '/../../vendor/autoload.php';
+    require_once __DIR__ . '/../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+    $pubSubController = new PubSub();
+    $pubSubController->publishPubsub('Organization', $pubSubEvent, 'organization_data', $values);
+
     // Since it's an edit, add in the facility ID
     $values["id"] = trim($_POST['fid'] ?? '');
     $facilityService->updateFacility($values);

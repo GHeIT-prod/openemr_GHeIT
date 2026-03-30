@@ -23,6 +23,7 @@ services:
       - ./docker_data/couchdbvolume:/couchdb/data 
       - /etc/letsencrypt/live/openemrprodtest.shoprideon.com/fullchain.pem:/etc/letsencrypt/live/openemrprodtest.shoprideon.com/fullchain.pem:ro
       - /etc/letsencrypt/live/openemrprodtest.shoprideon.com/privkey.pem:/etc/letsencrypt/live/openemrprodtest.shoprideon.com/privkey.pem:ro
+      - ../../openemr-keys/pubsub.json:/var/www/keys/pubsub.json
     environment:
       #DEBUG_COLORS: "true"
       TERM: xterm-256color
