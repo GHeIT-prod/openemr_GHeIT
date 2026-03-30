@@ -4323,7 +4323,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
-    'count' => 4,
+    'count' => 3,
     'path' => __DIR__ . '/../../interface/forms/eye_mag/php/eye_mag_functions.php',
 ];
 $ignoreErrors[] = [
@@ -24693,7 +24693,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, array\\<array\\<string, mixed\\>\\>\\|string given\\.$#',
-    'count' => 2,
+    'count' => 1,
     'path' => __DIR__ . '/../../library/edihistory/edih_csv_parse.php',
 ];
 $ignoreErrors[] = [
@@ -24703,7 +24703,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$value of function count expects array\\|Countable, mixed given\\.$#',
-    'count' => 8,
+    'count' => 7,
     'path' => __DIR__ . '/../../library/edihistory/edih_csv_parse.php',
 ];
 $ignoreErrors[] = [
@@ -71772,11 +71772,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/ImageUtilities/HandleImageService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$datetime of function strtotime expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Services/ImmunizationService.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$row of method OpenEMR\\\\Services\\\\ImmunizationService\\:\\:createResultRecordFromDatabaseResult\\(\\) expects array\\<string, mixed\\>, array given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/ImmunizationService.php',
@@ -71788,6 +71783,11 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$isAndCondition of method OpenEMR\\\\Services\\\\ImmunizationService\\:\\:search\\(\\) expects bool, mixed given\\.$#',
+    'count' => 1,
+    'path' => __DIR__ . '/../../src/Services/ImmunizationService.php',
+];
+$ignoreErrors[] = [
+    'message' => '#^Parameter \\#2 \\$timestamp of function date expects int\\|null, int\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/ImmunizationService.php',
 ];
