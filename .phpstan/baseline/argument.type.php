@@ -21492,11 +21492,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/ajax/execute_background_services.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$function of function function_exists expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/ajax/execute_background_services.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$method of static method OpenEMR\\\\ClinicalDecisionRules\\\\AMC\\\\CertificationReportTypes\\:\\:isAMCReportType\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/ajax/execute_cdr_report.php',
