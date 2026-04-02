@@ -18,6 +18,7 @@
  */
 
 use OpenEMR\Common\Database\QueryUtils;
+use OpenEMR\Common\Session\SessionWrapperFactory;
 use OpenEMR\Core\OEGlobalsBag;
 use OpenEMR\Services\FacilityService;
 
@@ -693,6 +694,16 @@ function report_basename($pid)
     return ['base' => $fn, 'fname' => $ptd['fname'], 'lname' => $ptd['lname']];
 }
 
+// global interface function to format text length using ellipses
+function strterm(string $string, int $length): string
+{
+    if (strlen($string) >= ($length - 3)) {
+        return substr($string, 0, $length - 3) . "...";
+    } else {
+        return $string;
+    }
+}
+
 /**
  * Reads $_POST and trims the value. New code should NOT use this function.
  */
@@ -716,6 +727,23 @@ function ucname($string): string
         }
     }
     return $string;
+}
+
+// Helper function to generate an image URL that defeats browser/proxy caching when needed.
+function UrlIfImageExists(string $filename, bool $append = true): string
+{
+    global $webserver_root, $web_root;
+    $session = SessionWrapperFactory::getInstance()->getActiveSession();
+    $path = "sites/" . $session->get('site_id') . "/images/$filename";
+    // @ in next line because a missing file is not an error.
+    if ($stat = @stat("$webserver_root/$path")) {
+        if ($append) {
+            return "$web_root/$path?v=" . $stat['mtime'];
+        } else {
+            return "$web_root/$path";
+        }
+    }
+    return '';
 }
 
 /**
