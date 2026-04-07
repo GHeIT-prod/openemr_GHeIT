@@ -73312,11 +73312,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Services/Utils/SQLUpgradeService.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$string of function rtrim expects string, string\\|false given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../src/Services/Utils/SQLUpgradeService.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$table of method OpenEMR\\\\Services\\\\Utils\\\\SQLUpgradeService\\:\\:MigrateTableEngine\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Services/Utils/SQLUpgradeService.php',
