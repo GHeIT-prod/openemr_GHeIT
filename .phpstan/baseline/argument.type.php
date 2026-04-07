@@ -12197,11 +12197,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/src/Application/Helper/Javascript.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$constant of function xl expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/src/Application/Helper/TranslatorViewHelper.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$key of function xla expects literal\\-string, string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/modules/zend_modules/module/Application/src/Application/Listener/Listener.php',
@@ -24932,11 +24927,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/edihistory/test_edih_835_accounting.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$constant of function xl expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/edihistory/test_edih_sftp_files.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$dir of method phpseclib3\\\\Net\\\\SFTP\\:\\:rawlist\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/edihistory/test_edih_sftp_files.php',
@@ -25140,11 +25130,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#6 \\$year of function mktime expects int\\|null, string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/global_functions.inc.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$constant of function xl expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/htmlspecialchars.inc.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, string\\|false given\\.$#',
@@ -25625,31 +25610,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#2 \\$string of function explode expects string, string\\|false given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/sanitize.inc.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xla expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/smarty/plugins/function.xla.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlj expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/smarty/plugins/function.xlj.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/smarty/plugins/function.xlt.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xla expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/smarty/plugins/modifier.xla.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/smarty/plugins/modifier.xlt.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$array of function array_keys expects array, mixed given\\.$#',
