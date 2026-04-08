@@ -1992,16 +1992,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/billing/new_payment.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$constant of function xl_list_label expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/payment_master.inc.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/billing/payment_master.inc.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$num of function number_format expects float, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/billing/payment_master.inc.php',
@@ -2013,12 +2003,12 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 28,
+    'count' => 23,
     'path' => __DIR__ . '/../../interface/billing/payment_master.inc.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 3,
+    'count' => 1,
     'path' => __DIR__ . '/../../interface/billing/payment_master.inc.php',
 ];
 $ignoreErrors[] = [
@@ -18912,11 +18902,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/ippf_daily.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$constant of function xl expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/ippf_statistics.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$date of function fixDate expects string\\|null, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/reports/ippf_statistics.php',
@@ -18972,11 +18957,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/ippf_statistics.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$constant of function xl expects literal\\-string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/reports/message_list.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/message_list.php',
@@ -18993,7 +18973,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 9,
+    'count' => 7,
     'path' => __DIR__ . '/../../interface/reports/message_list.php',
 ];
 $ignoreErrors[] = [
@@ -19197,16 +19177,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/reports/patient_flow_board_report.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$constant of function xl expects literal\\-string, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/reports/patient_list.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../interface/reports/patient_list.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/reports/patient_list.php',
@@ -19380,11 +19350,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 14,
     'path' => __DIR__ . '/../../interface/reports/prescriptions_report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$constant of function xl expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/reports/receipts_by_method_report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$patient_id of function receiptsByMethodLineItem expects int, mixed given\\.$#',
@@ -20872,11 +20837,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/ESign/views/form/esign_form.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$constant of function xl expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/FeeSheet.class.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$data of method OpenEMR\\\\PaymentProcessing\\\\Recorder\\:\\:recordActivity\\(\\) expects array\\{patientId\\: string, encounterId\\: string, codeType\\: string, code\\: string, modifier\\: string, payerType\\: string, postUser\\: string, sessionId\\: string, \\.\\.\\.\\}, array\\{patientId\\: mixed, encounterId\\: mixed, codeType\\: mixed, code\\: mixed, modifier\\: string, payerType\\: \'0\', postUser\\: mixed, sessionId\\: mixed, \\.\\.\\.\\} given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/FeeSheet.class.php',
@@ -21140,11 +21100,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$user of function checkUserSetting expects int\\|null, array given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/ajax/adminacl_ajax.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$constant of function xl expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../library/ajax/billing_tracker_ajax.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$json of function json_decode expects string, mixed given\\.$#',
