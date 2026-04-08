@@ -1328,27 +1328,31 @@ class AuthorizationController
         $response = $this->createServerResponse();
 
         $allowedOrigins = [
-            'http://localhost:5000/',
-            'https://rpm.gheit.co/',
-            'https://flutterdev.gheit.co/',
-            'https://rideon.gheit.co/'
+            'http://localhost:5000',
+            'https://rpm.gheit.co',
+            'https://flutterdev.gheit.co',
+            'https://rideon.gheit.co'
         ];
 
         $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 
         if (in_array($origin, $allowedOrigins)) {
             $response = $response->withHeader('Access-Control-Allow-Origin', $origin)
-                                ->withHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
-                                ->withHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type')
-                                ->withHeader('Access-Control-Allow-Credentials', 'true');
+                                ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH')
+                                // ->withHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+                                ->withHeader('Access-Control-Allow-Headers', $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'] ?? 'Authorization, Content-Type')
+                                ->withHeader('Access-Control-Allow-Credentials', 'true')
+                                ->withHeader('Access-Control-Expose-Headers', 'Authorization');
         }
 
         if ($request->getMethod() == 'OPTIONS') {
             // nothing to do here, just return
             $response = $response->withHeader('Access-Control-Allow-Origin', $origin)
-                         ->withHeader('Access-Control-Allow-Methods', 'POST, OPTIONS')
-                         ->withHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type')
-                         ->withHeader('Access-Control-Allow-Credentials', 'true');
+                         ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH')
+                        //  ->withHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type')
+                        ->withHeader('Access-Control-Allow-Headers', $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'] ?? 'Authorization, Content-Type')
+                         ->withHeader('Access-Control-Allow-Credentials', 'true')
+                         ->withHeader('Access-Control-Expose-Headers', 'Authorization');
             return $response->withStatus(Response::HTTP_OK);
         }
 
