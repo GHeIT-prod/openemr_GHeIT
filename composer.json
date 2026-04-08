@@ -126,11 +126,11 @@
         "zircote/swagger-php": "^3.0",
         "waryway/php-traits-library": "1.0.4",
         "http-interop/http-factory-guzzle": "^1.2",
-        "auth0/auth0-php": "^8.17",
+        "auth0/auth0-php": "^8.18",
         "steampixel/simple-php-router": "^0.7.1",
         "kreait/firebase-php": "^7.0",
-        "aws/aws-sdk-php": "^3.368",
-        "google/cloud-pubsub": "^2.18"
+        "aws/aws-sdk-php": "^3.374",
+        "google/cloud-pubsub": "^2.19"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.48",
