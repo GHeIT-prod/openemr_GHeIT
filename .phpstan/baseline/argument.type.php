@@ -3487,11 +3487,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/aftercare_plan/new.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/aftercare_plan/report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/aftercare_plan/report.php',
@@ -3500,11 +3495,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/aftercare_plan/report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/ankleinjury/report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
@@ -3530,11 +3520,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/forms/ankleinjury/view.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/bronchitis/report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
@@ -3635,11 +3620,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/forms/clinic_note/new.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/clinic_note/report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
@@ -3755,11 +3735,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$createdBy of method OpenEMR\\\\Services\\\\ClinicalNotesService\\:\\:saveLinkedResults\\(\\) expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/clinical_notes/save.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/dictation/report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
@@ -4997,11 +4972,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/misc_billing_options/new.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/misc_billing_options/report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/misc_billing_options/report.php',
@@ -5282,21 +5252,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/note/print.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/note/report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/note/report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/note/report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/note/report.php',
@@ -5417,19 +5372,9 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/physical_exam/new.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$constant of function xl expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/physical_exam/report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 5,
     'path' => __DIR__ . '/../../interface/forms/physical_exam/report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/prior_auth/report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
@@ -5802,21 +5747,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/requisition/new.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/reviewofs/report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/reviewofs/report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/reviewofs/report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/reviewofs/report.php',
@@ -5830,16 +5760,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/reviewofs/view.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/ros/report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/ros/report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#3 \\$subject of function str_replace expects array\\<string\\>\\|string, mixed given\\.$#',
@@ -5900,11 +5820,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#4 \\$patientId of static method OpenEMR\\\\Common\\\\Forms\\\\CoreFormToPortalUtility\\:\\:confirmFormBootstrapPatient\\(\\) expects int, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/sdoh/save.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/soap/report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
@@ -6037,11 +5952,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/forms/transfer_summary/new.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/transfer_summary/report.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/transfer_summary/report.php',
@@ -6070,11 +5980,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
     'count' => 13,
     'path' => __DIR__ . '/../../interface/forms/treatment_plan/new.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/treatment_plan/report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function text expects string, mixed given\\.$#',
@@ -6205,16 +6110,6 @@ $ignoreErrors[] = [
     'message' => '#^Parameter \\#7 \\$src_width of function imagecopy expects int, float\\|int\\<1, max\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/forms/vitals/growthchart/chart.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/vitals/report.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/forms/vitals/report.php',
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$num of function floor expects float\\|int, mixed given\\.$#',
@@ -19667,16 +19562,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/edit_globals.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
-    'count' => 6,
-    'path' => __DIR__ . '/../../interface/super/edit_globals.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/edit_globals.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$key of method OpenEMR\\\\Core\\\\OEGlobalsBag\\:\\:set\\(\\) expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/super/edit_globals.php',
@@ -19742,21 +19627,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/edit_layout.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xla expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/edit_layout.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/super/edit_layout.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/edit_layout.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$s of function escape_identifier expects string, mixed given\\.$#',
     'count' => 2,
     'path' => __DIR__ . '/../../interface/super/edit_layout.php',
@@ -19817,16 +19687,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/edit_layout_props.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xla expects literal\\-string, mixed given\\.$#',
-    'count' => 1,
-    'path' => __DIR__ . '/../../interface/super/edit_layout_props.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
-    'count' => 2,
-    'path' => __DIR__ . '/../../interface/super/edit_layout_props.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, int\\<2, 12\\> given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../interface/super/edit_layout_props.php',
@@ -19872,11 +19732,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../interface/super/edit_layout_props.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
-    'count' => 5,
-    'path' => __DIR__ . '/../../interface/super/edit_list.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$s of function escape_limit expects string, int given\\.$#',
     'count' => 3,
     'path' => __DIR__ . '/../../interface/super/edit_list.php',
@@ -19908,7 +19763,7 @@ $ignoreErrors[] = [
 ];
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$text of function attr expects string, mixed given\\.$#',
-    'count' => 35,
+    'count' => 34,
     'path' => __DIR__ . '/../../interface/super/edit_list.php',
 ];
 $ignoreErrors[] = [
@@ -25087,11 +24942,6 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../library/js/xl/select2.js.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$constant of function xl expects literal\\-string, mixed given\\.$#',
-    'count' => 3,
-    'path' => __DIR__ . '/../../library/lists.inc.php',
-];
-$ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$s of function process_cols_escape expects string, mixed given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../library/lists.inc.php',
@@ -25139,11 +24989,6 @@ $ignoreErrors[] = [
 $ignoreErrors[] = [
     'message' => '#^Parameter \\#1 \\$data of function unserialize expects string, mixed given\\.$#',
     'count' => 2,
-    'path' => __DIR__ . '/../../library/options.inc.php',
-];
-$ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
-    'count' => 3,
     'path' => __DIR__ . '/../../library/options.inc.php',
 ];
 $ignoreErrors[] = [
@@ -30777,17 +30622,17 @@ $ignoreErrors[] = [
     'path' => __DIR__ . '/../../src/Common/Acl/AclExtended.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xla expects literal\\-string, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$key of function xla expects literal\\-string, string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Acl/AclExtended.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$key of function xlt expects literal\\-string, string given\\.$#',
     'count' => 1,
     'path' => __DIR__ . '/../../src/Common/Acl/AclExtended.php',
 ];
 $ignoreErrors[] = [
-    'message' => '#^Parameter \\#1 \\$key of function xlx expects literal\\-string, mixed given\\.$#',
+    'message' => '#^Parameter \\#1 \\$key of function xlx expects literal\\-string, string given\\.$#',
     'count' => 7,
     'path' => __DIR__ . '/../../src/Common/Acl/AclExtended.php',
 ];
