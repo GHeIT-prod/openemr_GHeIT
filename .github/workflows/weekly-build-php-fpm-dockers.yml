@@ -2,8 +2,6 @@ name: Weekly Build php-fpm Dockers
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 2 * * 0' # (weekly) run at 2 AM UTC on Sundays
 
 permissions:
   contents: read
