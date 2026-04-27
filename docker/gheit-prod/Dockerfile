@@ -6,6 +6,12 @@ ENV COMPOSER_NO_INTERACTION=1 \
 WORKDIR /var/www/localhost/htdocs/openemr
 
 COPY --chown=apache:apache . .
+
+RUN if [ -f /usr/local/bin/openemr-start.sh ]; then \
+            cp /usr/local/bin/openemr-start.sh /usr/local/bin/openemr-start-base.sh; \
+            chmod 755 /usr/local/bin/openemr-start-base.sh; \
+        fi
+
 COPY docker/gheit-prod/openemr-start.sh /usr/local/bin/openemr-start.sh
 
 RUN apk add --no-cache git && \
