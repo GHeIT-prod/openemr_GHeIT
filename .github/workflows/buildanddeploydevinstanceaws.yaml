@@ -484,17 +484,6 @@ jobs:
           docker compose -f "${APP_DIR}/docker-compose.generated.yml" down --remove-orphans || true
           docker compose -f "${APP_DIR}/docker-compose.generated.yml" up -d --force-recreate
 
-          for _ in 1 2 3 4 5 6; do
-            if docker ps --format '{{.Names}}' | grep -qx 'openemr_app'; then
-              break
-            fi
-            sleep 5
-          done
-
-          if docker ps --format '{{.Names}}' | grep -qx 'openemr_app'; then
-            docker exec openemr_app sh -lc 'chown -R apache:apache /var/www/localhost/htdocs/openemr && chmod -R u+rwX,go+rX /var/www/localhost/htdocs/openemr' || true
-          fi
-
           sleep 20
           docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
           docker image prune -f >/dev/null 2>&1 || true
@@ -722,7 +711,7 @@ jobs:
           key_path="${RUNNER_TEMP}/.ssh/deploy_key.pem"
           image_ref="${OPENEMR_IMAGE_REPO}:${GITHUB_SHA}"
 
-          ssh -i "${key_path}" -o StrictHostKeyChecking=no "ubuntu@${host}" "\
+          ssh -i "${key_path}" -o StrictHostKeyChecking=no -o ServerAliveInterval=30 -o ServerAliveCountMax=20 "ubuntu@${host}" "\
             chmod 755 /home/ubuntu/deploy_openemr_release.sh && \
             sudo /home/ubuntu/deploy_openemr_release.sh \
               --image-archive /home/ubuntu/${OPENEMR_ARTIFACT_NAME}.tar.gz \
