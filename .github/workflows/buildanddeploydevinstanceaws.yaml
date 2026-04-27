@@ -9,22 +9,9 @@
 # - AWS_SECRET_ACCESS_KEY
 # - AWS_EC2_SSH_PRIVATE_KEY
 #
-# REQUIRED OPENEMR APP SETTINGS
-# Add these as GitHub variables or secrets with the same names:
-# - HALF_DOMAIN
-# - MYSQL_HOST
-# - MYSQL_ROOT_USER
-# - MYSQL_ROOT_PASS
-# - MYSQL_USER
-# - MYSQL_PASS
-# - EMAIL
-# - OE_USER
-# - OE_PASS
-# - COUCHDB_USER
-# - COUCHDB_PASSWORD
-# - OPENEMR_SETTING_site_addr_oath
-#
 # OPTIONAL OPENEMR APP SETTINGS
+# If these are not provided, the workflow falls back to a self-contained
+# single-instance setup with local MariaDB and OpenEMR defaults.
 # - AUTH0_DOMAIN
 # - AUTH0_CLIENT_ID
 # - AUTH0_CLIENT_SECRET
@@ -213,40 +200,30 @@ jobs:
         run: |
           set -euo pipefail
 
-          required_vars=(
-            MYSQL_HOST
-            MYSQL_ROOT_USER
-            MYSQL_ROOT_PASS
-            MYSQL_USER
-            MYSQL_PASS
-            OE_USER
-            OE_PASS
-            COUCHDB_USER
-            COUCHDB_PASSWORD
-          )
-
-          for var_name in "${required_vars[@]}"; do
-            if [[ -z "${!var_name:-}" ]]; then
-              echo "::error::Missing required OpenEMR setting: ${var_name}"
-              exit 1
-            fi
-          done
-
           host_or_ip="${HALF_DOMAIN:-${OPENEMR_EC2_EIP_PUBLIC_IP}}"
           oath_uri="${OPENEMR_SETTING_site_addr_oath:-http://${host_or_ip}}"
+          mysql_host="${MYSQL_HOST:-mysql}"
+          mysql_root_user="${MYSQL_ROOT_USER:-root}"
+          mysql_root_pass="${MYSQL_ROOT_PASS:-root}"
+          mysql_user="${MYSQL_USER:-openemr}"
+          mysql_pass="${MYSQL_PASS:-openemr}"
+          oe_user="${OE_USER:-admin}"
+          oe_pass="${OE_PASS:-pass}"
+          couchdb_user="${COUCHDB_USER:-admin}"
+          couchdb_password="${COUCHDB_PASSWORD:-admin}"
 
           cat > "${RUNNER_TEMP}/openemr.env" <<EOF
           HALF_DOMAIN=${host_or_ip}
-          MYSQL_HOST=${MYSQL_HOST}
-          MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
-          MYSQL_ROOT_PASS=${MYSQL_ROOT_PASS}
-          MYSQL_PASS=${MYSQL_PASS}
-          MYSQL_USER=${MYSQL_USER}
+          MYSQL_HOST=${mysql_host}
+          MYSQL_ROOT_USER=${mysql_root_user}
+          MYSQL_ROOT_PASS=${mysql_root_pass}
+          MYSQL_PASS=${mysql_pass}
+          MYSQL_USER=${mysql_user}
           EMAIL=${EMAIL}
-          OE_USER=${OE_USER}
-          OE_PASS=${OE_PASS}
-          COUCHDB_USER=${COUCHDB_USER}
-          COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
+          OE_USER=${oe_user}
+          OE_PASS=${oe_pass}
+          COUCHDB_USER=${couchdb_user}
+          COUCHDB_PASSWORD=${couchdb_password}
           OPENEMR_SETTING_site_addr_oath=${oath_uri}
           AUTH0_DOMAIN=${AUTH0_DOMAIN}
           AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
@@ -391,6 +368,7 @@ jobs:
 
           install -d -m 0755 \
             "${APP_DIR}" \
+            "${APP_DIR}/docker_data/databasevolume" \
             "${APP_DIR}/docker_data/sitesvolume" \
             "${APP_DIR}/docker_data/logvolume" \
             "${APP_DIR}/docker_data/couchdbvolume" \
@@ -406,13 +384,42 @@ jobs:
 
           cat > "${APP_DIR}/docker-compose.generated.yml" <<EOC
           services:
+            mysql:
+              image: mariadb:11.8
+              container_name: openemr_mysql
+              restart: unless-stopped
+              command:
+                - mariadbd
+                - --character-set-server=utf8mb4
+              env_file:
+                - ${APP_DIR}/.env
+              environment:
+                MYSQL_ROOT_PASSWORD: \${MYSQL_ROOT_PASS}
+              healthcheck:
+                test:
+                  - CMD
+                  - /usr/local/bin/healthcheck.sh
+                  - --su-mysql
+                  - --connect
+                  - --innodb_initialized
+                start_period: 1m
+                start_interval: 10s
+                interval: 1m
+                timeout: 5s
+                retries: 3
+              volumes:
+                - ${APP_DIR}/docker_data/databasevolume:/var/lib/mysql
             openemr:
               image: ${IMAGE_REF}
               container_name: openemr_app
               restart: unless-stopped
               depends_on:
-                - couchdb
-                - openldap
+                mysql:
+                  condition: service_healthy
+                couchdb:
+                  condition: service_started
+                openldap:
+                  condition: service_started
               env_file:
                 - ${APP_DIR}/.env
               environment:
@@ -455,7 +462,7 @@ jobs:
 
           docker compose -f "${APP_DIR}/docker-compose.generated.yml" down --remove-orphans || true
           docker compose -f "${APP_DIR}/docker-compose.generated.yml" up -d --force-recreate
-          sleep 10
+          sleep 20
           docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
           docker image prune -f >/dev/null 2>&1 || true
           echo "Deployment complete for ${IMAGE_REF}"
@@ -698,9 +705,9 @@ jobs:
           key_path="${RUNNER_TEMP}/.ssh/deploy_key.pem"
 
           ssh -i "${key_path}" -o StrictHostKeyChecking=no "ubuntu@${host}" \
-            'sudo docker ps --filter name=openemr_app --format "{{.Names}} {{.Status}}" && curl -fsSI http://127.0.0.1/'
+            'sudo docker ps --format "{{.Names}} {{.Status}}" && for i in $(seq 1 30); do curl -fsSI http://127.0.0.1/ && exit 0; sleep 10; done; exit 1'
 
-          curl -fsSI "http://${host}/"
+          curl --retry 30 --retry-delay 10 --retry-connrefused -fsSI "http://${host}/"
 
       - name: Deployment summary
         run: |
