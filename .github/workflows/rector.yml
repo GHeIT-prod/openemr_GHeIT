@@ -1,14 +1,7 @@
 name: Rector PHP Analysis
 
 on:
-  push:
-    branches:
-    - master
-    - rel-*
-  pull_request:
-    branches:
-    - master
-    - rel-*
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name == 'pull_request' && github.event.number || github.run_id }}

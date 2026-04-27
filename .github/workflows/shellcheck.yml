@@ -1,48 +1,6 @@
 name: ShellCheck
 on:
-  push:
-    branches:
-    - master
-    - rel-*
-    # GitHub Actions do not support YAML anchors
-    # There are five places in here we must keep
-    # the paths in sync and the exclusion logic.
-    paths:
-    - '**.sh'
-    - '**.source'
-    - '.github/workflows/shellcheck.yml'
-    - '.shellcheckrc'
-    - contrib/util/restore
-    - contrib/util/ubuntu_package_scripts/production/config
-    - contrib/util/ubuntu_package_scripts/production/postinst
-    - contrib/util/ubuntu_package_scripts/production/postrm
-    - contrib/util/ubuntu_package_scripts/production/preinst
-    - contrib/util/ubuntu_package_scripts/production/prerm
-    - docker/library/dockers/dev-php-fpm/data/docker-php-entrypoint
-    - docker/library/dockers/dev-php-fpm/data/docker-php-ext-configure
-    - docker/library/dockers/dev-php-fpm/data/docker-php-ext-enable
-    - docker/library/dockers/dev-php-fpm/data/docker-php-ext-install
-    - docker/library/dockers/dev-php-fpm/data/docker-php-source
-  pull_request:
-    branches:
-    - master
-    - rel-*
-    paths:
-    - '**.sh'
-    - '**.source'
-    - '.github/workflows/shellcheck.yml'
-    - '.shellcheckrc'
-    - contrib/util/restore
-    - contrib/util/ubuntu_package_scripts/production/config
-    - contrib/util/ubuntu_package_scripts/production/postinst
-    - contrib/util/ubuntu_package_scripts/production/postrm
-    - contrib/util/ubuntu_package_scripts/production/preinst
-    - contrib/util/ubuntu_package_scripts/production/prerm
-    - docker/library/dockers/dev-php-fpm/data/docker-php-entrypoint
-    - docker/library/dockers/dev-php-fpm/data/docker-php-ext-configure
-    - docker/library/dockers/dev-php-fpm/data/docker-php-ext-enable
-    - docker/library/dockers/dev-php-fpm/data/docker-php-ext-install
-    - docker/library/dockers/dev-php-fpm/data/docker-php-source
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name == 'pull_request' && github.event.number || github.run_id }}

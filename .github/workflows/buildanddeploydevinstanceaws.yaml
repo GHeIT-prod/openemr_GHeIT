@@ -1,0 +1,708 @@
+# THIS FILE BUILDS THE "OPENEMR (NEOCAREX)" DOCKER IMAGE USING GITHUB ACTIONS
+# THEN THE DOCKER IMAGE IS EXPORTED AND TRANSFERRED TO THE EC2 INSTANCE
+# IF EC2 INSTANCE IS OFF, FIRST IT WILL BE TURNED ON THEN TRANSFERRED
+# AFTER TRANSFERRING, THE INSTANCE WILL INSTALL DOCKER IF NEEDED
+# THEN THE CONTAINERS WILL BE STARTED WITH DOCKER COMPOSE
+#
+# REQUIRED GITHUB SECRETS
+# - AWS_ACCESS_KEY_ID
+# - AWS_SECRET_ACCESS_KEY
+# - AWS_EC2_SSH_PRIVATE_KEY
+#
+# REQUIRED OPENEMR APP SETTINGS
+# Add these as GitHub variables or secrets with the same names:
+# - HALF_DOMAIN
+# - MYSQL_HOST
+# - MYSQL_ROOT_USER
+# - MYSQL_ROOT_PASS
+# - MYSQL_USER
+# - MYSQL_PASS
+# - EMAIL
+# - OE_USER
+# - OE_PASS
+# - COUCHDB_USER
+# - COUCHDB_PASSWORD
+# - OPENEMR_SETTING_site_addr_oath
+#
+# OPTIONAL OPENEMR APP SETTINGS
+# - AUTH0_DOMAIN
+# - AUTH0_CLIENT_ID
+# - AUTH0_CLIENT_SECRET
+# - AUTH0_REDIRECT_URI
+# - PROVIDER_AUTH0_REDIRECT_URI
+# - AUTH0_COOKIE_SECRET
+# - AWS_DEFAULT_REGION
+# - AWS_BUCKET_NAME
+# - PUBSUB_PROJECT_ID
+# - PUBSUB_TOPIC_NAME
+# - PUBSUB_SUBSCRIPTION_NAME
+# - PUBSUB_CREDENTIALS_PATH
+# - OPENEMR_PUBSUB_JSON
+#
+# OPTIONAL EC2 VARIABLES
+# - AWS_REGION                         default: us-east-1
+# - OPENEMR_EC2_INSTANCE_ID           default: i-09c634c95f76dc631
+# - OPENEMR_EC2_INSTANCE_NAME         default: OpenEMR (NeoCareX)
+# - OPENEMR_EC2_INSTANCE_TYPE         default: t3.small
+# - OPENEMR_EC2_SUBNET_ID             default: subnet-ded09dd0
+# - OPENEMR_EC2_VPC_ID                default: vpc-6d278010
+# - OPENEMR_EC2_EIP_PUBLIC_IP         default: 52.200.191.233
+# - OPENEMR_EC2_EIP_ALLOCATION_ID
+# - OPENEMR_EC2_KEY_PAIR_NAME         default: neocarex-test-gha
+# - OPENEMR_EC2_SECURITY_GROUP_ID
+# - OPENEMR_EC2_SECURITY_GROUP_NAME   default: openemr-neocarex-gha-sg
+# - OPENEMR_EC2_SSH_CIDR              default: 0.0.0.0/0
+# - OPENEMR_EC2_WEB_CIDR              default: 0.0.0.0/0
+# - OPENEMR_EC2_AMI_ID                optional, otherwise latest Ubuntu 24.04 x86_64 is used
+
+name: Build And Deploy OpenEMR To AWS EC2
+
+on:
+  workflow_dispatch:
+    inputs:
+      instance_id:
+        description: Existing EC2 instance ID to reuse when available
+        required: false
+        default: i-09c634c95f76dc631
+      instance_name:
+        description: Name tag used to locate or create the instance
+        required: false
+        default: OpenEMR (NeoCareX)
+      instance_type:
+        description: Instance type used when a new instance must be created
+        required: false
+        default: t3.small
+      subnet_id:
+        description: Subnet ID for a new instance
+        required: false
+        default: subnet-ded09dd0
+      vpc_id:
+        description: VPC ID for security group creation
+        required: false
+        default: vpc-6d278010
+      eip_public_ip:
+        description: Existing Elastic IP to reattach when present
+        required: false
+        default: 52.200.191.233
+
+permissions:
+  contents: read
+
+concurrency:
+  group: openemr-neocarex-ec2
+  cancel-in-progress: false
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
+  OPENEMR_EC2_INSTANCE_ID: ${{ github.event.inputs.instance_id || vars.OPENEMR_EC2_INSTANCE_ID || 'i-09c634c95f76dc631' }}
+  OPENEMR_EC2_INSTANCE_NAME: ${{ github.event.inputs.instance_name || vars.OPENEMR_EC2_INSTANCE_NAME || 'OpenEMR (NeoCareX)' }}
+  OPENEMR_EC2_INSTANCE_TYPE: ${{ github.event.inputs.instance_type || vars.OPENEMR_EC2_INSTANCE_TYPE || 't3.small' }}
+  OPENEMR_EC2_SUBNET_ID: ${{ github.event.inputs.subnet_id || vars.OPENEMR_EC2_SUBNET_ID || 'subnet-ded09dd0' }}
+  OPENEMR_EC2_VPC_ID: ${{ github.event.inputs.vpc_id || vars.OPENEMR_EC2_VPC_ID || 'vpc-6d278010' }}
+  OPENEMR_EC2_EIP_PUBLIC_IP: ${{ github.event.inputs.eip_public_ip || vars.OPENEMR_EC2_EIP_PUBLIC_IP || '52.200.191.233' }}
+  OPENEMR_EC2_EIP_ALLOCATION_ID: ${{ vars.OPENEMR_EC2_EIP_ALLOCATION_ID || '' }}
+  OPENEMR_EC2_KEY_PAIR_NAME: ${{ vars.OPENEMR_EC2_KEY_PAIR_NAME || 'neocarex-test-gha' }}
+  OPENEMR_EC2_SECURITY_GROUP_ID: ${{ vars.OPENEMR_EC2_SECURITY_GROUP_ID || '' }}
+  OPENEMR_EC2_SECURITY_GROUP_NAME: ${{ vars.OPENEMR_EC2_SECURITY_GROUP_NAME || 'openemr-neocarex-gha-sg' }}
+  OPENEMR_EC2_AMI_ID: ${{ vars.OPENEMR_EC2_AMI_ID || '' }}
+  OPENEMR_EC2_SSH_CIDR: ${{ vars.OPENEMR_EC2_SSH_CIDR || '0.0.0.0/0' }}
+  OPENEMR_EC2_WEB_CIDR: ${{ vars.OPENEMR_EC2_WEB_CIDR || '0.0.0.0/0' }}
+  OPENEMR_EC2_ROOT_VOLUME_GB: ${{ vars.OPENEMR_EC2_ROOT_VOLUME_GB || '30' }}
+  OPENEMR_IMAGE_REPO: "openemr-gheit"
+  OPENEMR_ARTIFACT_NAME: "openemr-gheit-image"
+  OPENEMR_CONTAINER_NAME: "openemr_app"
+
+jobs:
+  build:
+    name: Build Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build docker image
+        run: |
+          set -euo pipefail
+          image_tag="${OPENEMR_IMAGE_REPO}:${GITHUB_SHA}"
+          docker build \
+            -f docker/gheit-prod/Dockerfile \
+            -t "${image_tag}" \
+            .
+          docker save "${image_tag}" | gzip > "${OPENEMR_ARTIFACT_NAME}.tar.gz"
+
+      - name: Upload docker image artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.OPENEMR_ARTIFACT_NAME }}
+          path: ${{ env.OPENEMR_ARTIFACT_NAME }}.tar.gz
+          if-no-files-found: error
+          retention-days: 7
+
+  deploy:
+    name: Deploy To EC2
+    needs: build
+    runs-on: ubuntu-latest
+
+    env:
+      HALF_DOMAIN: ${{ vars.HALF_DOMAIN || secrets.HALF_DOMAIN || '' }}
+      MYSQL_HOST: ${{ vars.MYSQL_HOST || secrets.MYSQL_HOST || '' }}
+      MYSQL_ROOT_USER: ${{ vars.MYSQL_ROOT_USER || secrets.MYSQL_ROOT_USER || '' }}
+      MYSQL_ROOT_PASS: ${{ secrets.MYSQL_ROOT_PASS || vars.MYSQL_ROOT_PASS || '' }}
+      MYSQL_USER: ${{ vars.MYSQL_USER || secrets.MYSQL_USER || '' }}
+      MYSQL_PASS: ${{ secrets.MYSQL_PASS || vars.MYSQL_PASS || '' }}
+      EMAIL: ${{ vars.EMAIL || secrets.EMAIL || '' }}
+      OE_USER: ${{ vars.OE_USER || secrets.OE_USER || '' }}
+      OE_PASS: ${{ secrets.OE_PASS || vars.OE_PASS || '' }}
+      COUCHDB_USER: ${{ vars.COUCHDB_USER || secrets.COUCHDB_USER || '' }}
+      COUCHDB_PASSWORD: ${{ secrets.COUCHDB_PASSWORD || vars.COUCHDB_PASSWORD || '' }}
+      OPENEMR_SETTING_site_addr_oath: ${{ vars.OPENEMR_SETTING_site_addr_oath || secrets.OPENEMR_SETTING_site_addr_oath || '' }}
+      AUTH0_DOMAIN: ${{ vars.AUTH0_DOMAIN || secrets.AUTH0_DOMAIN || '' }}
+      AUTH0_CLIENT_ID: ${{ vars.AUTH0_CLIENT_ID || secrets.AUTH0_CLIENT_ID || '' }}
+      AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET || vars.AUTH0_CLIENT_SECRET || '' }}
+      AUTH0_REDIRECT_URI: ${{ vars.AUTH0_REDIRECT_URI || secrets.AUTH0_REDIRECT_URI || '' }}
+      PROVIDER_AUTH0_REDIRECT_URI: ${{ vars.PROVIDER_AUTH0_REDIRECT_URI || secrets.PROVIDER_AUTH0_REDIRECT_URI || '' }}
+      AUTH0_COOKIE_SECRET: ${{ secrets.AUTH0_COOKIE_SECRET || vars.AUTH0_COOKIE_SECRET || '' }}
+      AWS_BUCKET_NAME: ${{ vars.AWS_BUCKET_NAME || secrets.AWS_BUCKET_NAME || '' }}
+      PUBSUB_PROJECT_ID: ${{ vars.PUBSUB_PROJECT_ID || secrets.PUBSUB_PROJECT_ID || '' }}
+      PUBSUB_TOPIC_NAME: ${{ vars.PUBSUB_TOPIC_NAME || secrets.PUBSUB_TOPIC_NAME || '' }}
+      PUBSUB_SUBSCRIPTION_NAME: ${{ vars.PUBSUB_SUBSCRIPTION_NAME || secrets.PUBSUB_SUBSCRIPTION_NAME || '' }}
+      PUBSUB_CREDENTIALS_PATH: ${{ vars.PUBSUB_CREDENTIALS_PATH || secrets.PUBSUB_CREDENTIALS_PATH || '/opt/openemr/openemr-keys/pubsub.json' }}
+      OPENEMR_PUBSUB_JSON: ${{ secrets.OPENEMR_PUBSUB_JSON || '' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download docker image artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.OPENEMR_ARTIFACT_NAME }}
+          path: .
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Write deploy SSH key
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.AWS_EC2_SSH_PRIVATE_KEY }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${SSH_PRIVATE_KEY:-}" ]]; then
+            echo "::error::Missing AWS_EC2_SSH_PRIVATE_KEY secret"
+            exit 1
+          fi
+
+          install -m 700 -d "${RUNNER_TEMP}/.ssh"
+          key_path="${RUNNER_TEMP}/.ssh/deploy_key.pem"
+
+          if grep -q "BEGIN .*PRIVATE KEY" <<<"${SSH_PRIVATE_KEY}"; then
+            printf '%s\n' "${SSH_PRIVATE_KEY}" > "${key_path}"
+          else
+            printf '%s' "${SSH_PRIVATE_KEY}" | base64 --decode > "${key_path}"
+          fi
+
+          chmod 600 "${key_path}"
+          ssh-keygen -y -f "${key_path}" > "${RUNNER_TEMP}/.ssh/deploy_key.pub"
+
+      - name: Render OpenEMR environment bundle
+        run: |
+          set -euo pipefail
+
+          required_vars=(
+            MYSQL_HOST
+            MYSQL_ROOT_USER
+            MYSQL_ROOT_PASS
+            MYSQL_USER
+            MYSQL_PASS
+            OE_USER
+            OE_PASS
+            COUCHDB_USER
+            COUCHDB_PASSWORD
+          )
+
+          for var_name in "${required_vars[@]}"; do
+            if [[ -z "${!var_name:-}" ]]; then
+              echo "::error::Missing required OpenEMR setting: ${var_name}"
+              exit 1
+            fi
+          done
+
+          host_or_ip="${HALF_DOMAIN:-${OPENEMR_EC2_EIP_PUBLIC_IP}}"
+          oath_uri="${OPENEMR_SETTING_site_addr_oath:-http://${host_or_ip}}"
+
+          cat > "${RUNNER_TEMP}/openemr.env" <<EOF
+          HALF_DOMAIN=${host_or_ip}
+          MYSQL_HOST=${MYSQL_HOST}
+          MYSQL_ROOT_USER=${MYSQL_ROOT_USER}
+          MYSQL_ROOT_PASS=${MYSQL_ROOT_PASS}
+          MYSQL_PASS=${MYSQL_PASS}
+          MYSQL_USER=${MYSQL_USER}
+          EMAIL=${EMAIL}
+          OE_USER=${OE_USER}
+          OE_PASS=${OE_PASS}
+          COUCHDB_USER=${COUCHDB_USER}
+          COUCHDB_PASSWORD=${COUCHDB_PASSWORD}
+          OPENEMR_SETTING_site_addr_oath=${oath_uri}
+          AUTH0_DOMAIN=${AUTH0_DOMAIN}
+          AUTH0_CLIENT_ID=${AUTH0_CLIENT_ID}
+          AUTH0_CLIENT_SECRET=${AUTH0_CLIENT_SECRET}
+          AUTH0_REDIRECT_URI=${AUTH0_REDIRECT_URI}
+          PROVIDER_AUTH0_REDIRECT_URI=${PROVIDER_AUTH0_REDIRECT_URI}
+          AUTH0_COOKIE_SECRET=${AUTH0_COOKIE_SECRET}
+          AWS_DEFAULT_REGION=${AWS_REGION}
+          AWS_BUCKET_NAME=${AWS_BUCKET_NAME}
+          AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          PUBSUB_PROJECT_ID=${PUBSUB_PROJECT_ID}
+          PUBSUB_TOPIC_NAME=${PUBSUB_TOPIC_NAME}
+          PUBSUB_SUBSCRIPTION_NAME=${PUBSUB_SUBSCRIPTION_NAME}
+          PUBSUB_CREDENTIALS_PATH=${PUBSUB_CREDENTIALS_PATH}
+          EOF
+
+          if [[ -n "${OPENEMR_PUBSUB_JSON:-}" ]]; then
+            printf '%s' "${OPENEMR_PUBSUB_JSON}" > "${RUNNER_TEMP}/pubsub.json"
+          fi
+
+      - name: Prepare docker deploy helper
+        run: |
+          set -euo pipefail
+
+          cat > "${RUNNER_TEMP}/deploy_openemr_release.sh" <<'EOF'
+          #!/usr/bin/env bash
+
+          set -euo pipefail
+
+          IMAGE_ARCHIVE=""
+          IMAGE_REF=""
+          APP_DIR=""
+          ENV_FILE=""
+          PUBSUB_FILE=""
+
+          while [[ $# -gt 0 ]]; do
+            case "$1" in
+              --image-archive)
+                IMAGE_ARCHIVE="$2"
+                shift 2
+                ;;
+              --image-ref)
+                IMAGE_REF="$2"
+                shift 2
+                ;;
+              --app-dir)
+                APP_DIR="$2"
+                shift 2
+                ;;
+              --env-file)
+                ENV_FILE="$2"
+                shift 2
+                ;;
+              --pubsub-file)
+                PUBSUB_FILE="$2"
+                shift 2
+                ;;
+              *)
+                echo "Unknown argument: $1" >&2
+                exit 1
+                ;;
+            esac
+          done
+
+          if [[ "${EUID}" -ne 0 ]]; then
+            echo "Run this script with sudo or as root." >&2
+            exit 1
+          fi
+
+          if [[ -z "${IMAGE_ARCHIVE}" || -z "${IMAGE_REF}" || -z "${APP_DIR}" || -z "${ENV_FILE}" ]]; then
+            echo "Missing required arguments." >&2
+            exit 1
+          fi
+
+          wait_for_apt() {
+            local attempts=30
+            local i
+
+            for ((i = 1; i <= attempts; i++)); do
+              if fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1 \
+                || fuser /var/lib/apt/lists/lock >/dev/null 2>&1 \
+                || fuser /var/cache/apt/archives/lock >/dev/null 2>&1; then
+                sleep 10
+              else
+                return 0
+              fi
+            done
+
+            echo "Timed out waiting for apt/dpkg locks to clear." >&2
+            return 1
+          }
+
+          wait_for_apt
+          export DEBIAN_FRONTEND=noninteractive
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates curl gnupg iproute2 psmisc
+
+          if ! systemctl cat docker.service >/dev/null 2>&1; then
+            snap stop docker >/dev/null 2>&1 || true
+            snap remove docker >/dev/null 2>&1 || true
+            apt-get remove -y docker-compose docker-compose-v2 docker-doc docker.io podman-docker containerd runc || true
+
+            install -m 0755 -d /etc/apt/keyrings
+            curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+            chmod a+r /etc/apt/keyrings/docker.asc
+
+            printf '%s\n' \
+              'Types: deb' \
+              'URIs: https://download.docker.com/linux/ubuntu' \
+              "Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")" \
+              'Components: stable' \
+              "Architectures: $(dpkg --print-architecture)" \
+              'Signed-By: /etc/apt/keyrings/docker.asc' \
+              > /etc/apt/sources.list.d/docker.sources
+
+            apt-get update
+            apt-get install -y --no-install-recommends \
+              containerd.io \
+              docker-buildx-plugin \
+              docker-ce \
+              docker-ce-cli \
+              docker-compose-plugin
+          fi
+
+          systemctl daemon-reload
+          systemctl enable containerd >/dev/null 2>&1 || true
+          systemctl enable docker >/dev/null 2>&1 || true
+          systemctl start containerd >/dev/null 2>&1 || true
+          systemctl start docker.socket >/dev/null 2>&1 || true
+          systemctl start docker >/dev/null 2>&1 || true
+
+          for _ in 1 2 3 4 5; do
+            if docker info >/dev/null 2>&1; then
+              break
+            fi
+            sleep 2
+            systemctl start containerd >/dev/null 2>&1 || true
+            systemctl start docker.socket >/dev/null 2>&1 || true
+            systemctl start docker >/dev/null 2>&1 || true
+          done
+
+          install -d -m 0755 \
+            "${APP_DIR}" \
+            "${APP_DIR}/docker_data/sitesvolume" \
+            "${APP_DIR}/docker_data/logvolume" \
+            "${APP_DIR}/docker_data/couchdbvolume" \
+            "${APP_DIR}/openemr-keys"
+
+          cp "${ENV_FILE}" "${APP_DIR}/.env"
+
+          if [[ -n "${PUBSUB_FILE}" && -f "${PUBSUB_FILE}" ]]; then
+            cp "${PUBSUB_FILE}" "${APP_DIR}/openemr-keys/pubsub.json"
+          fi
+
+          gunzip -c "${IMAGE_ARCHIVE}" | docker load
+
+          cat > "${APP_DIR}/docker-compose.generated.yml" <<EOC
+          services:
+            openemr:
+              image: ${IMAGE_REF}
+              container_name: openemr_app
+              restart: unless-stopped
+              depends_on:
+                - couchdb
+                - openldap
+              env_file:
+                - ${APP_DIR}/.env
+              environment:
+                TERM: xterm-256color
+                COLORTERM: truecolor
+                OPENEMR_SETTING_oauth_password_grant: 3
+                OPENEMR_SETTING_rest_system_scopes_api: 1
+                OPENEMR_SETTING_rest_api: 1
+                OPENEMR_SETTING_rest_fhir_api: 1
+                OPENEMR_SETTING_rest_portal_api: 1
+                OPENEMR_SETTING_portal_onsite_two_enable: 1
+                OPENEMR_SETTING_ccda_alt_service_enable: 3
+                OPENEMR_SETTING_couchdb_host: couchdb
+                OPENEMR_SETTING_couchdb_port: 5984
+                OPENEMR_SETTING_couchdb_dbase: example
+                OPENEMR_SETTING_couchdb_ssl_allow_selfsigned: 0
+                OPENEMR_SETTING_gbl_ldap_host: ldap://openldap:389
+                OPENEMR_SETTING_gbl_ldap_dn: cn={login},dc=example,dc=org
+              ports:
+                - "80:80"
+              volumes:
+                - ${APP_DIR}/docker_data/sitesvolume:/var/www/localhost/htdocs/openemr/sites
+                - ${APP_DIR}/docker_data/logvolume:/var/log/www
+                - ${APP_DIR}/openemr-keys:/var/www/keys
+            couchdb:
+              image: couchdb
+              container_name: openemr_couchdb
+              restart: unless-stopped
+              env_file:
+                - ${APP_DIR}/.env
+              ports:
+                - "5984:5984"
+              volumes:
+                - ${APP_DIR}/docker_data/couchdbvolume:/opt/couchdb/data
+            openldap:
+              image: openemr/dev-ldap:easy
+              container_name: openemr_openldap
+              restart: unless-stopped
+          EOC
+
+          docker compose -f "${APP_DIR}/docker-compose.generated.yml" down --remove-orphans || true
+          docker compose -f "${APP_DIR}/docker-compose.generated.yml" up -d --force-recreate
+          sleep 10
+          docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
+          docker image prune -f >/dev/null 2>&1 || true
+          echo "Deployment complete for ${IMAGE_REF}"
+          EOF
+
+          chmod 755 "${RUNNER_TEMP}/deploy_openemr_release.sh"
+
+      - name: Ensure EC2 instance and Elastic IP
+        id: ec2
+        run: |
+          set -euo pipefail
+
+          pub_key_path="${RUNNER_TEMP}/.ssh/deploy_key.pub"
+          instance_id="${OPENEMR_EC2_INSTANCE_ID}"
+
+          describe_instance_state() {
+            local target_id="$1"
+            aws ec2 describe-instances \
+              --region "${AWS_REGION}" \
+              --instance-ids "${target_id}" \
+              --query 'Reservations[0].Instances[0].State.Name' \
+              --output text 2>/dev/null || true
+          }
+
+          if [[ -n "${instance_id}" ]]; then
+            state="$(describe_instance_state "${instance_id}")"
+            if [[ -z "${state}" || "${state}" == "None" || "${state}" == "terminated" || "${state}" == "shutting-down" ]]; then
+              instance_id=""
+            fi
+          fi
+
+          if [[ -z "${instance_id}" ]]; then
+            found_id="$(aws ec2 describe-instances \
+              --region "${AWS_REGION}" \
+              --filters \
+                "Name=tag:Name,Values=${OPENEMR_EC2_INSTANCE_NAME}" \
+                "Name=instance-state-name,Values=pending,running,stopping,stopped" \
+              --query 'Reservations[].Instances | sort_by(@,&LaunchTime)[-1].InstanceId' \
+              --output text 2>/dev/null || true)"
+            if [[ -n "${found_id}" && "${found_id}" != "None" ]]; then
+              instance_id="${found_id}"
+            fi
+          fi
+
+          if [[ -z "${instance_id}" ]]; then
+            vpc_id="${OPENEMR_EC2_VPC_ID}"
+            if [[ -z "${vpc_id}" ]]; then
+              vpc_id="$(aws ec2 describe-subnets \
+                --region "${AWS_REGION}" \
+                --subnet-ids "${OPENEMR_EC2_SUBNET_ID}" \
+                --query 'Subnets[0].VpcId' \
+                --output text)"
+            fi
+
+            if ! aws ec2 describe-key-pairs \
+              --region "${AWS_REGION}" \
+              --key-names "${OPENEMR_EC2_KEY_PAIR_NAME}" >/dev/null 2>&1; then
+              aws ec2 import-key-pair \
+                --region "${AWS_REGION}" \
+                --key-name "${OPENEMR_EC2_KEY_PAIR_NAME}" \
+                --public-key-material "fileb://${pub_key_path}" >/dev/null
+            fi
+
+            security_group_id="${OPENEMR_EC2_SECURITY_GROUP_ID}"
+            if [[ -z "${security_group_id}" ]]; then
+              security_group_id="$(aws ec2 describe-security-groups \
+                --region "${AWS_REGION}" \
+                --filters \
+                  "Name=vpc-id,Values=${vpc_id}" \
+                  "Name=group-name,Values=${OPENEMR_EC2_SECURITY_GROUP_NAME}" \
+                --query 'SecurityGroups[0].GroupId' \
+                --output text 2>/dev/null || true)"
+
+              if [[ -z "${security_group_id}" || "${security_group_id}" == "None" ]]; then
+                security_group_id="$(aws ec2 create-security-group \
+                  --region "${AWS_REGION}" \
+                  --group-name "${OPENEMR_EC2_SECURITY_GROUP_NAME}" \
+                  --description "OpenEMR GitHub Actions deploy access" \
+                  --vpc-id "${vpc_id}" \
+                  --query 'GroupId' \
+                  --output text)"
+              fi
+
+              for port in 22 80 443 5984; do
+                cidr="${OPENEMR_EC2_WEB_CIDR}"
+                if [[ "${port}" == "22" ]]; then
+                  cidr="${OPENEMR_EC2_SSH_CIDR}"
+                fi
+
+                aws ec2 authorize-security-group-ingress \
+                  --region "${AWS_REGION}" \
+                  --group-id "${security_group_id}" \
+                  --ip-permissions "[{\"IpProtocol\":\"tcp\",\"FromPort\":${port},\"ToPort\":${port},\"IpRanges\":[{\"CidrIp\":\"${cidr}\",\"Description\":\"GitHub Actions deploy access\"}]}]" \
+                  >/dev/null 2>&1 || true
+              done
+            fi
+
+            ami_id="${OPENEMR_EC2_AMI_ID}"
+            if [[ -z "${ami_id}" ]]; then
+              ami_id="$(aws ssm get-parameter \
+                --region "${AWS_REGION}" \
+                --name /aws/service/canonical/ubuntu/server/24.04/stable/current/amd64/hvm/ebs-gp3/ami-id \
+                --query 'Parameter.Value' \
+                --output text)"
+            fi
+
+            instance_id="$(aws ec2 run-instances \
+              --region "${AWS_REGION}" \
+              --image-id "${ami_id}" \
+              --instance-type "${OPENEMR_EC2_INSTANCE_TYPE}" \
+              --key-name "${OPENEMR_EC2_KEY_PAIR_NAME}" \
+              --security-group-ids "${security_group_id}" \
+              --subnet-id "${OPENEMR_EC2_SUBNET_ID}" \
+              --metadata-options 'HttpTokens=required,HttpEndpoint=enabled' \
+              --block-device-mappings "[{\"DeviceName\":\"/dev/sda1\",\"Ebs\":{\"VolumeSize\":${OPENEMR_EC2_ROOT_VOLUME_GB},\"VolumeType\":\"gp3\",\"DeleteOnTermination\":true}}]" \
+              --tag-specifications "[{\"ResourceType\":\"instance\",\"Tags\":[{\"Key\":\"Name\",\"Value\":\"${OPENEMR_EC2_INSTANCE_NAME}\"},{\"Key\":\"Project\",\"Value\":\"openemr\"},{\"Key\":\"ManagedBy\",\"Value\":\"github-actions\"}]}]" \
+              --query 'Instances[0].InstanceId' \
+              --output text)"
+          fi
+
+          state="$(describe_instance_state "${instance_id}")"
+          case "${state}" in
+            running)
+              ;;
+            pending)
+              aws ec2 wait instance-running --region "${AWS_REGION}" --instance-ids "${instance_id}"
+              ;;
+            stopped)
+              aws ec2 start-instances --region "${AWS_REGION}" --instance-ids "${instance_id}" >/dev/null
+              aws ec2 wait instance-running --region "${AWS_REGION}" --instance-ids "${instance_id}"
+              ;;
+            stopping)
+              aws ec2 wait instance-stopped --region "${AWS_REGION}" --instance-ids "${instance_id}"
+              aws ec2 start-instances --region "${AWS_REGION}" --instance-ids "${instance_id}" >/dev/null
+              aws ec2 wait instance-running --region "${AWS_REGION}" --instance-ids "${instance_id}"
+              ;;
+            *)
+              echo "::error::Unsupported instance state: ${state}"
+              exit 1
+              ;;
+          esac
+
+          aws ec2 wait instance-status-ok --region "${AWS_REGION}" --instance-ids "${instance_id}"
+
+          allocation_id="${OPENEMR_EC2_EIP_ALLOCATION_ID}"
+          if [[ -z "${allocation_id}" && -n "${OPENEMR_EC2_EIP_PUBLIC_IP}" ]]; then
+            allocation_id="$(aws ec2 describe-addresses \
+              --region "${AWS_REGION}" \
+              --public-ips "${OPENEMR_EC2_EIP_PUBLIC_IP}" \
+              --query 'Addresses[0].AllocationId' \
+              --output text 2>/dev/null || true)"
+            if [[ "${allocation_id}" == "None" ]]; then
+              allocation_id=""
+            fi
+          fi
+
+          if [[ -z "${allocation_id}" ]]; then
+            allocation_id="$(aws ec2 allocate-address \
+              --region "${AWS_REGION}" \
+              --domain vpc \
+              --query 'AllocationId' \
+              --output text)"
+          fi
+
+          aws ec2 associate-address \
+            --region "${AWS_REGION}" \
+            --instance-id "${instance_id}" \
+            --allocation-id "${allocation_id}" \
+            --allow-reassociation >/dev/null
+
+          public_ip="$(aws ec2 describe-addresses \
+            --region "${AWS_REGION}" \
+            --allocation-ids "${allocation_id}" \
+            --query 'Addresses[0].PublicIp' \
+            --output text)"
+
+          echo "instance_id=${instance_id}" >> "${GITHUB_OUTPUT}"
+          echo "public_ip=${public_ip}" >> "${GITHUB_OUTPUT}"
+
+      - name: Wait for SSH
+        run: |
+          set -euo pipefail
+          host="${{ steps.ec2.outputs.public_ip }}"
+          key_path="${RUNNER_TEMP}/.ssh/deploy_key.pem"
+
+          for attempt in $(seq 1 30); do
+            if ssh -i "${key_path}" -o BatchMode=yes -o StrictHostKeyChecking=no -o ConnectTimeout=10 "ubuntu@${host}" 'echo ready' >/dev/null 2>&1; then
+              exit 0
+            fi
+            sleep 10
+          done
+
+          echo "::error::EC2 host ${host} did not become reachable over SSH"
+          exit 1
+
+      - name: Copy deploy bundle to EC2
+        run: |
+          set -euo pipefail
+          host="${{ steps.ec2.outputs.public_ip }}"
+          key_path="${RUNNER_TEMP}/.ssh/deploy_key.pem"
+
+          scp -i "${key_path}" -o StrictHostKeyChecking=no \
+            "${OPENEMR_ARTIFACT_NAME}.tar.gz" \
+            "ubuntu@${host}:/home/ubuntu/${OPENEMR_ARTIFACT_NAME}.tar.gz"
+
+          scp -i "${key_path}" -o StrictHostKeyChecking=no \
+            "${RUNNER_TEMP}/openemr.env" \
+            "ubuntu@${host}:/home/ubuntu/openemr.env"
+
+          scp -i "${key_path}" -o StrictHostKeyChecking=no \
+            "${RUNNER_TEMP}/deploy_openemr_release.sh" \
+            "ubuntu@${host}:/home/ubuntu/"
+
+          if [[ -f "${RUNNER_TEMP}/pubsub.json" ]]; then
+            scp -i "${key_path}" -o StrictHostKeyChecking=no \
+              "${RUNNER_TEMP}/pubsub.json" \
+              "ubuntu@${host}:/home/ubuntu/pubsub.json"
+          fi
+
+      - name: Deploy docker image on EC2
+        run: |
+          set -euo pipefail
+          host="${{ steps.ec2.outputs.public_ip }}"
+          key_path="${RUNNER_TEMP}/.ssh/deploy_key.pem"
+          image_ref="${OPENEMR_IMAGE_REPO}:${GITHUB_SHA}"
+
+          ssh -i "${key_path}" -o StrictHostKeyChecking=no "ubuntu@${host}" "\
+            chmod 755 /home/ubuntu/deploy_openemr_release.sh && \
+            sudo /home/ubuntu/deploy_openemr_release.sh \
+              --image-archive /home/ubuntu/${OPENEMR_ARTIFACT_NAME}.tar.gz \
+              --image-ref ${image_ref} \
+              --app-dir /opt/openemr \
+              --env-file /home/ubuntu/openemr.env \
+              --pubsub-file /home/ubuntu/pubsub.json"
+
+      - name: Verify deployment
+        run: |
+          set -euo pipefail
+          host="${{ steps.ec2.outputs.public_ip }}"
+          key_path="${RUNNER_TEMP}/.ssh/deploy_key.pem"
+
+          ssh -i "${key_path}" -o StrictHostKeyChecking=no "ubuntu@${host}" \
+            'sudo docker ps --filter name=openemr_app --format "{{.Names}} {{.Status}}" && curl -fsSI http://127.0.0.1/'
+
+          curl -fsSI "http://${host}/"
+
+      - name: Deployment summary
+        run: |
+          echo "Instance ID: ${{ steps.ec2.outputs.instance_id }}"
+          echo "Elastic IP: ${{ steps.ec2.outputs.public_ip }}"

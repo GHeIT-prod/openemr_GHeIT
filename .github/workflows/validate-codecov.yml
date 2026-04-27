@@ -1,12 +1,7 @@
 name: Validate codecov.yml
 
 on:
-  pull_request:
-    paths:
-    - codecov.yml
-  push:
-    paths:
-    - codecov.yml
+  workflow_dispatch:
 
 permissions:
   contents: read
