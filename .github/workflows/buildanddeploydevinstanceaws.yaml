@@ -80,6 +80,9 @@ concurrency:
   cancel-in-progress: false
 
 env:
+  CI: "true"
+  GIT_TERMINAL_PROMPT: "0"
+  COMPOSER_NO_INTERACTION: "1"
   AWS_REGION: ${{ vars.AWS_REGION || 'us-east-1' }}
   OPENEMR_EC2_INSTANCE_ID: ${{ github.event.inputs.instance_id || vars.OPENEMR_EC2_INSTANCE_ID || 'i-09c634c95f76dc631' }}
   OPENEMR_EC2_INSTANCE_NAME: ${{ github.event.inputs.instance_name || vars.OPENEMR_EC2_INSTANCE_NAME || 'OpenEMR (NeoCareX)' }}
@@ -103,6 +106,9 @@ jobs:
   build:
     name: Build Docker Image
     runs-on: ubuntu-latest
+
+    env:
+      DOCKER_BUILDKIT: "1"
 
     steps:
       - name: Checkout
@@ -132,6 +138,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      GIT_TERMINAL_PROMPT: "0"
       HALF_DOMAIN: ${{ vars.HALF_DOMAIN || secrets.HALF_DOMAIN || '' }}
       MYSQL_HOST: ${{ vars.MYSQL_HOST || secrets.MYSQL_HOST || '' }}
       MYSQL_ROOT_USER: ${{ vars.MYSQL_ROOT_USER || secrets.MYSQL_ROOT_USER || '' }}
@@ -352,9 +359,20 @@ jobs:
           systemctl daemon-reload
           systemctl enable containerd >/dev/null 2>&1 || true
           systemctl enable docker >/dev/null 2>&1 || true
+          systemctl restart systemd-resolved >/dev/null 2>&1 || true
+
+          install -d -m 0755 /etc/docker
+          if [[ ! -f /etc/docker/daemon.json ]] || ! grep -q '"dns"' /etc/docker/daemon.json; then
+            cat > /etc/docker/daemon.json <<'EOD'
+          {
+            "dns": ["8.8.8.8", "1.1.1.1"]
+          }
+          EOD
+          fi
+
           systemctl start containerd >/dev/null 2>&1 || true
           systemctl start docker.socket >/dev/null 2>&1 || true
-          systemctl start docker >/dev/null 2>&1 || true
+          systemctl restart docker >/dev/null 2>&1 || true
 
           for _ in 1 2 3 4 5; do
             if docker info >/dev/null 2>&1; then
@@ -363,7 +381,8 @@ jobs:
             sleep 2
             systemctl start containerd >/dev/null 2>&1 || true
             systemctl start docker.socket >/dev/null 2>&1 || true
-            systemctl start docker >/dev/null 2>&1 || true
+            systemctl restart systemd-resolved >/dev/null 2>&1 || true
+            systemctl restart docker >/dev/null 2>&1 || true
           done
 
           install -d -m 0755 \
@@ -415,7 +434,7 @@ jobs:
               restart: unless-stopped
               depends_on:
                 mysql:
-                  condition: service_healthy
+                  condition: service_started
                 couchdb:
                   condition: service_started
                 openldap:
@@ -434,6 +453,8 @@ jobs:
                 OPENEMR_SETTING_ccda_alt_service_enable: 3
                 OPENEMR_SETTING_couchdb_host: couchdb
                 OPENEMR_SETTING_couchdb_port: 5984
+                OPENEMR_SETTING_couchdb_user: \${COUCHDB_USER}
+                OPENEMR_SETTING_couchdb_pass: \${COUCHDB_PASSWORD}
                 OPENEMR_SETTING_couchdb_dbase: example
                 OPENEMR_SETTING_couchdb_ssl_allow_selfsigned: 0
                 OPENEMR_SETTING_gbl_ldap_host: ldap://openldap:389
@@ -462,6 +483,18 @@ jobs:
 
           docker compose -f "${APP_DIR}/docker-compose.generated.yml" down --remove-orphans || true
           docker compose -f "${APP_DIR}/docker-compose.generated.yml" up -d --force-recreate
+
+          for _ in 1 2 3 4 5 6; do
+            if docker ps --format '{{.Names}}' | grep -qx 'openemr_app'; then
+              break
+            fi
+            sleep 5
+          done
+
+          if docker ps --format '{{.Names}}' | grep -qx 'openemr_app'; then
+            docker exec openemr_app sh -lc 'chown -R apache:apache /var/www/localhost/htdocs/openemr && chmod -R u+rwX,go+rX /var/www/localhost/htdocs/openemr' || true
+          fi
+
           sleep 20
           docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
           docker image prune -f >/dev/null 2>&1 || true
@@ -704,10 +737,31 @@ jobs:
           host="${{ steps.ec2.outputs.public_ip }}"
           key_path="${RUNNER_TEMP}/.ssh/deploy_key.pem"
 
-          ssh -i "${key_path}" -o StrictHostKeyChecking=no "ubuntu@${host}" \
-            'sudo docker ps --format "{{.Names}} {{.Status}}" && for i in $(seq 1 30); do curl -fsSI http://127.0.0.1/ && exit 0; sleep 10; done; exit 1'
+          ssh -i "${key_path}" -o StrictHostKeyChecking=no "ubuntu@${host}" 'set -euo pipefail
+            sudo docker ps --format "{{.Names}} {{.Status}}"
+            for i in $(seq 1 72); do
+              code="$(curl -sS -o /dev/null -m 8 -w "%{http_code}" http://127.0.0.1/ || true)"
+              if [[ "$code" =~ ^(200|301|302|303)$ ]]; then
+                echo "localhost ready: HTTP $code"
+                exit 0
+              fi
+              sleep 10
+            done
+            echo "localhost did not become ready" >&2
+            sudo docker logs --tail 200 openemr_app || true
+            exit 1'
 
-          curl --retry 30 --retry-delay 10 --retry-connrefused -fsSI "http://${host}/"
+          for i in $(seq 1 30); do
+            code="$(curl -sS -o /dev/null -m 8 -w "%{http_code}" "http://${host}/" || true)"
+            if [[ "$code" =~ ^(200|301|302|303)$ ]]; then
+              echo "public endpoint ready: HTTP $code"
+              exit 0
+            fi
+            sleep 10
+          done
+
+          echo "::error::Public endpoint did not become ready"
+          exit 1
 
       - name: Deployment summary
         run: |
