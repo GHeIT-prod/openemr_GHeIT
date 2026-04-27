@@ -399,6 +399,13 @@ jobs:
             cp "${PUBSUB_FILE}" "${APP_DIR}/openemr-keys/pubsub.json"
           fi
 
+          docker system df >/dev/null 2>&1 || true
+          docker container prune -f >/dev/null 2>&1 || true
+          docker image prune -af >/dev/null 2>&1 || true
+          docker builder prune -af >/dev/null 2>&1 || true
+          docker volume prune -f >/dev/null 2>&1 || true
+          apt-get clean >/dev/null 2>&1 || true
+
           gunzip -c "${IMAGE_ARCHIVE}" | docker load
 
           cat > "${APP_DIR}/docker-compose.generated.yml" <<EOC
