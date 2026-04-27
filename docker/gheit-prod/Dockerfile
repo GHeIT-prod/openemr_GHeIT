@@ -6,6 +6,7 @@ ENV COMPOSER_NO_INTERACTION=1 \
 WORKDIR /var/www/localhost/htdocs/openemr
 
 COPY --chown=apache:apache . .
+COPY docker/gheit-prod/openemr-start.sh /usr/local/bin/openemr-start.sh
 
 RUN apk add --no-cache git && \
     git config --global url."https://github.com/".insteadOf "git@github.com:" && \
@@ -14,5 +15,8 @@ RUN apk add --no-cache git && \
     composer clear-cache
 
 RUN chown -R apache:apache /var/www/localhost/htdocs/openemr && \
+    chmod 755 /usr/local/bin/openemr-start.sh && \
     chmod -R u+rwX,go+rX /var/www/localhost/htdocs/openemr && \
     if [ -f .env ]; then chown apache:apache .env; fi
+
+ENTRYPOINT ["/usr/local/bin/openemr-start.sh"]
