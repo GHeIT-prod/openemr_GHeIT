@@ -13,4 +13,6 @@ RUN apk add --no-cache git && \
     composer require --no-interaction --no-progress auth0/auth0-php --ignore-platform-req=ext-bcmath && \
     composer clear-cache
 
-RUN if [ -f .env ]; then chown apache:apache .env; fi
+RUN chown -R apache:apache /var/www/localhost/htdocs/openemr && \
+    chmod -R u+rwX,go+rX /var/www/localhost/htdocs/openemr && \
+    if [ -f .env ]; then chown apache:apache .env; fi
