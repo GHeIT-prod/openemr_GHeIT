@@ -1,13 +1,16 @@
 FROM openemr/openemr:7.0.4
 
+ENV COMPOSER_NO_INTERACTION=1 \
+    COMPOSER_ALLOW_SUPERUSER=1
+
 WORKDIR /var/www/localhost/htdocs/openemr
 
-COPY . .
+COPY --chown=apache:apache . .
 
-RUN apk update && \
-    apk add --no-cache git && \
+RUN apk add --no-cache git && \
     git config --global url."https://github.com/".insteadOf "git@github.com:" && \
-    composer require google/cloud-pubsub aws/aws-sdk-php && \
-    composer require auth0/auth0-php --ignore-platform-req=ext-bcmath
+    composer require --no-interaction --no-progress google/cloud-pubsub aws/aws-sdk-php && \
+    composer require --no-interaction --no-progress auth0/auth0-php --ignore-platform-req=ext-bcmath && \
+    composer clear-cache
 
 RUN if [ -f .env ]; then chown apache:apache .env; fi
