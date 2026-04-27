@@ -1,28 +1,6 @@
 name: Composer Require Checker
 
 on:
-  push:
-    branches:
-    - master
-    - rel-*
-    paths:
-    - '**.inc'
-    - '**.php'
-    - '.composer-require-checker.json'
-    - '.github/workflows/composer-require-checker.yml'
-    - 'composer.json'
-    - 'composer.lock'
-  pull_request:
-    branches:
-    - master
-    - rel-*
-    paths:
-    - '**.inc'
-    - '**.php'
-    - '.composer-require-checker.json'
-    - '.github/workflows/composer-require-checker.yml'
-    - 'composer.json'
-    - 'composer.lock'
   workflow_dispatch:
 
 permissions:

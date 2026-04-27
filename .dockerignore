@@ -1,0 +1,12 @@
+.git
+.github
+.phpstan
+ci
+Documentation
+tests
+docker/**/docker_data
+docker/**/.env
+node_modules
+vendor
+npm-debug.log*
+yarn-error.log*

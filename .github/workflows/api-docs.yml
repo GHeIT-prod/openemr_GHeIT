@@ -1,14 +1,7 @@
 name: API Docs Freshness Checks
 
 on:
-  push:
-    branches:
-    - master
-    - rel-*
-  pull_request:
-    branches:
-    - master
-    - rel-*
+  workflow_dispatch:
 
 permissions:
   contents: read

@@ -2,8 +2,6 @@ name: Nightly Build development 8.6 php-fpm Docker
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 1 * * *' # (daily) run at 1 AM UTC
 
 permissions:
   contents: read
