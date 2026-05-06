@@ -37,8 +37,8 @@ use OpenEMR\Core\OEGlobalsBag;
 use OpenEMR\Services\LogoService;
 use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/..');
-$dotenv->safeLoad();
+// $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
+// $dotenv->safeLoad();
 
 // Will start the (patient) portal OpenEMR session/cookie.
 //  Need access to classes, so run autoloader now instead of in globals.php.
