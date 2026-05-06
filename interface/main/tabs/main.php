@@ -1,25 +1,23 @@
 <?php
 
 /**
-* main.php
-*
-* @package   OpenEMR
-* @link      http://www.open-emr.org
-* @author    Kevin Yeh <kevin.y@integralemr.com>
-* @author    Brady Miller <brady.g.miller@gmail.com>
-* @author    Ranganath Pathak <pathak@scrs1.org>
-* @author    Jerry Padgett <sjpadgett@gmail.com>
-* @author    Stephen Nielson <snielson@discoverandchange.com>
-* @copyright Copyright (c) 2016 Kevin Yeh <kevin.y@integralemr.com>
-* @copyright Copyright (c) 2016-2019 Brady Miller <brady.g.miller@gmail.com>
-* @copyright Copyright (c) 2019 Ranganath Pathak <pathak@scrs1.org>
-* @copyright Copyright (c) 2024 Care Management Solutions, Inc. <stephen.waite@cmsvt.com>
-* @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
-*/
+ * main.php
+ *
+ * @package   OpenEMR
+ * @link      http://www.open-emr.org
+ * @author    Kevin Yeh <kevin.y@integralemr.com>
+ * @author    Brady Miller <brady.g.miller@gmail.com>
+ * @author    Ranganath Pathak <pathak@scrs1.org>
+ * @author    Jerry Padgett <sjpadgett@gmail.com>
+ * @author    Stephen Nielson <snielson@discoverandchange.com>
+ * @copyright Copyright (c) 2016 Kevin Yeh <kevin.y@integralemr.com>
+ * @copyright Copyright (c) 2016-2019 Brady Miller <brady.g.miller@gmail.com>
+ * @copyright Copyright (c) 2019 Ranganath Pathak <pathak@scrs1.org>
+ * @copyright Copyright (c) 2024 Care Management Solutions, Inc. <stephen.waite@cmsvt.com>
+ * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
+ */
 
 $sessionAllowWrite = true;
-$ignoreAuth = true;
-
 require_once(__DIR__ . '/../../globals.php');
 require_once $GLOBALS['srcdir'] . '/ESign/Api.php';
 
@@ -92,26 +90,26 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
 <html>
 
 <head>
-<title><?php echo text($openemr_name); ?></title>
+    <title><?php echo text($openemr_name); ?></title>
 
-<script>
-    // This is to prevent users from losing data by refreshing or backing out of OpenEMR.
-    //  (default behavior, however, this behavior can be turned off in the prevent_browser_refresh global)
-    <?php if ($GLOBALS['prevent_browser_refresh'] > 0) { ?>
+    <script>
+        // This is to prevent users from losing data by refreshing or backing out of OpenEMR.
+        //  (default behavior, however, this behavior can be turned off in the prevent_browser_refresh global)
+        <?php if ($GLOBALS['prevent_browser_refresh'] > 0) { ?>
         window.addEventListener('beforeunload', (event) => {
             if (!timed_out) {
                 event.returnValue = <?php echo xlj('Recommend not leaving or refreshing or you may lose data.'); ?>;
             }
         });
-    <?php } ?>
+        <?php } ?>
 
-    <?php require($GLOBALS['srcdir'] . "/restoreSession.php"); ?>
+        <?php require($GLOBALS['srcdir'] . "/restoreSession.php"); ?>
 
-    // Since this should be the parent window, this is to prevent calls to the
-    // window that opened this window. For example when a new window is opened
-    // from the Patient Flow Board or the Patient Finder.
-    window.opener = null;
-    window.name = "main";
+        // Since this should be the parent window, this is to prevent calls to the
+        // window that opened this window. For example when a new window is opened
+        // from the Patient Flow Board or the Patient Finder.
+        window.opener = null;
+        window.name = "main";
 
         // This flag indicates if another window or frame is trying to reload the login
         // page to this top-level window.  It is set by javascript returned by auth.inc.php
@@ -142,216 +140,217 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
         const isServicesOther = (isSms || isFax);
         var telemetryEnabled = <?php echo js_escape((new TelemetryService())->isTelemetryEnabled()); ?>;
 
-    /**
-     * Async function to get session value from the server
-     * Usage Example
-     * let authUser;
-     * let sessionPid = await top.getSessionValue('pid');
-     * // If using then() method a promise is returned instead of the value.
-     * await top.getSessionValue('authUser').then(function (auth) {
-     *    authUser = auth;
-     *    console.log('authUser', authUser);
-     * });
-     * console.log('session pid', sessionPid);
-     * console.log('auth User', authUser);
-    */
-    async function getSessionValue(key) {
-        restoreSession();
-        let csrf_token_js = <?php echo js_escape(CsrfUtils::collectCsrfToken('default')); ?>;
-        const config = {
-            url: `${webroot_url}/library/ajax/set_pt.php?csrf_token_form=${csrf_token_js}`,
-            method: 'POST',
-            data: {
-                mode: 'session_key',
-                key: key
-            }
-        };
-        try {
-            const response = await $.ajax(config);
+        /**
+         * Async function to get session value from the server
+         * Usage Example
+         * let authUser;
+         * let sessionPid = await top.getSessionValue('pid');
+         * // If using then() method a promise is returned instead of the value.
+         * await top.getSessionValue('authUser').then(function (auth) {
+         *    authUser = auth;
+         *    console.log('authUser', authUser);
+         * });
+         * console.log('session pid', sessionPid);
+         * console.log('auth User', authUser);
+         */
+        async function getSessionValue(key) {
             restoreSession();
-            return response;
-        } catch (error) {
-            throw error;
+            let csrf_token_js = <?php echo js_escape(CsrfUtils::collectCsrfToken('default')); ?>;
+            const config = {
+                url: `${webroot_url}/library/ajax/set_pt.php?csrf_token_form=${csrf_token_js}`,
+                method: 'POST',
+                data: {
+                    mode: 'session_key',
+                    key: key
+                }
+            };
+            try {
+                const response = await $.ajax(config);
+                restoreSession();
+                return response;
+            } catch (error) {
+                throw error;
+            }
         }
-    }
 
-    function goRepeaterServices() {
-        // Ensure send the skip_timeout_reset parameter to not count this as a manual entry in the
-        // timing out mechanism in OpenEMR.
+        function goRepeaterServices() {
+            // Ensure send the skip_timeout_reset parameter to not count this as a manual entry in the
+            // timing out mechanism in OpenEMR.
 
-        // Send the skip_timeout_reset parameter to not count this as a manual entry in the
-        // timing out mechanism in OpenEMR. Notify App for various portal and reminder alerts.
-        // Combined portal and reminders ajax to fetch sjp 06-07-2020.
-        // Incorporated timeout mechanism in 2021
-        restoreSession();
-        let request = new FormData;
-        request.append("skip_timeout_reset", "1");
-        request.append("isPortal", isPortalEnabled);
-        request.append("isServicesOther", isServicesOther);
-        request.append("isSms", isSms);
-        request.append("isFax", isFax);
-        request.append("csrf_token_form", csrf_token_js);
-        fetch(webroot_url + "/library/ajax/dated_reminders_counter.php", {
-            method: 'POST',
-            credentials: 'same-origin',
-            body: request
-        }).then((response) => {
-            if (response.status !== 200) {
-                console.log('Reminders start failed. Status Code: ' + response.status);
-                return;
-            }
-            return response.json();
-        }).then((data) => {
-            if (data.timeoutMessage && (data.timeoutMessage == 'timeout')) {
-                // timeout has happened, so logout
-                timeoutLogout();
-            }
-            if (isPortalEnabled) {
-                let mail = data.mailCnt;
-                let chats = data.chatCnt;
-                let audits = data.auditCnt;
-                let payments = data.paymentCnt;
-                let total = data.total;
-                let enable = ((1 * mail) + (1 * audits)); // payments are among audits.
-                // Send portal counts to notification button model
-                // Will turn off button display if no notification!
-                app_view_model.application_data.user().portal(enable);
-                if (enable > 0) {
-                    app_view_model.application_data.user().portalAlerts(total);
-                    app_view_model.application_data.user().portalAudits(audits);
-                    app_view_model.application_data.user().portalMail(mail);
-                    app_view_model.application_data.user().portalChats(chats);
-                    app_view_model.application_data.user().portalPayments(payments);
-                }
-            }
-            if (isServicesOther) {
-                let sms = data.smsCnt;
-                let fax = data.faxCnt;
-                let total = data.serviceTotal;
-                let enable = ((1 * sms) + (1 * fax));
-                // Will turn off button display if no notification!
-                app_view_model.application_data.user().servicesOther(enable);
-                if (enable > 0) {
-                    app_view_model.application_data.user().serviceAlerts(total);
-                    app_view_model.application_data.user().smsAlerts(sms);
-                    app_view_model.application_data.user().faxAlerts(fax);
-                }
-            }
-            // Always send reminder count text to model
-            app_view_model.application_data.user().messages(data.reminderText);
-        }).catch(function (error) {
-            console.log('Request failed', error);
-        });
-
-        // run background-services
-        // delay 10 seconds to prevent both utility trigger at close to same time.
-        // Both call globals so that is my concern.
-        setTimeout(function () {
+            // Send the skip_timeout_reset parameter to not count this as a manual entry in the
+            // timing out mechanism in OpenEMR. Notify App for various portal and reminder alerts.
+            // Combined portal and reminders ajax to fetch sjp 06-07-2020.
+            // Incorporated timeout mechanism in 2021
             restoreSession();
-            request = new FormData;
+            let request = new FormData;
             request.append("skip_timeout_reset", "1");
-            request.append("ajax", "1");
+            request.append("isPortal", isPortalEnabled);
+            request.append("isServicesOther", isServicesOther);
+            request.append("isSms", isSms);
+            request.append("isFax", isFax);
             request.append("csrf_token_form", csrf_token_js);
-            fetch(webroot_url + "/library/ajax/execute_background_services.php", {
+            fetch(webroot_url + "/library/ajax/dated_reminders_counter.php", {
                 method: 'POST',
                 credentials: 'same-origin',
                 body: request
             }).then((response) => {
                 if (response.status !== 200) {
-                    console.log('Background Service start failed. Status Code: ' + response.status);
+                    console.log('Reminders start failed. Status Code: ' + response.status);
+                    return;
                 }
+                return response.json();
+            }).then((data) => {
+                if (data.timeoutMessage && (data.timeoutMessage == 'timeout')) {
+                    // timeout has happened, so logout
+                    timeoutLogout();
+                }
+                if (isPortalEnabled) {
+                    let mail = data.mailCnt;
+                    let chats = data.chatCnt;
+                    let audits = data.auditCnt;
+                    let payments = data.paymentCnt;
+                    let total = data.total;
+                    let enable = ((1 * mail) + (1 * audits)); // payments are among audits.
+                    // Send portal counts to notification button model
+                    // Will turn off button display if no notification!
+                    app_view_model.application_data.user().portal(enable);
+                    if (enable > 0) {
+                        app_view_model.application_data.user().portalAlerts(total);
+                        app_view_model.application_data.user().portalAudits(audits);
+                        app_view_model.application_data.user().portalMail(mail);
+                        app_view_model.application_data.user().portalChats(chats);
+                        app_view_model.application_data.user().portalPayments(payments);
+                    }
+                }
+                if (isServicesOther) {
+                    let sms = data.smsCnt;
+                    let fax = data.faxCnt;
+                    let total = data.serviceTotal;
+                    let enable = ((1 * sms) + (1 * fax));
+                    // Will turn off button display if no notification!
+                    app_view_model.application_data.user().servicesOther(enable);
+                    if (enable > 0) {
+                        app_view_model.application_data.user().serviceAlerts(total);
+                        app_view_model.application_data.user().smsAlerts(sms);
+                        app_view_model.application_data.user().faxAlerts(fax);
+                    }
+                }
+                // Always send reminder count text to model
+                app_view_model.application_data.user().messages(data.reminderText);
             }).catch(function (error) {
-                console.log('HTML Background Service start Request failed: ', error);
+                console.log('Request failed', error);
             });
-        }, 10000);
 
-        // auto run this function every 60 seconds
-        var repeater = setTimeout("goRepeaterServices()", 60000);
-    }
+            // run background-services
+            // delay 10 seconds to prevent both utility trigger at close to same time.
+            // Both call globals so that is my concern.
+            setTimeout(function () {
+                restoreSession();
+                request = new FormData;
+                request.append("skip_timeout_reset", "1");
+                request.append("ajax", "1");
+                request.append("csrf_token_form", csrf_token_js);
+                fetch(webroot_url + "/library/ajax/execute_background_services.php", {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    body: request
+                }).then((response) => {
+                    if (response.status !== 200) {
+                        console.log('Background Service start failed. Status Code: ' + response.status);
+                    }
+                }).catch(function (error) {
+                    console.log('HTML Background Service start Request failed: ', error);
+                });
+            }, 10000);
 
-    function isEncounterLocked(encounterId) {
-        <?php if ($esignApi->lockEncounters()) { ?>
-        // If encounter locking is enabled, make a synchronous call (async=false) to check the
-        // DB to see if the encounter is locked.
-        // Call restore session, just in case
-        // @TODO next clean up pass, turn into await promise then modify tabs_view_model.js L-309
-        restoreSession();
-        let url = webroot_url + "/interface/esign/index.php?module=encounter&method=esign_is_encounter_locked";
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: {
-                encounterId: encounterId
-            },
-            success: function (data) {
-                encounter_locked = data;
-            },
-            dataType: 'json',
-            async: false
-        });
-        return encounter_locked;
-        <?php } else { ?>
-        // If encounter locking isn't enabled then always return false
-        return false;
-        <?php } ?>
-    }
-</script>
+            // auto run this function every 60 seconds
+            var repeater = setTimeout("goRepeaterServices()", 60000);
+        }
 
-<?php Header::setupHeader(['knockout', 'tabs-theme', 'i18next', 'hotkeys', 'i18formatting']); ?>
-<script>
-    // set up global translations for js
-    function setupI18n(lang_id) {
-        restoreSession();
-        return fetch(<?php echo js_escape($GLOBALS['webroot']) ?> +"/library/ajax/i18n_generator.php?lang_id=" + encodeURIComponent(lang_id) + "&csrf_token_form=" + encodeURIComponent(csrf_token_js), {
-            credentials: 'same-origin',
-            method: 'GET'
-        }).then((response) => {
-            if (response.status !== 200) {
-                console.log('I18n setup failed. Status Code: ' + response.status);
-                return [];
-            }
-            return response.json();
-        })
-    }
-    setupI18n(<?php echo js_escape($_SESSION['language_choice']); ?>).then(translationsJson => {
-        i18next.init({
-            lng: 'selected',
-            debug: false,
-            nsSeparator: false,
-            keySeparator: false,
-            resources: {
-                selected: {
-                    translation: translationsJson
+        function isEncounterLocked(encounterId) {
+            <?php if ($esignApi->lockEncounters()) { ?>
+            // If encounter locking is enabled, make a synchronous call (async=false) to check the
+            // DB to see if the encounter is locked.
+            // Call restore session, just in case
+            // @TODO next clean up pass, turn into await promise then modify tabs_view_model.js L-309
+            restoreSession();
+            let url = webroot_url + "/interface/esign/index.php?module=encounter&method=esign_is_encounter_locked";
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    encounterId: encounterId
+                },
+                success: function (data) {
+                    encounter_locked = data;
+                },
+                dataType: 'json',
+                async: false
+            });
+            return encounter_locked;
+            <?php } else { ?>
+            // If encounter locking isn't enabled then always return false
+            return false;
+            <?php } ?>
+        }
+    </script>
+
+    <?php Header::setupHeader(['knockout', 'tabs-theme', 'i18next', 'hotkeys', 'i18formatting']); ?>
+    <script>
+        // set up global translations for js
+        function setupI18n(lang_id) {
+            restoreSession();
+            return fetch(<?php echo js_escape($GLOBALS['webroot']) ?> +"/library/ajax/i18n_generator.php?lang_id=" + encodeURIComponent(lang_id) + "&csrf_token_form=" + encodeURIComponent(csrf_token_js), {
+                credentials: 'same-origin',
+                method: 'GET'
+            }).then((response) => {
+                if (response.status !== 200) {
+                    console.log('I18n setup failed. Status Code: ' + response.status);
+                    return [];
                 }
-            }
-        });
-    }).catch(error => {
-        console.log(error.message);
-    });
+                return response.json();
+            })
+        }
 
-    /**
-     * Assign and persist documents to portal patients
-     * @var int patientId pid
-     */
-    function assignPatientDocuments(patientId) {
-        let url = top.webroot_url + '/portal/import_template_ui.php?from_demo_pid=' + encodeURIComponent(patientId);
-        dlgopen(url, 'pop-assignments', 'modal-lg', 850, '', '', {
-            allowDrag: true,
-            allowResize: true,
-            sizeHeight: 'full',
+        setupI18n(<?php echo js_escape($_SESSION['language_choice']); ?>).then(translationsJson => {
+            i18next.init({
+                lng: 'selected',
+                debug: false,
+                nsSeparator: false,
+                keySeparator: false,
+                resources: {
+                    selected: {
+                        translation: translationsJson
+                    }
+                }
+            });
+        }).catch(error => {
+            console.log(error.message);
         });
-    }
-</script>
 
-<script src="js/custom_bindings.js?v=<?php echo $v_js_includes; ?>"></script>
-<script src="js/user_data_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
-<script src="js/patient_data_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
-<script src="js/therapy_group_data_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
-<script src="js/tabs_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
-<script src="js/application_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
-<script src="js/frame_proxies.js?v=<?php echo $v_js_includes; ?>"></script>
-<script src="js/dialog_utils.js?v=<?php echo $v_js_includes; ?>"></script>
-<script src="js/shortcuts.js?v=<?php echo $v_js_includes; ?>"></script>
+        /**
+         * Assign and persist documents to portal patients
+         * @var int patientId pid
+         */
+        function assignPatientDocuments(patientId) {
+            let url = top.webroot_url + '/portal/import_template_ui.php?from_demo_pid=' + encodeURIComponent(patientId);
+            dlgopen(url, 'pop-assignments', 'modal-lg', 850, '', '', {
+                allowDrag: true,
+                allowResize: true,
+                sizeHeight: 'full',
+            });
+        }
+    </script>
+
+    <script src="js/custom_bindings.js?v=<?php echo $v_js_includes; ?>"></script>
+    <script src="js/user_data_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
+    <script src="js/patient_data_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
+    <script src="js/therapy_group_data_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
+    <script src="js/tabs_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
+    <script src="js/application_view_model.js?v=<?php echo $v_js_includes; ?>"></script>
+    <script src="js/frame_proxies.js?v=<?php echo $v_js_includes; ?>"></script>
+    <script src="js/dialog_utils.js?v=<?php echo $v_js_includes; ?>"></script>
+    <script src="js/shortcuts.js?v=<?php echo $v_js_includes; ?>"></script>
 
     <?php
     // Below code block is to prepare certain elements for deciding what links to show on the menu
@@ -364,12 +363,15 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
         }
     }
 
-// prepare track anything to be used in creating the menu
-$track_anything_sql = sqlQuery("SELECT `state` FROM `registry` WHERE `directory` = 'track_anything'");
-$GLOBALS['track_anything_state'] = ($track_anything_sql['state'] ?? 0);
-// prepare Issues popup link global that is used in creating the menu
-$GLOBALS['allow_issue_menu_link'] = ((AclMain::aclCheckCore('encounters', 'notes', '', 'write') || AclMain::aclCheckCore('encounters', 'notes_a', '', 'write')) &&
-    AclMain::aclCheckCore('patients', 'med', '', 'write'));
+    // prepare track anything to be used in creating the menu
+    $track_anything_sql = sqlQuery("SELECT `state` FROM `registry` WHERE `directory` = 'track_anything'");
+    $GLOBALS['track_anything_state'] = ($track_anything_sql['state'] ?? 0);
+    // prepare Issues popup link global that is used in creating the menu
+    $GLOBALS['allow_issue_menu_link'] = (
+        (AclMain::aclCheckCore('encounters', 'notes', '', 'write')
+        || AclMain::aclCheckCore('encounters', 'notes_a', '', 'write'))
+        && AclMain::aclCheckCore('patients', 'med', '', 'write')
+    );
 
     // we use twig templates here so modules can customize some of these files
     // at some point we will twigify all of main.php so we can extend it.
@@ -499,51 +501,45 @@ $GLOBALS['allow_issue_menu_link'] = ((AclMain::aclCheckCore('encounters', 'notes
     <script>
         ko.applyBindings(app_view_model);
 
-    $(function () {
-        $('.dropdown-toggle').dropdown();
-        $('#patient_caret').click(function () {
-            $('#attendantData').slideToggle();
-            $('#patient_caret').toggleClass('fa-caret-down').toggleClass('fa-caret-up');
-        });
-        if ($('body').css('direction') == "rtl") {
-            $('.dropdown-menu-right').each(function () {
-                $(this).removeClass('dropdown-menu-right');
+        $(function () {
+            $('.dropdown-toggle').dropdown();
+            $('#patient_caret').click(function () {
+                $('#attendantData').slideToggle();
+                $('#patient_caret').toggleClass('fa-caret-down').toggleClass('fa-caret-up');
             });
-        }
-    });
-    $(function () {
-        $('#logo_menu').focus();
-    });
-    $('#anySearchBox').keypress(function (event) {
-        if (event.which === 13 || event.keyCode === 13) {
-            event.preventDefault();
-            $('#search_globals').mousedown();
-        }
-    });
-    document.addEventListener('touchstart', {}); //specifically added for iOS devices, especially in iframes
-    <?php if (($_ENV['OPENEMR__NO_BACKGROUND_TASKS'] ?? 'false') !== 'true') { ?>
-    $(function () {
-        goRepeaterServices();
-    });
-    <?php } ?>
-</script>
-<?php
+            if ($('body').css('direction') == "rtl") {
+                $('.dropdown-menu-right').each(function () {
+                    $(this).removeClass('dropdown-menu-right');
+                });
+            }
+        });
+        $(function () {
+            $('#logo_menu').focus();
+        });
+        $('#anySearchBox').keypress(function (event) {
+            if (event.which === 13 || event.keyCode === 13) {
+                event.preventDefault();
+                $('#search_globals').mousedown();
+            }
+        });
+        document.addEventListener('touchstart', {}); //specifically added for iOS devices, especially in iframes
+        <?php if (($_ENV['OPENEMR__NO_BACKGROUND_TASKS'] ?? 'false') !== 'true') { ?>
+        $(function () {
+            goRepeaterServices();
+        });
+        <?php } ?>
+    </script>
+    <?php
 
-// fire off an event here
-if (!empty($GLOBALS['kernel']->getEventDispatcher())) {
-    /**
-     * @var \Symfony\Component\EventDispatcher\EventDispatcher
-     */
-    $dispatcher = $GLOBALS['kernel']->getEventDispatcher();
+    // fire off an event here
     $dispatcher->dispatch(new RenderEvent(), RenderEvent::EVENT_BODY_RENDER_POST);
-}
 
-if (!empty($allowRegisterDialog)) { // disable if running unit tests.
-    // Include the product registration js, telemetry and usage data reporting dialog
-    echo $twig->render("product_registration/product_reg.js.twig", ['webroot' => $webroot]);
-}
+    if (!empty($allowRegisterDialog)) { // disable if running unit tests.
+        // Include the product registration js, telemetry and usage data reporting dialog
+        echo $twig->render("product_registration/product_reg.js.twig", ['webroot' => $webroot]);
+    }
 
-?>
+    ?>
 </body>
 
 </html>

@@ -75,7 +75,6 @@ use OpenEMR\Common\Session\SessionConfigurationBuilder;
 
 require __DIR__ . '/../../../vendor/autoload.php';
 
-
 class SessionUtil
 {
     public const CORE_SESSION_ID = "OpenEMR";

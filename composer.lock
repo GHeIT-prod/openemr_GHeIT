@@ -12182,28 +12182,25 @@
         },
         {
             "name": "symfony/inflector",
-            "version": "v5.0.11",
+            "version": "v5.4.47",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/inflector.git",
-                "reference": "7eff2643934179cd0e5a6609a583fc22fc495fc4"
+                "reference": "b4ce65e0bc7a86caae0d13b65d853c5056e44a39"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/inflector/zipball/7eff2643934179cd0e5a6609a583fc22fc495fc4",
-                "reference": "7eff2643934179cd0e5a6609a583fc22fc495fc4",
+                "url": "https://api.github.com/repos/symfony/inflector/zipball/b4ce65e0bc7a86caae0d13b65d853c5056e44a39",
+                "reference": "b4ce65e0bc7a86caae0d13b65d853c5056e44a39",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.2.5",
-                "symfony/polyfill-ctype": "~1.8"
+                "symfony/deprecation-contracts": "^2.1|^3",
+                "symfony/polyfill-php80": "^1.16",
+                "symfony/string": "^5.4.47|^6.4.15"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.0-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Symfony\\Component\\Inflector\\": ""
@@ -12226,7 +12223,7 @@
                     "homepage": "https://symfony.com/contributors"
                 }
             ],
-            "description": "Symfony Inflector Component",
+            "description": "Converts words between their singular and plural forms (English only)",
             "homepage": "https://symfony.com",
             "keywords": [
                 "inflection",
@@ -12237,7 +12234,7 @@
                 "words"
             ],
             "support": {
-                "source": "https://github.com/symfony/inflector/tree/v5.0.9"
+                "source": "https://github.com/symfony/inflector/tree/v5.4.47"
             },
             "funding": [
                 {
@@ -12254,7 +12251,7 @@
                 }
             ],
             "abandoned": "EnglishInflector from the String component",
-            "time": "2020-05-20T17:38:26+00:00"
+            "time": "2024-11-10T20:33:58+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -13141,6 +13138,10 @@
                 },
                 {
                     "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
                     "type": "github"
                 },
                 {
