@@ -242,4 +242,3 @@ if ($alertmsg) {
 
 </body>
 </html>
-

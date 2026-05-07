@@ -22,6 +22,7 @@ use OpenEMR\Services\Search\ISearchField;
 use OpenEMR\Services\Search\TokenSearchField;
 use OpenEMR\Services\Utils\DateFormatterUtils;
 use OpenEMR\Validators\ProcessingResult;
+use OpenEMR\Common\Session\SessionWrapperFactory;
 
 class ContactRelationService extends BaseService
 {
@@ -415,6 +416,7 @@ class ContactRelationService extends BaseService
                 c.id as owner_contact_id,
                 c.foreign_table_name as owner_table,
                 c.foreign_id as owner_id,
+                cr.notes AS relation_notes,
                 target_contact.id AS target_contact_id
                 FROM contact_relation cr
                 JOIN contact c ON c.id = cr.contact_id
@@ -455,6 +457,7 @@ class ContactRelationService extends BaseService
 
             // Merge relationship data with entity details
             if ($entityDetails) {
+                unset($entityDetails['active']);
                 $results[] = array_merge($relationship, $entityDetails);
             } else {
                 $results[] = $relationship; // Include without entity details if entity not found
@@ -698,6 +701,7 @@ class ContactRelationService extends BaseService
     {
         $linkService = new PersonPatientLinkService();
         $personService = new PersonService();
+        $session = SessionWrapperFactory::getInstance()->getWrapper();
 
         // Check if patient already has a linked person
         $existingPerson = $linkService->getPersonForPatient($patientId);
@@ -724,7 +728,8 @@ class ContactRelationService extends BaseService
             'middle_name' => $patient['mname'] ?? '',
             'title' => $patient['title'] ?? '',
             'suffix' => $patient['suffix'] ?? '',
-            'birth_date' => $patient['DOB'] ?? '',
+            // birth date is expected to be in the format the frontend entered it so we have to convert it to an OpenEMR date
+            'birth_date' => DateFormatterUtils::oeFormatShortDate($patient['DOB'] ?? ''),
             'gender' => $patient['sex'] ?? '',
             'ssn' => $patient['ss'] ?? '',
             'email_direct' => $patient['email_direct'] ?? '',
@@ -750,7 +755,7 @@ class ContactRelationService extends BaseService
         $linkResult = $linkService->linkPersonToPatient(
             $personId,
             $patientId,
-            $_SESSION['authUserID'] ?? null,
+            $session->get('authUserID'),
             'auto_created_for_relationship',
             'Auto-created when adding relationship to existing patient'
         );
@@ -864,7 +869,27 @@ class ContactRelationService extends BaseService
                     $targetTable = 'person';
                 }
 
-                $metadata = [
+                $person_metadata = [
+                    'first_name' => $relatedPerson['first_name'] ?? '',
+                    'middle_name' => $relatedPerson['middle_name'] ?? '',
+                    'last_name' => $relatedPerson['last_name'] ?? '',
+                    'gender' => $relatedPerson['gender'] ?? '',
+                    'birth_date' => $relatedPerson['birth_date'] ?? ''
+                ];
+
+                if ($action == 'UPDATE') {
+                    if (empty($targetId)) {
+                        $this->getLogger()->warning("Missing person_id for UPDATE", [
+                            'index' => $index
+                        ]);
+                        continue;
+                    } else {  // UPDATE
+                        $personService = new PersonService();
+                        $personService->update($targetId, $person_metadata);
+                    }
+                }
+
+                $contact_relation_metadata = [
                     'relationship' => $relatedPerson['relationship'] ?? '',
                     'role' => $relatedPerson['role'] ?? '',
                     'contact_priority' => $relatedPerson['contact_priority'] ?? 1,
@@ -881,7 +906,7 @@ class ContactRelationService extends BaseService
                 if ($action == 'ADD') {
                     // For ADD, we need to create relationship to target person
                     // createRelationship expects: contactId, targetTable, targetId
-                    $result = $this->createRelationship($ownerContactId, $targetTable, $targetId, $metadata);
+                    $result = $this->createRelationship($ownerContactId, $targetTable, $targetId, $contact_relation_metadata);
                 } else { // UPDATE
                     if (empty($owner_contact_relation_id)) {
                         $this->getLogger()->warning("Missing relation_id for UPDATE", [
@@ -889,7 +914,7 @@ class ContactRelationService extends BaseService
                         ]);
                         continue;
                     }
-                    $result = $this->updateRelationship($owner_contact_relation_id, $metadata);
+                    $result = $this->updateRelationship($owner_contact_relation_id, $contact_relation_metadata);
                 }
 
                 if ($result->hasData()) {
@@ -958,25 +983,38 @@ class ContactRelationService extends BaseService
         }
 
         // Convert start_date using DateFormatterUtils to handle different date formats
-        if (isset($data['start_date']) && !empty($data['start_date'])) {
-            $startDate = DateFormatterUtils::dateStringToDateTime($data['start_date']);
-            if ($startDate !== false) {
-                $relation->set_start_date($startDate);
+        // Handle empty strings by setting to null
+        if (isset($data['start_date'])) {
+            if (!empty($data['start_date'])) {
+                $startDate = DateFormatterUtils::dateStringToDateTime($data['start_date']);
+                if ($startDate !== false) {
+                    $relation->set_start_date($startDate);
+                } else {
+                    $this->getLogger()->warning("Invalid start_date format", [
+                        'start_date' => $data['start_date']
+                    ]);
+                }
             } else {
-                $this->getLogger()->warning("Invalid start_date format", [
-                    'start_date' => $data['start_date']
-                ]);
+                // Empty string means clear the date
+                $relation->set_start_date(null);
             }
         }
 
-        if (isset($data['end_date']) && !empty($data['end_date'])) {
-            $endDate = DateFormatterUtils::dateStringToDateTime($data['end_date']);
-            if ($endDate !== false) {
-                $relation->set_end_date($endDate);
+        // Convert end_date using DateFormatterUtils to handle different date formats
+        // Handle empty strings by setting to null
+        if (isset($data['end_date'])) {
+            if (!empty($data['end_date'])) {
+                $endDate = DateFormatterUtils::dateStringToDateTime($data['end_date']);
+                if ($endDate !== false) {
+                    $relation->set_end_date($endDate);
+                } else {
+                    $this->getLogger()->warning("Invalid end_date format", [
+                        'end_date' => $data['end_date']
+                    ]);
+                }
             } else {
-                $this->getLogger()->warning("Invalid end_date format", [
-                    'end_date' => $data['end_date']
-                ]);
+                // Empty string means clear the date
+                $relation->set_end_date(null);
             }
         }
 

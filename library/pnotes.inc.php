@@ -12,6 +12,7 @@
  */
 
 use OpenEMR\Common\Logging\SystemLogger;
+use OpenEMR\Common\Session\SessionWrapperFactory;
 
 /**
  * Retrieve a note, given its ID
@@ -98,42 +99,48 @@ function getPnotesByUser($activity = "1", $show_all = "no", $user = '', $count =
     } else { //$activity=='all'
         $activity_query = " ";
     }
-    $user_plug = '';
+    $sqlBindArray = [];
+    $includePortalUser = false;
   // Set whether to show chosen user or all users
     if ($show_all == 'yes') {
         $usrvar = '_%';
     } else {
         if (checkPortalAuthUser($user)) {
-            $user_plug = "|| pnotes.assigned_to = 'portal-user'";
+            $includePortalUser = true;
         }
         $usrvar = $user;
     }
 
   // run the query
   // 2013-02-08 EMR Direct: minor changes to query so notes with pid=0 don't disappear
+    $fromWhere = "FROM ((pnotes LEFT JOIN users ON pnotes.user = users.username)
+          LEFT JOIN patient_data ON pnotes.pid = patient_data.pid) WHERE $activity_query
+          pnotes.deleted != '1' AND (pnotes.assigned_to LIKE ?";
+    $sqlBindArray[] = $usrvar;
+    if ($includePortalUser) {
+        $fromWhere .= " OR pnotes.assigned_to = ?";
+        $sqlBindArray[] = 'portal-user';
+    }
+    $fromWhere .= ")";
+
+  // return the results
+    if ($count) {
+        $row = sqlQuery("SELECT COUNT(*) AS cnt $fromWhere", $sqlBindArray);
+        return $row !== false ? (int) $row['cnt'] : 0;
+    }
+
     $sql = "SELECT pnotes.id, pnotes.user, pnotes.pid, pnotes.title, pnotes.date, pnotes.message_status, pnotes.activity,
           IF(pnotes.pid = 0 OR pnotes.user != pnotes.pid,users.fname,patient_data.fname) as users_fname,
           IF(pnotes.pid = 0 OR pnotes.user != pnotes.pid,users.lname,patient_data.lname) as users_lname,
           patient_data.fname as patient_data_fname, patient_data.lname as patient_data_lname
-          FROM ((pnotes LEFT JOIN users ON pnotes.user = users.username)
-          LEFT JOIN patient_data ON pnotes.pid = patient_data.pid) WHERE $activity_query
-          pnotes.deleted != '1' AND (pnotes.assigned_to LIKE ? $user_plug)";
+          $fromWhere";
     if (!empty($sortby) || !empty($sortorder)  || !empty($begin) || !empty($listnumber)) {
         $sql .= " order by " . escape_sql_column_name($sortby, ['users','patient_data','pnotes'], true) .
             " " . escape_sort_order($sortorder) .
             " limit " . escape_limit($begin) . ", " . escape_limit($listnumber);
     }
 
-    $result = sqlStatement($sql, [$usrvar]);
-
-  // return the results
-    if ($count) {
-        $total = sqlNumRows($result) != 0 ? sqlNumRows($result) : 0;
-
-        return $total;
-    } else {
-        return $result;
-    }
+    return sqlStatement($sql, $sqlBindArray);
 }
 
 function getPnotesByDate(
@@ -183,7 +190,10 @@ function getPnotesByDate(
     }
 
     if ($status) {
-        $sql .= " AND message_status IN ('" . str_replace(",", "','", add_escape_custom($status)) . "')";
+        $statusArr = explode(",", $status);
+        $placeholders = implode(",", array_fill(0, count($statusArr), "?"));
+        $sql .= " AND message_status IN ($placeholders)";
+        array_push($sqlParameterArray, ...$statusArr);
     }
 
     $sql .= " ORDER BY date DESC";
@@ -249,7 +259,10 @@ function getSentPnotesByDate(
     }
 
     if ($status) {
-        $sql .= " AND message_status IN ('" . str_replace(",", "','", add_escape_custom($status)) . "')";
+        $statusArr = explode(",", $status);
+        $placeholders = implode(",", array_fill(0, count($statusArr), "?"));
+        $sql .= " AND message_status IN ($placeholders)";
+        array_push($sqlParameterArray, ...$statusArr);
     }
 
     $sql .= " ORDER BY date DESC";
@@ -410,7 +423,7 @@ function addPnote(
     $message_status = 'New',
     $background_user = ""
 ) {
-
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
     if (empty($datetime)) {
         $datetime = date('Y-m-d H:i:s');
     }
@@ -419,7 +432,7 @@ function addPnote(
     if ($message_status == 'Done') {
         $activity = 0;
     }
-    $user = ($background_user != "" ? $background_user : $_SESSION['authUser']);
+    $user = ($background_user != "" ? $background_user : $session->get('authUser'));
     $body = date('Y-m-d H:i') . ' (' . $user;
     if ($assigned_to) {
         $body .= " to $assigned_to";
@@ -431,7 +444,7 @@ function addPnote(
         'INSERT INTO pnotes (date, body, pid, user, groupname, ' .
         'authorized, activity, title, assigned_to, message_status, update_by, update_date) VALUES ' .
         '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())',
-        [$datetime, $body, $pid, $user, ($_SESSION['authProvider'] ?? null), $authorized, $activity, $title, $assigned_to, $message_status, ($_SESSION['authUserID'] ?? null)]
+        [$datetime, $body, $pid, $user, $session->get('authProvider'), $authorized, $activity, $title, $assigned_to, $message_status, $session->get('authUserID')]
     );
 }
 
@@ -445,7 +458,7 @@ function addMailboxPnote(
     $datetime = '',
     $message_status = "New"
 ) {
-
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
     if (empty($datetime)) {
         $datetime = date('Y-m-d H:i:s');
     }
@@ -465,15 +478,32 @@ function addMailboxPnote(
     return sqlInsert(
         "INSERT INTO pnotes (date, body, pid, user, groupname, " .
         "authorized, activity, title, assigned_to, message_status, update_by, update_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())",
-        [$datetime, $body, $pid, $pid, 'Default', $authorized, $activity, $title, $assigned_to, $message_status, $_SESSION['authUserID']]
+        [$datetime, $body, $pid, $pid, 'Default', $authorized, $activity, $title, $assigned_to, $message_status, $session->get('authUserID')]
     );
 }
 
-function updatePnote($id, $newtext, $title, $assigned_to, $message_status = "", $datetime = ""): void
+/**
+ * Update a patient note.
+ *
+ * @param int|string $id Note ID
+ * @param string $newtext New text to append
+ * @param string $title Note title/type
+ * @param string $assigned_to Username to assign to
+ * @param string $message_status Message status
+ * @param string $datetime Optional datetime
+ * @param int|null $pid Patient ID for access control. When provided, the note must belong
+ *                      to this patient or the update is denied (IDOR protection).
+ */
+function updatePnote($id, $newtext, $title, $assigned_to, $message_status = "", $datetime = "", ?int $pid = null): void
 {
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
     $row = getPnoteById($id);
     if (! $row) {
         die("updatePnote() did not find id '" . text($id) . "'");
+    }
+    // IDOR protection: verify note belongs to expected patient
+    if ($pid !== null && (int)$row['pid'] !== $pid) {
+        die("updatePnote() access denied: note does not belong to patient");
     }
 
     if (empty($datetime)) {
@@ -488,7 +518,7 @@ function updatePnote($id, $newtext, $title, $assigned_to, $message_status = "", 
     }
 
     $body = $row['body'] . "\n" . date('Y-m-d H:i') .
-    ' (' . $_SESSION['authUser'];
+    ' (' . $session->get('authUser');
     if ($assigned_to) {
         $body .= " to $assigned_to";
     }
@@ -499,7 +529,7 @@ function updatePnote($id, $newtext, $title, $assigned_to, $message_status = "", 
     $sql = "UPDATE pnotes SET " .
         "body = ?, activity = ?, title= ?, " .
         "assigned_to = ?, update_by = ?, update_date = NOW()";
-    $bindingParams =  [$body, $activity, $title, $assigned_to, $_SESSION['authUserID']];
+    $bindingParams =  [$body, $activity, $title, $assigned_to, $session->get('authUserID')];
     if ($message_status) {
         $sql .= " ,message_status = ?";
         $bindingParams[] = $message_status;
@@ -513,12 +543,28 @@ function updatePnote($id, $newtext, $title, $assigned_to, $message_status = "", 
     sqlStatement($sql, $bindingParams);
 }
 
-function updatePnoteMessageStatus($id, $message_status): void
+/**
+ * Update a note's message status.
+ *
+ * @param int|string $id Note ID
+ * @param string $message_status New status
+ * @param int|null $pid Patient ID for access control. When provided, the note must belong
+ *                      to this patient or the update is denied (IDOR protection).
+ */
+function updatePnoteMessageStatus($id, $message_status, ?int $pid = null): void
 {
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
+    // IDOR protection: verify note belongs to expected patient
+    if ($pid !== null) {
+        $row = getPnoteById($id, 'pid');
+        if (!$row || (int)$row['pid'] !== $pid) {
+            die("updatePnoteMessageStatus() access denied: note does not belong to patient");
+        }
+    }
     if ($message_status == "Done") {
-        sqlStatement("update pnotes set message_status = ?, activity = '0', update_by = ?, update_date = NOW() where id = ?", [$message_status, $_SESSION['authUserID'], $id]);
+        sqlStatement("update pnotes set message_status = ?, activity = '0', update_by = ?, update_date = NOW() where id = ?", [$message_status, $session->get('authUserID'), $id]);
     } else {
-        sqlStatement("update pnotes set message_status = ?, activity = '1', update_by = ?, update_date = NOW() where id = ?", [$message_status, $_SESSION['authUserID'], $id]);
+        sqlStatement("update pnotes set message_status = ?, activity = '1', update_by = ?, update_date = NOW() where id = ?", [$message_status, $session->get('authUserID'), $id]);
     }
 }
 
@@ -530,6 +576,7 @@ function updatePnoteMessageStatus($id, $message_status): void
  */
 function updatePnotePatient($id, $patient_id): void
 {
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
     $row = getPnoteById($id);
     if (! $row) {
         die("updatePnotePatient() did not find id '" . text($id) . "'");
@@ -543,41 +590,106 @@ function updatePnotePatient($id, $patient_id): void
     }
 
     $pid = (int) $patient_id;
-    $newtext = "\n" . date('Y-m-d H:i') . " (patient set by " . $_SESSION['authUser'] . ")";
+    $newtext = "\n" . date('Y-m-d H:i') . " (patient set by " . $session->get('authUser') . ")";
     $body = $row['body'] . $newtext;
 
-    sqlStatement("UPDATE pnotes SET pid = ?, body = ?, update_by = ?, update_date = NOW() WHERE id = ?", [$pid, $body, $_SESSION['authUserID'], $id]);
+    sqlStatement("UPDATE pnotes SET pid = ?, body = ?, update_by = ?, update_date = NOW() WHERE id = ?", [$pid, $body, $session->get('authUserID'), $id]);
 }
 
-function authorizePnote($id, $authorized = "1"): void
+/**
+ * Authorize a patient note.
+ *
+ * @param int|string $id Note ID
+ * @param string $authorized Authorization status
+ * @param int|null $pid Patient ID for access control. When provided, the note must belong
+ *                      to this patient or the update is denied (IDOR protection).
+ */
+function authorizePnote($id, $authorized = "1", ?int $pid = null): void
 {
-    sqlQuery("UPDATE pnotes SET authorized = ? , update_by = ?, update_date = NOW() WHERE id = ?", [$authorized, $_SESSION['authUserID'], $id]);
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
+    // IDOR protection: verify note belongs to expected patient
+    if ($pid !== null) {
+        $row = getPnoteById($id, 'pid');
+        if (!$row || (int)$row['pid'] !== $pid) {
+            die("authorizePnote() access denied: note does not belong to patient");
+        }
+    }
+    sqlQuery("UPDATE pnotes SET authorized = ? , update_by = ?, update_date = NOW() WHERE id = ?", [$authorized, $session->get('authUserID'), $id]);
 }
 
-function disappearPnote($id)
+/**
+ * Mark a note as inactive/done.
+ *
+ * @param int|string $id Note ID
+ * @param int|null $pid Patient ID for access control. When provided, the note must belong
+ *                      to this patient or the update is denied (IDOR protection).
+ * @return bool True on success
+ */
+function disappearPnote($id, ?int $pid = null): bool
 {
-    sqlStatement("UPDATE pnotes SET activity = '0', message_status = 'Done', update_by = ?, update_date = NOW()  WHERE id=?", [$_SESSION['authUserID'], $id]);
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
+    // IDOR protection: verify note belongs to expected patient
+    if ($pid !== null) {
+        $row = getPnoteById($id, 'pid');
+        if (!$row || (int)$row['pid'] !== $pid) {
+            return false;
+        }
+    }
+    sqlStatement("UPDATE pnotes SET activity = '0', message_status = 'Done', update_by = ?, update_date = NOW()  WHERE id=?", [$session->get('authUserID'), $id]);
     return true;
 }
 
-function reappearPnote($id)
+/**
+ * Mark a note as active again.
+ *
+ * @param int|string $id Note ID
+ * @param int|null $pid Patient ID for access control. When provided, the note must belong
+ *                      to this patient or the update is denied (IDOR protection).
+ * @return bool True on success
+ */
+function reappearPnote($id, ?int $pid = null): bool
 {
-    sqlStatement("UPDATE pnotes SET activity = '1', message_status = IF(message_status='Done','New',message_status), update_by = ?, update_date = NOW() WHERE id=?", [$_SESSION['authUserID'], $id]);
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
+    // IDOR protection: verify note belongs to expected patient
+    if ($pid !== null) {
+        $row = getPnoteById($id, 'pid');
+        if (!$row || (int)$row['pid'] !== $pid) {
+            return false;
+        }
+    }
+    sqlStatement("UPDATE pnotes SET activity = '1', message_status = IF(message_status='Done','New',message_status), update_by = ?, update_date = NOW() WHERE id=?", [$session->get('authUserID'), $id]);
     return true;
 }
 
-function deletePnote($id)
+/**
+ * Delete (soft-delete) a patient note.
+ *
+ * @param int|string $id Note ID
+ * @param int|null $pid Patient ID for access control. When provided, the note must belong
+ *                      to this patient or the delete is denied (IDOR protection).
+ * @return bool True on success, false on denial
+ */
+function deletePnote($id, ?int $pid = null): bool
 {
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
+    // IDOR protection: verify note belongs to expected patient
+    if ($pid !== null) {
+        $row = getPnoteById($id, 'pid');
+        if (!$row || (int)$row['pid'] !== $pid) {
+            return false;
+        }
+    }
     $assigned = getAssignedToById($id);
-    if (!checkPortalAuthUser($_SESSION['authUser']) && $assigned == 'portal-user') {
+    $authUser = $session->get('authUser');
+    if (!checkPortalAuthUser($authUser) && $assigned == 'portal-user') {
         return false;
     }
     if (
-        $assigned == $_SESSION['authUser']
+        $assigned == $authUser
         || $assigned == 'portal-user'
         || getMessageStatusById($id) == 'Done'
     ) {
-        sqlStatement("UPDATE pnotes SET deleted = '1', update_by = ?, update_date = NOW() WHERE id=?", [$_SESSION['authUserID'], $id]);
+        sqlStatement("UPDATE pnotes SET deleted = '1', update_by = ?, update_date = NOW() WHERE id=?", [$session->get('authUserID'), $id]);
         return true;
     } else {
         return false;

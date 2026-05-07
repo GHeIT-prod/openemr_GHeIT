@@ -35,7 +35,7 @@
  * @package sms_api
  */
 
-class sms
+class sms_clickatell implements sms_interface
 {
     /**
     * Clickatell API-ID
@@ -324,10 +324,11 @@ class sms
     function _curl($command)
     {
         $this->_chk_curl();
+        $httpVerifySsl = (bool) ($GLOBALS['http_verify_ssl'] ?? true);
         $ch = curl_init($command);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $httpVerifySsl);
         if ($this->curl_use_proxy) {
             curl_setopt($ch, CURLOPT_PROXY, $this->curl_proxy);
             curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->curl_proxyuserpwd);

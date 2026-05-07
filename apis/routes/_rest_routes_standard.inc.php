@@ -5523,6 +5523,7 @@ return [
      * )
      */
     "GET /api/insurance_company" => function (HttpRestRequest $request) {
+        RestConfig::request_authorization_check($request, "acct", "bill");
         $return = (new InsuranceCompanyRestController())->getAll();
 
         return $return;
@@ -5558,6 +5559,7 @@ return [
      *  )
      */
     "GET /api/insurance_company/:iid" => function ($iid, HttpRestRequest $request) {
+        RestConfig::request_authorization_check($request, "acct", "bill");
         $return = (new InsuranceCompanyRestController())->getOne($iid);
 
         return $return;
@@ -5584,6 +5586,7 @@ return [
      *  )
      */
     "GET /api/insurance_type" => function (HttpRestRequest $request) {
+        RestConfig::request_authorization_check($request, "acct", "bill");
         $return = (new InsuranceCompanyRestController())->getInsuranceTypes();
 
         return $return;
@@ -5705,6 +5708,7 @@ return [
      *  )
      */
     "POST /api/insurance_company" => function (HttpRestRequest $request) {
+        RestConfig::request_authorization_check($request, "acct", "bill", 'write');
         $data = (array) (json_decode(file_get_contents("php://input")));
         $return = (new InsuranceCompanyRestController())->post($data);
 
@@ -5748,6 +5752,7 @@ return [
      *  )
      */
     "PUT /api/insurance_company/:iid" => function ($iid, HttpRestRequest $request) {
+        RestConfig::request_authorization_check($request, "acct", "bill", 'write');
         $data = (array) (json_decode(file_get_contents("php://input")));
         $return = (new InsuranceCompanyRestController())->put($iid, $data);
 
@@ -5807,6 +5812,7 @@ return [
      *  )
      */
     "POST /api/patient/:pid/document" => function ($pid, HttpRestRequest $request) {
+        RestConfig::request_authorization_check($request, "patients", "docs", ['write','addonly']);
         $controller = new DocumentRestController();
         $controller->setSession($request->getSession());
         $return = $controller->postWithPath($pid, $_GET['path'], $_FILES['document']);
@@ -5853,6 +5859,7 @@ return [
      *  )
      */
     "GET /api/patient/:pid/document" => function ($pid, HttpRestRequest $request) {
+        RestConfig::request_authorization_check($request, "patients", "docs");
         $return = (new DocumentRestController())->getAllAtPath($pid, $_GET['path']);
 
         return $return;
@@ -5897,6 +5904,7 @@ return [
      *  )
      */
     "GET /api/patient/:pid/document/:did" => function ($pid, $did, HttpRestRequest $request) {
+        RestConfig::request_authorization_check($request, "patients", "docs");
         $return = (new DocumentRestController())->downloadFile($pid, $did);
 
         return $return;
@@ -5985,6 +5993,7 @@ return [
      *  )
      */
     "GET /api/patient/:puuid/insurance" => function ($puuid, HttpRestRequest $request) {
+        RestConfig::request_authorization_check($request, "patients", "demo");
         $searchParams = $request->getQueryParams();
         $searchParams['puuid'] = $puuid;
         if ($request->isPatientRequest()) {
@@ -6043,6 +6052,7 @@ return [
      *  )
      */
     'GET /api/patient/:puuid/insurance/$swap-insurance' => function ($puuid, HttpRestRequest $request) {
+        RestConfig::request_authorization_check($request, "patients", "demo", 'write');
         if ($request->isPatientRequest()) {
             $puuid = $request->getPatientUUIDString();
         }
@@ -6084,6 +6094,7 @@ return [
      *  )
      */
     "GET /api/patient/:puuid/insurance/:uuid" => function ($puuid, $uuid, HttpRestRequest $request) {
+        RestConfig::request_authorization_check($request, "patients", "demo");
         if ($request->isPatientRequest()) {
             $puuid = $request->getPatientUUIDString();
         }

@@ -8,9 +8,11 @@
  * @author    Roberto Vasquez <robertogagliotta@gmail.com>
  * @author    Brady Miller <brady.g.miller@gmail.com>
  * @author    Sherwin Gaddis <sherwingaddis@gmail.com>
+ * @author    Michael A. Smith <michael@opencoreemr.com>
  * @copyright Copyright (c) 2015 Roberto Vasquez <robertogagliotta@gmail.com>
  * @copyright Copyright (c) 2018 Brady Miller <brady.g.miller@gmail.com>
  * @copyright Copyright (c) 2018 Sherwin Gaddis <sherwingaddis@gmail.com>
+ * @copyright Copyright (c) 2026 OpenCoreEMR Inc <https://opencoreemr.com/>
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
@@ -26,6 +28,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use OpenEMR\Common\Database\QueryUtils;
 use OpenEMR\Common\Twig\TwigContainer;
 use OpenEMR\Services\CodeTypesService;
+use OpenEMR\Services\DrugSalesService;
 use OpenEMR\Services\PatientIssuesService;
 
 class C_Prescription extends Controller
@@ -161,15 +164,14 @@ class C_Prescription extends Controller
         $defaultEncounterId = $this->prescriptions[0]->get_encounter() ?? $_SESSION['encounter'] ?? '';
         $this->assign("defaultEncounterId", $defaultEncounterId);
 
-        // if we are no a prescription with a drug id, disable the dispense button
-        if (empty($this->prescriptions[0]->get_drug_id())) {
-            $this->assign("dispenseEnabled", false);
-        }
+        // Track whether this is a new prescription (no ID yet) - affects dispense behavior
+        $isNewPrescription = empty($this->prescriptions[0]->id);
+        $this->assign("isNewPrescription", $isNewPrescription);
 
         $this->default_action();
     }
 
-    function list_action($id, $sort = "")
+    function list_action($id, $sort = "", $printPrescriptionId = null)
     {
         if (empty($id)) {
             $this->function_argument_error();
@@ -247,6 +249,8 @@ class C_Prescription extends Controller
         if (!($this->pconfig['use_signature'] && $this->current_user_has_signature())) {
             $vars['faxSignatureMissing'] = true;
         }
+        // Pass prescription ID to auto-print on page load (used by Save and Print workflow)
+        $vars['printPrescriptionId'] = $printPrescriptionId;
         $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
         echo $twig->render("prescription/" . $this->template_mod . "_list.html.twig", $vars);
     }
@@ -353,7 +357,86 @@ class C_Prescription extends Controller
               processAmcCall('e_prescribe_cont_subst_amc', true, 'remove', $this->prescriptions[0]->get_patient_id(), 'prescriptions', $this->prescriptions[0]->id);
         }
 
+        // Handle dispense after save if requested (Save and Dispense workflow)
+        if (!empty($_POST['dispense_after_save']) && $_POST['dispense_after_save'] === '1') {
+            $this->dispenseAfterSave();
+            return;
+        }
+
+        // Handle print after save if requested (Save and Print workflow)
+        if (!empty($_POST['print_after_save']) && $_POST['print_after_save'] === '1') {
+            $this->printAfterSave();
+            return;
+        }
+
         $this->list_action($this->prescriptions[0]->get_patient_id());
+        exit;
+    }
+
+    /**
+     * Dispense drug immediately after saving a new prescription.
+     * Uses DrugSalesService for proper inventory management.
+     */
+    private function dispenseAfterSave(): void
+    {
+        $prescription = $this->prescriptions[0];
+        $drugId = (int)($_POST['dispense_drug_id'] ?? $_POST['drug_id'] ?? 0);
+        $quantity = (float)($_POST['disp_quantity'] ?? 0);
+        $fee = (float)($_POST['disp_fee'] ?? 0);
+        $encounterId = (int)($_POST['dispense_encounter_id'] ?? 0);
+        $patientId = $prescription->get_patient_id();
+        $prescriptionId = $prescription->id;
+
+        $dispenseError = null;
+
+        if ($drugId <= 0) {
+            $dispenseError = xl('No in-house drug selected for dispensing');
+        } elseif ($quantity <= 0) {
+            $dispenseError = xl('Invalid dispense quantity');
+        } elseif ($encounterId <= 0) {
+            $dispenseError = xl('No encounter selected for dispensing');
+        } else {
+            try {
+                $drugSalesService = new DrugSalesService();
+                $saleId = $drugSalesService->sellDrug(
+                    $drugId,
+                    $quantity,
+                    $fee,
+                    $patientId,
+                    $encounterId,
+                    $prescriptionId
+                );
+
+                if (!$saleId) {
+                    $dispenseError = xl('Inventory is not available for this order');
+                }
+            } catch (\Throwable $e) {
+                $dispenseError = $e->getMessage();
+            }
+        }
+
+        if ($dispenseError) {
+            // Show error and return to prescription list
+            echo "<script>alert(" . js_escape($dispenseError) . "); ";
+            echo "window.location.href = 'controller.php?prescription&list&id=" . attr_url($patientId) . "';</script>";
+            exit;
+        }
+
+        // Success - redirect to prescription list
+        $this->list_action($patientId);
+        exit;
+    }
+
+    /**
+     * Print/download PDF immediately after saving a prescription.
+     * Redirects to the prescription list with a flag to trigger the print dialog on load.
+     * This keeps the dialog open (unlike directly streaming the PDF which would replace the page).
+     */
+    private function printAfterSave(): void
+    {
+        $prescriptionId = $this->prescriptions[0]->id;
+        $patientId = $this->prescriptions[0]->get_patient_id();
+        $this->list_action($patientId, "", $prescriptionId);
         exit;
     }
 
@@ -491,15 +574,11 @@ class C_Prescription extends Controller
         echo ("<tr>\n");
         echo ("<td rowspan='2' class='bordered'>\n");
         echo ('<b><span class="small">' . xl('Patient Name & Address') . '</span></b>' . '<br />');
-        echo ($p->patient->get_name_display() . '<br />');
+        echo (text($p->patient->get_name_display()) . '<br />');
         $res = sqlQuery("SELECT  concat(street,'\n',city,', ',state,' ',postal_code,'\n',if(phone_home!='',phone_home,if(phone_cell!='',phone_cell,if(phone_biz!='',phone_biz,'')))) addr from patient_data where pid =" . add_escape_custom($p->patient->id));
-        if (!empty($res)) {
-            $patterns =  ['/\n/'];
-            $replace =  ['<br />'];
-            $res = preg_replace($patterns, $replace, $res);
+        if (!empty($res['addr'])) {
+            echo nl2br(text($res['addr']));
         }
-
-        echo ($res['addr']);
         echo ("</td>\n");
         echo ("<td class='bordered'>\n");
         echo ('<b><span class="small">' . xl('Date of Birth') . '</span></b>' . '<br />');
@@ -568,7 +647,7 @@ class C_Prescription extends Controller
         echo ("}\n");
         echo ("</style>\n");
 
-        echo ("<title>" . xl('Prescription') . "</title>\n");
+        echo ("<title>" . xlt('Prescription') . "</title>\n");
         echo ("</head>\n");
         echo ("<body>\n");
     }
@@ -625,8 +704,8 @@ class C_Prescription extends Controller
     function multiprintcss_footer()
     {
         echo ("<div class='signdiv'>\n");
-        echo (xl('Signature') . ":________________________________<br />");
-        echo (xl('Date') . ": " . date('Y-m-d'));
+        echo (xlt('Signature') . ":________________________________<br />");
+        echo (xlt('Date') . ": " . text(date('Y-m-d')));
         echo ("</div>\n");
         echo ("</div>\n");
     }

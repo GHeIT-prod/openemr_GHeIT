@@ -1,7 +1,7 @@
 <?php
 
 /**
- * interface/eRx_xml.php Functions for interacting with NewCrop communications.
+ * interface/eRx_xml.php Functions for interacting with Ensora eRx communications.
  *
  * @package   OpenEMR
  * @link      http://www.open-emr.org
@@ -193,7 +193,7 @@ function account($doc, $r): void
     global $msg, $facilityService;
     $erxSiteID = $facilityService->getPrimaryBusinessEntity();
     if (!$erxSiteID['federal_ein']) {
-        echo xlt("Please select a Primary Business Entity facility with 'Tax ID' as your facility Tax ID. If you are an individual practitioner, use your tax id. This is used for identifying you in the NewCrop system.");
+        echo xlt("Please select a Primary Business Entity facility with 'Tax ID' as your facility Tax ID. If you are an individual practitioner, use your tax id. This is used for identifying you in the Ensora system.");
         die;
     }
 
@@ -788,7 +788,7 @@ function PatientMedication($doc, $r, $pid, $med_limit)
     global $msg;
     $active = '';
     if ($GLOBALS['erx_upload_active'] == 1) {
-        $active = " and (enddate is null or enddate = '' or enddate = '0000-00-00' )";
+        $active = " and (enddate is null or enddate = '0000-00-00' )";
     }
 
     $res_med = sqlStatement("select * from lists where type='medication' and pid=? and title<>''
@@ -848,7 +848,7 @@ function PatientFreeformAllergy($doc, $r, $pid)
 {
     $res = sqlStatement("SELECT id,l.title as title1,lo.title as title2,comments FROM lists AS l
     LEFT JOIN list_options AS lo ON l.outcome = lo.option_id AND lo.list_id = 'outcome' AND lo.activity = 1
-	WHERE `type`='allergy' AND pid=? AND erx_source='0' and erx_uploaded='0' AND (enddate is null or enddate = '' or enddate = '0000-00-00')", [$pid]);
+	WHERE `type`='allergy' AND pid=? AND erx_source='0' and erx_uploaded='0' AND (enddate is null or enddate = '0000-00-00')", [$pid]);
     $allergyId = [];
     while ($row = sqlFetchArray($res)) {
         $val = [];
@@ -940,6 +940,7 @@ function PrescriptionRenewalResponse($doc, $r, $pid): void
 
 function checkError($xml)
 {
+    $httpVerifySsl = (bool) ($GLOBALS['http_verify_ssl'] ?? true);
     $ch = curl_init($xml);
 
     $data = ['RxInput' => $xml];
@@ -947,7 +948,7 @@ function checkError($xml)
     curl_setopt($ch, CURLOPT_URL, getErxPath());
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, "RxInput=" . $xml);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $httpVerifySsl);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($ch, CURLOPT_COOKIESESSION, true);
     //curl_setopt($ch, CURLOPT_HEADER, 0);

@@ -19,16 +19,15 @@ require_once(__DIR__ . "/../../../globals.php");
 use OpenEMR\Core\Header;
 use OpenEMR\Events\Messaging\SendNotificationEvent;
 use OpenEMR\Modules\FaxSMS\Controller\AppDispatch;
+use OpenEMR\Modules\FaxSMS\Enums\ServiceType;
 
 $assetBase = $GLOBALS['web_root'] . "/interface/modules/custom_modules/oe-module-faxsms/public";
 
 $serviceType = $_REQUEST['type'] ?? '';
 $clientApp = AppDispatch::getApiService($serviceType);
 $service = $clientApp::getServiceType();
-$title = $service == "1" ? xlt('RingCentral') : '';
-$title = $service == "2" ? xlt('Twilio SMS') : $title;
-$title = $service == "3" ? xlt('etherFAX') : $title;
-$title = $service == "4" ? xlt('Email') : $title;
+$serviceEnum = ServiceType::fromValue($service);
+$title = $serviceEnum->getTranslatedDisplayName();
 $tabTitle = $serviceType == "sms" ? xlt('SMS') : ($serviceType == "email" ? xlt('Email') : xlt('FAX'));
 ?>
 <!DOCTYPE html>
@@ -37,7 +36,7 @@ $tabTitle = $serviceType == "sms" ? xlt('SMS') : ($serviceType == "email" ? xlt(
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $tabTitle ?? ''; ?></title>
     <link rel="stylesheet" href="<?php echo $GLOBALS['assets_static_relative']; ?>/dropzone/dist/dropzone.css">
-    <!--<script src="./public/WebPhoneService.js"></script>-->
+    <script src="<?php echo $GLOBALS['assets_static_relative']; ?>/utif2/UTIF.js"></script>
     <?php
     if (!$clientApp->verifyAcl()) {
         die("<h3>" . xlt("Not Authorised!") . "</h3>");
@@ -45,6 +44,7 @@ $tabTitle = $serviceType == "sms" ? xlt('SMS') : ($serviceType == "email" ? xlt(
     Header::setupHeader(['opener', 'datetime-picker', 'jspdf', 'jstiff']);
     echo "<script>let pid=" . js_escape($pid ?? 0) . ";let portalUrl=" . js_escape($clientApp->portalUrl ?? '') .
         ";let currentService=" . js_escape($service) . ";let serviceType=" . js_escape($serviceType) . "</script>";
+    echo ServiceType::renderJsConstants();
     ?>
     <script type="text/javascript" src="<?php echo $GLOBALS['assets_static_relative']; ?>/dropzone/dist/dropzone.js"></script>
 
@@ -63,18 +63,14 @@ $tabTitle = $serviceType == "sms" ? xlt('SMS') : ($serviceType == "email" ? xlt(
             $("#todate").val(new Date().toJSON().slice(0, 10));
 
             $(".other").hide();
-            if (currentService == '1' && serviceType == 'fax') {
-                $(".rc-hide").hide();
-                $(".rc-fax-hide").hide();
-            } else if (currentService == '1' && serviceType == 'sms') {
-                $(".rc-hide").hide();
-            } else if (currentService == '2') {
-                $(".etherfax").hide();
-            } else if (currentService == '3') {
-                $(".twilio").hide();
-                $(".etherfax-hide").hide();
-                $(".etherfax").show();
-            }
+            const {hide = [], show = []} = {
+                [ServiceType.RINGCENTRAL]: {hide: ['.rc-hide'].concat(serviceType === 'fax' ? ['.rc-fax-hide'] : [])},
+                [ServiceType.TWILIO_SMS]: {hide: ['.etherfax', '.signalwire']},
+                [ServiceType.ETHERFAX]: {hide: ['.twilio', '.etherfax-hide', '.signalwire'], show: ['.etherfax']},
+                [ServiceType.SIGNALWIRE]: {hide: ['.twilio', '.etherfax', '.rc-hide'], show: ['.signalwire']},
+            }[currentService] ?? {};
+            hide.forEach(s => $(s).hide());
+            show.forEach(s => $(s).show());
             if (serviceType == 'sms') {
                 $(".sms-hide").hide();
             }
@@ -106,12 +102,11 @@ $tabTitle = $serviceType == "sms" ? xlt('SMS') : ($serviceType == "email" ? xlt(
             let url = top.webroot_url + '/interface/modules/custom_modules/oe-module-faxsms/contact.php?type=fax&isDocuments=0&isQueue=' +
                 encodeURIComponent(from) + '&file=' + encodeURIComponent(filePath);
             // leave dialog name param empty so send dialogs can cascade.
-            dlgopen(url, '', 'modal-sm', 800, '', title, { // dialog auto restores session cookie
+            dlgopen(url, '', 'modal-sm', 600, '', title, { // dialog auto restores session cookie
                 buttons: [
                     {text: btnClose, close: true, style: 'secondary btn-sm'}
                 ],
                 resolvePromiseOn: 'close',
-                sizeHeight: 'full'
             }).then(function (contact) {
                 top.restoreSession();
             });
@@ -151,10 +146,8 @@ $tabTitle = $serviceType == "sms" ? xlt('SMS') : ($serviceType == "email" ? xlt(
                 console.log('Session restore failed!');
             }
             e.preventDefault();
-            let url = top.webroot_url + '/interface/modules/custom_modules/oe-module-faxsms/setup.php';
-            if (currentService === '1') {
-                url = top.webroot_url + '/interface/modules/custom_modules/oe-module-faxsms/setup_rc.php';
-            }
+            let url = top.webroot_url + '/interface/modules/custom_modules/oe-module-faxsms/' +
+                (currentService === ServiceType.RINGCENTRAL ? 'setup_rc.php' : 'setup.php');
             let msg = <?php echo xlj('Credentials and Notifications') ?>;
             dlgopen('', 'setup', 'modal-md', 700, '', msg, {
                 buttons: [
@@ -176,6 +169,53 @@ $tabTitle = $serviceType == "sms" ? xlt('SMS') : ($serviceType == "email" ? xlt(
             });
             return false;
         };
+
+        // Store the current fax id for assignment; used by setpatient callback
+        let currentFaxForAssignment = null;
+
+        // Callback that patient finder calls on opener
+        function setpatient(pid, lname, fname, dob) {
+            if (!currentFaxForAssignment) {
+                alertMsg(<?php echo xlj('No fax selected for assignment'); ?>);
+                return;
+            }
+            $.post('assignFax?type=fax', {
+                'fax_id': currentFaxForAssignment,
+                'patient_id': pid
+            }, function (response) {
+                if (response && response.success) {
+                    alertMsg(<?php echo xlj('Fax assigned successfully'); ?>);
+                    retrieveMsgs();
+                } else {
+                    alertMsg((response && response.error) || <?php echo xlj('Failed to assign fax'); ?>);
+                }
+            }, 'json').fail(function () {
+                alertMsg(<?php echo xlj('Error assigning fax'); ?>);
+            }).always(function () {
+                currentFaxForAssignment = null;
+            });
+        }
+
+        const assignFaxToPatient = function (faxQueueId) {
+            try {
+                top.restoreSession();
+            } catch (error) {
+                console.log('Session restore failed!');
+            }
+            currentFaxForAssignment = faxQueueId;
+            // Open standard patient finder which calls opener.setpatient(...)
+            dlgopen('../../../main/calendar/find_patient_popup.php', '_blank', 750, 550, false, <?php echo xlj('Select Patient'); ?>);
+        };
+
+        function base64ToArrayBuffer(_base64Str) {
+            let binaryString = window.atob(_base64Str);
+            let binaryLen = binaryString.length;
+            let bytes = new Uint8Array(binaryLen);
+            for (let i = 0; i < binaryLen; i++) {
+                bytes[i] = binaryString.charCodeAt(i);
+            }
+            return bytes;
+        }
 
         function showPrint(base64, _contentType = 'image/tiff') {
             const binary = atob(base64.replace(/\s/g, ''));
@@ -262,6 +302,7 @@ $tabTitle = $serviceType == "sms" ? xlt('SMS') : ($serviceType == "email" ? xlt(
                     setTimeout(retrieveMsgs, 1000);
                     return false;
                 }
+
                 if (downFlag == 'true') {
                     let base64 = data.base64;
                     if (data.mime === 'image/tiff' || data.mime === 'image/tif') {
@@ -270,6 +311,7 @@ $tabTitle = $serviceType == "sms" ? xlt('SMS') : ($serviceType == "email" ? xlt(
                     } else {
                         base64 = '';
                     }
+
                     fetch('disposeDocument?type=fax', {
                         method: 'POST',
                         headers: {
@@ -290,9 +332,9 @@ $tabTitle = $serviceType == "sms" ? xlt('SMS') : ($serviceType == "email" ? xlt(
                     }).catch(error => {
                         console.error('Error:', error);
                     });
-
                     return false;
                 }
+
                 if (data.mime === 'application/pdf') {
                     showDocument(data.base64, data.mime);
                 } else if (data.mime === 'image/tiff') {
@@ -462,14 +504,11 @@ $tabTitle = $serviceType == "sms" ? xlt('SMS') : ($serviceType == "email" ? xlt(
                 e.stopPropagation();
             }
 
-            let actionUrl = (serviceType === 'fax') ? 'getPending?type=fax' : '';
-            if (serviceType === 'sms' && currentService == '1') { //RC
-                actionUrl = 'getPending?type=sms';
-            } else if (serviceType === 'sms') {
-                actionUrl = 'fetchSMSList?type=sms';
-            } else if (serviceType === 'email') {
-                actionUrl = 'fetchEmailList?type=email';
-            }
+            const actionUrl = {
+                fax: 'getPending?type=fax',
+                sms: currentService === ServiceType.RINGCENTRAL ? 'getPending?type=sms' : 'fetchSMSList?type=sms',
+                email: 'fetchEmailList?type=email',
+            }[serviceType] ?? '';
 
             const datefrom = $('#fromdate').val();
             const dateto = $('#todate').val();
@@ -714,7 +753,7 @@ $tabTitle = $serviceType == "sms" ? xlt('SMS') : ($serviceType == "email" ? xlt(
         Dropzone.autoDiscover = false;
         $(function () {
             var fileTypes = '';
-            if (currentService === '3') {
+            if (currentService === ServiceType.ETHERFAX) {
                 fileTypes = "application/pdf, image/*";
             }
             const faxQueue = new Dropzone("#faxQueue", {
@@ -931,7 +970,7 @@ $tabTitle = $serviceType == "sms" ? xlt('SMS') : ($serviceType == "email" ? xlt(
                                                 <th><?php echo xlt("Caller Id") ?></th>
                                                 <th><?php echo xlt("To") ?></th>
                                                 <th><?php echo xlt("Pages") ?></th>
-                                                <th><?php echo xlt("Length") ?></th>
+                                                <th><?php echo xlt("Name") ?></th>
                                                 <th><?php echo xlt("Status") ?></th>
                                                 <th><?php echo xlt("Actions") ?></th>
                                                 <th><i role="button" id="delete-selected-sent" title="<?php echo xlt("Delete selected fax documents") ?>" class="delete-selected-items text-danger fa fa-trash"></i></th>
@@ -976,7 +1015,7 @@ $tabTitle = $serviceType == "sms" ? xlt('SMS') : ($serviceType == "email" ? xlt(
                                         <tr>
                                             <th><?php echo xlt("Date") ?></th>
                                             <th><?php echo xlt("Type") ?></th>
-                                            <th><?php echo xlt("From") ?></th>
+                                            <th><?php echo xlt("Send By") ?></th>
                                             <th><?php echo xlt("To") ?></th>
                                             <th><?php echo xlt("Result") ?></th>
                                             <th class="other"><?php echo xlt("Download") ?></th>

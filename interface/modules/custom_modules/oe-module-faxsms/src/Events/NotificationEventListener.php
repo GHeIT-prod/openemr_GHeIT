@@ -21,8 +21,7 @@ use OpenEMR\Events\Main\Tabs\RenderEvent;
 use OpenEMR\Events\Messaging\SendNotificationEvent;
 use OpenEMR\Modules\FaxSMS\Controller\AppDispatch;
 use PHPMailer\PHPMailer\Exception;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class NotificationEventListener implements EventSubscriberInterface
@@ -69,10 +68,6 @@ class NotificationEventListener implements EventSubscriberInterface
         ];
     }
 
-    /**
-     * @param EventDispatcher $eventDispatcher
-     * @return void
-     */
     public function subscribeToEvents(): void
     {
         $this->eventDispatcher->addListener('sendNotification.send', $this->onNotifySendEvent(...));
@@ -115,9 +110,16 @@ class NotificationEventListener implements EventSubscriberInterface
 
     private function getRCCredentials($serviceType = 'voice'): array
     {
-        // Set the module type for AppDispatch i.e. voice, fax, sms, email
         AppDispatch::setModuleType($serviceType);
-        $clientApp = AppDispatch::getApiService($serviceType);
+        try {
+            $clientApp = AppDispatch::getApiService($serviceType);
+        } catch (\Throwable $e) {
+            \OpenEMR\BC\ServiceContainer::getLogger()->warning(
+                "FaxSMS: failed to load service",
+                ['type' => $serviceType, 'message' => $e->getMessage()]
+            );
+            return ['appKey' => '', 'appSecret' => '', 'jwt' => ''];
+        }
         return $clientApp->getCredentials();
     }
 
@@ -451,19 +453,19 @@ class NotificationEventListener implements EventSubscriberInterface
         $queryParams['pid'] = '';
         $url_part = $baseUrl . http_build_query($queryParams);
         $modal = $e['modal_size'] ?? 'modal-md';
-        $modal_height = $e['modal_height'] ?? '775';
+        $modal_height = $e['modal_height'] ?? '675';
         $modal_size_height = $e['modal_size_height'] ?? '';
         ?>
         function sendNotification(pid, docName, docId, details) {
-        let btnClose = <?php echo xlj("Cancel"); ?>;
-        let title = <?php echo xlj("Send Message"); ?>;
-        let url = top.webroot_url + '<?php echo $url_part; ?>' + encodeURIComponent(pid) + '&title=' + encodeURIComponent(docName) +
-        '&template_id=' + encodeURIComponent(docId) + '&details=' + encodeURIComponent(details);
-        dlgopen(url, '', '<?php echo attr($modal); ?>', '<?php echo attr($modal_height); ?>', '', title, {
-        buttons: [{text: btnClose, close: true, style: 'secondary'}],
-        sizeHeight: '<?php echo attr($modal_size_height); ?>',
-        allowDrag: true,
-        allowResize: true,
+            let btnClose = <?php echo xlj("Cancel"); ?>;
+            let title = <?php echo xlj("Send Message"); ?>;
+            let url = top.webroot_url + '<?php echo $url_part; ?>' + encodeURIComponent(pid) + '&title=' + encodeURIComponent(docName) +
+            '&template_id=' + encodeURIComponent(docId) + '&details=' + encodeURIComponent(details);
+            dlgopen(url, '', '<?php echo attr($modal); ?>', '<?php echo attr($modal_height); ?>', '', title, {
+            buttons: [{text: btnClose, close: true, style: 'secondary'}],
+            sizeHeight: '<?php echo attr($modal_size_height); ?>',
+            allowDrag: true,
+            allowResize: true,
         });
         }
     <?php }
