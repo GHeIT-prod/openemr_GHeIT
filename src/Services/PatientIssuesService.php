@@ -72,7 +72,21 @@ class PatientIssuesService extends BaseService
         $insert = $this->buildInsertColumns($whiteListDict, ['null_value' => null]);
 
         $sql = "INSERT INTO lists SET " . $insert['set'];
+        
         $whiteListDict['id'] = QueryUtils::sqlInsert($sql, $insert['bind']);
+        $row = sqlQuery(
+            "SELECT uuid FROM lists WHERE id = ?",
+            [$whiteListDict['id']]
+        );
+
+        if (empty($row['uuid'])) {
+            $newUuid = (new UuidRegistry(['table_name' => 'lists']))->createUuid();
+
+            sqlStatement(
+                "UPDATE lists SET uuid = ? WHERE id = ?",
+                [$newUuid, $whiteListDict['id']]
+            );
+        }
         if ($issueRecord['type'] == "medication" && !empty($issueRecord['medication'])) {
             $medication = $issueRecord['medication'] ?? [];
             $medication['list_id'] = $whiteListDict['id'];

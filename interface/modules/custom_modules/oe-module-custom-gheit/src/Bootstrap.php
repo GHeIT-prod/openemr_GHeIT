@@ -31,7 +31,8 @@ use OpenEMR\Events\RestApiExtend\RestApiScopeEvent;
 use OpenEMR\Services\Globals\GlobalSetting;
 use OpenEMR\Menu\MenuEvent;
 use OpenEMR\Events\RestApiExtend\RestApiCreateEvent;
-
+use OpenEMR\Modules\CustomModuleGheit\EventSubscriber\UserCreatedSubscriber;
+use OpenEMR\Modules\CustomModuleGheit\EventSubscriber\UserUpdatedSubscriber;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;
@@ -100,6 +101,7 @@ class Bootstrap
             $this->registerMenuItems();
             $this->registerTemplateEvents();
             $this->subscribeToApiEvents();
+            $this->eventDispatcher->addSubscriber(new UserUpdatedSubscriber());
         }
     }
 

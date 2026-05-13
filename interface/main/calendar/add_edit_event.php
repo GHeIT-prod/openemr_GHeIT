@@ -58,7 +58,9 @@ use OpenEMR\Events\Appointments\AppointmentSetEvent;
 use OpenEMR\Events\Appointments\AppointmentRenderEvent;
 use OpenEMR\Events\Appointments\AppointmentDialogCloseEvent;
 use OpenEMR\Common\Logging\SystemLogger;
+use OpenEMR\Common\Uuid\UuidRegistry;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
+use OpenEMR\Services\FHIR\FhirAppointmentService;
 
  //Check access control
 if (!AclMain::aclCheckCore('patients', 'appt', '', ['write','wsome'])) {
@@ -731,10 +733,17 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
         // end Update Multi providers case
         // =======================================
 
-        require_once __DIR__ . '/../../../vendor/autoload.php';
-        require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        //pubsub for appointment update
+        $uuid = sqlQuery("SELECT uuid FROM openemr_postcalendar_events WHERE pc_eid = ?", [$eid]);
+        $appointmentUuid = UuidRegistry::uuidToString($uuid['uuid']);
+
+        $service = new FhirAppointmentService();
+        $result = $service->getOne($appointmentUuid);
+        $appointment = $result->getData()[0];
+        $fhirArray = $appointment->jsonSerialize();
+
         $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('Appointment', 'appointment_updated', 'appointment_data', $_POST);
+        $pubSubController->publishPubsub('Appointment', 'appointment_updated', 'appointment_data', $fhirArray);
 
         // EVENTS TO FACILITIES
         $e2f = (int)$eid;
@@ -747,12 +756,34 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
      *                    INSERT NEW EVENT(S)
      * ======================================================*/
 
-        require_once __DIR__ . '/../../../vendor/autoload.php';
-        require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
-        $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('Appointment', 'appointment_created', 'appointment_data', $_POST);
-
         $eid = InsertEventFull();
+
+        //pubsub for appointment creation
+        $row = sqlQuery(
+            "SELECT uuid FROM openemr_postcalendar_events WHERE pc_eid = ?",
+            [$eid]
+        );
+
+        if (empty($row['uuid'])) {
+            $newUuid = (new UuidRegistry(['table_name' => 'openemr_postcalendar_events']))->createUuid();
+
+            sqlStatement(
+                "UPDATE openemr_postcalendar_events SET uuid = ? WHERE pc_eid = ?",
+                [$newUuid, $eid]
+            );
+        }
+
+        $uuid = sqlQuery("SELECT uuid FROM openemr_postcalendar_events WHERE pc_eid = ?", [$eid]);
+        $appointmentUuid = UuidRegistry::uuidToString($uuid['uuid']);
+
+        $service = new FhirAppointmentService();
+        $result = $service->getOne($appointmentUuid);
+        $appointment = $result->getData()[0];
+        $fhirArray = $appointment->jsonSerialize();
+
+        $pubSubController = new PubSub();
+        $pubSubController->publishPubsub('Appointment', 'appointment_created', 'appointment_data', $fhirArray);
+
         //Tell subscribers that a new single appointment has been set
         $patientAppointmentSetEvent = new AppointmentSetEvent($_POST);
         $patientAppointmentSetEvent->eid = $eid;  //setting the appointment id to an object

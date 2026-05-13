@@ -27,6 +27,7 @@ use OpenEMR\Common\Uuid\UuidRegistry;
 use OpenEMR\Common\Database\QueryUtils;
 use OpenEMR\Services\PatientIssuesService;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
+use OpenEMR\Services\FHIR\FhirEncounterService;
 
 if (!CsrfUtils::verifyCsrfToken($_POST["csrf_token_form"])) {
     CsrfUtils::csrfNotVerified();
@@ -157,48 +158,15 @@ if ($mode == 'new') {
         die("Error creating encounter: " . var_export($result->getValidationMessages(), true));
     }
 
-    $pcCategory = sqlQuery("SELECT * FROM openemr_postcalendar_categories WHERE pc_catid = ?", [$pc_catid]);
-    $encounterData['pc_catid'] = $pcCategory;
+    $encounteruuid = $result->getData()[0]['euuid'];
 
-    $facility = sqlQuery("SELECT * FROM facility WHERE id = ?", [$facility_id]);
-    if (!empty($facility)) {
-        // $facility['uuid'] = Uuid::fromBytes($facility['uuid'])->toString();
-        $facility['uuid'] = UuidRegistry::uuidToString($facility['uuid']);
-    }
-    $encounterData['facility_id'] = $facility;
+    $service = new FhirEncounterService();
+    $encounterResult = $service->getOne($encounteruuid);
+    $encounterResource = $encounterResult->getData()[0];
+    $fhirArray = $encounterResource->jsonSerialize();
 
-    $billingFacility = sqlQuery("SELECT * FROM facility WHERE id = ?", [$billing_facility]);
-    if (!empty($billingFacility)) {
-        $billingFacility['uuid'] = UuidRegistry::uuidToString($billingFacility['uuid']);
-    }
-    $encounterData['billing_facility'] = $billingFacility;
-
-    $provider = sqlQuery("SELECT * FROM users WHERE id = ?", [$provider_id]);
-    if (!empty($provider)) {
-        $provider['uuid'] = UuidRegistry::uuidToString($provider['uuid']);
-    }
-    $encounterData['provider_id'] = $provider;
-
-    $referringProvider = sqlQuery("SELECT * FROM users WHERE id = ?", [$referring_provider_id]);
-    if (!empty($referringProvider)) {
-        $referringProvider['uuid'] = UuidRegistry::uuidToString($referringProvider['uuid']);
-    }
-    $encounterData['referring_provider_id'] = $referringProvider;
-
-    $orderingProvider = sqlQuery("SELECT * FROM users WHERE id = ?", [$ordering_provider_id]);
-    if (!empty($orderingProvider)) {
-        $orderingProvider['uuid'] = UuidRegistry::uuidToString($orderingProvider['uuid']);
-    }
-    $encounterData['ordering_provider_id'] = $orderingProvider;
-
-    $patient = sqlQuery("SELECT * FROM patient_data WHERE pid = ?", [$pid]);
-    $patient['uuid'] = UuidRegistry::uuidToString($patient['uuid']);
-    $encounterData['pid'] = $patient;
-
-    require_once __DIR__ . '/../../../vendor/autoload.php';
-    require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
     $pubSubController = new PubSub();
-    $pubSubController->publishPubsub('Encounter', 'encounter_created', 'encounter_data', $encounterData);
+    $pubSubController->publishPubsub('Encounter', 'encounter_created', 'encounter_data', $fhirArray);
 
     $encounter = $result->getData()[0]['eid'];
 } elseif ($mode == 'update') {
@@ -216,52 +184,18 @@ if ($mode == 'new') {
         die("Error updating encounter: " . var_export($result->getValidationMessages(), true));
     }
 
-    $pcCategory = sqlQuery("SELECT * FROM openemr_postcalendar_categories WHERE pc_catid = ?", [$pc_catid]);
-    $encounterData['pc_catid'] = $pcCategory;
+    //pubsub for encounter update/completion
+    $service = new FhirEncounterService();
+    $encounterResult = $service->getOne($euuid);
+    $encounterResource = $encounterResult->getData()[0];
+    $fhirArray = $encounterResource->jsonSerialize();
 
-    $facility = sqlQuery("SELECT * FROM facility WHERE id = ?", [$facility_id]);
-    if (!empty($facility)) {
-        // $facility['uuid'] = Uuid::fromBytes($facility['uuid'])->toString();
-        $facility['uuid'] = UuidRegistry::uuidToString($facility['uuid']);
-    }
-    $encounterData['facility_id'] = $facility;
-
-    $billingFacility = sqlQuery("SELECT * FROM facility WHERE id = ?", [$billing_facility]);
-    if (!empty($billingFacility)) {
-        $billingFacility['uuid'] = UuidRegistry::uuidToString($billingFacility['uuid']);
-    }
-    $encounterData['billing_facility'] = $billingFacility;
-
-    $provider = sqlQuery("SELECT * FROM users WHERE id = ?", [$provider_id]);
-    if (!empty($provider)) {
-        $provider['uuid'] = UuidRegistry::uuidToString($provider['uuid']);
-    }
-    $encounterData['provider_id'] = $provider;
-
-    $referringProvider = sqlQuery("SELECT * FROM users WHERE id = ?", [$referring_provider_id]);
-    if (!empty($referringProvider)) {
-        $referringProvider['uuid'] = UuidRegistry::uuidToString($referringProvider['uuid']);
-    }
-    $encounterData['referring_provider_id'] = $referringProvider;
-
-    $orderingProvider = sqlQuery("SELECT * FROM users WHERE id = ?", [$ordering_provider_id]);
-    if (!empty($orderingProvider)) {
-        $orderingProvider['uuid'] = UuidRegistry::uuidToString($orderingProvider['uuid']);
-    }
-    $encounterData['ordering_provider_id'] = $orderingProvider;
-
-    $patient = sqlQuery("SELECT * FROM patient_data WHERE pid = ?", [$pid]);
-    $patient['uuid'] = UuidRegistry::uuidToString($patient['uuid']);
-    $encounterData['pid'] = $patient;
-
-    require_once __DIR__ . '/../../../vendor/autoload.php';
-    require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
     $pubSubController = new PubSub();
 
     if (!empty($discharge_disposition) && $discharge_disposition === 'home') {
-        $pubSubController->publishPubsub('Encounter', 'encounter_completed', 'encounter_data', $encounterData);
+        $pubSubController->publishPubsub('Encounter', 'encounter_completed', 'encounter_data', $fhirArray);
     } else {
-        $pubSubController->publishPubsub('Encounter', 'encounter_updated', 'encounter_data', $encounterData);
+        $pubSubController->publishPubsub('Encounter', 'encounter_updated', 'encounter_data', $fhirArray);
     }
 
     $encounter = $result->getData()[0]['eid'];

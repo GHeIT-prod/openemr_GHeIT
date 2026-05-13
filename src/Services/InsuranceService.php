@@ -35,6 +35,7 @@ use OpenEMR\Validators\{
     ProcessingResult,
 };
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
+use OpenEMR\Services\FHIR\FhirCoverageService;
 
 class InsuranceService extends BaseService
 {
@@ -306,10 +307,15 @@ class InsuranceService extends BaseService
             ]
         );
 
-        require_once __DIR__ . '/../../vendor/autoload.php';
-        require_once __DIR__ . '/../../interface/modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        $coverageUuid = UuidRegistry::uuidToString($uuid);
+
+        $service = new FhirCoverageService();
+        $result = $service->getOne($coverageUuid);
+        $coverage = $result->getData()[0];
+        $fhirArray = $coverage->jsonSerialize();
+
         $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('Coverage', 'coverage_updated', 'coverage_data', $data);
+        $pubSubController->publishPubsub('Coverage', 'coverage_created', 'coverage_data', $fhirArray);
 
         if ($results) {
             $serviceSavePostEvent = new ServiceSaveEvent($this, $data);

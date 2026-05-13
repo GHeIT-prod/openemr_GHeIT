@@ -33,6 +33,7 @@ use Exception;
 use Google\Cloud\PubSub\PubSubClient;
 use Ramsey\Uuid\Uuid;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
+use OpenEMR\Services\FHIR\FhirObservationService;
 
 class ObservationService extends BaseService
 {
@@ -558,11 +559,6 @@ class ObservationService extends BaseService
 
         if (!empty($observationData['id'])) {
 
-            require_once __DIR__ . '/../../vendor/autoload.php';
-            require_once __DIR__ . '/../../interface/modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
-            $pubSubController = new PubSub();
-            $pubSubController->publishPubsub('Observation', 'observation_updated', 'observation_data', $observationData);
-
             $sql = "UPDATE `form_observation` SET $sets WHERE id = ? AND pid = ? AND encounter = ?";
             $sqlBindArray[] = $observationData['id'];
             // we make sure updates are not done to other patients/encounters
@@ -572,19 +568,38 @@ class ObservationService extends BaseService
                 $sql,
                 $sqlBindArray
             );
-        } else {
 
-            $observationData['uuid'] = Uuid::fromBytes($observationData['uuid'])->toString();
-            require_once __DIR__ . '/../../vendor/autoload.php';
-            require_once __DIR__ . '/../../interface/modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+            $uuid = sqlQuery("SELECT uuid FROM form_observation WHERE id = ?", [$observationData['id']]);
+            $observationUUID = UuidRegistry::uuidToString($uuid['uuid']);
+
+            $service = new FhirObservationService();
+            $observationResult = $service->getOne($observationUUID);
+            $observationResource = $observationResult->getData()[0];
+            $fhirArray = $observationResource->jsonSerialize();
+
             $pubSubController = new PubSub();
-            $pubSubController->publishPubsub('Observation', 'observation_created', 'observation_data', $observationData);
+            $pubSubController->publishPubsub('Observation', 'observation_updated', 'observation_data', $fhirArray);
+
+        } else {
 
             $sql = "INSERT INTO `form_observation` SET $sets";
             $observationData['id'] = QueryUtils::sqlInsert(
                 $sql,
                 $sqlBindArray
             );
+
+            $uuid = sqlQuery("SELECT uuid FROM form_observation WHERE id = ?", [$observationData['id']]);
+            $observationUUID = UuidRegistry::uuidToString($uuid['uuid']);
+
+            $service = new FhirObservationService();
+            $observationResult = $service->getOne($observationUUID);
+            $observationResource = $observationResult->getData()[0];
+            $fhirArray = $observationResource->jsonSerialize();
+
+            $pubSubController = new PubSub();
+            $pubSubController->publishPubsub('Observation', 'observation_created', 'observation_data', $fhirArray);
+
+
         }
         // fetch the saved data and return it, that way dates, and everything else is in correct format
         $dbObservation = $this->getObservationById($observationData['id'], $pid);

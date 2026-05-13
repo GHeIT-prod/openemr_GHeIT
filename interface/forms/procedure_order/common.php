@@ -36,6 +36,8 @@ use OpenEMR\Events\Services\DornLabEvent;
 use OpenEMR\Events\Services\QuestLabTransmitEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
+use OpenEMR\Services\FHIR\FhirProcedureService;
+use OpenEMR\Services\FHIR\FhirServiceRequestService;
 
 if (!$encounter) { // comes from globals.php
     die("Internal error: we do not seem to be in an encounter!");
@@ -316,10 +318,16 @@ if (($_POST['bn_save'] ?? null) || !empty($_POST['bn_xmit']) || !empty($_POST['b
         $query = "UPDATE forms SET form_name = ? WHERE encounter = ? AND form_id = ? AND formdir = ?";
         sqlStatement($query, [$lab_title, $encounter, $formid, 'procedure_order']);
 
-        require_once __DIR__ . '/../../../vendor/autoload.php';
-        require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        $uuid = sqlQuery("SELECT uuid FROM procedure_order WHERE procedure_order_id = ?", [$formid]);
+        $serviceRequestUuid = UuidRegistry::uuidToString($uuid['uuid']);
+
+        $service = new FhirServiceRequestService();
+        $serviceRequestResult = $service->getOne($serviceRequestUuid);
+        $serviceRequestResource = $serviceRequestResult->getData()[0];
+        $fhirArray = $serviceRequestResource->jsonSerialize();
+
         $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('Procedure', 'procedure_updated', 'procedure_data', $orderData);
+        $pubSubController->publishPubsub('ServiceRequest', 'service_request_updated', 'service_request_data', $fhirArray);
 
     } else {
         $query = "INSERT INTO procedure_order SET $sets";
@@ -333,10 +341,16 @@ if (($_POST['bn_save'] ?? null) || !empty($_POST['bn_xmit']) || !empty($_POST['b
         $mode = 'update';
         $viewmode = true;
 
-        require_once __DIR__ . '/../../../vendor/autoload.php';
-        require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        $uuid = sqlQuery("SELECT uuid FROM procedure_order WHERE procedure_order_id = ?", [$formid]);
+        $serviceRequestUuid = UuidRegistry::uuidToString($uuid['uuid']);
+
+        $service = new FhirServiceRequestService();
+        $serviceRequestResult = $service->getOne($serviceRequestUuid);
+        $serviceRequestResource = $serviceRequestResult->getData()[0];
+        $fhirArray = $serviceRequestResource->jsonSerialize();
+
         $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('Procedure', 'procedure_created', 'procedure_data', $orderData);
+        $pubSubController->publishPubsub('ServiceRequest', 'service_request_created', 'service_request_data', $fhirArray);
     }
 
     $lab_name = normalizeDirectoryName(get_lab_name($ppid ?? 0));
