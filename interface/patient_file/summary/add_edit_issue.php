@@ -29,6 +29,9 @@ use OpenEMR\MedicalDevice\MedicalDevice;
 use OpenEMR\Services\PatientIssuesService;
 use OpenEMR\Services\Utils\DateFormatterUtils;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
+use OpenEMR\Services\FHIR\FhirConditionService;
+use OpenEMR\Services\FHIR\FhirMedicationRequestService;
+use OpenEMR\Common\Uuid\UuidRegistry;
 
 $session = SessionWrapperFactory::getInstance()->getWrapper();
 
@@ -290,25 +293,34 @@ if (!empty($_POST['form_save'])) {
         $issueRecord['medication']['medication_adherence_date_asserted'] = !empty($issueRecord['medication']['medication_adherence_date_asserted']) ? DateTimeToYYYYMMDDHHMMSS($issueRecord['medication']['medication_adherence_date_asserted']) : null;
     }
 
-    //pubsub implementation
-    if ($issueRecord['type'] == 'medical_problem') { 
-        $resource = 'Condition';
-        $event = $issue ? 'condition_updated' : 'condition_created';
-        $resourceDataName = 'condition_data';
-    } elseif($issueRecord['type'] == 'medication') { 
-        $resource = 'MedicationRequest';
-        $event = $issue ? 'medication_request_updated' : 'medication_request_created';
-        $resourceDataName = 'medication_request_data';
-    }
-
-    require_once __DIR__ . '/../../../vendor/autoload.php';
-    require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
-    $pubSubController = new PubSub();
-    $pubSubController->publishPubsub($resource, $event, $resourceDataName, $issueRecord);
-
     $patientIssuesService = new PatientIssuesService();
     if ($issue) {
         $patientIssuesService->updateIssue($issueRecord);
+
+        //pubsub updates for condition and medication request when issue is edited
+        if ($issueRecord['type'] == 'medical_problem') {
+            $uuid = sqlQuery("SELECT uuid FROM lists WHERE pid = ? AND id = ?", [$thispid, $issue])['uuid'];
+            $conditionUuid = UuidRegistry::uuidToString($uuid);
+            $service = new FhirConditionService();
+            $result = $service->getOne($conditionUuid);
+            $condition = $result->getData()[0];
+            $fhirArray = $condition->jsonSerialize();
+
+            $pubSubController = new PubSub();
+            $pubSubController->publishPubsub('Condition', 'condition_updated', 'condition_data', $fhirArray);
+
+        } elseif($issueRecord['type'] == 'medication') {
+            $uuid = sqlQuery("SELECT uuid FROM lists WHERE pid = ? AND id = ?", [$thispid, $issue])['uuid'];
+            $medicationRequestUuid = UuidRegistry::uuidToString($uuid);
+            $service = new FhirMedicationRequestService();
+            $result = $service->getOne($medicationRequestUuid);
+            $medicationRequest = $result->getData()[0];
+            $fhirArray = $medicationRequest->jsonSerialize();
+
+            $pubSubController = new PubSub();
+            $pubSubController->publishPubsub('MedicationRequest', 'medication_request_updated', 'medication_request_data', $fhirArray);
+        }
+
     } else {
         $issueRecord["date"] = date("Y-m-d H:m:s");
         $issueRecord['activity'] = 1;
@@ -316,6 +328,31 @@ if (!empty($_POST['form_save'])) {
         $issueRecord['groupname'] = $session->get('authProvider');
         $savedRecord = $patientIssuesService->createIssue($issueRecord);
         $issue = $savedRecord['id'] ?? "";
+
+        //pubsub creations for condition and medication request when issue is created
+        if ($issueRecord['type'] == 'medical_problem') {
+            $uuid = sqlQuery("SELECT uuid FROM lists WHERE pid = ? AND id = ?", [$thispid, $issue])['uuid'];
+            $conditionUuid = UuidRegistry::uuidToString($uuid);
+
+            $service = new FhirConditionService();
+            $result = $service->getOne($conditionUuid);
+            $condition = $result->getData()[0];
+            $fhirArray = $condition->jsonSerialize();
+
+            $pubSubController = new PubSub();
+            $pubSubController->publishPubsub('Condition', 'condition_created', 'condition_data', $fhirArray);
+
+        } elseif($issueRecord['type'] == 'medication') {
+            $uuid = sqlQuery("SELECT uuid FROM lists WHERE pid = ? AND id = ?", [$thispid, $issue])['uuid'];
+            $medicationRequestUuid = UuidRegistry::uuidToString($uuid);
+            $service = new FhirMedicationRequestService();
+            $result = $service->getOne($medicationRequestUuid);
+            $medicationRequest = $result->getData()[0];
+            $fhirArray = $medicationRequest->jsonSerialize();
+
+            $pubSubController = new PubSub();
+            $pubSubController->publishPubsub('MedicationRequest', 'medication_request_created', 'medication_request_data', $fhirArray);
+        }
     }
 
     // For record/reporting purposes, place entry in lists_touch table.

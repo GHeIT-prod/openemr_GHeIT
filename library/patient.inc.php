@@ -24,7 +24,6 @@ use OpenEMR\Billing\InsurancePolicyTypes;
 use OpenEMR\Services\InsuranceCompanyService;
 use OpenEMR\Services\EmployerService;
 use OpenEMR\Common\Session\SessionWrapperFactory;
-use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 
 require_once(__DIR__ . "/dupscore.inc.php");
 
@@ -1307,45 +1306,6 @@ function newInsuranceData(
     if (empty($effective_date_end)) {
         $effective_date_end = null;
     }
-
-    $data = [
-        'pid' => $pid,
-        'type' => $type,
-        'provider' => $provider,
-        'policy_number' => $policy_number,
-        'group_number' => $group_number,
-        'plan_name' => $plan_name,
-        'subscriber_lname' => $subscriber_lname,
-        'subscriber_mname' => $subscriber_mname,
-        'subscriber_fname' => $subscriber_fname,
-        'subscriber_relationship' => $subscriber_relationship,
-        'subscriber_ss' => $subscriber_ss,
-        'subscriber_DOB' => $subscriber_DOB,
-        'subscriber_street' => $subscriber_street,
-        'subscriber_postal_code' => $subscriber_postal_code,
-        'subscriber_city' => $subscriber_city,
-        'subscriber_state' => $subscriber_state,
-        'subscriber_country' => $subscriber_country,
-        'subscriber_phone' => $subscriber_phone,
-        'subscriber_employer' => $subscriber_employer,
-        'subscriber_employer_street' => $subscriber_employer_street,
-        'subscriber_employer_city' => $subscriber_employer_city,
-        'subscriber_employer_postal_code' => $subscriber_employer_postal_code,
-        'subscriber_employer_state' => $subscriber_employer_state,
-        'subscriber_employer_country' => $subscriber_employer_country,
-        'copay' => $copay,
-        'subscriber_sex' => $subscriber_sex,
-        'effective_date' => $effective_date,
-        'accept_assignment' => $accept_assignment,
-        'policy_type' => $policy_type,
-        'effective_date_end' => $effective_date_end
-    ];
-
-    require_once __DIR__ . '/../vendor/autoload.php';
-    require_once __DIR__ . '/../interface/modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
-    $pubSubController = new PubSub();
-    $pubSubController->publishPubsub('Coverage', 'coverage_created', 'coverage_data', $data);
-
 
     return sqlInsert(
         "INSERT INTO `insurance_data` SET `type` = ?,
