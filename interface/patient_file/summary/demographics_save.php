@@ -185,6 +185,12 @@ while ($frow = sqlFetchArray($fres)) {
 
 // Save patient and employer data
 try {
+    if (!empty($newdata['patient_data']['MRN'])) {
+        sqlInsert("
+            INSERT INTO custom_mrn_sequence ()
+            VALUES ()
+        ");
+    }
     updatePatientData($pid, $newdata['patient_data']);
     if (!$GLOBALS['omit_employers']) {
         updateEmployerData($pid, $newdata['employer_data'], false, $newdata['patient_data']);
