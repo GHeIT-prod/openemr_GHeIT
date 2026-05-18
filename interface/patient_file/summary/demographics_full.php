@@ -44,6 +44,28 @@ if (!$pid) {
 }
 
 $result = getPatientData($pid, "*, DATE_FORMAT(DOB,'%Y-%m-%d') as DOB_YMD");
+
+if (empty($result['MRN'])) {
+    $userAuthId = $_SESSION['authUserID'] ?? null;
+    $facilityId = sqlQuery("SELECT facility_id FROM users WHERE id = ?", [$userAuthId])['facility_id'] ?? null;
+    $date = date('Ymd');
+
+    // Create guaranteed unique sequence
+   $row = sqlQuery("
+        SELECT AUTO_INCREMENT
+        FROM information_schema.TABLES
+        WHERE TABLE_SCHEMA = DATABASE()
+        AND TABLE_NAME = 'custom_mrn_sequence'
+    ");
+
+    $nextId = $row['AUTO_INCREMENT'] ?? 1;
+    $sequence = str_pad($nextId, 3, '0', STR_PAD_LEFT);
+    $formattedFacilityId = str_pad($facilityId, 3, '0', STR_PAD_LEFT);
+    $mrn = "A-{$formattedFacilityId}-{$date}-{$sequence}";
+
+    $result['MRN'] = $mrn;
+}
+
 $result2 = getEmployerData($pid);
 // Check authorization.
 if ($pid) {
@@ -84,6 +106,16 @@ $CPR = 4; // cells per row
         var somethingChanged = false;
 
         $(function () {
+
+            if ($('#form_MRN').length) {
+                $('#form_MRN').prop('readonly', true);
+
+                // Optional styling
+                $('#form_MRN').css({
+                    'background-color': '#e9ecef',
+                    'cursor': 'not-allowed'
+                });
+            }
             tabbify();
 
             $('.swapIns').hide();

@@ -1025,3 +1025,27 @@ include_once("$srcdir/validation/validation_script.js.php");?>
 </script>
 </body>
 </html>
+
+<script>
+    async function populateMRN() {
+        try {
+            const response = await fetch('ajax_generate_mrn.php');
+            const data = await response.json();
+            const mrnField =
+                document.querySelector('#form_MRN') ||
+                document.querySelector('[name="form_MRN"]') ||
+                document.querySelector('#mrn') ||
+                document.querySelector('[name="form_MRN"]');
+
+            if (mrnField) {
+                mrnField.value = data.mrn;
+                mrnField.readOnly = true;
+            }
+        } catch (e) {
+            console.error('MRN generation failed', e);
+        }
+    }
+    window.addEventListener('load', function () {
+        setTimeout(populateMRN, 1000);
+    });
+</script>

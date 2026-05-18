@@ -78,6 +78,28 @@ while ($frow = sqlFetchArray($fres)) {
 // The result contains the pid, so use that to set the global session pid
 $pid = updatePatientData(null, $newdata['patient_data'], true);
 
+if (empty($newdata['patient_data']['MRN'])) {
+    $userAuthId = $_SESSION['authUserID'] ?? null;
+    $facilityId = sqlQuery("SELECT facility_id FROM users WHERE id = ?", [$userAuthId])['facility_id'] ?? null;
+    $formattedFacilityId = str_pad($facilityId, 3, '0', STR_PAD_LEFT);
+    $date = date('Ymd');
+
+    // Create guaranteed unique sequence
+    $sequenceId = sqlInsert("
+        INSERT INTO custom_mrn_sequence ()
+        VALUES ()
+    ");
+
+    $sequence = str_pad($sequenceId, 3, '0', STR_PAD_LEFT);
+    $mrn = "A-{$formattedFacilityId}-{$date}-{$sequence}";
+    $newdata['patient_data']['MRN'] = $mrn;
+} else {
+    sqlInsert("
+        INSERT INTO custom_mrn_sequence ()
+        VALUES ()
+    ");
+}
+
 $uuid = sqlQuery("SELECT uuid FROM patient_data WHERE pid = ?", [$pid])['uuid'];
 $patientuuid = UuidRegistry::uuidToString($uuid);
 
@@ -257,3 +279,5 @@ if ($alertmsg) {
 
 </body>
 </html>
+
+
