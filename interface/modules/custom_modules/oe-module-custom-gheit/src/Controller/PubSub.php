@@ -26,18 +26,22 @@ class PubSub
             $topic = $pubSub->topic($topicName);
 
             $payload = [
-                'resource' => $resource,
+                'resourceType' => $resource,
                 'event' => $event,
-                $resourceDataName => $data
+                'timestamp' => date('c'),
+                'data' => $data
             ];
 
-            // Publish message
             $topic->publish([
-                'data' => json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+                'data' => json_encode($payload),
+                'attributes' => [
+                    'resourceType' => $resource,
+                    'eventType' => $event
+                ]
             ]);
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             error_log("PubSub Error: " . $e->getMessage());
-        }   
+        }
     }
 }
