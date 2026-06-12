@@ -1,314 +1,524 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NeoCareX Registration</title>
 
-    <style>
-        #zohoSupportWebToCase textarea,
-        #zohoSupportWebToCase input[type='text'],
-        #zohoSupportWebToCase input[type='date'],
-        #zohoSupportWebToCase select,
-        .wb_common {
-            width: 280px;
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Georgia&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+<style>
+    *, *::before, *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'DM Sans', Arial, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        background: #eef1f5;
+        padding: 0;
+        color: #222;
+    }
+
+    /* Top Nav Bar */
+    .top-bar {
+        width: 100%;
+        background: #fff;
+        border-bottom: 1px solid #e2e5ea;
+        padding: 14px 30px;
+        display: flex;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .back-btn {
+        text-decoration: none;
+        color: #174f56;
+        font-size: 14px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: opacity .2s;
+    }
+
+    .back-btn:hover { opacity: .65; }
+
+    .top-bar-title {
+        flex: 1;
+        text-align: center;
+        font-size: 15px;
+        font-weight: 600;
+        color: #444;
+        letter-spacing: .3px;
+    }
+
+    .top-bar-spacer {
+        width: 60px;
+    }
+
+    /* Page content */
+    .page-content {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 40px 20px 60px;
+    }
+
+    /* Card */
+    .neo-card {
+        width: 100%;
+        max-width: 620px;
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 8px 40px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
+        overflow: hidden;
+    }
+
+    /* Card Header */
+    .card-header {
+        padding:  20px 36px 16px;;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        border-bottom: 1px solid #eef0f3;
+    }
+
+    .brand-logo {
+        height: 60px;
+        width: 60px;
+        object-fit: contain;
+        flex-shrink: 0;
+        border-radius: 13px;
+    }
+
+    .brand-text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .brand-name {
+        font-family: Georgia, serif;
+        font-size: 34px;
+        color: #174f56;
+        font-weight: 500;
+        line-height: 1;
+    }
+
+    .brand-subtitle {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 1.4px;
+        color: #8a9aab;
+        text-transform: uppercase;
+    }
+
+    /* Card Body */
+    .card-body {
+        padding: 18px 36px 22px;
+    }
+
+    /* Two-column row */
+    .form-row {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 18px;
+    }
+
+    .form-row .form-group {
+        flex: 1;
+        margin-bottom: 0;
+    }
+
+    /* Single form group */
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        margin-bottom: 18px;
+    }
+
+    .form-group label {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.1px;
+        text-transform: uppercase;
+        color: #6b7a8d;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    .form-group label i {
+        font-size: 12px;
+        color: #8a9aab;
+    }
+
+    /* Input wrapper */
+    .input-wrap {
+        position: relative;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #b0bbc8;
+        font-size: 14px;
+        pointer-events: none;
+    }
+
+    .textarea-icon {
+        top: 16px;
+        transform: none;
+    }
+
+    .form-control {
+        width: 100%;
+        height: 38px;
+        border: 1.5px solid #e0e5ec;
+        border-radius: 10px;
+        padding: 0 14px 0 40px;
+        font-size: 14px;
+        font-family: 'DM Sans', Arial, sans-serif;
+        color: #222;
+        background: #f8f9fb;
+        transition: border-color .2s, box-shadow .2s, background .2s;
+    }
+
+    .form-control::placeholder {
+        color: #b8c3ce;
+    }
+
+    .form-control:focus {
+        outline: none;
+        border-color: #174f56;
+        background: #fff;
+        box-shadow: 0 0 0 3.5px rgba(23,79,86,0.09);
+    }
+
+    textarea.form-control {
+        height: 90px;
+        padding-top: 13px;
+        padding-bottom: 13px;
+        resize: none;
+    }
+
+    /* Buttons */
+    .button-row {
+        display: flex;
+        gap: 12px;
+        margin-top: 8px;
+    }
+
+    .submit-btn {
+        flex: 1;
+        background: #264c96;
+        color: #fff;
+        border: none;
+        height: 40px;
+        font-size: 15px;
+        font-family: 'DM Sans', Arial, sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 10px;
+        transition: background .2s, box-shadow .2s, transform .1s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 9px;
+        letter-spacing: .2px;
+        box-shadow: 0 4px 14px rgba(38,76,150,0.25);
+    }
+
+    .submit-btn:hover {
+        background: #1d3d7a;
+        box-shadow: 0 6px 20px rgba(38,76,150,0.32);
+    }
+
+    .submit-btn:active {
+        transform: scale(0.99);
+    }
+
+    .submit-btn:disabled {
+        opacity: .65;
+        cursor: not-allowed;
+    }
+
+    .reset-btn {
+        background: #fff;
+        border: 1.5px solid #d8dee8;
+        height: 40px;
+        min-width: 110px;
+        font-size: 14px;
+        font-family: 'DM Sans', Arial, sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        border-radius: 10px;
+        color: #556070;
+        transition: background .2s, border-color .2s;
+    }
+
+    .reset-btn:hover {
+        background: #f5f7fa;
+        border-color: #bec7d4;
+    }
+
+    /* Card Footer */
+    .card-footer {
+        padding: 14px 36px;
+        border-top: 1px solid #eef0f3;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #fafbfc;
+    }
+
+    .powered-by {
+        font-size: 12px;
+        color: #aab3be;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .powered-by i {
+        color: #61d5c7;
+        font-size: 13px;
+    }
+
+    .footer-links a {
+        font-size: 12px;
+        color: #264c96;
+        text-decoration: none;
+        font-weight: 500;
+        transition: opacity .2s;
+    }
+
+    .footer-links a:hover { opacity: .7; }
+
+    /* Responsive */
+    @media (max-width: 520px) {
+        .card-header, .card-body, .card-footer {
+            padding-left: 22px;
+            padding-right: 22px;
         }
 
-        #zohoSupportWebToCase td {
-            padding: 11px 5px;
+        .form-row {
+            flex-direction: column;
+            gap: 18px;
         }
 
-        #zohoSupportWebToCase textarea,
-        #zohoSupportWebToCase input[type='text'],
-        #zohoSupportWebToCase input[type='date'],
-        #zohoSupportWebToCase select {
-            border: 1px solid #ddd;
-            padding: 3px 5px;
-            border-radius: 3px;
+        .button-row {
+            flex-direction: column;
         }
 
-        .zsFormClass {
-            background-color: #60cae8;
-            width: 600px;
+        .reset-btn {
+            width: 100%;
         }
 
-        .zsFontClass {
-            color: #000;
-            font-family: Arial;
-            font-size: 13px;
-        }
+        .brand-name { font-size: 22px; }
+    }
+</style>
 
-        .manfieldbdr {
-            border-left: 1px solid #ff6448 !important;
-        }
+<script>
+    var zsWebFormMandatoryFields = [
+        "First Name",
+        "Contact Name",
+        "Email",
+        "Phone",
+        "Subject",
+        "Description"
+    ];
 
-        .wb_FtCon {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            margin-top: 15px;
-            padding-left: 10px;
-        }
+    var zsFieldsDisplayLabelArray = [
+        "First Name",
+        "Last Name",
+        "Email",
+        "Phone",
+        "NPI Number",
+        "Clinic/Hospital Address"
+    ];
 
-        .wb_logo {
-            max-width: 16px;
-            max-height: 16px;
-        }
-    </style>
-
-    <script src="https://static.zohocdn.com/zohodeskstatic/app/js/jqueryandencoder.ef05974972bf3bca1b87.js"></script>
-
-    <script>
-        var zsWebFormMandatoryFields = [
-            "First Name",
-            "Contact Name",
-            "Email",
-            "Phone",
-            "Subject",
-            "Description"
-        ];
-
-        var zsFieldsDisplayLabelArray = [
-            "First Name",
-            "Last Name",
-            "Email",
-            "Phone",
-            "NPI Number",
-            "Clinic/Hospital Address"
-        ];
-
-        function zsValidateMandatoryFields() {
-            for (var index = 0; index < zsWebFormMandatoryFields.length; index++) {
-
-                var fieldObject =
-                    document.forms['zsWebToCase_1326210000000474001']
-                    [zsWebFormMandatoryFields[index]];
-
-                if (fieldObject) {
-
-                    if (
-                        fieldObject.value.replace(/^\s+|\s+$/g, '').length == 0
-                    ) {
-                        alert(
-                            zsFieldsDisplayLabelArray[index] +
-                            ' cannot be empty'
-                        );
-
+    function zsValidateMandatoryFields() {
+        for (var index = 0; index < zsWebFormMandatoryFields.length; index++) {
+            var fieldObject = document.forms['zsWebToCase_1326210000000474001'][zsWebFormMandatoryFields[index]];
+            if (fieldObject) {
+                if (fieldObject.value.replace(/^\s+|\s+$/g, '').length == 0) {
+                    alert(zsFieldsDisplayLabelArray[index] + ' cannot be empty');
+                    fieldObject.focus();
+                    return false;
+                }
+                if (fieldObject.name == 'Email') {
+                    if (!fieldObject.value.match(/^([\w_][\w\-_.+\'&]*)@(?=.{4,256}$)(([\w]+)([\-_]*[\w])*[\.])+[a-zA-Z]{2,22}$/)) {
+                        alert('Enter a valid email address');
                         fieldObject.focus();
                         return false;
                     }
-
-                    if (fieldObject.name == 'Email') {
-
-                        if (
-                            !fieldObject.value.match(
-                                /^([\w_][\w\-_.+\'&]*)@(?=.{4,256}$)(([\w]+)([\-_]*[\w])*[\.])+[a-zA-Z]{2,22}$/
-                            )
-                        ) {
-                            alert('Enter a valid email-Id');
-                            fieldObject.focus();
-                            return false;
-                        }
+                }
+                if (fieldObject.name == 'Phone') {
+                    var digits = fieldObject.value.replace(/\D/g, '');
+                    if (digits.length !== 10) {
+                        alert('Phone number must be exactly 10 digits');
+                        fieldObject.focus();
+                        return false;
                     }
                 }
             }
-
-            document
-                .getElementById('zsSubmitButton_1326210000000474001')
-                .setAttribute('disabled', 'disabled');
         }
+        document.getElementById('zsSubmitButton_1326210000000474001').setAttribute('disabled', 'disabled');
+        return true;
+    }
 
-        function zsResetWebForm(webFormId) {
-            document.forms['zsWebToCase_' + webFormId].reset();
+    function zsResetWebForm(webFormId) {
+        document.forms['zsWebToCase_' + webFormId].reset();
+        document.getElementById('zsSubmitButton_1326210000000474001').removeAttribute('disabled');
+    }
+</script>
 
-            document
-                .getElementById('zsSubmitButton_1326210000000474001')
-                .removeAttribute('disabled');
-        }
-    </script>
 </head>
-
 <body>
 
-<div id="zohoSupportWebToCase" align="center">
+<!-- Top Navigation Bar -->
+<div class="top-bar">
+    <a href="/interface/login/login.php" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i> Back
+    </a>
+    <div class="top-bar-title">Sign up Form</div>
+    <div class="top-bar-spacer"></div>
+</div>
 
-    <form
-        name="zsWebToCase_1326210000000474001"
-        id="zsWebToCase_1326210000000474001"
-        action="https://desk.zoho.com/support/WebToCase"
-        method="POST"
-        enctype="multipart/form-data"
-        onsubmit="return zsValidateMandatoryFields()"
-    >
+<!-- Page Content -->
+<div class="page-content">
 
-        <!-- Hidden Fields -->
-        <input
-            type="hidden"
-            name="xnQsjsdp"
-            value="edbsn3cd6b3a1f4f4db8b56ffcb65d5d13ca7"
-        />
+    <div class="neo-card">
 
-        <input
-            type="hidden"
-            name="xmIwtLD"
-            value="edbsna90b72589aef285d98025b83119625d54de43f855369190be6e729701bf9fad3"
-        />
+        <!-- Card Header -->
+        <div class="card-header">
+            <img
+                src="/public/images/logos/core/menu/primary/logo.svg"
+                alt="NeoCareX Logo"
+                class="brand-logo"
+            />
+            <div class="brand-text">
+                <div class="brand-name">NeoCareX</div>
+                <div class="brand-subtitle">User Registration</div>
+            </div>
+        </div>
 
-        <input type="hidden" name="xJdfEaS" value="" />
+        <!-- Card Body -->
+        <div class="card-body">
 
-        <input
-            type="hidden"
-            name="actionType"
-            value="Q2FzZXM="
-        />
+            <form
+                name="zsWebToCase_1326210000000474001"
+                id="zsWebToCase_1326210000000474001"
+                action="https://desk.zoho.com/support/WebToCase"
+                method="POST"
+                enctype="multipart/form-data"
+                onsubmit="return zsValidateMandatoryFields()"
+                target="_self"
+            >
+                <!-- Hidden Fields -->
+                <input type="hidden" name="xnQsjsdp" value="edbsn3cd6b3a1f4f4db8b56ffcb65d5d13ca7"/>
+                <input type="hidden" name="xmIwtLD" value="edbsna90b72589aef285d98025b83119625d54de43f855369190be6e729701bf9fad3"/>
+                <input type="hidden" name="xJdfEaS" value=""/>
+                <input type="hidden" name="actionType" value="Q2FzZXM="/>
+                <input type="hidden" id="property(module)" value="Cases"/>
+                <input type="hidden" id="dependent_field_values_Cases" value='{"JSON_VALUES":{},"JSON_SELECT_VALUES":{},"JSON_MAP_DEP_LABELS":[]}'/>
+                <input type="hidden" name="returnURL" value=""/>
 
-        <input
-            type="hidden"
-            id="property(module)"
-            value="Cases"
-        />
-
-        <input
-            type="hidden"
-            id="dependent_field_values_Cases"
-            value='{"JSON_VALUES":{},"JSON_SELECT_VALUES":{},"JSON_MAP_DEP_LABELS":[]}'
-        />
-
-        <input type="hidden" name="returnURL" value="*" />
-
-        <!-- Form Table -->
-        <table border="0" cellspacing="0" class="zsFormClass">
-
-            <tr>
-                <td colspan="2" class="zsFontClass">
-                    <strong>Physician/User Registration Form</strong>
-                </td>
-            </tr>
-
-            <tr>
-                <td class="zsFontClass">First Name</td>
-                <td>
-                    <input
-                        type="text"
-                        maxlength="120"
-                        name="First Name"
-                        class="manfieldbdr"
-                    />
-                </td>
-            </tr>
-
-            <tr>
-                <td class="zsFontClass">Last Name</td>
-                <td>
-                    <input
-                        type="text"
-                        maxlength="120"
-                        name="Contact Name"
-                        class="manfieldbdr"
-                    />
-                </td>
-            </tr>
-
-            <tr>
-                <td class="zsFontClass">Email</td>
-                <td>
-                    <input
-                        type="text"
-                        maxlength="120"
-                        name="Email"
-                        class="manfieldbdr"
-                    />
-                </td>
-            </tr>
-
-            <tr>
-                <td class="zsFontClass">Phone</td>
-                <td>
-                    <input
-                        type="text"
-                        maxlength="120"
-                        name="Phone"
-                        class="manfieldbdr"
-                    />
-                </td>
-            </tr>
-
-            <tr>
-                <td class="zsFontClass">NPI Number</td>
-                <td>
-                    <input
-                        type="text"
-                        maxlength="255"
-                        name="Subject"
-                        class="manfieldbdr"
-                    />
-                </td>
-            </tr>
-
-            <tr>
-                <td class="zsFontClass">
-                    Clinic/Hospital Address
-                </td>
-
-                <td>
-                    <textarea
-                        name="Description"
-                        maxlength="3000"
-                        class="manfieldbdr"
-                    ></textarea>
-                </td>
-            </tr>
-
-            <!-- Buttons -->
-            <tr>
-                <td colspan="2" align="center">
-
-                    <input
-                        type="submit"
-                        id="zsSubmitButton_1326210000000474001"
-                        class="zsFontClass"
-                        value="Submit"
-                    />
-
-                    &nbsp;&nbsp;
-
-                    <input
-                        type="button"
-                        class="zsFontClass"
-                        value="Reset"
-                        onclick="zsResetWebForm('1326210000000474001')"
-                    />
-
-                </td>
-            </tr>
-
-            <!-- Footer -->
-            <tr>
-                <td></td>
-
-                <td align="left">
-
-                    <div class="wb_FtCon wb_common">
-
-                        <span>powered by</span>
-
-                        <a
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            href="https://zoho.com/desk"
-                        >
-                            <img
-                                class="wb_logo"
-                                src="https://static.zohocdn.com/zohodeskstatic/app/images/portalLogo.de847024ebc0131731a3.png"
-                            />
-                        </a>
-
+                <!-- First Name + Last Name Row -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label><i class="fa-regular fa-user"></i> First Name</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-user input-icon"></i>
+                            <input type="text" maxlength="120" name="First Name" class="form-control" placeholder="Jane"/>
+                        </div>
                     </div>
+                    <div class="form-group">
+                        <label><i class="fa-regular fa-user"></i> Last Name</label>
+                        <div class="input-wrap">
+                            <i class="fa-regular fa-user input-icon"></i>
+                            <input type="text" maxlength="120" name="Contact Name" class="form-control" placeholder="Doe"/>
+                        </div>
+                    </div>
+                </div>
 
-                </td>
-            </tr>
+                <!-- Email -->
+                <div class="form-group">
+                    <label><i class="fa-regular fa-envelope"></i> Email Address</label>
+                    <div class="input-wrap">
+                        <i class="fa-regular fa-envelope input-icon"></i>
+                        <input type="text" maxlength="120" name="Email" class="form-control" placeholder="jane.doe@example.com"/>
+                    </div>
+                </div>
 
-        </table>
+                <!-- Phone -->
+                <div class="form-group">
+                    <label><i class="fa-solid fa-phone"></i> Phone Number</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-phone input-icon"></i>
+                        <input type="text" maxlength="120" name="Phone" class="form-control" placeholder="(555) 000-0000"/>
+                    </div>
+                </div>
 
-    </form>
+                <!-- NPI -->
+                <div class="form-group">
+                    <label><i class="fa-regular fa-id-card"></i> NPI Number</label>
+                    <div class="input-wrap">
+                        <i class="fa-regular fa-id-card input-icon"></i>
+                        <input type="text" maxlength="255" name="Subject" class="form-control" placeholder="1234567890"/>
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div class="form-group">
+                    <label><i class="fa-solid fa-location-dot"></i> Clinic / Hospital Address</label>
+                    <div class="input-wrap">
+                        <i class="fa-solid fa-location-dot input-icon textarea-icon"></i>
+                        <textarea name="Description" maxlength="3000" class="form-control" placeholder="123 Main St, City, State"></textarea>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="button-row">
+                    <button type="submit" id="zsSubmitButton_1326210000000474001" class="submit-btn">
+                        <i class="fa-solid fa-check"></i> Submit Registration
+                    </button>
+                    <button type="button" class="reset-btn" onclick="zsResetWebForm('1326210000000474001')">
+                        Reset
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+        <!-- Card Footer -->
+        <div class="card-footer">
+            <div class="powered-by">
+                <i class="fa-solid fa-heart"></i> powered by NeoCareX
+            </div>
+            <div class="footer-links">
+                <a href="https://gheit.co/privacy-policy/" target="_blank" rel="noopener noreferrer">Terms &amp; Privacy</a>
+            </div>
+        </div>
+
+    </div>
 
 </div>
 
