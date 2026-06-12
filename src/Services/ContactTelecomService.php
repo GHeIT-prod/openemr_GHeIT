@@ -159,11 +159,13 @@ class ContactTelecomService extends BaseService
                 }
 
                 // Set value and metadata
+                $contactTelecom->set_status($telecom['status'] ?? '');
                 $contactTelecom->set_value($telecom['value'] ?? '');
                 $contactTelecom->set_notes($telecom['notes'] ?? '');
                 $contactTelecom->set_rank($telecom['rank'] ?? 1);
                 $contactTelecom->set_inactivated_reason($telecom['inactivated_reason'] ?? '');
                 $contactTelecom->set_contact_id($contactId);
+                $contactTelecom->set_is_primary($telecom['is_primary'] ?? '');
 
                 // Save the record
                 if ($contactTelecom->persist()) {

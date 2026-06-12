@@ -25,15 +25,16 @@ class PubSub
 
             $topic = $pubSub->topic($topicName);
 
+            $payload = [
+                'resource' => $resource,
+                'event' => $event,
+                $resourceDataName => $data
+            ];
+
             // Publish message
             $topic->publish([
-                'data' => json_encode([
-                    'resource' => $resource,
-                    'event' => $event,
-                    $resourceDataName => $data,
-                ], JSON_UNESCAPED_UNICODE)
+                'data' => json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
             ]);
-            // echo "message sent to Pub/Sub!";
 
         } catch (Exception $e) {
             error_log("PubSub Error: " . $e->getMessage());

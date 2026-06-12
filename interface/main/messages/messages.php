@@ -234,6 +234,7 @@ if (!empty($_REQUEST['go'])) { ?>
                             $messages = xl('My Messages');
                         }
                     } else {
+                        $show_all = "no";
                         $messages = xlt('My Messages');
                     }
                     ?>
@@ -331,6 +332,10 @@ if (!empty($_REQUEST['go'])) { ?>
                             $noteid = $_POST['noteid'];
                             $form_message_status = $_POST['form_message_status'];
                             $reply_to = $_POST['reply_to'];
+                            // IDOR protection: verify note is assigned to current user
+                            if (!checkPnotesNoteId($noteid, $_SESSION['authUser'])) {
+                                die("Message is not assigned to you. Update is disallowed.");
+                            }
                             if ($task == "save") {
                                 updatePnoteMessageStatus($noteid, $form_message_status);
                             } else {
@@ -369,8 +374,12 @@ if (!empty($_REQUEST['go'])) { ?>
                             // Delete selected message(s) from the Messages box (only).
                             $delete_id = $_POST['delete_id'];
                             for ($i = 0; $i < count($delete_id); $i++) {
+                                // IDOR protection: verify note is assigned to current user
+                                if (!checkPnotesNoteId($delete_id[$i], $_SESSION['authUser'])) {
+                                    continue; // skip notes not assigned to user
+                                }
                                 deletePnote($delete_id[$i]);
-                                EventAuditLogger::instance()->newEvent("delete", $_SESSION['authUser'], $_SESSION['authProvider'], 1, "pnotes: id " . $delete_id[$i]);
+                                EventAuditLogger::getInstance()->newEvent("delete", $_SESSION['authUser'], $_SESSION['authProvider'], 1, "pnotes: id " . $delete_id[$i]);
                             }
                             break;
                     }
@@ -1062,7 +1071,13 @@ if (!empty($_REQUEST['go'])) { ?>
                 alert(<?php echo xlj("This patient does not allow SMS messaging!"); ?>);
             } else {
                 top.restoreSession();
-                window.open('messages.php?nomenu=1&go=SMS_bot&pid=' + encodeURIComponent(pid) + '&m=' + encodeURIComponent(m), 'SMS_bot', 'width=370,height=600,resizable=0');
+                const params = new URLSearchParams({
+                    go: 'SMS_bot',
+                    m: m,
+                    nomenu: '1',
+                    pid: pid
+                });
+                window.open('messages.php?' + params, 'SMS_bot', 'width=370,height=600,resizable=0');
             }
         }
 

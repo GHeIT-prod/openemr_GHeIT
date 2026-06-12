@@ -58,7 +58,9 @@ use OpenEMR\Events\Appointments\AppointmentSetEvent;
 use OpenEMR\Events\Appointments\AppointmentRenderEvent;
 use OpenEMR\Events\Appointments\AppointmentDialogCloseEvent;
 use OpenEMR\Common\Logging\SystemLogger;
+use OpenEMR\Common\Uuid\UuidRegistry;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
+use OpenEMR\Services\FHIR\FhirAppointmentService;
 
  //Check access control
 if (!AclMain::aclCheckCore('patients', 'appt', '', ['write','wsome'])) {
@@ -731,10 +733,17 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
         // end Update Multi providers case
         // =======================================
 
-        require_once __DIR__ . '/../../../vendor/autoload.php';
-        require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        //pubsub for appointment update
+        $uuid = sqlQuery("SELECT uuid FROM openemr_postcalendar_events WHERE pc_eid = ?", [$eid]);
+        $appointmentUuid = UuidRegistry::uuidToString($uuid['uuid']);
+
+        $service = new FhirAppointmentService();
+        $result = $service->getOne($appointmentUuid);
+        $appointment = $result->getData()[0];
+        $fhirArray = $appointment->jsonSerialize();
+
         $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('Appointment', 'appointment_updated', 'appointment_data', $_POST);
+        $pubSubController->publishPubsub('Appointment', 'appointment_updated', 'appointment_data', $fhirArray);
 
         // EVENTS TO FACILITIES
         $e2f = (int)$eid;
@@ -747,12 +756,34 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
      *                    INSERT NEW EVENT(S)
      * ======================================================*/
 
-        require_once __DIR__ . '/../../../vendor/autoload.php';
-        require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
-        $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('Appointment', 'appointment_created', 'appointment_data', $_POST);
-
         $eid = InsertEventFull();
+
+        //pubsub for appointment creation
+        $row = sqlQuery(
+            "SELECT uuid FROM openemr_postcalendar_events WHERE pc_eid = ?",
+            [$eid]
+        );
+
+        if (empty($row['uuid'])) {
+            $newUuid = (new UuidRegistry(['table_name' => 'openemr_postcalendar_events']))->createUuid();
+
+            sqlStatement(
+                "UPDATE openemr_postcalendar_events SET uuid = ? WHERE pc_eid = ?",
+                [$newUuid, $eid]
+            );
+        }
+
+        $uuid = sqlQuery("SELECT uuid FROM openemr_postcalendar_events WHERE pc_eid = ?", [$eid]);
+        $appointmentUuid = UuidRegistry::uuidToString($uuid['uuid']);
+
+        $service = new FhirAppointmentService();
+        $result = $service->getOne($appointmentUuid);
+        $appointment = $result->getData()[0];
+        $fhirArray = $appointment->jsonSerialize();
+
+        $pubSubController = new PubSub();
+        $pubSubController->publishPubsub('Appointment', 'appointment_created', 'appointment_data', $fhirArray);
+
         //Tell subscribers that a new single appointment has been set
         $patientAppointmentSetEvent = new AppointmentSetEvent($_POST);
         $patientAppointmentSetEvent->eid = $eid;  //setting the appointment id to an object
@@ -1194,20 +1225,20 @@ function set_days_every_week() {
 
 // Constants used by dateChanged() function.
 const occurNames = Array(
-    '<?php echo xls("1st{{nth}}"); ?>',
-    '<?php echo xls("2nd{{nth}}"); ?>',
-    '<?php echo xls("3rd{{nth}}"); ?>',
-    '<?php echo xls("4th{{nth}}"); ?>'
+    <?php echo xlj("1st{{nth}}"); ?>,
+    <?php echo xlj("2nd{{nth}}"); ?>,
+    <?php echo xlj("3rd{{nth}}"); ?>,
+    <?php echo xlj("4th{{nth}}"); ?>
 );
 
 const weekDays = Array(
-    '<?php echo xls("Sunday"); ?>',
-    '<?php echo xls("Monday"); ?>',
-    '<?php echo xls("Tuesday"); ?>',
-    '<?php echo xls("Wednesday"); ?>',
-    '<?php echo xls("Thursday"); ?>',
-    '<?php echo xls("Friday"); ?>',
-    '<?php echo xls("Saturday"); ?>'
+    <?php echo xlj("Sunday"); ?>,
+    <?php echo xlj("Monday"); ?>,
+    <?php echo xlj("Tuesday"); ?>,
+    <?php echo xlj("Wednesday"); ?>,
+    <?php echo xlj("Thursday"); ?>,
+    <?php echo xlj("Friday"); ?>,
+    <?php echo xlj("Saturday"); ?>
 );
 
  // Monitor start date changes to adjust repeat type options.
@@ -1226,7 +1257,7 @@ function dateChanged() {
     if (tmp.getDate() - d.getUTCDate() < 7) { // Modified by epsdky 2016 (details in commit)
         // This is a last occurrence of the specified weekday in the month,
         // so permit that as an option.
-        lasttext = '<?php echo xls("Last"); ?> ' + downame;
+        lasttext = <?php echo xlj("Last"); ?> + ' ' + downame;
     }
     var si = f.form_repeat_type.selectedIndex;
     var opts = f.form_repeat_type.options;
@@ -1923,7 +1954,7 @@ function validateform(event,valu){
     $('#form_save').attr('disabled', true);
     //Make sure if days_every_week is checked that at least one weekday is checked.
     if($('#days_every_week').is(':checked') && !are_days_checked()){
-        alert('<?php echo xls("Must choose at least one day!"); ?>');
+        alert(<?php echo xlj("Must choose at least one day!"); ?>);
         $('#form_save').attr('disabled', false);
         return false;
     }
@@ -1932,7 +1963,7 @@ function validateform(event,valu){
         //Prevent from user to change status to Arrive before the time
         //Dependent in globals setting - allow_early_check_in
         if($('#form_apptstatus').val() == '@' && new Date(DateToYYYYMMDD_js($('#form_date').val())).getTime() > new Date().getTime()){
-            alert('<?php echo xls("You can not change status to 'Arrive' before the appointment's time") . '.'; ?>');
+            alert(<?php echo xlj("You can not change status to 'Arrive' before the appointment's time."); ?>);
             $('#form_save').attr('disabled', false);
             return false;
         }
@@ -2007,7 +2038,7 @@ function HideRecurrPopup() {
 }
 
 function deleteEvent() {
-    if (confirm("<?php echo addslashes((string) xl('Deleting this event cannot be undone. It cannot be recovered once it is gone. Are you sure you wish to delete this event?')); ?>")) {
+    if (confirm("<?php echo addslashes(xl('Deleting this event cannot be undone. It cannot be recovered once it is gone. Are you sure you wish to delete this event?')); ?>")) {
         $('#form_action').val("delete");
 
         <?php if ($repeats) : ?>
@@ -2054,7 +2085,7 @@ function SubmitForm() {
         }?>
     if (f.form_action.value != 'delete') {
         <?php if ($is_holiday) {?>
-        if (!confirm('<?php echo xls('On this date there is a holiday, use it anyway?'); ?>')) {
+        if (!confirm(<?php echo xlj('On this date there is a holiday, use it anyway?'); ?>)) {
             top.restoreSession();
         }
         <?php }?>

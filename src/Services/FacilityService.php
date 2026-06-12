@@ -28,6 +28,8 @@ use OpenEMR\Validators\ProcessingResult;
 use OpenEMR\Events\Facility\FacilityCreatedEvent;
 use OpenEMR\Events\Facility\FacilityUpdatedEvent;
 use Particle\Validator\Validator;
+use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
+use OpenEMR\Services\FHIR\FhirOrganizationService;
 
 class FacilityService extends BaseService
 {
@@ -213,6 +215,17 @@ class FacilityService extends BaseService
             $query['bind']
         );
 
+        $uuid = sqlQuery("SELECT uuid FROM facility WHERE id = ?", [$data['id']]);
+        $facilityUuid = UuidRegistry::uuidToString($uuid['uuid']);
+
+        $service = new FhirOrganizationService();
+        $result = $service->getOne($facilityUuid);
+        $organization = $result->getData()[0];
+        $fhirArray = $organization->jsonSerialize();
+
+        $pubSubController = new PubSub();
+        $pubSubController->publishPubsub('Organization', 'organization_updated', 'organization_data', $fhirArray);
+
         $facilityUpdatedEvent = new FacilityUpdatedEvent($dataBeforeUpdate, $data);
         $GLOBALS["kernel"]->getEventDispatcher()->dispatch($facilityUpdatedEvent, FacilityUpdatedEvent::EVENT_HANDLE, 10);
 
@@ -228,6 +241,30 @@ class FacilityService extends BaseService
             $sql,
             $query['bind']
         );
+        $row = sqlQuery(
+            "SELECT uuid FROM facility WHERE id = ?",
+            [$facilityId]
+        );
+
+        if (empty($row['uuid'])) {
+            $newUuid = (new UuidRegistry(['table_name' => 'facility']))->createUuid();
+
+            sqlStatement(
+                "UPDATE facility SET uuid = ? WHERE id = ?",
+                [$newUuid, $facilityId]
+            );
+        }
+
+        $uuid = sqlQuery("SELECT uuid FROM facility WHERE id = ?", [$facilityId]);
+        $facilityUuid = UuidRegistry::uuidToString($uuid['uuid']);
+
+        $service = new FhirOrganizationService();
+        $result = $service->getOne($facilityUuid);
+        $organization = $result->getData()[0];
+        $fhirArray = $organization->jsonSerialize();
+
+        $pubSubController = new PubSub();
+        $pubSubController->publishPubsub('Organization', 'organization_created', 'organization_data', $fhirArray);
 
         $facilityCreatedEvent = new FacilityCreatedEvent(array_merge($data, ['id' => $facilityId]));
         $GLOBALS["kernel"]->getEventDispatcher()->dispatch($facilityCreatedEvent, FacilityCreatedEvent::EVENT_HANDLE, 10);

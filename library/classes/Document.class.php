@@ -24,11 +24,13 @@ use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Crypto\CryptoGen;
 use OpenEMR\Common\ORDataObject\ORDataObject;
 use OpenEMR\Common\Uuid\UuidRegistry;
+use OpenEMR\Common\Session\SessionWrapperFactory;
 use OpenEMR\Events\PatientDocuments\PatientDocumentStoreOffsite;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Google\Cloud\PubSub\PubSubClient;
 use Ramsey\Uuid\Uuid;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
+use OpenEMR\Services\FHIR\FhirDocumentReferenceService;
 
 class Document extends ORDataObject
 {
@@ -908,6 +910,7 @@ class Document extends ORDataObject
         ) {
             return xl('Reference table and reference id must both be set');
         }
+        $session = SessionWrapperFactory::getInstance()->getWrapper();
         $this->set_foreign_reference_id($foreign_reference_id);
         $this->set_foreign_reference_table($foreign_reference_table);
         // The original code used the encounter ID but never set it to anything.
@@ -1083,7 +1086,7 @@ class Document extends ORDataObject
         $this->size  = strlen($data);
         $this->hash  = hash('sha3-512', $data);
         $this->type  = $this->type_array['file_url'];
-        $this->owner = $owner ?: $_SESSION['authUserID'] ?? null;
+        $this->owner = $owner ?: $session->get('authUserID');
         $this->date_expires = $date_expires;
         $this->set_foreign_id($patient_id);
         $this->persist();
@@ -1093,34 +1096,16 @@ class Document extends ORDataObject
             $this->_db->Execute($sql, [$category_id, $this->get_id()]);
         }
 
-        $documentCategory = sqlQuery("SELECT * FROM categories WHERE id = ?", [$category_id]);
-        $documentData = [
-            'id' => $this->get_id(),
-            'uuid' =>  Uuid::fromBytes($this->get_uuid())->toString(),
-            'name' => $this->get_name(),
-            'foreign_id' => $this->get_foreign_id(),
-            'type' => $this->get_type(),
-            'size' => $this->get_size(),
-            'date' => $this->get_date(),
-            'url' => $this->get_url(),
-            'mimetype' => $this->get_mimetype(),
-            'pages' => $this->get_pages(),
-            'owner' => $this->get_owner(),
-            'revision' => $this->revision,
-            'docdate' => $this->get_docdate(),
-            'hash' => $this->get_hash(),
-            'date_expires' => $this->get_date_expires(),
-            'list_id' => $this->get_list_id(),
-            'encounter_id' => $this->get_encounter_id(),
-            'encounter_check' => $this->get_encounter_check(),
-            'document_category' => $documentCategory,
-        ];
+        //publish the document reference to the pubsub system
+        $documentUuid = UuidRegistry::uuidToString($docUUID);
 
-        require_once __DIR__ . '/../../vendor/autoload.php';
-        require_once __DIR__ . '/../../interface/modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        $service = new FhirDocumentReferenceService();
+        $result = $service->getOne($documentUuid);
+        $documentRef = $result->getData()[0];
+        $fhirArray = $documentRef->jsonSerialize();
+
         $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('DocumentReference', 'document_uploaded', 'document_data', $documentData);
-
+        $pubSubController->publishPubsub('DocumentReference', 'document_uploaded', 'document_data', $fhirArray);
 
         return '';
     }

@@ -13,6 +13,7 @@ This layout is the legacy login page, a centered box with the logos on top
 {% extends "login/base.html.twig" %}
 
 {% block content %}
+
 <div class="vh-100 p-5 d-flex flex-column justify-content-center">
     <form method="POST" id="login_form" autocomplete="off" action="../main/main_screen.php?auth=login&site={{ siteID|attr_url }}" target="_top" name="login_form">
         <div class="shadow-lg m-0 my-sm-5 login-row-center">
@@ -51,6 +52,18 @@ This layout is the legacy login page, a centered box with the logos on top
                 {% include "login/partials/input/facilities.html.twig" %}
 
                 {% include "login/partials/input/buttons.html.twig" %}
+
+                <div class="d-flex justify-content-end mt-2">
+                    <span class="fw-semibold">
+                        Not Registered?&nbsp;
+                    </span>
+                    <a href="{{ web_root }}/interface/modules/custom_modules/oe-module-custom-gheit/templates/login/layouts/helpdesk.html.twig"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-primary text-decoration-none fw-semibold ms-1">
+                        Click here to register
+                    </a>
+                </div>
 
                 <div class="form-group">
                     {% if displayGoogleSignin %}

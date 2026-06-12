@@ -452,7 +452,7 @@ $constraints = LBF_Validation::generate_validate_constraints("DEM");
                         $data_type  = $frow['data_type'];
                         $field_id   = $frow['field_id'];
                         $list_id    = $frow['list_id'];
-                        $currvalue  = '';
+                        $currvalue  = null;
 
                         // Accumulate action conditions into a JSON expression for the browser side.
                         accumActionConditions($frow, $condition_str);
@@ -1025,3 +1025,27 @@ include_once("$srcdir/validation/validation_script.js.php");?>
 </script>
 </body>
 </html>
+
+<script>
+    async function populateMRN() {
+        try {
+            const response = await fetch('ajax_generate_mrn.php');
+            const data = await response.json();
+            const mrnField =
+                document.querySelector('#form_MRN') ||
+                document.querySelector('[name="form_MRN"]') ||
+                document.querySelector('#mrn') ||
+                document.querySelector('[name="form_MRN"]');
+
+            if (mrnField) {
+                mrnField.value = data.mrn;
+                mrnField.readOnly = true;
+            }
+        } catch (e) {
+            console.error('MRN generation failed', e);
+        }
+    }
+    window.addEventListener('load', function () {
+        setTimeout(populateMRN, 1000);
+    });
+</script>

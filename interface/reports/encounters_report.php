@@ -44,11 +44,11 @@ $alertmsg = ''; // not used yet but maybe later
 // For each sorting option, specify the ORDER BY argument.
 //
 $ORDERHASH = [
-  'doctor'  => 'lower(u.lname), lower(u.fname), fe.date',
-  'patient' => 'lower(p.lname), lower(p.fname), fe.date',
-  'pubpid'  => 'lower(p.pubpid), fe.date',
-  'time'    => 'fe.date, lower(u.lname), lower(u.fname)',
-  'encounter'    => 'fe.encounter, fe.date, lower(u.lname), lower(u.fname)',
+  'doctor'  => 'lower(u.lname), lower(u.fname), fe.date DESC, fe.encounter DESC',
+  'patient' => 'lower(p.lname), lower(p.fname), fe.date DESC, fe.encounter DESC',
+  'pubpid'  => 'lower(p.pubpid), fe.date DESC, fe.encounter DESC',
+  'time'    => 'fe.date DESC, fe.encounter DESC, lower(u.lname), lower(u.fname)',
+  'encounter'    => 'fe.encounter DESC, fe.date DESC, lower(u.lname), lower(u.fname)',
 ];
 
 function show_doc_total($lastdocname, $doc_encounters): void
@@ -204,7 +204,11 @@ $res = sqlStatement($query, $sqlBindArray);
         // Called to switch to the specified encounter having the specified DOS.
         function toEncounter(newpid, enc) {
             top.restoreSession();
-            top.RTop.location = "<?php echo $GLOBALS['webroot']; ?>/interface/patient_file/summary/demographics.php?set_pid=" + encodeURIComponent(newpid) + "&set_encounterid=" + encodeURIComponent(enc);
+            const params = new URLSearchParams({
+                set_encounterid: enc,
+                set_pid: newpid
+            });
+            top.RTop.location = "<?php echo $GLOBALS['webroot']; ?>/interface/patient_file/summary/demographics.php?" + params;
         }
 
     </script>

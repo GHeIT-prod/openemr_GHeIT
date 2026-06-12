@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <style>
+        #zohoSupportWebToCase textarea,
+        #zohoSupportWebToCase input[type='text'],
+        #zohoSupportWebToCase input[type='date'],
+        #zohoSupportWebToCase select,
+        .wb_common {
+            width: 280px;
+        }
+
+        #zohoSupportWebToCase td {
+            padding: 11px 5px;
+        }
+
+        #zohoSupportWebToCase textarea,
+        #zohoSupportWebToCase input[type='text'],
+        #zohoSupportWebToCase input[type='date'],
+        #zohoSupportWebToCase select {
+            border: 1px solid #ddd;
+            padding: 3px 5px;
+            border-radius: 3px;
+        }
+
+        .zsFormClass {
+            background-color: #60cae8;
+            width: 600px;
+        }
+
+        .zsFontClass {
+            color: #000;
+            font-family: Arial;
+            font-size: 13px;
+        }
+
+        .manfieldbdr {
+            border-left: 1px solid #ff6448 !important;
+        }
+
+        .wb_FtCon {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: 15px;
+            padding-left: 10px;
+        }
+
+        .wb_logo {
+            max-width: 16px;
+            max-height: 16px;
+        }
+    </style>
+
+    <script src="https://static.zohocdn.com/zohodeskstatic/app/js/jqueryandencoder.ef05974972bf3bca1b87.js"></script>
+
+    <script>
+        var zsWebFormMandatoryFields = [
+            "First Name",
+            "Contact Name",
+            "Email",
+            "Phone",
+            "Subject",
+            "Description"
+        ];
+
+        var zsFieldsDisplayLabelArray = [
+            "First Name",
+            "Last Name",
+            "Email",
+            "Phone",
+            "NPI Number",
+            "Clinic/Hospital Address"
+        ];
+
+        function zsValidateMandatoryFields() {
+            for (var index = 0; index < zsWebFormMandatoryFields.length; index++) {
+
+                var fieldObject =
+                    document.forms['zsWebToCase_1326210000000474001']
+                    [zsWebFormMandatoryFields[index]];
+
+                if (fieldObject) {
+
+                    if (
+                        fieldObject.value.replace(/^\s+|\s+$/g, '').length == 0
+                    ) {
+                        alert(
+                            zsFieldsDisplayLabelArray[index] +
+                            ' cannot be empty'
+                        );
+
+                        fieldObject.focus();
+                        return false;
+                    }
+
+                    if (fieldObject.name == 'Email') {
+
+                        if (
+                            !fieldObject.value.match(
+                                /^([\w_][\w\-_.+\'&]*)@(?=.{4,256}$)(([\w]+)([\-_]*[\w])*[\.])+[a-zA-Z]{2,22}$/
+                            )
+                        ) {
+                            alert('Enter a valid email-Id');
+                            fieldObject.focus();
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            document
+                .getElementById('zsSubmitButton_1326210000000474001')
+                .setAttribute('disabled', 'disabled');
+        }
+
+        function zsResetWebForm(webFormId) {
+            document.forms['zsWebToCase_' + webFormId].reset();
+
+            document
+                .getElementById('zsSubmitButton_1326210000000474001')
+                .removeAttribute('disabled');
+        }
+    </script>
+</head>
+
+<body>
+
+<div id="zohoSupportWebToCase" align="center">
+
+    <form
+        name="zsWebToCase_1326210000000474001"
+        id="zsWebToCase_1326210000000474001"
+        action="https://desk.zoho.com/support/WebToCase"
+        method="POST"
+        enctype="multipart/form-data"
+        onsubmit="return zsValidateMandatoryFields()"
+    >
+
+        <!-- Hidden Fields -->
+        <input
+            type="hidden"
+            name="xnQsjsdp"
+            value="edbsn3cd6b3a1f4f4db8b56ffcb65d5d13ca7"
+        />
+
+        <input
+            type="hidden"
+            name="xmIwtLD"
+            value="edbsna90b72589aef285d98025b83119625d54de43f855369190be6e729701bf9fad3"
+        />
+
+        <input type="hidden" name="xJdfEaS" value="" />
+
+        <input
+            type="hidden"
+            name="actionType"
+            value="Q2FzZXM="
+        />
+
+        <input
+            type="hidden"
+            id="property(module)"
+            value="Cases"
+        />
+
+        <input
+            type="hidden"
+            id="dependent_field_values_Cases"
+            value='{"JSON_VALUES":{},"JSON_SELECT_VALUES":{},"JSON_MAP_DEP_LABELS":[]}'
+        />
+
+        <input type="hidden" name="returnURL" value="*" />
+
+        <!-- Form Table -->
+        <table border="0" cellspacing="0" class="zsFormClass">
+
+            <tr>
+                <td colspan="2" class="zsFontClass">
+                    <strong>Physician/User Registration Form</strong>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="zsFontClass">First Name</td>
+                <td>
+                    <input
+                        type="text"
+                        maxlength="120"
+                        name="First Name"
+                        class="manfieldbdr"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td class="zsFontClass">Last Name</td>
+                <td>
+                    <input
+                        type="text"
+                        maxlength="120"
+                        name="Contact Name"
+                        class="manfieldbdr"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td class="zsFontClass">Email</td>
+                <td>
+                    <input
+                        type="text"
+                        maxlength="120"
+                        name="Email"
+                        class="manfieldbdr"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td class="zsFontClass">Phone</td>
+                <td>
+                    <input
+                        type="text"
+                        maxlength="120"
+                        name="Phone"
+                        class="manfieldbdr"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td class="zsFontClass">NPI Number</td>
+                <td>
+                    <input
+                        type="text"
+                        maxlength="255"
+                        name="Subject"
+                        class="manfieldbdr"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td class="zsFontClass">
+                    Clinic/Hospital Address
+                </td>
+
+                <td>
+                    <textarea
+                        name="Description"
+                        maxlength="3000"
+                        class="manfieldbdr"
+                    ></textarea>
+                </td>
+            </tr>
+
+            <!-- Buttons -->
+            <tr>
+                <td colspan="2" align="center">
+
+                    <input
+                        type="submit"
+                        id="zsSubmitButton_1326210000000474001"
+                        class="zsFontClass"
+                        value="Submit"
+                    />
+
+                    &nbsp;&nbsp;
+
+                    <input
+                        type="button"
+                        class="zsFontClass"
+                        value="Reset"
+                        onclick="zsResetWebForm('1326210000000474001')"
+                    />
+
+                </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+                <td></td>
+
+                <td align="left">
+
+                    <div class="wb_FtCon wb_common">
+
+                        <span>powered by</span>
+
+                        <a
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://zoho.com/desk"
+                        >
+                            <img
+                                class="wb_logo"
+                                src="https://static.zohocdn.com/zohodeskstatic/app/images/portalLogo.de847024ebc0131731a3.png"
+                            />
+                        </a>
+
+                    </div>
+
+                </td>
+            </tr>
+
+        </table>
+
+    </form>
+
+</div>
+
+</body>
+</html>

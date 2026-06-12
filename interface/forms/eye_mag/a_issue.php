@@ -491,12 +491,12 @@ foreach (explode(',', $given) as $item) {
         function validate() {
             var f = document.forms[0];
             if (f.form_begin.value > f.form_end.value && (f.form_end.value)) {
-                alert("<?php echo addslashes((string) xl('Please Enter End Date greater than Begin Date!')); ?>");
+                alert("<?php echo addslashes(xl('Please Enter End Date greater than Begin Date!')); ?>");
                 return false;
             }
             if (f.form_type.value != 'ROS' && f.form_type.value != 'FH' && f.form_type.value != 'SOCH') {
                 if (!f.form_title.value) {
-                    alert("<?php echo addslashes((string) xl('Please enter a title!')); ?>");
+                    alert("<?php echo addslashes(xl('Please enter a title!')); ?>");
                     return false;
                 }
             }
@@ -758,7 +758,7 @@ foreach (explode(',', $given) as $item) {
                     </tr>
                     <tr id='row_eye_med'>
                         <td class="right text-nowrap"><strong id="by_whom"><?php echo xlt('Eye Med'); ?>:</strong></td>
-                        <td colspan="3"><?php echo $irow['subtype'] ?? ''; ?>
+                        <td colspan="3"><?php echo text($irow['subtype'] ?? ''); ?>
                             <input type='checkbox' name='form_eye_subtype' id='form_eye_subtype' value='1' <?php
                             if (($irow['subtype'] ?? '') == 'eye') {
                                 echo " checked";

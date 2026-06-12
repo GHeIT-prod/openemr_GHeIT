@@ -20,6 +20,8 @@ use OpenEMR\Services\ContactAddressService;
 use OpenEMR\Common\Logging\SystemLogger;
 use OpenEMR\Events\Patient\PatientBeforeCreatedAuxEvent;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
+use OpenEMR\Common\Uuid\UuidRegistry;
+use OpenEMR\Services\FHIR\FhirPatientService;
 
 if (!CsrfUtils::verifyCsrfToken($_POST["csrf_token_form"])) {
     CsrfUtils::csrfNotVerified();
@@ -72,14 +74,49 @@ while ($frow = sqlFetchArray($fres)) {
     }
 }
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . '/../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
-$pubSubController = new PubSub();
-$pubSubController->publishPubsub('Patient', 'patient_created', 'patient_data', $newdata);
-
 // Use the global helper to use the PatientService to create a new patient
 // The result contains the pid, so use that to set the global session pid
 $pid = updatePatientData(null, $newdata['patient_data'], true);
+
+if (empty($newdata['patient_data']['MRN'])) {
+    $userAuthId = $_SESSION['authUserID'] ?? null;
+    $facilityId = sqlQuery("SELECT facility_id FROM users WHERE id = ?", [$userAuthId])['facility_id'] ?? null;
+    $formattedFacilityId = str_pad($facilityId, 3, '0', STR_PAD_LEFT);
+    $date = date('Ymd');
+
+    // Create guaranteed unique sequence
+    $sequenceId = sqlInsert("
+        INSERT INTO custom_mrn_sequence ()
+        VALUES ()
+    ");
+
+    $sequence = str_pad($sequenceId, 3, '0', STR_PAD_LEFT);
+    $mrn = "A-{$formattedFacilityId}-{$date}-{$sequence}";
+    $newdata['patient_data']['MRN'] = $mrn;
+} else {
+    sqlInsert("
+        INSERT INTO custom_mrn_sequence ()
+        VALUES ()
+    ");
+}
+
+$uuid = sqlQuery("SELECT uuid FROM patient_data WHERE pid = ?", [$pid])['uuid'];
+$patientuuid = UuidRegistry::uuidToString($uuid);
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+require_once __DIR__ . '/../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+
+$service = new FhirPatientService();
+
+$result = $service->getOne($patientuuid);
+
+$patient = $result->getData()[0];
+
+$fhirArray = $patient->jsonSerialize();
+
+$pubSubController = new PubSub();
+$pubSubController->publishPubsub('Patient', 'patient_created', 'patient_data', $fhirArray);
+
 if (empty($pid)) {
     die("Internal error: setpid(" . text($pid) . ") failed!");
 }
@@ -242,4 +279,5 @@ if ($alertmsg) {
 
 </body>
 </html>
+
 

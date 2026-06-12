@@ -8,9 +8,11 @@
  * @author    Brady Miller <brady.g.miller@gmail.com>
  * @author    Medical Information Integration, LLC
  * @author    Ensofttek, LLC
+ * @author    Stephen Waite <stephen.waite@open-emr.org>
  * @copyright Copyright (c) 2010-2019 Brady Miller <brady.g.miller@gmail.com>
  * @copyright Copyright (c) 2011 Medical Information Integration, LLC
  * @copyright Copyright (c) 2011 Ensofttek, LLC
+ * @copyright Copyright (c) 2026 OpenEMR Foundation Inc
  * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
  */
 
@@ -22,6 +24,7 @@ require_once(__DIR__ . "/report_database.inc.php");
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\ClinicalDecisionRules\AMC\CertificationReportTypes;
 use OpenEMR\Common\Logging\SystemLogger;
+use OpenEMR\Common\Session\SessionWrapperFactory;
 use OpenEMR\Services\FacilityService;
 
 /**
@@ -62,7 +65,7 @@ function listingCDRReminderLog($begin_date = '', $end_date = '')
  */
 function clinical_summary_widget($patient_id, $mode, $dateTarget = '', $organize_mode = 'default', $user = ''): void
 {
-
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
   // Set date to current if not set
     $dateTarget = $dateTarget ?: date('Y-m-d H:i:s');
 
@@ -183,22 +186,25 @@ function clinical_summary_widget($patient_id, $mode, $dateTarget = '', $organize
   // Compare the current with most recent action log (this function will also log the current actions)
   // Only when $mode is reminders-due
     if ($mode == "reminders-due" && $GLOBALS['enable_alert_log']) {
-        $new_targets = compare_log_alerts($patient_id, $current_targets, 'clinical_reminder_widget', $_SESSION['authUserID']);
+        $new_targets = compare_log_alerts($patient_id, $current_targets, 'clinical_reminder_widget', $session->get('authUserID'));
         if (!empty($new_targets) && $GLOBALS['enable_cdr_new_crp']) {
-            // If there are new action(s), then throw a popup (if the enable_cdr_new_crp global is turned on)
-            //  Note I am taking advantage of a slight hack in order to run javascript within code that
-            //  is being passed via an ajax call by using a dummy image.
-            echo '<img src="../../pic/empty.gif" onload="alert(\'' . xls('New Due Clinical Reminders') . '\n\n';
+            $message = xl('New Due Clinical Reminders') . "\n\n";
+
+            // coached claude sonnet 4.5 to rework
             foreach ($new_targets as $key => $value) {
                 $category_item = explode(":", (string) $key);
-                $category = $category_item[0];
-                $item = $category_item[1];
-                echo generate_display_field(['data_type' => '1','list_id' => 'rule_action_category'], $category) .
-                   ': ' . generate_display_field(['data_type' => '1','list_id' => 'rule_action'], $item) . '\n';
+                $category = $category_item[0] ?? '';
+                $item = $category_item[1] ?? '';
+
+                $cat_display = generate_display_field(['data_type' => '1','list_id' => 'rule_action_category'], $category);
+                $item_display = generate_display_field(['data_type' => '1','list_id' => 'rule_action'], $item);
+
+                $message .= $cat_display . ': ' . $item_display . "\n";
             }
 
-            echo '\n' . '(' . xls('See the Clinical Reminders widget for more details') . ')';
-            echo '\');this.parentNode.removeChild(this);" />';
+            $message .= "\n" . xl('See the Clinical Reminders widget for more details');
+            echo '<img src="../../pic/empty.gif" onload="alert(' . attr_js($message) . ');this.parentNode.removeChild(this);" />';
+            // end claude code
         }
     }
 }
@@ -216,7 +222,7 @@ function clinical_summary_widget($patient_id, $mode, $dateTarget = '', $organize
  */
 function active_alert_summary($patient_id, $mode, $dateTarget = '', $organize_mode = 'default', $user = '', $test = false)
 {
-
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
   // Set date to current if not set
     $dateTarget = $dateTarget ?: date('Y-m-d H:i:s');
 
@@ -274,7 +280,7 @@ function active_alert_summary($patient_id, $mode, $dateTarget = '', $organize_mo
   // Compare the current with most recent action log (this function will also log the current actions)
   // Only when $mode is reminders-due and $test is FALSE
     if (($mode == "reminders-due") && ($test === false) && ($GLOBALS['enable_alert_log'])) {
-        $new_targets = compare_log_alerts($patient_id, $current_targets, 'active_reminder_popup', $_SESSION['authUserID']);
+        $new_targets = compare_log_alerts($patient_id, $current_targets, 'active_reminder_popup', $session->get('authUserID'));
         if (!empty($new_targets)) {
             $returnOutput .= "<br />" . xlt('New Items (see above for details)') . ":<br />";
             foreach ($new_targets as $key => $value) {
@@ -301,7 +307,7 @@ function active_alert_summary($patient_id, $mode, $dateTarget = '', $organize_mo
  */
 function allergy_conflict($patient_id, $mode, $user, $test = false)
 {
-
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
   // Collect allergies
     $sqlParam = [];
     $sqlParam[] = $patient_id;
@@ -359,7 +365,7 @@ function allergy_conflict($patient_id, $mode, $user, $test = false)
   // If there are conflicts, $test is FALSE, and alert logging is on, then run through compare_log_alerts
     $new_conflicts = [];
     if ((!empty($conflicts_unique)) && $GLOBALS['enable_alert_log'] && ($test === false)) {
-        $new_conflicts = compare_log_alerts($patient_id, $conflicts_unique, 'allergy_alert', $_SESSION['authUserID'], $mode);
+        $new_conflicts = compare_log_alerts($patient_id, $conflicts_unique, 'allergy_alert', $session->get('authUserID'), $mode);
     }
 
     if ($mode == 'all') {
@@ -628,7 +634,7 @@ function rules_clinic_get_providers($billing_facility, $pat_prov_rel)
             . " ORDER BY provider_id ",
             [$billing_facility, $billing_facility]
         );
-    } else if ($pat_prov_rel == "primary") {
+    } elseif ($pat_prov_rel == "primary") {
         $rez = sqlStatementCdrEngine(
             "SELECT id AS provider_id , lname, fname, npi, federaltaxid FROM users WHERE authorized = 1 AND users.id IN ( "
             . "SELECT DISTINCT `providerID` AS provider_id FROM `patient_data` JOIN `users` providers ON providerID=providers.id "
@@ -1387,13 +1393,13 @@ function buildPatientArray($patient_id = '', $provider = '', $pat_prov_rel = 'pr
             // Look at an individual physician
             if ($provider == 'group_calculation' && $pat_prov_rel == 'encounter') {
                 return buildPatientArrayEncounterBillingFacility($start, $batchSize, $onlyCount, $billing_facility);
-            } else if ($provider == 'group_calculation' && $pat_prov_rel == 'primary') {
+            } elseif ($provider == 'group_calculation' && $pat_prov_rel == 'primary') {
                 return buildPatientArrayPrimaryProviderBillingFacility($start, $batchSize, $onlyCount, $billing_facility);
-            } else if ($pat_prov_rel == 'encounter_billing_facility' && is_numeric($provider)) {
+            } elseif ($pat_prov_rel == 'encounter_billing_facility' && is_numeric($provider)) {
                 return buildPatientArrayEncounterBillingFacility($start, $batchSize, $onlyCount, $billing_facility, $provider);
-            } else if ($pat_prov_rel == 'primary_billing_facility' && is_numeric($provider)) {
+            } elseif ($pat_prov_rel == 'primary_billing_facility' && is_numeric($provider)) {
                 return buildPatientArrayPrimaryProviderBillingFacility($start, $batchSize, $onlyCount, $billing_facility, $provider);
-            } else if ($pat_prov_rel == 'encounter') {
+            } elseif ($pat_prov_rel == 'encounter') {
                 // Choose patients that are related to specific physician by an encounter (OR the provider was a referral originator)
                 $sql = "select DISTINCT `pid` FROM `form_encounter` WHERE `provider_id` =? OR `supervisor_id` = ? "
                     . " UNION select DISTINCT `transactions`.`pid` FROM transactions "
@@ -1727,7 +1733,7 @@ function test_filter($patient_id, $rule, $dateTarget)
         $dc = database_check($patient_id, $filter, '', '', $dateTarget);
         if ($dc === false) {
             return false;
-        } else if ($dc === 'continue') {
+        } elseif ($dc === 'continue') {
             ;
         } else { // $dc === true
             // need to check if other required filters in other categories also pass
@@ -1750,7 +1756,7 @@ function test_filter($patient_id, $rule, $dateTarget)
         $lc = lists_check($patient_id, $filter, $dateTarget);
         if ($lc === false) {
             return false;
-        } else if ($lc === 'continue') {
+        } elseif ($lc === 'continue') {
             ;
         } else { // $lc === true
             // need to check if other required filters in other categories also pass
@@ -1770,7 +1776,7 @@ function test_filter($patient_id, $rule, $dateTarget)
         $pc = procedure_check($patient_id, $filter, '', '', $dateTarget);
         if (!$pc === false) {
             return false;
-        } else if ($pc === 'continue') {
+        } elseif ($pc === 'continue') {
             ;
         } else { // $pc === true
             $anySuccess = true;
@@ -1830,7 +1836,7 @@ function test_filter($patient_id, $rule, $dateTarget)
         if ($lc === false) {
             // a required exclusion did not succeed, so patient can not be excluded from rule. return true
             return true;
-        } else if ($lc === 'continue') {
+        } elseif ($lc === 'continue') {
             // all exclusion filters are optional and none succeeded
             ;
         } else { // $lc === true
@@ -1935,7 +1941,7 @@ function test_targets($patient_id, $rule, ?string $group_id = null, $dateFocus =
         $dc = database_check($patient_id, $target, $interval, $dateFocus, $dateTarget);
         if ($dc === false) {
             return false;
-        } else if ($dc === 'continue') {
+        } elseif ($dc === 'continue') {
             ;
         } else { // $dc === true
             // need to check if other required targets in other categories also pass
@@ -1953,7 +1959,7 @@ function test_targets($patient_id, $rule, ?string $group_id = null, $dateFocus =
         $pc = procedure_check($patient_id, $target, $interval, $dateFocus, $dateTarget);
         if ($pc === false) {
             return false;
-        } else if ($pc === 'continue') {
+        } elseif ($pc === 'continue') {
             ;
         } else { // $pc === true
             $anySuccess = true;
@@ -1971,7 +1977,7 @@ function test_targets($patient_id, $rule, ?string $group_id = null, $dateFocus =
         $ac = appointment_check($patient_id, $dateFocus, $dateTarget);
         if ($ac === false) {
             return false;
-        } else if ($ac === 'continue') {
+        } elseif ($ac === 'continue') {
             ;
         } else { // $ac === true
             $anySuccess = true;
@@ -1980,7 +1986,7 @@ function test_targets($patient_id, $rule, ?string $group_id = null, $dateFocus =
 
     if ($anySuccess === '') {
         return false;
-    } else if ($anySuccess === true) {
+    } elseif ($anySuccess === true) {
         return true;
     } else {
         return false;

@@ -36,6 +36,8 @@ use OpenEMR\Events\Services\DornLabEvent;
 use OpenEMR\Events\Services\QuestLabTransmitEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
+use OpenEMR\Services\FHIR\FhirProcedureService;
+use OpenEMR\Services\FHIR\FhirServiceRequestService;
 
 if (!$encounter) { // comes from globals.php
     die("Internal error: we do not seem to be in an encounter!");
@@ -124,7 +126,7 @@ if (!function_exists('ucname')) {
         $string = ucwords(strtolower((string) $string));
         foreach (['-', '\''] as $delimiter) {
             if (str_contains($string, $delimiter)) {
-                $string = implode($delimiter, array_map('ucfirst', explode($delimiter, $string)));
+                $string = implode($delimiter, array_map(ucfirst(...), explode($delimiter, $string)));
             }
         }
         return $string;
@@ -316,10 +318,16 @@ if (($_POST['bn_save'] ?? null) || !empty($_POST['bn_xmit']) || !empty($_POST['b
         $query = "UPDATE forms SET form_name = ? WHERE encounter = ? AND form_id = ? AND formdir = ?";
         sqlStatement($query, [$lab_title, $encounter, $formid, 'procedure_order']);
 
-        require_once __DIR__ . '/../../../vendor/autoload.php';
-        require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        $uuid = sqlQuery("SELECT uuid FROM procedure_order WHERE procedure_order_id = ?", [$formid]);
+        $serviceRequestUuid = UuidRegistry::uuidToString($uuid['uuid']);
+
+        $service = new FhirServiceRequestService();
+        $serviceRequestResult = $service->getOne($serviceRequestUuid);
+        $serviceRequestResource = $serviceRequestResult->getData()[0];
+        $fhirArray = $serviceRequestResource->jsonSerialize();
+
         $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('Procedure', 'procedure_updated', 'procedure_data', $orderData);
+        $pubSubController->publishPubsub('ServiceRequest', 'service_request_updated', 'service_request_data', $fhirArray);
 
     } else {
         $query = "INSERT INTO procedure_order SET $sets";
@@ -333,10 +341,16 @@ if (($_POST['bn_save'] ?? null) || !empty($_POST['bn_xmit']) || !empty($_POST['b
         $mode = 'update';
         $viewmode = true;
 
-        require_once __DIR__ . '/../../../vendor/autoload.php';
-        require_once __DIR__ . '/../../modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
+        $uuid = sqlQuery("SELECT uuid FROM procedure_order WHERE procedure_order_id = ?", [$formid]);
+        $serviceRequestUuid = UuidRegistry::uuidToString($uuid['uuid']);
+
+        $service = new FhirServiceRequestService();
+        $serviceRequestResult = $service->getOne($serviceRequestUuid);
+        $serviceRequestResource = $serviceRequestResult->getData()[0];
+        $fhirArray = $serviceRequestResource->jsonSerialize();
+
         $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('Procedure', 'procedure_created', 'procedure_data', $orderData);
+        $pubSubController->publishPubsub('ServiceRequest', 'service_request_created', 'service_request_data', $fhirArray);
     }
 
     $lab_name = normalizeDirectoryName(get_lab_name($ppid ?? 0));
@@ -487,8 +501,8 @@ if (($_POST['bn_save'] ?? null) || !empty($_POST['bn_xmit']) || !empty($_POST['b
                     }
                     if ($gbl_lab === 'quest' && $isDorn === false) {
                         $order_log .= xlt("Transmitting order to Quest");
-                        $ed->dispatch(new QuestLabTransmitEvent($hl7), QuestLabTransmitEvent::EVENT_LAB_TRANSMIT, 10);
-                        $ed->dispatch(new QuestLabTransmitEvent($pid), QuestLabTransmitEvent::EVENT_LAB_POST_ORDER_LOAD, 10);
+                        $ed->dispatch(new QuestLabTransmitEvent($hl7), QuestLabTransmitEvent::EVENT_LAB_TRANSMIT);
+                        $ed->dispatch(new QuestLabTransmitEvent($pid), QuestLabTransmitEvent::EVENT_LAB_POST_ORDER_LOAD);
                     }
 
                     if ($_POST['form_order_psc']) {
@@ -795,11 +809,13 @@ if (!empty($row['lab_id'])) {
 
             let title = <?php echo xlj("Find Procedure Order"); ?>;
             // This replaces the previous search for an easier/faster order picker tool.
-            dlgopen('../../orders/find_order_popup.php' +
-                '?labid=' + encodeURIComponent(f.form_lab_id.value) +
-                '&order=' + encodeURIComponent(f[ptvarname].value) +
-                '&formid=' + <?php echo js_url($formid); ?> +
-                    '&formseq=' + encodeURIComponent(formseq),
+            const params = new URLSearchParams({
+                formid: <?php echo js_escape($formid); ?>,
+                formseq: formseq,
+                labid: f.form_lab_id.value,
+                order: f[ptvarname].value
+            });
+            dlgopen('../../orders/find_order_popup.php?' + params,
                 '_blank', 850, 500, '', title);
         }
 
@@ -1170,8 +1186,12 @@ if (!empty($row['lab_id'])) {
             let codetitle = 'form_proc_type_desc[' + id + ']';
             let code = f[codeattr].value;
             let url = top.webroot_url + "/interface/procedure_tools/libs/labs_ajax.php";
-            url += "?action=code_detail)&code=" + encodeURIComponent(code) +
-                "&csrf_token_form=" + <?php echo js_url(CsrfUtils::collectCsrfToken()); ?>;
+            const params = new URLSearchParams({
+                action: 'code_detail)',
+                code: code,
+                csrf_token_form: <?php echo js_escape(CsrfUtils::collectCsrfToken()); ?>
+            });
+            url += "?" + params;
             let title = <?php echo xlj("Test") ?> +": " + code + " " + f[codetitle].value;
             dlgopen(url, 'details', 'modal-md', 200, '', title, {
                 buttons: [
@@ -1229,10 +1249,18 @@ if (!empty($row['lab_id'])) {
             let pid = <?php echo js_escape($patient['pid']);  ?>;
             let url = top.webroot_url + "/interface/procedure_tools/libs/labs_ajax.php";
             // this escapes above
-            let uri = "?action=print_labels&count=" + encodeURIComponent(count) + "&order=" + encodeURIComponent(order) + "&pid=" + encodeURIComponent(pid) +
-                "&acctid=" + encodeURIComponent(acctid) + "&patient=" + encodeURIComponent(patient) + "&specimen=" + encodeURIComponent(tarray) +
-                "&dob=" + encodeURIComponent(dob) +
-                "&csrf_token_form=" + <?php echo js_url(CsrfUtils::collectCsrfToken()); ?>;
+            const params = new URLSearchParams({
+                acctid: acctid,
+                action: 'print_labels',
+                count: count,
+                csrf_token_form: <?php echo js_escape(CsrfUtils::collectCsrfToken()); ?>,
+                dob: dob,
+                order: order,
+                patient: patient,
+                pid: pid,
+                specimen: tarray
+            });
+            const uri = "?" + params;
 
             // retrieve the labels
             dlgopen(url + uri, 'pdf', 'modal-md', 750, '');

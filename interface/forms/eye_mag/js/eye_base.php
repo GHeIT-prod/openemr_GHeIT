@@ -267,10 +267,14 @@ function check_lock(modify) {
 function submit_canvas(zone) {
     var id_here = document.getElementById('myCanvas_'+zone);
     var dataURL = id_here.toDataURL('image/jpeg','1');
+    const params = new URLSearchParams({
+        id: $("#form_id").val(),
+        canvas: zone
+    });
     top.restoreSession();
     $.ajax({
            type: "POST",
-           url: "../../forms/eye_mag/save.php?canvas="+zone+"&id="+$("#form_id").val(),
+           url: "../../forms/eye_mag/save.php?" + params.toString(),
            data: {
            imgBase64     : dataURL,  //this contains the canvas + new strokes, the sketch.js foreground
            'zone'        : zone,
@@ -924,13 +928,17 @@ function show_PRIORS_section(section,newValue) {
 /**
  *  Function to display a canvas/drawing from a prior visit.
  */
-
 function show_PRIOR_CANVAS_section(section, newValue) {
     var pid    =  $('#pid').val();
     var zone   = section;
-    var result = base+'/controller.php?document&retrieve&patient_id='+pid+'&document_id='+newValue+'&as_file=false';
-    var cp_forward = '<button onclick="replace_CANVAS(\''+zone+'\',\''+result+'\'); return false;" id="Replace_Canvas_ANTSEG" class="ui-button ui-corner-all ui-widget"><?php echo xlt('Use this image'); ?></button>';
-    var filler = "<div class='tools text-info'><?php echo xlt('Previous Encounter Drawings'); ?>: "+cp_forward+"</div><div class='borderShadow'><img src='"+result+"' alt='<?php echo xla("Loading prior image");?>...'></div>";
+    const params = new URLSearchParams({
+        as_file: 'false',
+        document_id: newValue,
+        patient_id: pid,
+    });
+    const result = base + '/controller.php?document&retrieve&' + params.toString();
+    const cp_forward = '<button onclick="replace_CANVAS(\''+zone+'\',\''+result+'\'); return false;" id="Replace_Canvas_ANTSEG" class="ui-button ui-corner-all ui-widget"><?php echo xlt('Use this image'); ?></button>';
+    const filler = "<div class='tools text-info'><?php echo xlt('Previous Encounter Drawings'); ?>: "+cp_forward+"</div><div class='borderShadow'><img src='"+result+"' alt='<?php echo xla("Loading prior image");?>...'></div>";
 
     $("#"+zone+"_canvas").addClass('nodisplay');
     $("#"+zone+"_olddrawing").html(filler);
@@ -1033,11 +1041,13 @@ function editScripts(url) {
     var pid = $('#pid').val();
         var AddScript = function () {
             var iam = top.frames.editScripts;
-            iam.location.href = base + "/controller.php?prescription&edit&id=&pid="+encodeURIComponent(pid)
+            const params = new URLSearchParams({ id: '', pid: pid });
+            iam.location.href = base + "/controller.php?prescription&edit&" + params;
         };
         var ListScripts = function () {
             var iam = top.frames.editScripts;
-            iam.location.href = base + "/controller.php?prescription&list&id="+encodeURIComponent(pid)
+            const params = new URLSearchParams({ id: pid });
+            iam.location.href = base + "/controller.php?prescription&list&" + params;
         };
 
         let title = 'Prescriptions';
@@ -1873,14 +1883,14 @@ function goto_url(url) {
     top.restoreSession();
     location.href = R;
 }
-//is this used anywhere?  Looks like it should be deleted...
-function openImage() {
-    dlgopen(base+'/controller.php?document&retrieve&patient_id=3&document_id=10&as_file=false', '_blank', 600, 475);
-}
 
 // Called to open a document in another tab for this encounter.
 function openDocumentNewTab(doc_id) {
-    var url = '../../interface/patient_file/encounter/view_form.php?formname=' + formdir + '&id=' + formid;
+    const params = new URLSearchParams({
+        id: formid,
+        formname: formdir
+    });
+    const url = '../../interface/patient_file/encounter/view_form.php?' + params.toString();
     if (formdir == 'newpatient' || !parent.twAddFrameTab) {
         top.restoreSession();
         location.href = url;

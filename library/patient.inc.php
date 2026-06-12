@@ -23,7 +23,7 @@ use OpenEMR\Services\SocialHistoryService;
 use OpenEMR\Billing\InsurancePolicyTypes;
 use OpenEMR\Services\InsuranceCompanyService;
 use OpenEMR\Services\EmployerService;
-use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
+use OpenEMR\Common\Session\SessionWrapperFactory;
 
 require_once(__DIR__ . "/dupscore.inc.php");
 
@@ -136,6 +136,7 @@ function getFacility($facid = 0)
 {
     global $facilityService;
 
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
     $facility = null;
 
     if ($facid > 0) {
@@ -144,12 +145,12 @@ function getFacility($facid = 0)
 
     if ($GLOBALS['login_into_facility']) {
         //facility is saved in sessions
-        $facility  = $facilityService->getById($_SESSION['facilityId']);
+        $facility  = $facilityService->getById($session->get('facilityId'));
     } else {
         if ($facid == 0) {
             $facility = $facilityService->getPrimaryBillingLocation();
         } else {
-            $facility = $facilityService->getFacilityForUser($_SESSION['authUserID']);
+            $facility = $facilityService->getFacilityForUser($session->get('authUserID'));
         }
     }
 
@@ -504,6 +505,7 @@ function _set_patient_inc_count($limit, $count, $where, $whereBindArray = []): v
 // it needs to be escaped via whitelisting prior to using this function.
 function getPatientLnames($term = "%", $given = "pid, id, lname, fname, mname, providerID, DATE_FORMAT(DOB,'%m/%d/%Y') as DOB_TS", $orderby = "lname ASC, fname ASC", $limit = "all", $start = "0")
 {
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
     $names = getPatientNameSplit($term);
 
     foreach ($names as $key => $val) {
@@ -551,11 +553,11 @@ function getPatientLnames($term = "%", $given = "pid, id, lname, fname, mname, p
     }
 
     if (!empty($GLOBALS['pt_restrict_field'])) {
-        if ($_SESSION["authUser"] != 'admin' || $GLOBALS['pt_restrict_admin']) {
+        if ($session->get("authUser") != 'admin' || $GLOBALS['pt_restrict_admin']) {
             $where .= " AND ( patient_data." . add_escape_custom($GLOBALS['pt_restrict_field']) .
                 " = ( SELECT facility_id FROM users WHERE username = ?) OR patient_data." .
                 add_escape_custom($GLOBALS['pt_restrict_field']) . " = '' ) ";
-            array_push($sqlBindArray, $_SESSION["authUser"]);
+            array_push($sqlBindArray, $session->get("authUser"));
         }
     }
 
@@ -629,16 +631,16 @@ function getPatientNameSplit($term)
 // it needs to be escaped via whitelisting prior to using this function.
 function getPatientId($pid = "%", $given = "pid, id, lname, fname, mname, providerID, DATE_FORMAT(DOB,'%m/%d/%Y') as DOB_TS", $orderby = "lname ASC, fname ASC", $limit = "all", $start = "0")
 {
-
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
     $sqlBindArray = [];
     $where = "pubpid LIKE ? ";
     array_push($sqlBindArray, $pid . "%");
     if (!empty($GLOBALS['pt_restrict_field']) && $GLOBALS['pt_restrict_by_id']) {
-        if ($_SESSION["authUser"] != 'admin' || $GLOBALS['pt_restrict_admin']) {
+        if ($session->get("authUser") != 'admin' || $GLOBALS['pt_restrict_admin']) {
             $where .= "AND ( patient_data." . add_escape_custom($GLOBALS['pt_restrict_field']) .
                     " = ( SELECT facility_id FROM users WHERE username = ?) OR patient_data." .
                     add_escape_custom($GLOBALS['pt_restrict_field']) . " = '' ) ";
-            array_push($sqlBindArray, $_SESSION["authUser"]);
+            array_push($sqlBindArray, $session->get("authUser"));
         }
     }
 
@@ -900,15 +902,16 @@ function getPatientNameFirstLast($pid)
 // it needs to be escaped via whitelisting prior to using this function.
 function getPatientDOB($DOB = "%", $given = "pid, id, lname, fname, mname", $orderby = "lname ASC, fname ASC", $limit = "all", $start = "0")
 {
+    $session = SessionWrapperFactory::getInstance()->getWrapper();
     $sqlBindArray = [];
     $where = "DOB like ? ";
     array_push($sqlBindArray, $DOB . "%");
     if (!empty($GLOBALS['pt_restrict_field'])) {
-        if ($_SESSION["authUser"] != 'admin' || $GLOBALS['pt_restrict_admin']) {
+        if ($session->get("authUser") != 'admin' || $GLOBALS['pt_restrict_admin']) {
             $where .= "AND ( patient_data." . add_escape_custom($GLOBALS['pt_restrict_field']) .
                     " = ( SELECT facility_id FROM users WHERE username = ?) OR patient_data." .
                     add_escape_custom($GLOBALS['pt_restrict_field']) . " = '' ) ";
-            array_push($sqlBindArray, $_SESSION["authUser"]);
+            array_push($sqlBindArray, $session->get("authUser"));
         }
     }
 
@@ -1303,45 +1306,6 @@ function newInsuranceData(
     if (empty($effective_date_end)) {
         $effective_date_end = null;
     }
-
-    $data = [
-        'pid' => $pid,
-        'type' => $type,
-        'provider' => $provider,
-        'policy_number' => $policy_number,
-        'group_number' => $group_number,
-        'plan_name' => $plan_name,
-        'subscriber_lname' => $subscriber_lname,
-        'subscriber_mname' => $subscriber_mname,
-        'subscriber_fname' => $subscriber_fname,
-        'subscriber_relationship' => $subscriber_relationship,
-        'subscriber_ss' => $subscriber_ss,
-        'subscriber_DOB' => $subscriber_DOB,
-        'subscriber_street' => $subscriber_street,
-        'subscriber_postal_code' => $subscriber_postal_code,
-        'subscriber_city' => $subscriber_city,
-        'subscriber_state' => $subscriber_state,
-        'subscriber_country' => $subscriber_country,
-        'subscriber_phone' => $subscriber_phone,
-        'subscriber_employer' => $subscriber_employer,
-        'subscriber_employer_street' => $subscriber_employer_street,
-        'subscriber_employer_city' => $subscriber_employer_city,
-        'subscriber_employer_postal_code' => $subscriber_employer_postal_code,
-        'subscriber_employer_state' => $subscriber_employer_state,
-        'subscriber_employer_country' => $subscriber_employer_country,
-        'copay' => $copay,
-        'subscriber_sex' => $subscriber_sex,
-        'effective_date' => $effective_date,
-        'accept_assignment' => $accept_assignment,
-        'policy_type' => $policy_type,
-        'effective_date_end' => $effective_date_end
-    ];
-
-    require_once __DIR__ . '/../vendor/autoload.php';
-    require_once __DIR__ . '/../interface/modules/custom_modules/oe-module-custom-gheit/src/Controller/PubSub.php';
-    $pubSubController = new PubSub();
-    $pubSubController->publishPubsub('Coverage', 'coverage_created', 'coverage_data', $data);
-
 
     return sqlInsert(
         "INSERT INTO `insurance_data` SET `type` = ?,

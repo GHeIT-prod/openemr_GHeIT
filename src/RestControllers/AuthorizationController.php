@@ -49,6 +49,7 @@ use OpenEMR\Common\Auth\OpenIDConnect\Repositories\JWTRepository;
 use OpenEMR\Common\Auth\OpenIDConnect\Repositories\RefreshTokenRepository;
 use OpenEMR\Common\Auth\OpenIDConnect\Repositories\ScopeRepository;
 use OpenEMR\Common\Auth\OpenIDConnect\Repositories\UserRepository;
+use OpenEMR\Common\Session\SessionUtil;
 use OpenEMR\RestControllers\SMART\ScopePermissionParser;
 use OpenEMR\Services\JWTClientAuthenticationService;
 use OpenEMR\Common\Auth\OpenIDConnect\SMARTSessionTokenContextBuilder;
@@ -1011,11 +1012,9 @@ class AuthorizationController
 
     public function getUuidUserAccount($userId): UuidUserAccount
     {
-        if (is_callable($this->uuidUserFactory)) {
-            return call_user_func($this->uuidUserFactory, [$userId]);
-        } else {
-            return new UuidUserAccount($userId);
-        }
+        return is_callable($this->uuidUserFactory)
+            ? ($this->uuidUserFactory)($userId)
+            : new UuidUserAccount($userId);
     }
 
 // ============================================================================
@@ -1223,14 +1222,17 @@ class AuthorizationController
                     CsrfUtils::csrfNotVerified(false, true, false);
                     throw OAuthServerException::serverError("Failed authorization due to failed CSRF check.");
                 } else {
-                    $this->saveTrustedUser(
+                    if (!$this->saveTrustedUser(
                         $this->session->get('client_id'),
                         $this->session->get('user_id'),
                         $this->session->get('scopes'),
                         $this->session->get('persist_login'),
                         $code,
                         $session_cache
-                    );
+                    )) {
+                        $this->getSystemLogger()->errorLogCaller("AuthorizationController->authorizeUser() failed to save trusted user session");
+                        throw OAuthServerException::serverError("Failed authorization due to internal server error.");
+                    }
                 }
             } else {
                 if (empty($this->session->get('csrf'))) {
@@ -1445,10 +1447,17 @@ class AuthorizationController
 
     public function saveTrustedUser($clientId, $userId, $scope, $persist, $code = '', $session = '', $grant = 'authorization_code'): bool
     {
-        if ($this->trustedUserService->saveTrustedUser($clientId, $userId, $scope, $persist, $code, $session, $grant) !== false) {
+        try {
+            $id = $this->trustedUserService->saveTrustedUser($clientId, $userId, $scope, $persist, $code, $session, $grant);
+            if (empty($id)) {
+                $this->getSystemLogger()->errorLogCaller("AuthorizationController->saveTrustedUser() failed to save trusted user");
+                return false;
+            }
             return true;
+        } catch (Exception $e) {
+            $this->getSystemLogger()->errorLogCaller("AuthorizationController->saveTrustedUser() Exception occurred while saving trusted user", ['message' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            return false;
         }
-        return false;
     }
 
     public function decodeToken($token)
@@ -1817,34 +1826,65 @@ class AuthorizationController
 
     private function getLoggedInCoreUserUuid(HttpRestRequest $request)
     {
-        $this->session->save(); // save the session so we can switch to the core session
+        // Get the OAuth session ID before we do anything
+        $oauthSessionId = $request->cookies->get(SessionUtil::OAUTH_SESSION_ID, '');
+        $coreSessionId = $request->cookies->get(SessionUtil::CORE_SESSION_ID, '');
+        // can't do much without a core session id
+        if (empty($coreSessionId)) {
+            return null;
+        }
+        // Close the current session completely so we can switch to core session - this writes and releases the lock
+        if ($this->session->isStarted()) {
+            $this->session->save();
+            // Force close the native PHP session, shouldn't get here, but just in case
+            if (session_status() === PHP_SESSION_ACTIVE) {
+                session_write_close();
+            }
+        }
+
+        // we have to change the session id to the core session as creating a new session instance will reuse the existing session id
+        // which doesn't have the core session data.
+        $this->session->setId($coreSessionId);
         // TODO: do we need to have a setter here so we can unit test this functionality for the session factory?
         $sessionFactory = new HttpSessionFactory($request, $this->webroot, HttpSessionFactory::SESSION_TYPE_CORE, true);
         $coreSession = $sessionFactory->createSession();
+        $userId = $coreSession->get('authUserID');
+        // Close the core session before switching back
+        $coreSession->save();
 
         // if we can deserialize let's now check to see if the user is logged in
         // note this switching of sessions can slow things down a bit depending on how the php session storage is setup.
         // for now we only handle in-ehr launch for providers not patients.  We can add this later if needed.
-        if (empty($coreSession->get('authUserID'))) {
+        if (empty($userId)) {
             $this->getSystemLogger()->debug("AuthorizationController->processAuthorizeFlowForLaunch() no user logged in, redirecting to login page");
-            // switch back so we don't destroy the original session
-            $coreSession->save(); // there is no close method, since we're in readonly mode we can safely save and close
+            $this->restoreOAuthSession($request, $oauthSessionId);
             $this->session->invalidate(); // restart the oauth2 session
-            return null; // no uuid so we will go through login steps
+            return null;
         }
-        $userId = $coreSession->get('authUserID');
+
         $userService = new UserService();
         $user = $userService->getUser($userId);
         if (empty($user)) {
-            // switch back so we don't destroy the original session
             $this->getSystemLogger()->debug("AuthorizationController->processAuthorizeFlowForLaunch() no user found for logged in authUserID, redirecting to login page");
-            $coreSession->save(); // there is no close method, since we're in readonly mode we can safely save and close
+            $this->restoreOAuthSession($request, $oauthSessionId);
             $this->session->invalidate(); // restart the oauth2 session
-            return null; // no uuid so we will go through login steps
+            return null;
         }
-        $userUuid = $user['uuid'];
-        $this->session->start();
-        return $userUuid;
+        $this->restoreOAuthSession($request, $oauthSessionId);
+        return $user['uuid'];
+    }
+
+    private function restoreOAuthSession(HttpRestRequest $request, string $oauthSessionId): void
+    {
+        // Ensure any active session is closed
+        if ($this->session->isStarted()) {
+            $this->session->save();
+        }
+
+        // Set the OAuth session ID and restart
+        $this->session->setId($oauthSessionId);
+        $sessionFactory = new HttpSessionFactory($request, $this->webroot, HttpSessionFactory::SESSION_TYPE_OAUTH);
+        $this->session = $sessionFactory->createSession(); // create and start a new session
     }
 
     protected function getUserRepository(): UserRepository

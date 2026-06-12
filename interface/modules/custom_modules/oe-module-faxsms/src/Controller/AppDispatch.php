@@ -13,11 +13,14 @@
 namespace OpenEMR\Modules\FaxSMS\Controller;
 
 use MyMailer;
+use OpenEMR\Common\Acl\AccessDeniedHelper;
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Crypto\CryptoGen;
 use OpenEMR\Common\Session\SessionUtil;
 use OpenEMR\Common\Utils\ValidationUtils;
 use OpenEMR\Modules\FaxSMS\BootstrapService;
+use OpenEMR\Modules\FaxSMS\Enums\ServiceType;
+use OpenEMR\Services\PhoneNumberService;
 
 /**
  * Class AppDispatch
@@ -40,7 +43,7 @@ abstract class AppDispatch
     /**
      * @throws \Exception
      */
-    public function __construct($type = null)
+    public function __construct()
     {
         $this->_request = &$_REQUEST;
         $this->_query = &$_GET;
@@ -54,6 +57,9 @@ abstract class AppDispatch
             self::$_apiModule = $_REQUEST['type'] ?? $_SESSION["oefax_current_module_type"] ?? null;
         }
         $this->crypto = new CryptoGen();
+        if (!$this->verifyAcl()) {
+            AccessDeniedHelper::deny('FaxSMS module access denied');
+        }
         $this->dispatchActions();
         $this->render();
     }
@@ -81,16 +87,19 @@ abstract class AppDispatch
             // route it if direct call
             if (method_exists($this, $action)) {
                 $this->setResponse(
-                    call_user_func([$this, $action], [])
+                    $this->$action()
                 );
             } else {
                 $this->setHeader("HTTP/1.0 404 Not Found");
-                die(xlt("Requested") . ' ' . text($action) . ' ' . xlt("or service is not found.") . '<br />' . xlt("Install or turn service on!"));
+                throw new \RuntimeException(
+                    xlt("Requested") . ' ' . text($action) . ' '
+                    . xlt("or service is not found.") . ' ' . xlt("Install or turn service on!")
+                );
             }
         } else {
             // Not an internal route so pass on to current service index action.
             $this->setResponse(
-                call_user_func([$this, self::ACTION_DEFAULT], [])
+                $this->{self::ACTION_DEFAULT}()
             );
         }
     }
@@ -202,7 +211,7 @@ abstract class AppDispatch
      * This is where we decide which Api to use.
      *
      * @param string $type
-     * @return EtherFaxActions|TwilioSMSClient|RCFaxClient|ClickatellSMSClient|EmailClient|void|null
+     * @return EtherFaxActions|TwilioSMSClient|RCFaxClient|ClickatellSMSClient|EmailClient|SignalWireClient|void|null
      */
     static function getApiService(string $type)
     {
@@ -225,7 +234,7 @@ abstract class AppDispatch
      * @param string $type
      * @return void
      */
-    static function setApiService($type): void
+    static function setApiService(string $type): void
     {
         try {
             if (empty($type)) {
@@ -252,46 +261,35 @@ abstract class AppDispatch
     static function getServiceInstance($type)
     {
         $s = self::getServiceType();
-        if ($type == 'sms') {
-            switch ($s) {
-                case 0:
-                    break;
-                case 1:
-                    return new RCFaxClient();
-                    break;
-                case 2:
-                    return new TwilioSMSClient();
-                case 5:
-                    return new ClickatellSMSClient();
-            }
-        } elseif ($type == 'fax') {
-            switch ($s) {
-                case 0:
-                    break;
-                case 1:
-                    return new RCFaxClient();
-                    break;
-                case 3:
-                    return new EtherFaxActions();
-            }
-        } elseif ($type == 'email') {
-            switch ($s) {
-                case 0:
-                    break;
-                case 4:
-                    return new EmailClient();
-            }
-        } elseif ($type == 'voice') {
-            switch ($s) {
-                case 0:
-                    break;
-                case 6:
-                    return new VoiceClient();
-            }
+
+        $factoryMap = [
+            'sms' => [
+                ServiceType::RINGCENTRAL->value => fn(): RCFaxClient => new RCFaxClient(),
+                ServiceType::TWILIO_SMS->value => fn(): TwilioSMSClient => new TwilioSMSClient(),
+                ServiceType::CLICKATELL_SMS->value => fn(): ClickatellSMSClient => new ClickatellSMSClient(),
+            ],
+            'fax' => [
+                ServiceType::RINGCENTRAL->value => fn(): RCFaxClient => new RCFaxClient(),
+                ServiceType::ETHERFAX->value => fn(): EtherFaxActions => new EtherFaxActions(),
+                ServiceType::SIGNALWIRE->value => fn(): SignalWireClient => new SignalWireClient(),
+            ],
+            'email' => [
+                ServiceType::EMAIL->value => fn(): EmailClient => new EmailClient(),
+            ],
+            'voice' => [
+                ServiceType::VOICE->value => fn(): VoiceClient => new VoiceClient(),
+            ],
+        ];
+
+        $factory = $factoryMap[$type][$s] ?? null;
+        if (is_callable($factory)) {
+            return $factory();
         }
 
-        http_response_code(404);
-        die(xlt("Requested") . ' ' . text($type) . ' ' . xlt("service is not found.") . '<br />' . xlt("Install or turn service on!"));
+        throw new \RuntimeException(
+            xlt("Requested") . ' ' . text($type) . ' '
+            . xlt("service is not found.") . ' ' . xlt("Install or turn service on!")
+        );
     }
 
     /**
@@ -318,8 +316,10 @@ abstract class AppDispatch
             return $GLOBALS['oe_enable_voice'] ?? null;
         }
 
-        http_response_code(404);
-        die(xlt("Requested") . ' ' . text(self::$_apiModule) . ' ' . xlt("service is not found.") . '<br />' . xlt("Install or turn service on!") . '<br />');
+        throw new \RuntimeException(
+            xlt("Requested") . ' ' . text(self::$_apiModule) . ' '
+            . xlt("service is not found.") . ' ' . xlt("Install or turn service on!")
+        );
     }
 
     /**
@@ -396,6 +396,13 @@ abstract class AppDispatch
             $smsMessage = $this->getRequest('smsmessage');
             $smsHours = $this->getRequest('smshours');
             $jwt = $this->getRequest('jwt');
+            // SignalWire specific fields
+            $spaceUrl = $this->getRequest('space_url');
+            $projectId = $this->getRequest('project_id');
+            $apiToken = $this->getRequest('api_token');
+            $faxNumberRaw = $this->getRequest('fax_number');
+            $faxNumber = !empty($faxNumberRaw) ? $this->formatPhoneForSave($faxNumberRaw) : '';
+
             $setup = [
                 'username' => "$username",
                 'extension' => "$ext",
@@ -412,6 +419,11 @@ abstract class AppDispatch
                 'smsHours' => $smsHours,
                 'smsMessage' => $smsMessage,
                 'jwt' => $jwt ?? '',
+                // SignalWire credentials
+                'space_url' => $spaceUrl ?? '',
+                'project_id' => $projectId ?? '',
+                'api_token' => $apiToken ?? '',
+                'fax_number' => $faxNumber,
             ];
         }
 
@@ -459,15 +471,8 @@ abstract class AppDispatch
      */
     static function getModuleVendor(): ?string
     {
-        return match ((string)self::getServiceType()) {
-            '1' => '_ringcentral',
-            '2' => '_twilio',
-            '3' => '_etherfax',
-            '4' => '_email',
-            '5' => '_clickatell',
-            '6' => '_voice',
-            default => null,
-        };
+        $service = ServiceType::fromValue(self::getServiceType());
+        return $service->getVendorKey() ?: null;
     }
 
     public function getEmailSetup(): mixed
@@ -565,7 +570,13 @@ abstract class AppDispatch
                 'smsHours' => "50",
                 'smsMessage' => "A courtesy reminder for ***NAME*** \r\nFor the appointment scheduled on: ***DATE*** At: ***STARTTIME*** Until: ***ENDTIME*** \r\nWith: ***PROVIDER*** Of: ***ORG***\r\nPlease call if unable to attend.",
                 'jwt' => '',
+                // SignalWire fields
+                'space_url' => '',
+                'project_id' => '',
+                'api_token' => '',
+                'fax_number' => ''
             ];
+            return $credentials;
         } else {
             $credentials = $credentials['credentials'];
         }
@@ -612,6 +623,7 @@ abstract class AppDispatch
      */
     public function mailEmail($email, $from_name, $body, $subject = '', $htmlContent = ''): string
     {
+        $status = 'Error: ' . xlt('Unknown error occurred');
         try {
             $mail = new MyMailer();
             $smtpEnabled = $mail::isConfigured();
@@ -634,7 +646,9 @@ abstract class AppDispatch
                 $mail->MsgHTML(text($htmlContent));
                 $mail->IsHTML(true);
             }
-            $status = $mail->Send() ? xlt("Email successfully sent.") : xlt("Error: Email failed") . text($mail->ErrorInfo);
+            if ($mail->Send()) {
+                $status = $mail->Send() ? xlt("Email successfully sent.") : xlt("Error: Email failed") . text($mail->ErrorInfo);
+            }
         } catch (\Exception $e) {
             $message = $e->getMessage();
             $status = 'Error: ' . $message;
