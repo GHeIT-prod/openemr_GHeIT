@@ -50,6 +50,9 @@ require_once($GLOBALS['srcdir'] . '/encounter_events.inc.php');
 require_once($GLOBALS['srcdir'] . '/patient_tracker.inc.php');
 require_once($GLOBALS['incdir'] . "/main/holidays/Holidays_Controller.php");
 require_once($GLOBALS['srcdir'] . '/group.inc.php');
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirReferenceDetector.php';
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirBundleBuilder.php';
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirResourceResolver.php';
 
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Twig\TwigContainer;
@@ -737,13 +740,44 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
         $uuid = sqlQuery("SELECT uuid FROM openemr_postcalendar_events WHERE pc_eid = ?", [$eid]);
         $appointmentUuid = UuidRegistry::uuidToString($uuid['uuid']);
 
+        // $service = new FhirAppointmentService();
+        // $result = $service->getOne($appointmentUuid);
+        // $appointment = $result->getData()[0];
+        // $fhirArray = $appointment->jsonSerialize();
+
+        // $pubSubController = new PubSub();
+        // $pubSubController->publishPubsub('Appointment', 'appointment_updated', 'appointment_data', $fhirArray);
+
         $service = new FhirAppointmentService();
         $result = $service->getOne($appointmentUuid);
-        $appointment = $result->getData()[0];
-        $fhirArray = $appointment->jsonSerialize();
+
+        $appointment = $result->getData()[0]->jsonSerialize();
+        $appointment = json_decode(json_encode($appointment), true);
+
+        $hasReference = FhirReferenceDetector::hasReference($appointment);
+
+        if ($hasReference) {
+            $resolved = FhirResourceResolver::resolveResourceContext($appointment);
+
+            $payload = FhirBundleBuilder::buildTransactionBundle(
+                $resolved['patient'],
+                $resolved['resource'],
+                $resolved['locations'] ?? [],
+                $resolved['organizations'] ?? [],
+                $resolved['practitioners'] ?? []
+            );
+
+        } else {
+            $payload = $appointment;
+        }
 
         $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('Appointment', 'appointment_updated', 'appointment_data', $fhirArray);
+        $pubSubController->publishPubsub(
+            'Appointment',
+            'appointment_updated',
+            'appointment_data',
+            $payload
+        );
 
         // EVENTS TO FACILITIES
         $e2f = (int)$eid;
@@ -776,13 +810,45 @@ if (!empty($_POST['form_action']) && ($_POST['form_action'] == "save")) {
         $uuid = sqlQuery("SELECT uuid FROM openemr_postcalendar_events WHERE pc_eid = ?", [$eid]);
         $appointmentUuid = UuidRegistry::uuidToString($uuid['uuid']);
 
+        // $service = new FhirAppointmentService();
+        // $result = $service->getOne($appointmentUuid);
+        // $appointment = $result->getData()[0];
+        // $fhirArray = $appointment->jsonSerialize();
+
+        // $pubSubController = new PubSub();
+        // $pubSubController->publishPubsub('Appointment', 'appointment_created', 'appointment_data', $fhirArray);
+
+
         $service = new FhirAppointmentService();
         $result = $service->getOne($appointmentUuid);
-        $appointment = $result->getData()[0];
-        $fhirArray = $appointment->jsonSerialize();
+
+        $appointment = $result->getData()[0]->jsonSerialize();
+        $appointment = json_decode(json_encode($appointment), true);
+
+        $hasReference = FhirReferenceDetector::hasReference($appointment);
+
+        if ($hasReference) {
+            $resolved = FhirResourceResolver::resolveResourceContext($appointment);
+
+            $payload = FhirBundleBuilder::buildTransactionBundle(
+                $resolved['patient'],
+                $resolved['resource'],
+                $resolved['locations'] ?? [],
+                $resolved['organizations'] ?? [],
+                $resolved['practitioners'] ?? []
+            );
+
+        } else {
+            $payload = $appointment;
+        }
 
         $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('Appointment', 'appointment_created', 'appointment_data', $fhirArray);
+        $pubSubController->publishPubsub(
+            'Appointment',
+            'appointment_created',
+            'appointment_data',
+            $payload
+        );
 
         //Tell subscribers that a new single appointment has been set
         $patientAppointmentSetEvent = new AppointmentSetEvent($_POST);

@@ -19,6 +19,10 @@
 
 namespace OpenEMR\Services;
 
+require_once dirname(__DIR__, 2) . '/library/fhir/FhirReferenceDetector.php';
+require_once dirname(__DIR__, 2) . '/library/fhir/FhirBundleBuilder.php';
+require_once dirname(__DIR__, 2) . '/library/fhir/FhirResourceResolver.php';
+
 use OpenEMR\Common\Logging\SystemLoggerAwareTrait;
 use OpenEMR\Services\Search\TokenSearchField;
 use RuntimeException;
@@ -34,6 +38,9 @@ use Google\Cloud\PubSub\PubSubClient;
 use Ramsey\Uuid\Uuid;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 use OpenEMR\Services\FHIR\FhirObservationService;
+use FhirReferenceDetector;
+use FhirResourceResolver;
+use FhirBundleBuilder;
 
 class ObservationService extends BaseService
 {
@@ -591,13 +598,45 @@ class ObservationService extends BaseService
             $uuid = sqlQuery("SELECT uuid FROM form_observation WHERE id = ?", [$observationData['id']]);
             $observationUUID = UuidRegistry::uuidToString($uuid['uuid']);
 
+            // $service = new FhirObservationService();
+            // $observationResult = $service->getOne($observationUUID);
+            // $observationResource = $observationResult->getData()[0];
+            // $fhirArray = $observationResource->jsonSerialize();
+
+            // $pubSubController = new PubSub();
+            // $pubSubController->publishPubsub('Observation', 'observation_created', 'observation_data', $fhirArray);
+
             $service = new FhirObservationService();
-            $observationResult = $service->getOne($observationUUID);
-            $observationResource = $observationResult->getData()[0];
-            $fhirArray = $observationResource->jsonSerialize();
+            $result = $service->getOne($observationUUID);
+
+            $observationResource = $result->getData()[0]->jsonSerialize();
+            $observationResource = json_decode(json_encode($observationResource), true);
+
+            $hasReference = FhirReferenceDetector::hasReference($observationResource);
+
+            if ($hasReference) {
+                $resolved = FhirResourceResolver::resolveResourceContext($observationResource);
+
+                $payload = FhirBundleBuilder::buildTransactionBundle(
+                    $resolved['patient'],
+                    $resolved['resource'],
+                    $resolved['locations'] ?? [],
+                    $resolved['organizations'] ?? [],
+                    $resolved['practitioners'] ?? [],
+                    $resolved['encounters'] ?? []
+                );
+
+            } else {
+                $payload = $observationResource;
+            }
 
             $pubSubController = new PubSub();
-            $pubSubController->publishPubsub('Observation', 'observation_created', 'observation_data', $fhirArray);
+            $pubSubController->publishPubsub(
+                'Observation',
+                'observation_created',
+                'observation_data',
+                $payload
+            );
 
 
         }

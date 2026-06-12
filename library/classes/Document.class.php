@@ -19,6 +19,9 @@
 
 require_once(__DIR__ . "/../pnotes.inc.php");
 require_once(__DIR__ . "/../gprelations.inc.php");
+require_once dirname(__DIR__) . '/fhir/FhirReferenceDetector.php';
+require_once dirname(__DIR__) . '/fhir/FhirBundleBuilder.php';
+require_once dirname(__DIR__) . '/fhir/FhirResourceResolver.php';
 
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Crypto\CryptoGen;
@@ -1099,13 +1102,45 @@ class Document extends ORDataObject
         //publish the document reference to the pubsub system
         $documentUuid = UuidRegistry::uuidToString($docUUID);
 
+        // $service = new FhirDocumentReferenceService();
+        // $result = $service->getOne($documentUuid);
+        // $documentRef = $result->getData()[0];
+        // $fhirArray = $documentRef->jsonSerialize();
+
+        // $pubSubController = new PubSub();
+        // $pubSubController->publishPubsub('DocumentReference', 'document_uploaded', 'document_data', $fhirArray);
+
         $service = new FhirDocumentReferenceService();
         $result = $service->getOne($documentUuid);
-        $documentRef = $result->getData()[0];
-        $fhirArray = $documentRef->jsonSerialize();
+
+        $documentRef = $result->getData()[0]->jsonSerialize();
+        $documentRef = json_decode(json_encode($documentRef), true);
+
+        $hasReference = FhirReferenceDetector::hasReference($documentRef);
+
+        if ($hasReference) {
+            $resolved = FhirResourceResolver::resolveResourceContext($documentRef);
+
+            $payload = FhirBundleBuilder::buildTransactionBundle(
+                $resolved['patient'],
+                $resolved['resource'],
+                $resolved['locations'] ?? [],
+                $resolved['organizations'] ?? [],
+                $resolved['practitioners'] ?? [],
+                $resolved['encounters'] ?? []
+            );
+
+        } else {
+            $payload = $documentRef;
+        }
 
         $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('DocumentReference', 'document_uploaded', 'document_data', $fhirArray);
+        $pubSubController->publishPubsub(
+            'DocumentReference',
+            'document_uploaded',
+            'document_data',
+            $payload
+        );
 
         return '';
     }

@@ -42,3 +42,5 @@ tmp-phpstan/*
 public/images/logos/custom/*
 
 openemr-keys/pubsub.json
+
+pubsub/pubsub-debug.log

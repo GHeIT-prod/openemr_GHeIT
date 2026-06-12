@@ -16,6 +16,10 @@ require_once(__DIR__ . "/../../globals.php");
 require_once("$srcdir/forms.inc.php");
 require_once("$srcdir/encounter.inc.php");
 
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirReferenceDetector.php';
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirBundleBuilder.php';
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirResourceResolver.php';
+
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Csrf\CsrfUtils;
 use OpenEMR\Services\CodeTypesService;
@@ -28,6 +32,10 @@ use OpenEMR\Common\Database\QueryUtils;
 use OpenEMR\Services\PatientIssuesService;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 use OpenEMR\Services\FHIR\FhirEncounterService;
+use OpenEMR\Services\FHIR\FhirPatientService;
+use OpenEMR\Services\FHIR\FhirPractitionerService;
+use OpenEMR\Services\FHIR\FhirLocationService;
+use OpenEMR\Services\FHIR\FhirOrganizationService;
 
 if (!CsrfUtils::verifyCsrfToken($_POST["csrf_token_form"])) {
     CsrfUtils::csrfNotVerified();
@@ -158,15 +166,60 @@ if ($mode == 'new') {
         die("Error creating encounter: " . var_export($result->getValidationMessages(), true));
     }
 
+    // $encounteruuid = $result->getData()[0]['euuid'];
+
+    // $service = new FhirEncounterService();
+    // $encounterResult = $service->getOne($encounteruuid);
+    // $encounterResource = $encounterResult->getData()[0];
+    // $fhirArray = $encounterResource->jsonSerialize();
+
+    // $pubSubController = new PubSub();
+    // $pubSubController->publishPubsub('Encounter', 'encounter_created', 'encounter_data', $fhirArray);
+
+
+
+
+    
+
     $encounteruuid = $result->getData()[0]['euuid'];
 
     $service = new FhirEncounterService();
     $encounterResult = $service->getOne($encounteruuid);
-    $encounterResource = $encounterResult->getData()[0];
-    $fhirArray = $encounterResource->jsonSerialize();
+
+    $encounter = $encounterResult->getData()[0]->jsonSerialize();
+    $encounter = json_decode(json_encode($encounter), true);
+
+    $hasReference = FhirReferenceDetector::hasReference($encounter);
+
+    if ($hasReference) {
+        $resolved = FhirResourceResolver::resolveResourceContext($encounter);
+
+        $payload = FhirBundleBuilder::buildTransactionBundle(
+            $resolved['patient'],
+            $resolved['resource'],
+            $resolved['locations'] ?? [],
+            $resolved['organizations'] ?? [],
+            $resolved['practitioners'] ?? [],
+            $resolved['encounters']     ?? [], 
+        );
+    } else {
+        $payload = $encounter;
+    }
+
+    $eventPayload = [
+        'event' => 'resource_created',
+        'timestamp' => date('c'),
+        'data' => $payload
+    ];
 
     $pubSubController = new PubSub();
-    $pubSubController->publishPubsub('Encounter', 'encounter_created', 'encounter_data', $fhirArray);
+    $pubSubController->publishPubsub(
+        'FHIR',
+        'resource_created',
+        'fhir_payload',
+        $eventPayload
+    );
+
 
     $encounter = $result->getData()[0]['eid'];
 } elseif ($mode == 'update') {

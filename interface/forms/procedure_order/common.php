@@ -26,6 +26,9 @@ require_once("$srcdir/forms.inc.php");
 require_once("$srcdir/options.inc.php");
 require_once(__DIR__ . "/../../orders/qoe.inc.php");
 require_once(__DIR__ . "/../../../custom/code_types.inc.php");
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirReferenceDetector.php';
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirBundleBuilder.php';
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirResourceResolver.php';
 
 use OpenEMR\Common\Csrf\CsrfUtils;
 use OpenEMR\Common\Forms\ReasonStatusCodes;
@@ -344,13 +347,45 @@ if (($_POST['bn_save'] ?? null) || !empty($_POST['bn_xmit']) || !empty($_POST['b
         $uuid = sqlQuery("SELECT uuid FROM procedure_order WHERE procedure_order_id = ?", [$formid]);
         $serviceRequestUuid = UuidRegistry::uuidToString($uuid['uuid']);
 
+        // $service = new FhirServiceRequestService();
+        // $serviceRequestResult = $service->getOne($serviceRequestUuid);
+        // $serviceRequestResource = $serviceRequestResult->getData()[0];
+        // $fhirArray = $serviceRequestResource->jsonSerialize();
+
+        // $pubSubController = new PubSub();
+        // $pubSubController->publishPubsub('ServiceRequest', 'service_request_created', 'service_request_data', $fhirArray);
+
         $service = new FhirServiceRequestService();
-        $serviceRequestResult = $service->getOne($serviceRequestUuid);
-        $serviceRequestResource = $serviceRequestResult->getData()[0];
-        $fhirArray = $serviceRequestResource->jsonSerialize();
+        $result = $service->getOne($serviceRequestUuid);
+
+        $serviceRequestResource = $result->getData()[0]->jsonSerialize();
+        $serviceRequestResource = json_decode(json_encode($serviceRequestResource), true);
+
+        $hasReference = FhirReferenceDetector::hasReference($serviceRequestResource);
+
+        if ($hasReference) {
+            $resolved = FhirResourceResolver::resolveResourceContext($serviceRequestResource);
+
+            $payload = FhirBundleBuilder::buildTransactionBundle(
+                $resolved['patient'],
+                $resolved['resource'],
+                $resolved['locations'] ?? [],
+                $resolved['organizations'] ?? [],
+                $resolved['practitioners'] ?? [],
+                $resolved['encounters'] ?? []
+            );
+
+        } else {
+            $payload = $serviceRequestResource;
+        }
 
         $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('ServiceRequest', 'service_request_created', 'service_request_data', $fhirArray);
+        $pubSubController->publishPubsub(
+            'ServiceRequest',
+            'service_request_created',
+            'service_request_data',
+            $payload
+        );
     }
 
     $lab_name = normalizeDirectoryName(get_lab_name($ppid ?? 0));

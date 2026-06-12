@@ -18,6 +18,10 @@
 
 namespace OpenEMR\Services;
 
+require_once dirname(__DIR__, 2) . '/library/fhir/FhirReferenceDetector.php';
+require_once dirname(__DIR__, 2) . '/library/fhir/FhirBundleBuilder.php';
+require_once dirname(__DIR__, 2) . '/library/fhir/FhirResourceResolver.php';
+
 use OpenEMR\Common\Database\QueryUtils;
 use OpenEMR\Common\Logging\SystemLogger;
 use OpenEMR\Common\Uuid\UuidRegistry;
@@ -36,6 +40,9 @@ use OpenEMR\Validators\{
 };
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 use OpenEMR\Services\FHIR\FhirCoverageService;
+use FhirReferenceDetector;
+use FhirResourceResolver;
+use FhirBundleBuilder;
 
 class InsuranceService extends BaseService
 {
@@ -309,13 +316,44 @@ class InsuranceService extends BaseService
 
         $coverageUuid = UuidRegistry::uuidToString($uuid);
 
+        // $service = new FhirCoverageService();
+        // $result = $service->getOne($coverageUuid);
+        // $coverage = $result->getData()[0];
+        // $fhirArray = $coverage->jsonSerialize();
+
+        // $pubSubController = new PubSub();
+        // $pubSubController->publishPubsub('Coverage', 'coverage_created', 'coverage_data', $fhirArray);
+
         $service = new FhirCoverageService();
         $result = $service->getOne($coverageUuid);
-        $coverage = $result->getData()[0];
-        $fhirArray = $coverage->jsonSerialize();
+
+        $coverage = $result->getData()[0]->jsonSerialize();
+        $coverage = json_decode(json_encode($coverage), true);
+
+        $hasReference = FhirReferenceDetector::hasReference($coverage);
+
+        if ($hasReference) {
+            $resolved = FhirResourceResolver::resolveResourceContext($coverage);
+
+            $payload = FhirBundleBuilder::buildTransactionBundle(
+                $resolved['patient'],
+                $resolved['resource'],
+                $resolved['locations'] ?? [],
+                $resolved['organizations'] ?? [],
+                $resolved['practitioners'] ?? []
+            );
+
+        } else {
+            $payload = $coverage;
+        }
 
         $pubSubController = new PubSub();
-        $pubSubController->publishPubsub('Coverage', 'coverage_created', 'coverage_data', $fhirArray);
+        $pubSubController->publishPubsub(
+            'Coverage',
+            'coverage_updated',
+            'coverage_data',
+            $payload
+        );
 
         if ($results) {
             $serviceSavePostEvent = new ServiceSaveEvent($this, $data);
@@ -410,6 +448,39 @@ class InsuranceService extends BaseService
         // I prefer exceptions... but we will try to match other service handler formats for consistency
         $processingResult = new ProcessingResult();
         $stringUuid = UuidRegistry::uuidToString($data['uuid']);
+
+
+        $service = new FhirCoverageService();
+        $result = $service->getOne($stringUuid);
+
+        $coverage = $result->getData()[0]->jsonSerialize();
+        $coverage = json_decode(json_encode($coverage), true);
+
+        $hasReference = FhirReferenceDetector::hasReference($coverage);
+
+        if ($hasReference) {
+            $resolved = FhirResourceResolver::resolveResourceContext($coverage);
+
+            $payload = FhirBundleBuilder::buildTransactionBundle(
+                $resolved['patient'],
+                $resolved['resource'],
+                $resolved['locations'] ?? [],
+                $resolved['organizations'] ?? [],
+                $resolved['practitioners'] ?? []
+            );
+
+        } else {
+            $payload = $coverage;
+        }
+
+        $pubSubController = new PubSub();
+        $pubSubController->publishPubsub(
+            'Coverage',
+            'coverage_created',
+            'coverage_data',
+            $payload
+        );
+
         if ($insuranceDataId) {
             $data['id'] = $insuranceDataId;
             $processingResult->addData([
