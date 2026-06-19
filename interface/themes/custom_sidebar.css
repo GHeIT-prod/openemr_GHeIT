@@ -251,7 +251,7 @@ nav.navbar .menuSection > .menuLabel.dropdown-toggle:hover {
 nav.navbar .menuSection > .menuLabel.dropdown-toggle::after {
   content: '\25B8' !important;
   border: none !important;
-  font-size: 0.72rem;
+  font-size: 1.25rem;
   margin-left: auto;
   padding-left: 8px;
   transition: transform 0.2s ease;
@@ -487,14 +487,6 @@ body.sidebar-collapsed #framesDisplay {
   #oe-sidebar-toggle { display: none; }
 }
 
-
-
-
-
-
-
-
-
 /* ══════════════════════════════════════════
    SECONDARY BREADCRUMB NAV IN TOPBAR
 ══════════════════════════════════════════ */
@@ -596,13 +588,6 @@ nav.navbar .oe-level2-active {
   border-radius: 2px;
 }
 
-
-
-
-
-
-
-
 nav.navbar #userData,
 #userData {
   display: none !important;
@@ -613,6 +598,7 @@ nav.navbar #userData,
 #oe-user-sidebar {
   width: 100%;
   border-top: 1px solid var(--border-color);
+  border-bottom: 10px solid var(--border-color);
   background: var(--sidebar-bg);
   flex-shrink: 0;
   position: relative;
@@ -624,7 +610,7 @@ nav.navbar #userData,
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 14px;
+  padding: 20px 14px;
   cursor: pointer;
   user-select: none;
 }
@@ -715,4 +701,140 @@ nav.navbar .navbar-collapse {
   flex: 1 !important;
   overflow-y: auto !important;
   min-height: 0;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE — MOBILE / TABLET
+══════════════════════════════════════════ */
+
+/* Hamburger button — lives in tab bar caret wrapper, hidden on desktop */
+#oe-mobile-toggle {
+  display: none;
+  margin-left: 10px;
+  font-size: 1rem;
+  color: var(--text-dark);
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+
+  /* Topbar — compact, logo smaller, hide search by default */
+  #oe-topbar {
+    padding: 0 8px 0 0;
+    gap: 6px;
+  }
+
+  #oe-topbar .navbar-brand {
+    width: auto !important;
+    border-right: none;
+    padding: 0 10px !important;
+  }
+
+  #oe-topbar .navbar-brand span {
+    display: none; /* hide text label, keep icon only */
+  }
+
+  /* Hide secondary breadcrumb nav on mobile — no room */
+  #oe-secondary-nav {
+    display: none !important;
+  }
+
+  /* Search bar shrinks */
+  #oe-topbar input#anySearchBox {
+    width: 110px;
+    font-size: 0.78rem;
+  }
+
+  /* Sidebar becomes a slide-in overlay, hidden by default */
+  nav.navbar {
+    position: fixed !important;
+    top: var(--topbar-height) !important;
+    left: -100% !important;       /* hidden off-screen */
+    width: 80% !important;
+    max-width: 280px !important;
+    height: calc(100vh - var(--topbar-height)) !important;
+    z-index: 1060 !important;
+    transition: left 0.25s ease !important;
+    box-shadow: 4px 0 16px rgba(0,0,0,0.15);
+  }
+
+  /* Sidebar visible state */
+  body.sidebar-mobile-open nav.navbar {
+    left: 0 !important;
+  }
+
+  /* Dark overlay behind sidebar when open */
+  #oe-mobile-overlay {
+    display: none;
+    position: fixed;
+    top: var(--topbar-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 1055;
+  }
+
+  body.sidebar-mobile-open #oe-mobile-overlay {
+    display: block;
+  }
+
+  /* Hide desktop collapse toggle */
+  #oe-sidebar-toggle {
+    display: none !important;
+  }
+
+  /* Hamburger now lives in tab bar, next to existing caret */
+  #oe-mobile-toggle {
+    display: inline-block !important;
+  }
+
+  .tabsNoHover.w-1 {
+    display: flex !important;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* Tab bar and frames — always full width on mobile, sidebar overlays */
+  #tabs_div {
+    left: 0 !important;
+    width: 100% !important;
+  }
+
+  #framesDisplay {
+    left: 0 !important;
+    width: 100% !important;
+    top: calc(var(--topbar-height) + var(--tabbar-height)) !important;
+  }
+
+  #mainBox {
+    padding-left: 0 !important;
+  }
+
+  /* Tab bar items — allow horizontal scroll instead of wrapping */
+  #tabs_div .tabControls {
+    overflow-x: auto;
+    flex-wrap: nowrap !important;
+  }
+
+  /* User sidebar section — adjust spacing */
+  #oe-user-header {
+    padding: 12px 14px;
+  }
+}
+
+/* Small phones — extra compact */
+@media (max-width: 420px) {
+  #oe-topbar input#anySearchBox {
+    width: 80px;
+  }
+
+  #oe-topbar .flex-column {
+    gap: 2px;
+  }
+
+  nav.navbar {
+    width: 85% !important;
+  }
 }

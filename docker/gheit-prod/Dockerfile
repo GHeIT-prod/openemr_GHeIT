@@ -1,4 +1,4 @@
-FROM openemr/openemr:7.0.4
+FROM openemr/openemr:8.0.0
 
 WORKDIR /var/www/localhost/htdocs/openemr
 
