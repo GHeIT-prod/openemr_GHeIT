@@ -6,22 +6,22 @@
   --sidebar-width: 240px;
   --topbar-height: 52px;
   --tabbar-height: 54px;
-  --sidebar-bg: #f5f6f7;
+  --sidebar-bg: #dbeafe;
   --border-color: #e0e3e7;
   --text-dark: #2c3e50;
   --text-mid: #3d4f60;
-  --hover-bg: #e8eaed;
-  --submenu-bg: #eceef0;
-  --submenu2-bg: #e4e6ea;
+  --hover-bg: #24439a;
+  --submenu-bg: #bfdbfe;
+  --submenu2-bg: #93c5fd;
 }
 
 /* ══════════════════════════════════════════
-   TOP BAR — full width, contains logo
+   TOP BAR
 ══════════════════════════════════════════ */
 #oe-topbar {
   position: fixed !important;
   top: 0;
-  left: 0;                          /* full width — logo lives here */
+  left: 0;
   right: 0;
   height: var(--topbar-height);
   background: #fff;
@@ -33,7 +33,6 @@
   gap: 10px;
 }
 
-/* Logo inside topbar */
 #oe-topbar .navbar-brand {
   display: flex !important;
   align-items: center;
@@ -46,12 +45,6 @@
   box-sizing: border-box;
 }
 
-/* #oe-topbar .navbar-brand img {
-  height: 50px !important;
-  width: auto !important;
-  display: inline-block !important;
-} */
-
 #oe-topbar .navbar-brand span {
   font-size: 0.95rem;
   font-weight: 700;
@@ -60,7 +53,6 @@
   white-space: nowrap;
 }
 
-/* Search input */
 #oe-topbar input#anySearchBox {
   border: 1px solid #cdd0d4;
   border-radius: 6px 0 0 6px;
@@ -74,12 +66,10 @@
   border-radius: 0 6px 6px 0;
 }
 
-/* Spacer */
 #oe-topbar .oe-spacer {
   flex: 1 !important;
 }
 
-/* Notification icons */
 #oe-topbar .flex-column {
   display: flex !important;
   flex-direction: row !important;
@@ -87,7 +77,6 @@
   gap: 6px;
 }
 
-/* User icon */
 #oe-topbar #username-container {
   position: relative;
   margin: 0 !important;
@@ -102,10 +91,9 @@
 }
 
 #oe-topbar #username:hover {
-  background: var(--hover-bg);
+  background: #e8eaed;
 }
 
-/* User dropdown */
 #oe-topbar #userdropdown {
   position: absolute !important;
   top: 44px !important;
@@ -131,7 +119,7 @@
 }
 
 #oe-topbar #userdropdown .dropdown-item:hover {
-  background: var(--hover-bg);
+  background: #e8eaed;
 }
 
 #oe-topbar #userdropdown .dropdown-divider {
@@ -144,7 +132,7 @@
 ══════════════════════════════════════════ */
 nav.navbar {
   position: fixed !important;
-  top: var(--topbar-height);       /* starts below topbar */
+  top: var(--topbar-height);
   left: 0;
   width: var(--sidebar-width) !important;
   height: calc(100vh - var(--topbar-height)) !important;
@@ -155,16 +143,15 @@ nav.navbar {
   padding: 0 !important;
   background-color: var(--sidebar-bg) !important;
   background-image: none !important;
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid #93c5fd;
   transition: width 0.25s ease;
+  display: flex !important;
 }
 
-/* Hide logo from sidebar — it lives in topbar now */
 nav.navbar .navbar-brand {
   display: none !important;
 }
 
-/* Hide elements moved to topbar */
 nav.navbar .form-inline,
 nav.navbar #frm_search_globals,
 nav.navbar #userData,
@@ -172,17 +159,17 @@ nav.navbar .navbar-toggler {
   display: none !important;
 }
 
-/* Scrollable menu */
 nav.navbar .navbar-collapse {
   display: flex !important;
   flex-direction: column !important;
   width: 100% !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
-  flex: 1;
+  flex: 1 !important;
   height: 100%;
   padding-top: 8px;
   background: transparent !important;
+  min-height: 0;
 }
 
 nav.navbar .appMenu {
@@ -192,21 +179,20 @@ nav.navbar .appMenu {
   padding: 0 6px !important;
 }
 
-/* Top-level wrappers */
 nav.navbar .appMenu > div {
   width: 100%;
   border: none !important;
   background: transparent !important;
 }
 
-/* Direct action items (Calendar, Finder etc.) */
+/* ── Direct action items ── */
 nav.navbar .appMenu > div > .menuLabel {
   display: flex !important;
   align-items: center;
   padding: 9px 12px !important;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--text-dark) !important;
+  color: #1e3a8a !important;
   cursor: pointer;
   border-radius: 6px;
   margin: 1px 0 !important;
@@ -215,17 +201,17 @@ nav.navbar .appMenu > div > .menuLabel {
 }
 
 nav.navbar .appMenu > div > .menuLabel:hover {
-  background-color: var(--hover-bg) !important;
+  background-color: #24439a !important;
+  color: #ffffff !important;
 }
 
-/* menuSection — no borders */
 nav.navbar .menuSection {
   width: 100%;
   border: none !important;
   background: transparent !important;
 }
 
-/* Parent toggle labels */
+/* ── Parent toggle labels ── */
 nav.navbar .menuSection > .menuLabel.dropdown-toggle {
   display: flex !important;
   align-items: center;
@@ -233,7 +219,7 @@ nav.navbar .menuSection > .menuLabel.dropdown-toggle {
   padding: 9px 12px !important;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--text-dark) !important;
+  color: #1e3a8a !important;
   cursor: pointer;
   user-select: none;
   width: 100%;
@@ -244,7 +230,12 @@ nav.navbar .menuSection > .menuLabel.dropdown-toggle {
 }
 
 nav.navbar .menuSection > .menuLabel.dropdown-toggle:hover {
-  background-color: var(--hover-bg) !important;
+  background-color: #24439a !important;
+  color: #ffffff !important;
+}
+
+nav.navbar .menuSection > .menuLabel.dropdown-toggle:hover::after {
+  color: #ffffff !important;
 }
 
 /* Arrow */
@@ -257,7 +248,7 @@ nav.navbar .menuSection > .menuLabel.dropdown-toggle::after {
   transition: transform 0.2s ease;
   display: inline-block;
   flex-shrink: 0;
-  color: #8a9bb0;
+  color: #1e3a8a;
 }
 
 nav.navbar .menuSection.oe-open > .menuLabel.dropdown-toggle::after {
@@ -282,12 +273,10 @@ nav.navbar .menuSection > ul.menuEntries {
   background-color: var(--submenu-bg) !important;
 }
 
-/* Submenus expanded */
 nav.navbar .menuSection.oe-open > ul.menuEntries {
   max-height: 2000px !important;
 }
 
-/* Submenu items — no borders */
 nav.navbar .menuEntries > li {
   list-style: none !important;
   width: 100%;
@@ -295,12 +284,12 @@ nav.navbar .menuEntries > li {
   background: transparent !important;
 }
 
-/* Level 1 labels */
+/* ── Level 1 labels ── */
 nav.navbar .menuEntries > li > .menuLabel {
   display: block;
   padding: 8px 12px 8px 24px !important;
   font-size: 0.845rem;
-  color: var(--text-mid) !important;
+  color: #1e3a8a !important;
   cursor: pointer;
   border-radius: 4px;
   margin: 1px 4px !important;
@@ -309,14 +298,15 @@ nav.navbar .menuEntries > li > .menuLabel {
 }
 
 nav.navbar .menuEntries > li > .menuLabel:hover {
-  background-color: #dde0e4 !important;
+  background-color: #24439a !important;
+  color: #ffffff !important;
 }
 
-/* Level 2 parent labels */
+/* ── Level 2 parent labels ── */
 nav.navbar .menuEntries .menuSection > .menuLabel.dropdown-toggle {
   padding: 8px 12px 8px 24px !important;
   font-size: 0.845rem;
-  color: var(--text-mid) !important;
+  color: #1e3a8a !important;
   background: transparent !important;
   border-radius: 4px;
   border: none !important;
@@ -324,44 +314,64 @@ nav.navbar .menuEntries .menuSection > .menuLabel.dropdown-toggle {
 }
 
 nav.navbar .menuEntries .menuSection > .menuLabel.dropdown-toggle:hover {
-  background-color: #dde0e4 !important;
+  background-color: #24439a !important;
+  color: #ffffff !important;
 }
 
-/* Level 2 submenu */
+nav.navbar .menuEntries .menuSection > .menuLabel.dropdown-toggle:hover::after {
+  color: #ffffff !important;
+}
+
 nav.navbar .menuEntries .menuSection > ul.menuEntries {
   background-color: var(--submenu2-bg) !important;
   border-radius: 4px !important;
 }
 
-/* Level 2 labels */
+/* ── Level 2 labels ── */
 nav.navbar .menuEntries .menuSection > ul.menuEntries > li > .menuLabel {
   padding: 7px 12px 7px 40px !important;
   font-size: 0.825rem;
-  color: #4a5568 !important;
+  color: #1e3a8a !important;
   border: none !important;
 }
 
 nav.navbar .menuEntries .menuSection > ul.menuEntries > li > .menuLabel:hover {
-  background-color: #d4d8de !important;
+  background-color: #24439a !important;
+  color: #ffffff !important;
 }
 
-/* Disabled */
 nav.navbar .menuDisabled {
   opacity: 0.4 !important;
   cursor: not-allowed !important;
   pointer-events: none !important;
 }
 
-/* Hide fa caret icons */
 nav.navbar .closeButton.fa-caret-right {
   display: none !important;
 }
 
-/* Scrollbar */
 nav.navbar .navbar-collapse::-webkit-scrollbar { width: 4px; }
 nav.navbar .navbar-collapse::-webkit-scrollbar-thumb {
-  background: #c0c6ce;
+  background: #93c5fd;
   border-radius: 2px;
+}
+
+/* ══════════════════════════════════════════
+   TOP-LEVEL ACTIVE STATE (children in topbar)
+══════════════════════════════════════════ */
+nav.navbar .appMenu > div > .menuSection > .menuLabel.dropdown-toggle::after {
+  content: '\25B8' !important;
+  transform: none !important;
+}
+
+nav.navbar .appMenu > div > .menuSection.oe-top-active > .menuLabel.dropdown-toggle {
+  background-color: #24439a !important;
+  color: #ffffff !important;
+}
+
+nav.navbar .appMenu > div > .menuSection.oe-top-active > .menuLabel.dropdown-toggle::after {
+  color: #ffffff !important;
+  transform: rotate(90deg) !important;
 }
 
 /* ══════════════════════════════════════════
@@ -371,14 +381,14 @@ nav.navbar .navbar-collapse::-webkit-scrollbar-thumb {
   position: fixed;
   top: calc(var(--topbar-height) + 8px);
   left: calc(var(--sidebar-width) - 1px);
-  width: 20px;
+  width: 28px;
   height: 40px;
-  background: #fff;
+  background: var(--sidebar-bg) !important;
   border: 1px solid var(--border-color);
   border-left: none;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
-  z-index: 1051;
+  z-index: 1038;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -410,17 +420,20 @@ body.sidebar-collapsed #framesDisplay {
 }
 
 /* ══════════════════════════════════════════
-   HIDE MOVED ELEMENTS FROM ORIGINAL POSITION
+   HIDE MOVED ELEMENTS
 ══════════════════════════════════════════ */
 #attendantData {
+  display: none !important;
+}
+
+nav.navbar #userData,
+#userData {
   display: none !important;
 }
 
 /* ══════════════════════════════════════════
    MAIN CONTENT AREA
 ══════════════════════════════════════════ */
-
-/* Tab bar */
 #tabs_div {
   position: fixed !important;
   top: var(--topbar-height) !important;
@@ -433,7 +446,6 @@ body.sidebar-collapsed #framesDisplay {
   transition: left 0.25s ease, width 0.25s ease;
 }
 
-/* Frames display */
 #framesDisplay {
   position: fixed !important;
   top: calc(var(--topbar-height) + var(--tabbar-height)) !important;
@@ -461,30 +473,11 @@ body.sidebar-collapsed #framesDisplay {
   display: block !important;
 }
 
-/* mainBox wrapper */
 #mainBox {
   padding-left: var(--sidebar-width);
   box-sizing: border-box;
   width: 100% !important;
   margin-left: 0 !important;
-}
-
-/* ══════════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════════ */
-@media (max-width: 768px) {
-  nav.navbar {
-    width: 100% !important;
-    height: auto !important;
-    position: relative !important;
-    top: 0 !important;
-  }
-  nav.navbar .navbar-toggler { display: block !important; }
-  #oe-topbar .navbar-brand { width: auto; border-right: none; }
-  #tabs_div { left: 0 !important; width: 100% !important; }
-  #framesDisplay { left: 0 !important; width: 100% !important; }
-  #mainBox { padding-left: 0; }
-  #oe-sidebar-toggle { display: none; }
 }
 
 /* ══════════════════════════════════════════
@@ -495,7 +488,7 @@ body.sidebar-collapsed #framesDisplay {
   align-items: center;
   gap: 4px;
   flex: 0 1 auto;
-  max-width: 500px;
+  max-width: 775px;
   padding: 0 12px;
   overflow-x: auto;
   white-space: nowrap;
@@ -505,7 +498,6 @@ body.sidebar-collapsed #framesDisplay {
   display: none;
 }
 
-/* Parent label */
 #oe-secondary-nav .oe-sec-parent {
   font-size: 0.78rem;
   color: #8a9bb0;
@@ -515,7 +507,6 @@ body.sidebar-collapsed #framesDisplay {
   flex-shrink: 0;
 }
 
-/* Arrow separator */
 #oe-secondary-nav .oe-sec-sep {
   font-size: 0.85rem;
   color: #c0c6ce;
@@ -523,7 +514,6 @@ body.sidebar-collapsed #framesDisplay {
   margin: 0 2px;
 }
 
-/* Child pill buttons */
 #oe-secondary-nav .oe-sec-item {
   display: inline-flex;
   align-items: center;
@@ -542,14 +532,15 @@ body.sidebar-collapsed #framesDisplay {
 }
 
 #oe-secondary-nav .oe-sec-item:hover {
-  background: var(--hover-bg);
-  border-color: #b0b8c4;
+  background: #24439a;
+  border-color: #24439a;
+  color: #ffffff;
 }
 
 #oe-secondary-nav .oe-sec-item.oe-sec-active {
   background: #dbeafe;
   border-color: #93c5fd;
-  color: #1d4ed8;
+  color: #24439a;
   font-weight: 500;
 }
 
@@ -559,15 +550,17 @@ body.sidebar-collapsed #framesDisplay {
   pointer-events: none;
 }
 
-/* Items that have nested children get a chevron */
 #oe-secondary-nav .oe-sec-has-children {
-  background: #f8f0ff;
-  border-color: #d8b4fe;
-  color: #6b21a8;
+  background: #8cb4ea;
+  border-color: #0734af;
+  color: #24439a;
+  font-weight: 600;
 }
 
 #oe-secondary-nav .oe-sec-has-children:hover {
-  background: #ede9fe;
+  background: #24439a;
+  color: #ffffff;
+  border-color: #24439a;
 }
 
 #oe-secondary-nav .oe-sec-chevron {
@@ -575,37 +568,24 @@ body.sidebar-collapsed #framesDisplay {
   opacity: 0.7;
 }
 
-/* Active level 2 toggle in sidebar gets highlighted */
-nav.navbar .oe-level2-active {
-  background: var(--hover-bg) !important;
-  color: var(--text-dark) !important;
-}
-
-/* Scrollbar */
 #oe-secondary-nav::-webkit-scrollbar { height: 2px; }
 #oe-secondary-nav::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 2px;
 }
 
-nav.navbar #userData,
-#userData {
-  display: none !important;
-}
 /* ══════════════════════════════════════════
    SIDEBAR USER SECTION
 ══════════════════════════════════════════ */
 #oe-user-sidebar {
   width: 100%;
-  border-top: 1px solid var(--border-color);
-  border-bottom: 10px solid var(--border-color);
-  background: var(--sidebar-bg);
+  border-top: 1px solid #93c5fd;
+  background: #eef2f7;
   flex-shrink: 0;
   position: relative;
   margin-top: auto;
 }
 
-/* User header row — just avatar + name + dots */
 #oe-user-header {
   display: flex;
   align-items: center;
@@ -616,19 +596,24 @@ nav.navbar #userData,
 }
 
 #oe-user-header:hover {
-  background: var(--hover-bg);
+  background-color: #24439a;
+}
+
+#oe-user-header:hover .oe-user-avatar,
+#oe-user-header:hover .oe-user-name {
+  color: #ffffff !important;
 }
 
 .oe-user-avatar {
   font-size: 1.4rem;
-  color: #6b7280;
+  color: #1e3a8a;
   flex-shrink: 0;
 }
 
 .oe-user-name {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--text-dark);
+  color: #1e3a8a;
   flex: 1;
   white-space: nowrap;
   overflow: hidden;
@@ -637,21 +622,20 @@ nav.navbar #userData,
 
 .oe-user-dots {
   font-size: 0.8rem;
-  color: #8a9bb0;
+  color: #3b5bdb;
   flex-shrink: 0;
 }
 
-/* Hover submenu — floats ABOVE the header */
 #oe-user-submenu {
   list-style: none !important;
   margin: 0;
   padding: 4px 0;
   position: absolute;
-  bottom: 100%;              /* appears above the header */
+  bottom: 100%;
   left: 0;
   right: 0;
   background: #fff;
-  border: 1px solid var(--border-color);
+  border: 1px solid #93c5fd;
   border-radius: 8px 8px 0 0;
   box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
   z-index: 2000;
@@ -676,11 +660,17 @@ nav.navbar #userData,
 }
 
 #oe-user-submenu li:hover {
-  background: var(--hover-bg) !important;
+  background: #24439a !important;
+  color: #ffffff !important;
+}
+
+#oe-user-submenu li:hover i,
+#oe-user-submenu li:hover span {
+  color: #ffffff !important;
 }
 
 #oe-user-submenu li i {
-  color: #8a9bb0;
+  color: #3b5bdb;
   width: 16px;
   text-align: center;
   flex-shrink: 0;
@@ -691,23 +681,9 @@ nav.navbar #userData,
   color: var(--text-mid);
 }
 
-/* Ensure navbar is flex column so user section sticks to bottom */
-nav.navbar {
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-nav.navbar .navbar-collapse {
-  flex: 1 !important;
-  overflow-y: auto !important;
-  min-height: 0;
-}
-
 /* ══════════════════════════════════════════
    RESPONSIVE — MOBILE / TABLET
 ══════════════════════════════════════════ */
-
-/* Hamburger button — lives in tab bar caret wrapper, hidden on desktop */
 #oe-mobile-toggle {
   display: none;
   margin-left: 10px;
@@ -718,8 +694,6 @@ nav.navbar .navbar-collapse {
 }
 
 @media (max-width: 768px) {
-
-  /* Topbar — compact, logo smaller, hide search by default */
   #oe-topbar {
     padding: 0 8px 0 0;
     gap: 6px;
@@ -732,25 +706,22 @@ nav.navbar .navbar-collapse {
   }
 
   #oe-topbar .navbar-brand span {
-    display: none; /* hide text label, keep icon only */
+    display: none;
   }
 
-  /* Hide secondary breadcrumb nav on mobile — no room */
   #oe-secondary-nav {
     display: none !important;
   }
 
-  /* Search bar shrinks */
   #oe-topbar input#anySearchBox {
     width: 110px;
     font-size: 0.78rem;
   }
 
-  /* Sidebar becomes a slide-in overlay, hidden by default */
   nav.navbar {
     position: fixed !important;
     top: var(--topbar-height) !important;
-    left: -100% !important;       /* hidden off-screen */
+    left: -100% !important;
     width: 80% !important;
     max-width: 280px !important;
     height: calc(100vh - var(--topbar-height)) !important;
@@ -759,12 +730,10 @@ nav.navbar .navbar-collapse {
     box-shadow: 4px 0 16px rgba(0,0,0,0.15);
   }
 
-  /* Sidebar visible state */
   body.sidebar-mobile-open nav.navbar {
     left: 0 !important;
   }
 
-  /* Dark overlay behind sidebar when open */
   #oe-mobile-overlay {
     display: none;
     position: fixed;
@@ -780,12 +749,10 @@ nav.navbar .navbar-collapse {
     display: block;
   }
 
-  /* Hide desktop collapse toggle */
   #oe-sidebar-toggle {
     display: none !important;
   }
 
-  /* Hamburger now lives in tab bar, next to existing caret */
   #oe-mobile-toggle {
     display: inline-block !important;
   }
@@ -796,7 +763,6 @@ nav.navbar .navbar-collapse {
     gap: 4px;
   }
 
-  /* Tab bar and frames — always full width on mobile, sidebar overlays */
   #tabs_div {
     left: 0 !important;
     width: 100% !important;
@@ -812,19 +778,19 @@ nav.navbar .navbar-collapse {
     padding-left: 0 !important;
   }
 
-  /* Tab bar items — allow horizontal scroll instead of wrapping */
   #tabs_div .tabControls {
     overflow-x: auto;
     flex-wrap: nowrap !important;
   }
 
-  /* User sidebar section — adjust spacing */
   #oe-user-header {
     padding: 12px 14px;
   }
+
+  nav.navbar .navbar-toggler { display: block !important; }
+  #oe-topbar .navbar-brand { width: auto; border-right: none; }
 }
 
-/* Small phones — extra compact */
 @media (max-width: 420px) {
   #oe-topbar input#anySearchBox {
     width: 80px;
@@ -837,4 +803,22 @@ nav.navbar .navbar-collapse {
   nav.navbar {
     width: 85% !important;
   }
+}
+
+/* ── Force correct hover color on ALL sidebar items ── */
+nav.navbar .appMenu > div > .menuLabel:hover,
+nav.navbar .menuSection > .menuLabel.dropdown-toggle:hover,
+nav.navbar .menuEntries > li > .menuLabel:hover,
+nav.navbar .menuEntries .menuSection > .menuLabel.dropdown-toggle:hover,
+nav.navbar .menuEntries .menuSection > ul.menuEntries > li > .menuLabel:hover,
+nav.navbar .appMenu > div > .menuSection.oe-top-active > .menuLabel.dropdown-toggle {
+  background-color: #24439a !important;
+  color: #ffffff !important;
+}
+
+/* ── Fix topbar hover — should stay neutral, not blue ── */
+#oe-topbar #username:hover,
+#oe-topbar #userdropdown .dropdown-item:hover {
+  background-color: #e8eaed !important;
+  color: var(--text-dark) !important;
 }
