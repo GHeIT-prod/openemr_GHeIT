@@ -430,6 +430,7 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
         min-width: max-content;     /* expands to fit the widest item */
       }
     </style>
+    <link rel="stylesheet" href="<?php echo $GLOBALS['webroot']; ?>/interface/themes/custom_sidebar.css">
 </head>
 
 <body class="min-vw-100">
@@ -462,8 +463,9 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
                 <!-- <a class="navbar-brand" href="https://www.open-emr.org" title="OpenEMR <?php echo xla("Website"); ?>" rel="noopener" target="_blank">
                     <img src="<?php echo $menuLogo; ?>" class="d-inline-block align-middle" height="16" alt="<?php echo xlt('Main Menu Logo'); ?>">
                 </a> -->
-                <a class="navbar-brand" href="https://www.open-emr.org" title="NeoCareX" rel="noopener"
-                    <img src="<?php echo $menuLogo; ?>" class="d-inline-block align-middle" height="16" alt="<?php echo xlt('Main Menu Logo'); ?>">
+                <a class="navbar-brand d-flex align-items-center" href="https://www.open-emr.org" rel="noopener">
+                    <img src="<?php echo $menuLogo; ?>" class="d-inline-block align-middle" height="50">
+                    <span class="ms-2">NeoCareX</span>
                 </a>
             <?php endif; ?>
             <button class="navbar-toggler mr-auto" type="button" data-toggle="collapse" data-target="#mainMenu" aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -540,6 +542,380 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
     }
 
     ?>
+
+    <script>
+        (function () {
+
+            /* ── 1. Accordion toggle ── */
+            function initSidebarMenu() {
+                document.querySelectorAll(
+                'nav.navbar .menuSection > .menuLabel.dropdown-toggle'
+                ).forEach(function (toggle) {
+                if (toggle.dataset.oeToggleInit) return;
+                toggle.dataset.oeToggleInit = 'true';
+
+                toggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    var section = toggle.closest('.menuSection');
+                    if (!section) return;
+
+                    var isOpen = section.classList.contains('oe-open');
+
+                    var parent = section.parentElement;
+                    if (parent) {
+                    parent.querySelectorAll(
+                        ':scope > li > .menuSection.oe-open, :scope > .menuSection.oe-open'
+                    ).forEach(function (s) {
+                        if (s !== section) s.classList.remove('oe-open');
+                    });
+                    }
+
+                    section.classList.toggle('oe-open', !isOpen);
+
+                    // If closing, clear secondary nav
+                    if (!section.classList.contains('oe-open')) {
+                    clearSecondaryNav();
+                    }
+                });
+                });
+
+                // Level 2 items that have children — show in topbar on hover/click
+                initLevel2Hovers();
+            }
+
+            /* ── 2. Level 2 hover → secondary topbar nav ── */
+            function initLevel2Hovers() {
+                // Find all level 2 menuSections (inside a ul.menuEntries that's inside a top-level menuSection)
+                document.querySelectorAll(
+                    'nav.navbar .menuSection > ul.menuEntries > li > .menuSection'
+                ).forEach(function (section) {
+                    if (section.dataset.oeLevel2Init) return;
+                    section.dataset.oeLevel2Init = 'true';
+
+                    var toggle = section.querySelector(':scope > .menuLabel.dropdown-toggle');
+                    var submenu = section.querySelector(':scope > ul.menuEntries');
+                    if (!toggle || !submenu) return;
+
+                    // Collect level 3 children
+                    var children = [];
+                    submenu.querySelectorAll(':scope > li').forEach(function (li) {
+                    // Could be a plain label or another nested menuSection
+                    var label = li.querySelector(':scope > .menuLabel:not(.dropdown-toggle)');
+                    var nestedSection = li.querySelector(':scope > .menuSection');
+
+                    if (label && !nestedSection) {
+                        children.push({
+                        label: label.textContent.trim(),
+                        element: label,
+                        disabled: label.classList.contains('menuDisabled')
+                        });
+                    } else if (nestedSection) {
+                        // If it's another nested section, just add the toggle as a button
+                        var nestedToggle = nestedSection.querySelector(':scope > .menuLabel.dropdown-toggle');
+                        if (nestedToggle) {
+                        children.push({
+                            label: nestedToggle.textContent.trim(),
+                            element: nestedToggle,
+                            disabled: false,
+                            hasChildren: true
+                        });
+                        }
+                    }
+                    });
+
+                    if (children.length === 0) return;
+
+                    var parentLabel = toggle.textContent.trim();
+
+                    // Show on mouseenter of the toggle
+                    toggle.addEventListener('mouseenter', function () {
+                    showSecondaryNav(parentLabel, children, toggle);
+                    });
+
+                    // Also keep visible when hovering the secondary nav itself
+                    toggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showSecondaryNav(parentLabel, children, toggle);
+                    });
+                });
+            }
+
+            function showSecondaryNav(parentLabel, children, sourceToggle) {
+                var nav = document.getElementById('oe-secondary-nav');
+                if (!nav) return;
+
+                // Mark source as active
+                document.querySelectorAll('nav.navbar .menuSection > ul.menuEntries > li > .menuSection > .menuLabel')
+                    .forEach(function (t) { t.classList.remove('oe-level2-active'); });
+                if (sourceToggle) sourceToggle.classList.add('oe-level2-active');
+
+                nav.innerHTML = '';
+
+                // Parent breadcrumb label
+                var parent = document.createElement('span');
+                parent.className = 'oe-sec-parent';
+                parent.textContent = parentLabel;
+                nav.appendChild(parent);
+
+                // Arrow separator
+                var sep = document.createElement('span');
+                sep.className = 'oe-sec-sep';
+                sep.innerHTML = '&#8250;';
+                nav.appendChild(sep);
+
+                // Child pills
+                children.forEach(function (child) {
+                    var btn = document.createElement('button');
+                    btn.className = 'oe-sec-item' +
+                    (child.disabled ? ' oe-sec-disabled' : '') +
+                    (child.hasChildren ? ' oe-sec-has-children' : '');
+                    btn.textContent = child.label;
+
+                    if (child.hasChildren) {
+                    btn.innerHTML = child.label + ' <span class="oe-sec-chevron">&#8250;</span>';
+                    }
+
+                    if (!child.disabled) {
+                    btn.addEventListener('click', function () {
+                        // Remove active from siblings
+                        nav.querySelectorAll('.oe-sec-item').forEach(function (b) {
+                        b.classList.remove('oe-sec-active');
+                        });
+                        btn.classList.add('oe-sec-active');
+                        child.element.click();
+                    });
+                    }
+
+                    nav.appendChild(btn);
+                });
+            }
+
+            function clearSecondaryNav() {
+            var nav = document.getElementById('oe-secondary-nav');
+                if (nav) nav.innerHTML = '';
+                document.querySelectorAll('.oe-level2-active').forEach(function (el) {
+                    el.classList.remove('oe-level2-active');
+                });
+            }
+
+            /* ── 4. Build top bar ── */
+            function buildTopBar() {
+                var existingBar = document.getElementById('oe-topbar');
+                if (existingBar && existingBar.querySelector('.navbar-brand')) return;
+
+                var navbar = document.querySelector('nav.navbar');
+                if (!navbar) return;
+
+                var searchForm = navbar.querySelector('form[name="frm_search_globals"], .form-inline');
+                var userData   = document.getElementById('userData');
+                var notifIcons = document.querySelector('#attendantData .flex-column.mx-2');
+                var logo       = navbar.querySelector('.navbar-brand');
+
+                if (!searchForm && !userData && !notifIcons && !logo) return;
+
+                var bar = existingBar || document.createElement('div');
+                if (!existingBar) {
+                    bar.id = 'oe-topbar';
+                    document.body.appendChild(bar);
+                }
+
+                // Logo (leftmost)
+                if (logo && !bar.contains(logo)) {
+                    logo.style.cssText = '';
+                    bar.insertBefore(logo, bar.firstChild);
+                }
+
+                // Secondary nav (center — fills remaining space)
+                if (!document.getElementById('oe-secondary-nav')) {
+                    var secNav = document.createElement('div');
+                    secNav.id = 'oe-secondary-nav';
+                    // Insert after logo
+                    var logoEl = bar.querySelector('.navbar-brand');
+                    if (logoEl && logoEl.nextSibling) {
+                        bar.insertBefore(secNav, logoEl.nextSibling);
+                    } else {
+                        bar.appendChild(secNav);
+                    }
+                }
+
+                // Spacer
+                if (!bar.querySelector('.oe-spacer')) {
+                    var spacer = document.createElement('div');
+                    spacer.className = 'oe-spacer';
+                    spacer.style.flex = '1';
+                    bar.appendChild(spacer);
+                }
+
+
+                // Search form (right side, next to notification)
+                if (searchForm && !bar.contains(searchForm)) {
+                    searchForm.style.cssText = 'margin:0;padding:0 8px;display:flex;align-items:center;';
+                    bar.appendChild(searchForm);
+                }
+
+                // Notifications
+                if (notifIcons && !bar.contains(notifIcons)) {
+                    notifIcons.style.cssText = 'display:flex!important;flex-direction:row!important;align-items:center;gap:6px;';
+                    bar.appendChild(notifIcons);
+                }
+            }
+
+            /* ── 5. Sidebar collapse toggle ── */
+            function initSidebarToggle() {
+                if (document.getElementById('oe-sidebar-toggle')) return;
+
+                var btn = document.createElement('div');
+                btn.id = 'oe-sidebar-toggle';
+                btn.innerHTML = '&#8249;';
+                btn.title = 'Toggle sidebar';
+                document.body.appendChild(btn);
+
+                btn.addEventListener('click', function () {
+                document.body.classList.toggle('sidebar-collapsed');
+                btn.innerHTML = document.body.classList.contains('sidebar-collapsed')
+                    ? '&#8250;' : '&#8249;';
+
+                setTimeout(function () {
+                    window.dispatchEvent(new Event('resize'));
+                    document.querySelectorAll('iframe').forEach(function (f) {
+                    try { f.contentWindow.dispatchEvent(new Event('resize')); } catch(e) {}
+                    });
+                }, 300);
+                });
+            }
+
+            /* ── User section in sidebar ── */
+            function buildUserSidebar() {
+                if (document.getElementById('oe-user-sidebar')) return;
+
+                var userData = document.getElementById('userData');
+                if (!userData) return;
+
+                var userName = 'Administrator';
+                var lname = userData.querySelector('[data-bind*="lname"]');
+                var fname = userData.querySelector('[data-bind*="fname"]');
+                if (lname) userName = (fname ? fname.textContent.trim() + ' ' : '') + lname.textContent.trim();
+
+                var dropdownItems = userData.querySelectorAll('#userdropdown .dropdown-item');
+
+                var section = document.createElement('div');
+                section.id = 'oe-user-sidebar';
+
+                // Just username + arrow, no icon or "Current User" label
+                var header = document.createElement('div');
+                header.id = 'oe-user-header';
+                header.innerHTML = '\
+                    <i class="fa fa-user-circle oe-user-avatar"></i>\
+                    <span class="oe-user-name">' + userName + '</span>\
+                    </i>\
+                ';
+                section.appendChild(header);
+
+                // Hover submenu
+                var submenu = document.createElement('ul');
+                submenu.id = 'oe-user-submenu';
+
+                dropdownItems.forEach(function (item) {
+                    var li = document.createElement('li');
+                    var icon = item.querySelector('i');
+                    var iconClass = icon ? icon.className.replace('pr-2', '').trim() : 'fa fa-fw fa-circle';
+                    var label = item.textContent.trim();
+
+                    li.innerHTML = '<i class="' + iconClass + '"></i><span>' + label + '</span>';
+                    li.addEventListener('click', function () {
+                    item.click();
+                    });
+                    submenu.appendChild(li);
+                });
+
+                section.appendChild(submenu);
+
+                // Show submenu on hover
+                section.addEventListener('mouseenter', function () {
+                    submenu.classList.add('oe-submenu-visible');
+                });
+                section.addEventListener('mouseleave', function () {
+                    submenu.classList.remove('oe-submenu-visible');
+            });
+
+            var navbar = document.querySelector('nav.navbar');
+            if (navbar) navbar.appendChild(section);
+            }
+
+
+            /* ── Mobile sidebar toggle ── */
+            function initMobileToggle() {
+                if (document.getElementById('oe-mobile-toggle')) return;
+
+                var tabsDiv = document.getElementById('tabs_div');
+                if (!tabsDiv) {
+                    setTimeout(initMobileToggle, 300);
+                    return;
+                }
+
+                var caretWrapper = tabsDiv.querySelector('.tabsNoHover.w-1');
+                if (!caretWrapper) {
+                    setTimeout(initMobileToggle, 300);
+                    return;
+                }
+
+                var btn = document.createElement('i');
+                btn.id = 'oe-mobile-toggle';
+                btn.className = 'fa fa-bars';
+                btn.title = 'Toggle menu';
+
+                // Insert right after the existing caret icon
+                caretWrapper.insertBefore(btn, caretWrapper.firstChild);
+
+                var overlay = document.createElement('div');
+                overlay.id = 'oe-mobile-overlay';
+                document.body.appendChild(overlay);
+
+                function closeMobileSidebar() {
+                    document.body.classList.remove('sidebar-mobile-open');
+                }
+
+                btn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    document.body.classList.toggle('sidebar-mobile-open');
+                });
+
+                overlay.addEventListener('click', closeMobileSidebar);
+
+                document.addEventListener('click', function (e) {
+                    if (window.innerWidth > 768) return;
+                    var label = e.target.closest('.menuLabel:not(.dropdown-toggle)');
+                    if (label) {
+                    setTimeout(closeMobileSidebar, 150);
+                    }
+                });
+            }
+
+            /* ── 6. Watch for Knockout rendering ── */
+            var observer = new MutationObserver(function () {
+                initSidebarMenu();
+                buildTopBar();
+            });
+
+            document.addEventListener('DOMContentLoaded', function () {
+                observer.observe(document.body, { childList: true, subtree: true });
+                initSidebarMenu();
+                buildTopBar();
+                initSidebarToggle();
+
+                setTimeout(function () {
+                    buildUserSidebar();
+                    initLevel2Hovers(); // re-run after Knockout renders
+                    initMobileToggle();
+                }, 800);
+            });
+
+        })();
+    </script>
+  
 </body>
 
 </html>
