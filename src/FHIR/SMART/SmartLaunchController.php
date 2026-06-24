@@ -77,7 +77,7 @@ class SmartLaunchController
             $issuer = (new ServerConfig())->getFhirUrl();
             $viewArgs = [
                         'title' => xl('SMART Enabled Apps'),
-                        'card_container_class_list' => ['flex-fill', 'mx-1', 'card'],
+                        'card_container_class_list' => ['card'],
                         'id' => 'smart',
                         'forceAlwaysOpen' => false,
                         'initiallyCollapsed' => (getUserSetting('smart') == 0) ? true : false,
