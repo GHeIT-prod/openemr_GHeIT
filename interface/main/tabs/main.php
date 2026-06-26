@@ -776,7 +776,7 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
                 }
 
                 if (searchForm && !bar.contains(searchForm)) {
-                    searchForm.style.cssText = 'margin:0;padding:0 8px;display:flex;align-items:center;';
+                    searchForm.style.cssText = 'margin:0;display:flex;align-items:center;';
                     bar.appendChild(searchForm);
                 }
 
