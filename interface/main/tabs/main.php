@@ -549,159 +549,189 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
             /* ── 1. Accordion toggle ── */
             function initSidebarMenu() {
                 document.querySelectorAll(
-                'nav.navbar .menuSection > .menuLabel.dropdown-toggle'
-                ).forEach(function (toggle) {
-                if (toggle.dataset.oeToggleInit) return;
-                toggle.dataset.oeToggleInit = 'true';
+                    'nav.navbar .menuSection > .menuLabel.dropdown-toggle'
+                    ).forEach(function (toggle) {
+                    if (toggle.dataset.oeToggleInit) return;
+                    toggle.dataset.oeToggleInit = 'true';
 
-                toggle.addEventListener('click', function (e) {
+                var section = toggle.closest('.menuSection');
+                if (!section) return;
+                    // Check if this is a TOP-LEVEL menuSection
+                    // (direct child of appMenu > div, not inside a ul.menuEntries)
+                    var isTopLevel = !!section.parentElement.closest('.appMenu');
+                    var isInsideSubmenu = !!section.closest('ul.menuEntries');
+
+                if (isTopLevel && !isInsideSubmenu) {
+                    // TOP LEVEL — show children in topbar instead of expanding sidebar
+                    toggle.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+
+                        var isActive = section.classList.contains('oe-top-active');
+
+                    // Remove active from all top-level sections
+                    document.querySelectorAll('nav.navbar .appMenu > div > .menuSection')
+                        .forEach(function (s) { s.classList.remove('oe-top-active'); });
+
+                    if (isActive) {
+                        // Clicking again closes the topbar nav
+                        clearSecondaryNav();
+                    } else {
+                        section.classList.add('oe-top-active');
+                        showLevel1Nav(section, toggle);
+                    }
+                    });
+
+                } else {
+                    // NESTED LEVEL (inside a submenu) — keep existing accordion behaviour
+                    toggle.addEventListener('click', function (e) {
                     e.preventDefault();
                     e.stopPropagation();
-
-                    var section = toggle.closest('.menuSection');
-                    if (!section) return;
 
                     var isOpen = section.classList.contains('oe-open');
 
                     var parent = section.parentElement;
                     if (parent) {
-                    parent.querySelectorAll(
+                        parent.querySelectorAll(
                         ':scope > li > .menuSection.oe-open, :scope > .menuSection.oe-open'
-                    ).forEach(function (s) {
+                        ).forEach(function (s) {
                         if (s !== section) s.classList.remove('oe-open');
-                    });
+                        });
                     }
 
                     section.classList.toggle('oe-open', !isOpen);
-
-                    // If closing, clear secondary nav
-                    if (!section.classList.contains('oe-open')) {
-                    clearSecondaryNav();
-                    }
+                    });
+                }
                 });
-                });
-
-                // Level 2 items that have children — show in topbar on hover/click
-                initLevel2Hovers();
             }
 
-            /* ── 2. Level 2 hover → secondary topbar nav ── */
-            function initLevel2Hovers() {
-                // Find all level 2 menuSections (inside a ul.menuEntries that's inside a top-level menuSection)
-                document.querySelectorAll(
-                    'nav.navbar .menuSection > ul.menuEntries > li > .menuSection'
-                ).forEach(function (section) {
-                    if (section.dataset.oeLevel2Init) return;
-                    section.dataset.oeLevel2Init = 'true';
+            /* ── 2. Show Level 1 children in topbar ── */
+            function showLevel1Nav(section, sourceToggle) {
+                var parentLabel = sourceToggle.textContent.trim();
+                var submenu = section.querySelector(':scope > ul.menuEntries');
+                if (!submenu) return;
 
-                    var toggle = section.querySelector(':scope > .menuLabel.dropdown-toggle');
-                    var submenu = section.querySelector(':scope > ul.menuEntries');
-                    if (!toggle || !submenu) return;
+                var children = collectChildren(submenu);
+                renderSecondaryNav([{ label: parentLabel, children: children }]);
+            }
 
-                    // Collect level 3 children
-                    var children = [];
-                    submenu.querySelectorAll(':scope > li').forEach(function (li) {
-                    // Could be a plain label or another nested menuSection
+            /* ── 3. Collect children from a ul.menuEntries ── */
+            function collectChildren(submenu) {
+                var children = [];
+                submenu.querySelectorAll(':scope > li').forEach(function (li) {
                     var label = li.querySelector(':scope > .menuLabel:not(.dropdown-toggle)');
                     var nestedSection = li.querySelector(':scope > .menuSection');
 
-                    if (label && !nestedSection) {
+                    if (nestedSection) {
+                        var nestedToggle = nestedSection.querySelector(':scope > .menuLabel.dropdown-toggle');
+                        var nestedSubmenu = nestedSection.querySelector(':scope > ul.menuEntries');
+                        if (nestedToggle) {
+                            children.push({
+                                label: nestedToggle.textContent.trim(),
+                                element: nestedToggle,
+                                disabled: false,
+                                hasChildren: !!nestedSubmenu,
+                                submenu: nestedSubmenu
+                            });
+                        }
+                    } else if (label) {
                         children.push({
                         label: label.textContent.trim(),
                         element: label,
-                        disabled: label.classList.contains('menuDisabled')
+                        disabled: label.classList.contains('menuDisabled'),
+                        hasChildren: false,
+                        submenu: null
                         });
-                    } else if (nestedSection) {
-                        // If it's another nested section, just add the toggle as a button
-                        var nestedToggle = nestedSection.querySelector(':scope > .menuLabel.dropdown-toggle');
-                        if (nestedToggle) {
-                        children.push({
-                            label: nestedToggle.textContent.trim(),
-                            element: nestedToggle,
-                            disabled: false,
-                            hasChildren: true
-                        });
-                        }
                     }
-                    });
-
-                    if (children.length === 0) return;
-
-                    var parentLabel = toggle.textContent.trim();
-
-                    // Show on mouseenter of the toggle
-                    toggle.addEventListener('mouseenter', function () {
-                    showSecondaryNav(parentLabel, children, toggle);
-                    });
-
-                    // Also keep visible when hovering the secondary nav itself
-                    toggle.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    showSecondaryNav(parentLabel, children, toggle);
-                    });
                 });
+                return children;
             }
 
-            function showSecondaryNav(parentLabel, children, sourceToggle) {
+            /* ── 4. Render breadcrumb trail + pills in topbar ── */
+            var breadcrumbTrail = []; // stack of { label, children }
+
+            function renderSecondaryNav(trail) {
+                breadcrumbTrail = trail;
+
                 var nav = document.getElementById('oe-secondary-nav');
                 if (!nav) return;
-
-                // Mark source as active
-                document.querySelectorAll('nav.navbar .menuSection > ul.menuEntries > li > .menuSection > .menuLabel')
-                    .forEach(function (t) { t.classList.remove('oe-level2-active'); });
-                if (sourceToggle) sourceToggle.classList.add('oe-level2-active');
-
                 nav.innerHTML = '';
 
-                // Parent breadcrumb label
-                var parent = document.createElement('span');
-                parent.className = 'oe-sec-parent';
-                parent.textContent = parentLabel;
-                nav.appendChild(parent);
+                // Render breadcrumb trail
+                trail.forEach(function (crumb, idx) {
+                    var isLast = (idx === trail.length - 1);
 
-                // Arrow separator
-                var sep = document.createElement('span');
-                sep.className = 'oe-sec-sep';
-                sep.innerHTML = '&#8250;';
-                nav.appendChild(sep);
+                    // Breadcrumb label (clickable if not last)
+                    var crumbEl = document.createElement('span');
+                    crumbEl.className = 'oe-sec-parent' + (idx > 0 ? ' oe-sec-crumb-link' : '');
+                    crumbEl.textContent = crumb.label;
 
-                // Child pills
-                children.forEach(function (child) {
-                    var btn = document.createElement('button');
-                    btn.className = 'oe-sec-item' +
+                    if (!isLast) {
+                        crumbEl.style.cursor = 'pointer';
+                        crumbEl.style.textDecoration = 'underline';
+                        crumbEl.style.opacity = '0.7';
+                        (function (i) {
+                            crumbEl.addEventListener('click', function () {
+                                renderSecondaryNav(trail.slice(0, i + 1));
+                            });
+                        })(idx);
+                    }
+
+                    nav.appendChild(crumbEl);
+
+                    // Separator
+                    var sep = document.createElement('span');
+                    sep.className = 'oe-sec-sep';
+                    sep.innerHTML = '&#8250;';
+                    nav.appendChild(sep);
+                });
+
+                // Render current level's children as pills
+                var currentChildren = trail[trail.length - 1].children;
+                currentChildren.forEach(function (child) {
+                var btn = document.createElement('button');
+                btn.className = 'oe-sec-item' +
                     (child.disabled ? ' oe-sec-disabled' : '') +
                     (child.hasChildren ? ' oe-sec-has-children' : '');
-                    btn.textContent = child.label;
 
-                    if (child.hasChildren) {
+                if (child.hasChildren) {
                     btn.innerHTML = child.label + ' <span class="oe-sec-chevron">&#8250;</span>';
-                    }
+                } else {
+                    btn.textContent = child.label;
+                }
 
-                    if (!child.disabled) {
+                if (!child.disabled) {
                     btn.addEventListener('click', function () {
-                        // Remove active from siblings
-                        nav.querySelectorAll('.oe-sec-item').forEach(function (b) {
+                    // Mark active
+                    nav.querySelectorAll('.oe-sec-item').forEach(function (b) {
                         b.classList.remove('oe-sec-active');
-                        });
-                        btn.classList.add('oe-sec-active');
-                        child.element.click();
                     });
-                    }
+                    btn.classList.add('oe-sec-active');
 
-                    nav.appendChild(btn);
+                    if (child.hasChildren && child.submenu) {
+                        // Drill down — push to trail
+                        var newChildren = collectChildren(child.submenu);
+                        renderSecondaryNav(trail.concat([{ label: child.label, children: newChildren }]));
+                    } else {
+                        // Navigate
+                        child.element.click();
+                    }
+                    });
+                }
+
+                nav.appendChild(btn);
                 });
             }
 
             function clearSecondaryNav() {
-            var nav = document.getElementById('oe-secondary-nav');
+                breadcrumbTrail = [];
+                var nav = document.getElementById('oe-secondary-nav');
                 if (nav) nav.innerHTML = '';
-                document.querySelectorAll('.oe-level2-active').forEach(function (el) {
-                    el.classList.remove('oe-level2-active');
-                });
+                document.querySelectorAll('nav.navbar .appMenu > div > .menuSection.oe-top-active')
+                .forEach(function (s) { s.classList.remove('oe-top-active'); });
             }
 
-            /* ── 4. Build top bar ── */
+            /* ── 5. Build top bar ── */
             function buildTopBar() {
                 var existingBar = document.getElementById('oe-topbar');
                 if (existingBar && existingBar.querySelector('.navbar-brand')) return;
@@ -722,17 +752,14 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
                     document.body.appendChild(bar);
                 }
 
-                // Logo (leftmost)
                 if (logo && !bar.contains(logo)) {
                     logo.style.cssText = '';
                     bar.insertBefore(logo, bar.firstChild);
                 }
 
-                // Secondary nav (center — fills remaining space)
                 if (!document.getElementById('oe-secondary-nav')) {
                     var secNav = document.createElement('div');
                     secNav.id = 'oe-secondary-nav';
-                    // Insert after logo
                     var logoEl = bar.querySelector('.navbar-brand');
                     if (logoEl && logoEl.nextSibling) {
                         bar.insertBefore(secNav, logoEl.nextSibling);
@@ -741,7 +768,6 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
                     }
                 }
 
-                // Spacer
                 if (!bar.querySelector('.oe-spacer')) {
                     var spacer = document.createElement('div');
                     spacer.className = 'oe-spacer';
@@ -749,23 +775,24 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
                     bar.appendChild(spacer);
                 }
 
-
-                // Search form (right side, next to notification)
                 if (searchForm && !bar.contains(searchForm)) {
                     searchForm.style.cssText = 'margin:0;padding:0 8px;display:flex;align-items:center;';
                     bar.appendChild(searchForm);
                 }
 
-                // Notifications
                 if (notifIcons && !bar.contains(notifIcons)) {
                     notifIcons.style.cssText = 'display:flex!important;flex-direction:row!important;align-items:center;gap:6px;';
                     bar.appendChild(notifIcons);
                 }
             }
 
-            /* ── 5. Sidebar collapse toggle ── */
+            /* ── 6. Sidebar collapse toggle ── */
             function initSidebarToggle() {
                 if (document.getElementById('oe-sidebar-toggle')) return;
+                if (window.self !== window.top) return;
+
+                var popupNames = ['Popup', 'RTop', 'RBot', 'LeftNav', 'logoutinnerframe'];
+                if (popupNames.indexOf(window.name) !== -1) return;
 
                 var btn = document.createElement('div');
                 btn.id = 'oe-sidebar-toggle';
@@ -774,20 +801,20 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
                 document.body.appendChild(btn);
 
                 btn.addEventListener('click', function () {
-                document.body.classList.toggle('sidebar-collapsed');
-                btn.innerHTML = document.body.classList.contains('sidebar-collapsed')
-                    ? '&#8250;' : '&#8249;';
+                    document.body.classList.toggle('sidebar-collapsed');
+                    btn.innerHTML = document.body.classList.contains('sidebar-collapsed')
+                        ? '&#8250;' : '&#8249;';
 
-                setTimeout(function () {
-                    window.dispatchEvent(new Event('resize'));
-                    document.querySelectorAll('iframe').forEach(function (f) {
-                    try { f.contentWindow.dispatchEvent(new Event('resize')); } catch(e) {}
-                    });
-                }, 300);
+                    setTimeout(function () {
+                        window.dispatchEvent(new Event('resize'));
+                        document.querySelectorAll('iframe').forEach(function (f) {
+                        try { f.contentWindow.dispatchEvent(new Event('resize')); } catch(e) {}
+                        });
+                    }, 300);
                 });
             }
 
-            /* ── User section in sidebar ── */
+            /* ── 7. User section in sidebar ── */
             function buildUserSidebar() {
                 if (document.getElementById('oe-user-sidebar')) return;
 
@@ -804,17 +831,14 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
                 var section = document.createElement('div');
                 section.id = 'oe-user-sidebar';
 
-                // Just username + arrow, no icon or "Current User" label
                 var header = document.createElement('div');
                 header.id = 'oe-user-header';
                 header.innerHTML = '\
-                    <i class="fa fa-user-circle oe-user-avatar"></i>\
-                    <span class="oe-user-name">' + userName + '</span>\
-                    </i>\
+                <i class="fa fa-user-circle oe-user-avatar"></i>\
+                <span class="oe-user-name">' + userName + '</span>\
                 ';
                 section.appendChild(header);
 
-                // Hover submenu
                 var submenu = document.createElement('ul');
                 submenu.id = 'oe-user-submenu';
 
@@ -823,51 +847,38 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
                     var icon = item.querySelector('i');
                     var iconClass = icon ? icon.className.replace('pr-2', '').trim() : 'fa fa-fw fa-circle';
                     var label = item.textContent.trim();
-
                     li.innerHTML = '<i class="' + iconClass + '"></i><span>' + label + '</span>';
-                    li.addEventListener('click', function () {
-                    item.click();
-                    });
+                    li.addEventListener('click', function () { item.click(); });
                     submenu.appendChild(li);
                 });
 
                 section.appendChild(submenu);
 
-                // Show submenu on hover
                 section.addEventListener('mouseenter', function () {
                     submenu.classList.add('oe-submenu-visible');
                 });
                 section.addEventListener('mouseleave', function () {
                     submenu.classList.remove('oe-submenu-visible');
-            });
+                });
 
-            var navbar = document.querySelector('nav.navbar');
-            if (navbar) navbar.appendChild(section);
+                var navbar = document.querySelector('nav.navbar');
+                if (navbar) navbar.appendChild(section);
             }
 
-
-            /* ── Mobile sidebar toggle ── */
+            /* ── 8. Mobile sidebar toggle ── */
             function initMobileToggle() {
                 if (document.getElementById('oe-mobile-toggle')) return;
 
                 var tabsDiv = document.getElementById('tabs_div');
-                if (!tabsDiv) {
-                    setTimeout(initMobileToggle, 300);
-                    return;
-                }
+                if (!tabsDiv) { setTimeout(initMobileToggle, 300); return; }
 
                 var caretWrapper = tabsDiv.querySelector('.tabsNoHover.w-1');
-                if (!caretWrapper) {
-                    setTimeout(initMobileToggle, 300);
-                    return;
-                }
+                if (!caretWrapper) { setTimeout(initMobileToggle, 300); return; }
 
                 var btn = document.createElement('i');
                 btn.id = 'oe-mobile-toggle';
                 btn.className = 'fa fa-bars';
                 btn.title = 'Toggle menu';
-
-                // Insert right after the existing caret icon
                 caretWrapper.insertBefore(btn, caretWrapper.firstChild);
 
                 var overlay = document.createElement('div');
@@ -888,13 +899,11 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
                 document.addEventListener('click', function (e) {
                     if (window.innerWidth > 768) return;
                     var label = e.target.closest('.menuLabel:not(.dropdown-toggle)');
-                    if (label) {
-                    setTimeout(closeMobileSidebar, 150);
-                    }
+                    if (label) { setTimeout(closeMobileSidebar, 150); }
                 });
             }
 
-            /* ── 6. Watch for Knockout rendering ── */
+            /* ── 9. Watch for Knockout rendering ── */
             var observer = new MutationObserver(function () {
                 initSidebarMenu();
                 buildTopBar();
@@ -907,9 +916,8 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
                 initSidebarToggle();
 
                 setTimeout(function () {
-                    buildUserSidebar();
-                    initLevel2Hovers(); // re-run after Knockout renders
-                    initMobileToggle();
+                buildUserSidebar();
+                initMobileToggle();
                 }, 800);
             });
 
