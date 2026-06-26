@@ -463,7 +463,11 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
                 <!-- <a class="navbar-brand" href="https://www.open-emr.org" title="OpenEMR <?php echo xla("Website"); ?>" rel="noopener" target="_blank">
                     <img src="<?php echo $menuLogo; ?>" class="d-inline-block align-middle" height="16" alt="<?php echo xlt('Main Menu Logo'); ?>">
                 </a> -->
-                <a class="navbar-brand d-flex align-items-center" href="https://www.open-emr.org" rel="noopener">
+                <!-- <a class="navbar-brand d-flex align-items-center" href="https://www.open-emr.org" rel="noopener">
+                    <img src="<?php echo $menuLogo; ?>" class="d-inline-block align-middle" height="50">
+                    <span class="ms-2">NeoCareX</span>
+                </a> -->
+                <a class="navbar-brand d-flex align-items-center" href="#" onclick="(function(){ var cal = Array.from(document.querySelectorAll('nav.navbar .menuLabel')).find(function(el){ return el.textContent.trim() === 'Calendar'; }); if(cal) cal.click(); return false; })(); return false;">
                     <img src="<?php echo $menuLogo; ?>" class="d-inline-block align-middle" height="50">
                     <span class="ms-2">NeoCareX</span>
                 </a>
@@ -740,11 +744,11 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
                 if (!navbar) return;
 
                 var searchForm = navbar.querySelector('form[name="frm_search_globals"], .form-inline');
-                var userData   = document.getElementById('userData');
                 var notifIcons = document.querySelector('#attendantData .flex-column.mx-2');
-                var logo       = navbar.querySelector('.navbar-brand');
+                var attendantData = document.getElementById('attendantData');
+                var logo = navbar.querySelector('.navbar-brand');
 
-                if (!searchForm && !userData && !notifIcons && !logo) return;
+                if (!searchForm && !logo) return;
 
                 var bar = existingBar || document.createElement('div');
                 if (!existingBar) {
@@ -783,6 +787,14 @@ $twig = (new TwigContainer(null, $GLOBALS['kernel']))->getTwig();
                 if (notifIcons && !bar.contains(notifIcons)) {
                     notifIcons.style.cssText = 'display:flex!important;flex-direction:row!important;align-items:center;gap:6px;';
                     bar.appendChild(notifIcons);
+                }
+
+                // ── NEW: place #attendantData as a sub-bar BELOW #oe-topbar ──
+                if (attendantData && !document.getElementById('oe-patient-bar')) {
+                    var patientBar = document.createElement('div');
+                    patientBar.id = 'oe-patient-bar';
+                    patientBar.appendChild(attendantData);
+                    document.body.appendChild(patientBar); // just append to body, CSS handles position
                 }
             }
 

@@ -66,6 +66,7 @@ $side-calendar-date-padding: 0.3rem !default;
   #viewPicker {
     @extend .col-md-3;
     text-align: $right;
+    padding-#{$left}: 14px !important;
   }
 
   #bigCalHeader {
