@@ -538,9 +538,9 @@ nav.navbar #userData,
 }
 
 #oe-secondary-nav .oe-sec-item.oe-sec-active {
-  background: #dbeafe;
-  border-color: #93c5fd;
-  color: #24439a;
+  background: #24439a !important;
+  color: #ffffff !important;
+  border-color: #24439a !important;
   font-weight: 500;
 }
 
@@ -816,6 +816,27 @@ nav.navbar .appMenu > div > .menuSection.oe-top-active > .menuLabel.dropdown-tog
   color: #ffffff !important;
 }
 
+/* ══════════════════════════════════════════
+   TOPBAR LEAF ITEMS (NO CHILDREN) — LIGHT GREEN BACKGROUND
+══════════════════════════════════════════ */
+#oe-secondary-nav .oe-sec-item:not(.oe-sec-has-children) {
+  background: #98e0af !important;
+  border-color: #70bd8b !important;
+  color: #15803d !important;
+}
+
+#oe-secondary-nav .oe-sec-item:not(.oe-sec-has-children):hover {
+  background: #24439a !important;
+  border-color: #24439a !important;
+  color: #ffffff !important;
+}
+
+#oe-secondary-nav .oe-sec-item:not(.oe-sec-has-children).oe-sec-active {
+  background: #24439a !important;
+  color: #ffffff !important;
+  border-color: #24439a !important;
+}
+
 /* ── Fix topbar hover — should stay neutral, not blue ── */
 #oe-topbar #username:hover,
 #oe-topbar #userdropdown .dropdown-item:hover {
@@ -943,4 +964,14 @@ body.sidebar-collapsed #oe-patient-bar {
 
 #oe-sidebar-toggle {
     top: 130px !important;   /* 52 + 70 + 16 */
+}
+
+#oe-patient-bar {
+    overflow: visible !important;  /* was: overflow: hidden */
+}
+
+#oe-patient-bar .dropdown-menu {
+    z-index: 1050 !important;
+    position: absolute !important;
+    border: 1px solid rgba(17, 24, 39, .15);
 }
