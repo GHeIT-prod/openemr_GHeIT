@@ -975,3 +975,13 @@ body.sidebar-collapsed #oe-patient-bar {
     position: absolute !important;
     border: 1px solid rgba(17, 24, 39, .15);
 }
+
+@media (max-height: 1366px) and (min-width: 769px) {
+  #oe-topbar input#anySearchBox {
+    width: 190px !important;
+  }
+
+  #oe-secondary-nav {
+    max-width: 568px !important;
+  }
+}
