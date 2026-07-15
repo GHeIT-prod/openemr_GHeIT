@@ -366,6 +366,29 @@ class FhirResourceResolver
         }
 
         // Binary/ and unknown resource types are intentionally ignored here.
+
+        if (str_starts_with($reference, 'Person/')) {
+            /*
+            |----------------------------------------------------------------------
+            | OpenEMR references some providers as Person/<uuid>.
+            | Try to resolve as Practitioner using the same UUID.
+            | If found, it goes into $practitioners so the bundle builder
+            | can include it and patch the reference to urn:uuid:.
+            |----------------------------------------------------------------------
+            */
+            $personId = explode('/', $reference)[1] ?? null;
+            if ($personId) {
+                $r = self::resolveReference(
+                    "Practitioner/$personId",
+                    $practitionerService,
+                    $seen['Practitioner']
+                );
+                if ($r) {
+                    $practitioners[] = $r;
+                }
+            }
+            return;
+        }
     }
 
     /*

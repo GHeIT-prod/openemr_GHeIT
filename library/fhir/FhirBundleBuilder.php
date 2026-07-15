@@ -114,6 +114,8 @@ class FhirBundleBuilder
             $id = $practitioner['id'] ?? null;
             if ($id) {
                 self::patchReferenceExact($resource, "Practitioner/$id", $practitionerUuids[$i]);
+                // Also patch Person/<id> → urn:uuid: in case OpenEMR used Person reference
+                self::patchReferenceExact($resource, "Person/$id", $practitionerUuids[$i]);
             }
         }
 
@@ -455,7 +457,9 @@ class FhirBundleBuilder
 
         self::fixMedicationRequestCategoryDisplays($resource);
 
-        self::fixIcd10SystemUri($resource); 
+        self::fixIcd10SystemUri($resource);
+        
+        self::fixUnresolvableReferences($resource);
 
         if (($resource['resourceType'] ?? '') === 'Encounter') {
             $resource = self::fixEncounterResource($resource);
@@ -595,7 +599,7 @@ class FhirBundleBuilder
             return $resource;
         }
 
-        // Fix invalid appointmentType system URIs
+        // Fix invalid appointmentType system URIs and displays
         if (isset($resource['appointmentType']['coding'])) {
             foreach ($resource['appointmentType']['coding'] as &$coding) {
                 $system = $coding['system'] ?? '';
@@ -607,8 +611,6 @@ class FhirBundleBuilder
                     $coding['system'] = 'http://terminology.hl7.org/CodeSystem/v2-0276';
                     $coding['code']   = self::mapAppointmentTypeCode($coding['code'] ?? '');
                 }
-
-                // Always enforce the canonical display for v2-0276 codes
                 if ($coding['system'] === 'http://terminology.hl7.org/CodeSystem/v2-0276') {
                     $coding['display'] = self::appointmentTypeDisplay($coding['code']);
                 }
@@ -616,8 +618,60 @@ class FhirBundleBuilder
             unset($coding);
         }
 
-        // Auto-correct status based on participant statuses
         if (isset($resource['participant'])) {
+
+            foreach ($resource['participant'] as &$participant) {
+                $actorType = $participant['actor']['type']      ?? null;
+                $actorRef  = $participant['actor']['reference'] ?? null;
+
+                /*
+                |------------------------------------------------------------------
+                | Remap Person → Practitioner
+                | OpenEMR stores some providers as Person resources.
+                | Person is not a valid Appointment.participant.actor target.
+                |------------------------------------------------------------------
+                */
+                if ($actorType === 'Person' && $actorRef) {
+                    $participant['actor']['type']      = 'Practitioner';
+                    $participant['actor']['reference'] = preg_replace(
+                        '#^Person/#',
+                        'Practitioner/',
+                        $actorRef
+                    );
+                }
+            }
+            unset($participant);
+
+            /*
+            |----------------------------------------------------------------------
+            | Drop participants whose actor is still an external ResourceType/id
+            | reference that won't exist in Aidbox (not in bundle, not pre-loaded).
+            | Keeps urn:uuid: (intra-bundle) and empty/display-only actors.
+            |----------------------------------------------------------------------
+            */
+            $resource['participant'] = array_values(array_filter(
+                $resource['participant'],
+                function ($participant) {
+                    $ref = $participant['actor']['reference'] ?? '';
+
+                    // Always keep intra-bundle urn:uuid: references
+                    if (str_starts_with($ref, 'urn:uuid:') || empty($ref)) {
+                        return true;
+                    }
+
+                    // Drop external ResourceType/id that Aidbox will reject
+                    if (preg_match(
+                        '#^(Practitioner|Person|Patient|RelatedPerson|Device|HealthcareService)/[a-f0-9\-]+$#i',
+                        $ref
+                    )) {
+                        return false;
+                    }
+
+                    return true;
+                }
+            ));
+
+            // Auto-correct status
             $allAccepted = array_reduce(
                 $resource['participant'],
                 fn($carry, $p) => $carry && (($p['status'] ?? '') === 'accepted'),
@@ -1063,6 +1117,53 @@ class FhirBundleBuilder
                 unset($coding);
             }
             unset($diag);
+        }
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | FIX UNRESOLVABLE REFERENCES
+    |--------------------------------------------------------------------------
+    | Drops performer[], requester, and other external ResourceType/id
+    | references that were not resolved into the bundle.
+    | These cause Aidbox 422 "resource does not exist".
+    |--------------------------------------------------------------------------
+    */
+    private static function fixUnresolvableReferences(array &$resource): void
+    {
+        // performer[]
+        if (isset($resource['performer'])) {
+            $resource['performer'] = array_values(array_filter(
+                $resource['performer'],
+                function ($performer) {
+                    $ref = $performer['reference'] ?? '';
+                    if (str_starts_with($ref, 'urn:uuid:') || empty($ref)) {
+                        return true;
+                    }
+                    if (preg_match(
+                        '#^(Practitioner|Person|Patient|RelatedPerson|Device|Organization)/[a-f0-9\-]+$#i',
+                        $ref
+                    )) {
+                        return false;
+                    }
+                    return true;
+                }
+            ));
+
+            if (empty($resource['performer'])) {
+                unset($resource['performer']);
+            }
+        }
+
+        // requester
+        if (isset($resource['requester']['reference'])) {
+            $ref = $resource['requester']['reference'];
+            if (
+                !str_starts_with($ref, 'urn:uuid:') &&
+                preg_match('#^(Practitioner|Person|Patient|Organization)/[a-f0-9\-]+$#i', $ref)
+            ) {
+                unset($resource['requester']);
+            }
         }
     }
 
