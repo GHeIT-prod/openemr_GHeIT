@@ -8,14 +8,14 @@ services:
     - 80:80
     - 443:443
     volumes:
-      - ../../public:/var/www/localhost/htdocs/openemr/public:rw
-      - ./docker_data/sitesvolume:/var/www/localhost/htdocs/openemr/sites:rw
-      - ../../interface:/var/www/localhost/htdocs/openemr/interface
-      - ../../src:/var/www/localhost/htdocs/openemr/src
-      - ../../templates:/var/www/localhost/htdocs/openemr/templates
-      - ../../portal:/var/www/localhost/htdocs/openemr/portal
-      - ../../library:/var/www/localhost/htdocs/openemr/library
-      - ../../apis:/var/www/localhost/htdocs/openemr/apis
+      # - ../../public:/var/www/localhost/htdocs/openemr/public:rw
+      # - ./docker_data/sitesvolume:/var/www/localhost/htdocs/openemr/sites:rw
+      # - ../../interface:/var/www/localhost/htdocs/openemr/interface
+      # - ../../src:/var/www/localhost/htdocs/openemr/src
+      # - ../../templates:/var/www/localhost/htdocs/openemr/templates
+      # - ../../portal:/var/www/localhost/htdocs/openemr/portal
+      # - ../../library:/var/www/localhost/htdocs/openemr/library
+      # - ../../apis:/var/www/localhost/htdocs/openemr/apis
         # - ./docker_data/nodemodules:/var/www/localhost/htdocs/openemr/node_modules:rw
         #- ./docker_data/vendordir:/var/www/localhost/htdocs/openemr/vendor:rw
         # - ./docker_data/ccdanodemodules:/var/www/localhost/htdocs/openemr/ccdaservice/node_modules:rw
@@ -63,6 +63,10 @@ services:
       OPENEMR_SETTING_couchdb_ssl_allow_selfsigned: 1
       OPENEMR_SETTING_gbl_ldap_host: 'ldap://openldap:389'
       OPENEMR_SETTING_gbl_ldap_dn: 'cn={login},dc=example,dc=org'
+      PUBSUB_CREDENTIALS_PATH: ${PUBSUB_CREDENTIALS_PATH}
+      PUBSUB_PROJECT_ID: ${PUBSUB_PROJECT_ID}
+      PUBSUB_TOPIC_NAME: ${PUBSUB_TOPIC_NAME}
+      PUBSUB_SUBSCRIPTION_NAME: ${PUBSUB_SUBSCRIPTION_NAME}
       #phpmyadmin:
       # restart: always
       #image: phpmyadmin
