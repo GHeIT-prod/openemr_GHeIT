@@ -3,7 +3,7 @@ FROM openemr/openemr:8.0.0
 WORKDIR /var/www/localhost/htdocs/openemr
 
 # Copy Apache configuration
-COPY docker/gheit-local/config/openemr.conf /etc/apache2/conf.d/openemr.conf
+COPY docker/gheit-dev/config/openemr.conf /etc/apache2/conf.d/openemr.conf
 RUN chown root:root /etc/apache2/conf.d/openemr.conf
 
 # Copy the entire application from the build context

@@ -15,8 +15,8 @@ services:
   openemr:
     restart: always
     build:
-      context: "."
-      dockerfile: Dockerfile
+      context: "../.."
+      dockerfile: docker/gheit-dev/Dockerfile
     ports:
     - 80:80
     - 443:443
