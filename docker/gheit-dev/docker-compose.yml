@@ -15,8 +15,8 @@ services:
   openemr:
     restart: always
     build:
-      context: "."
-      dockerfile: Dockerfile
+      context: "../.."
+      dockerfile: docker/gheit-dev/Dockerfile
     ports:
     - 80:80
     - 443:443
@@ -25,14 +25,14 @@ services:
       #- ../..:/var/www/localhost/htdocs/openemr:rw
       #- ./docker_data/assetvolume:/var/www/localhost/htdocs/openemr/public/assets:rw
       #- ./docker_data/themevolume:/var/www/localhost/htdocs/openemr/public/themes:rw
-    - ../../public:/var/www/localhost/htdocs/openemr/public:rw
-    - ../../interface:/var/www/localhost/htdocs/openemr/interface
-    - ../../src:/var/www/localhost/htdocs/openemr/src
-    - ../../templates:/var/www/localhost/htdocs/openemr/templates
-    - ../../apis:/var/www/localhost/htdocs/openemr/apis
-    - ./docker_data/sitesvolume:/var/www/localhost/htdocs/openemr/sites:rw
-    - ../../portal:/var/www/localhost/htdocs/openemr/portal
-    - ../../library:/var/www/localhost/htdocs/openemr/library
+    # - ../../public:/var/www/localhost/htdocs/openemr/public:rw
+    # - ../../interface:/var/www/localhost/htdocs/openemr/interface
+    # - ../../src:/var/www/localhost/htdocs/openemr/src
+    # - ../../templates:/var/www/localhost/htdocs/openemr/templates
+    # - ../../apis:/var/www/localhost/htdocs/openemr/apis
+    # - ./docker_data/sitesvolume:/var/www/localhost/htdocs/openemr/sites:rw
+    # - ../../portal:/var/www/localhost/htdocs/openemr/portal
+    # - ../../library:/var/www/localhost/htdocs/openemr/library
 
       #- ./docker_data/nodemodules:/var/www/localhost/htdocs/openemr/node_modules:rw
       #- ./docker_data/vendordir:/var/www/localhost/htdocs/openemr/vendor:rw
@@ -81,6 +81,10 @@ services:
       OPENEMR_SETTING_couchdb_ssl_allow_selfsigned: 1
       OPENEMR_SETTING_gbl_ldap_host: 'ldap://openldap:389'
       OPENEMR_SETTING_gbl_ldap_dn: 'cn={login},dc=example,dc=org'
+      PUBSUB_CREDENTIALS_PATH: ${PUBSUB_CREDENTIALS_PATH}
+      PUBSUB_PROJECT_ID: ${PUBSUB_PROJECT_ID}
+      PUBSUB_TOPIC_NAME: ${PUBSUB_TOPIC_NAME}
+      PUBSUB_SUBSCRIPTION_NAME: ${PUBSUB_SUBSCRIPTION_NAME}
     depends_on:
     - mysql
       #phpmyadmin:
