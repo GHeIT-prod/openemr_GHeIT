@@ -3,14 +3,20 @@
 namespace OpenEMR\Modules\CustomModuleGheit\Controller;
 
 use Google\Cloud\PubSub\PubSubClient;
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../../../../../');
+$dotenv->safeLoad();
 
 class PubSub
 {
-    public function publishPubsub($resource, $event, $resourceDataName, $data): void
+    public function publishPubsub($resource, $event, $resourceDataName, $data)
     {
-        $credentialsPath = getenv('PUBSUB_CREDENTIALS_PATH');
-        $projectId = getenv('PUBSUB_PROJECT_ID');
-        $topicName = getenv('PUBSUB_TOPIC_NAME');
+        putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $_ENV['PUBSUB_CREDENTIALS_PATH']);
+
+        $projectId = $_ENV['PUBSUB_PROJECT_ID'];
+        $topicName = $_ENV['PUBSUB_TOPIC_NAME'];
+        $credentialsPath = $_ENV['PUBSUB_CREDENTIALS_PATH'];
 
         // Validate required configuration
         if (
@@ -29,9 +35,9 @@ class PubSub
         }
 
         try {
+
             $pubSub = new PubSubClient([
-                'projectId'  => $projectId,
-                'keyFilePath' => $credentialsPath,
+                'projectId' => $projectId,
             ]);
 
             $topic = $pubSub->topic($topicName);
@@ -40,16 +46,21 @@ class PubSub
                 'resourceType' => $resource,
                 'event' => $event,
                 $resourceDataName => $data,
+                'timestamp' => date('c'),
+                'data' => $data
             ];
 
+            // Publish message
             $topic->publish([
-                'data' => json_encode(
-                    $payload,
-                    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-                ),
+                'data' => json_encode($payload),
+                'attributes' => [
+                    'resourceType' => $resource,
+                    'eventType' => $event
+                ]
             ]);
-        } catch (\Throwable $e) {
-            error_log('PubSub Error: ' . $e->getMessage());
-        }
+
+        } catch (\Exception $e) {
+            error_log("PubSub Error: " . $e->getMessage());
+        }   
     }
 }
