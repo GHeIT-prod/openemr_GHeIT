@@ -106,6 +106,14 @@ final class FileMetadataServiceTest extends TestCase
         $service->markDeleted(42);
     }
 
+    public function testMarksUploadedFileScanClean(): void
+    {
+        $repository = $this->createMock(FileMetadataRepositoryInterface::class);
+        $repository->expects($this->once())->method('markScanClean')->with(42)->willReturn(true);
+
+        (new FileMetadataService($repository, $this->config()))->markScanClean(42);
+    }
+
     public function testReturnsMetadataAndRejectsMissingRecord(): void
     {
         $repository = $this->createMock(FileMetadataRepositoryInterface::class);

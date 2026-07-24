@@ -56,6 +56,18 @@ final class FileUploadValidatorTest extends TestCase
         $this->assertSame(filesize($path), $upload->getSize());
     }
 
+    public function testInfersKindFromFilenameExtension(): void
+    {
+        $this->assertSame(
+            FileUploadValidator::KIND_PDF,
+            $this->validator->kindForFilename('report.PDF')
+        );
+        $this->assertSame(
+            FileUploadValidator::KIND_IMAGE,
+            $this->validator->kindForFilename('scan.png')
+        );
+    }
+
     public function testValidatesPlainTextDocument(): void
     {
         $path = $this->file('clinical note');

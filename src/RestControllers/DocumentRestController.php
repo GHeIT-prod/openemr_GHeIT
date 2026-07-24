@@ -12,10 +12,10 @@
 
 namespace OpenEMR\RestControllers;
 
-use Nyholm\Psr7\Factory\Psr17Factory;
 use OpenEMR\Services\DocumentService;
 use OpenEMR\RestControllers\RestControllerHelper;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -44,7 +44,11 @@ class DocumentRestController
     {
         $results = $this->documentService->getFile($pid, $did);
 
-        if (!empty($results)) {
+        if (!empty($results['download_url'])) {
+            return new RedirectResponse($results['download_url'], Response::HTTP_FOUND);
+        }
+
+        if (!empty($results['file'])) {
             $response = new BinaryFileResponse($results['file'], Response::HTTP_OK, [], true);
             $response->setContentDisposition('attachment', $results['filename']);
             // we no longer use pre-check and post-check headers as they are not needed and microsoft even discourages
@@ -56,10 +60,10 @@ class DocumentRestController
             // the browser will not cache the file.
             $response->setExpires(new \DateTimeImmutable("-1 HOUR"));
             return $response;
-        } else {
-            // TODO: @adunsulag we should return a 404 here if the file does not exist... but prior behavior was to return a 400
-            return new Response(null, Response::HTTP_BAD_REQUEST);
         }
+
+        // TODO: @adunsulag we should return a 404 here if the file does not exist... but prior behavior was to return a 400
+        return new Response(null, Response::HTTP_BAD_REQUEST);
     }
 
     public function setSession(SessionInterface $getSession)

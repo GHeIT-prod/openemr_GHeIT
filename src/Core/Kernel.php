@@ -14,11 +14,16 @@ use OpenEMR\Services\FileStorage\FileStorageConfig;
 use OpenEMR\Services\FileStorage\FileStorageInterface;
 use OpenEMR\Services\FileStorage\FileMetadataRepositoryInterface;
 use OpenEMR\Services\FileStorage\FileMetadataService;
+use OpenEMR\Services\FileStorage\FileMetadataServiceInterface;
 use OpenEMR\Services\FileStorage\FileUploadValidator;
+use OpenEMR\Services\FileStorage\FileUploadValidatorInterface;
+use OpenEMR\Services\FileStorage\PatientDocumentRecordRepositoryInterface;
+use OpenEMR\Services\FileStorage\PatientDocumentStorageService;
 use OpenEMR\Services\FileStorage\S3ClientFactory;
 use OpenEMR\Services\FileStorage\S3FileStorage;
 use OpenEMR\Services\FileStorage\S3ObjectKeyGenerator;
 use OpenEMR\Services\FileStorage\SqlFileMetadataRepository;
+use OpenEMR\Services\FileStorage\SqlPatientDocumentRecordRepository;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -93,10 +98,33 @@ class Kernel
                     new Reference(FileStorageConfig::class),
                 ]))->setPublic(true)
             );
+            $builder->setAlias(FileMetadataServiceInterface::class, FileMetadataService::class)
+                ->setPublic(true);
             $builder->setDefinition(
                 FileUploadValidator::class,
                 (new Definition(FileUploadValidator::class, [
                     new Reference(FileStorageConfig::class),
+                ]))->setPublic(true)
+            );
+            $builder->setAlias(FileUploadValidatorInterface::class, FileUploadValidator::class)
+                ->setPublic(true);
+            $builder->setDefinition(
+                SqlPatientDocumentRecordRepository::class,
+                new Definition(SqlPatientDocumentRecordRepository::class)
+            );
+            $builder->setAlias(
+                PatientDocumentRecordRepositoryInterface::class,
+                SqlPatientDocumentRecordRepository::class
+            );
+            $builder->setDefinition(
+                PatientDocumentStorageService::class,
+                (new Definition(PatientDocumentStorageService::class, [
+                    new Reference(FileStorageInterface::class),
+                    new Reference(FileMetadataServiceInterface::class),
+                    new Reference(FileUploadValidatorInterface::class),
+                    new Reference(S3ObjectKeyGenerator::class),
+                    new Reference(PatientDocumentRecordRepositoryInterface::class),
+                    new Reference(SystemLogger::class),
                 ]))->setPublic(true)
             );
             $builder->setDefinition(SystemLogger::class, new Definition(SystemLogger::class));

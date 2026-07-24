@@ -14,7 +14,7 @@ namespace OpenEMR\Services\FileStorage;
 use finfo;
 use ZipArchive;
 
-final class FileUploadValidator
+final class FileUploadValidator implements FileUploadValidatorInterface
 {
     public const KIND_IMAGE = 'images';
     public const KIND_PDF = 'pdfs';
@@ -57,6 +57,34 @@ final class FileUploadValidator
             : null;
 
         return $this->validateFile($file['tmp_name'], $file['name'], $kind, $declaredSize);
+    }
+
+    public function validateUploadedFileAutoKind(array $file): ValidatedUpload
+    {
+        if (!isset($file['name']) || !is_string($file['name'])) {
+            throw new FileValidationException('Invalid HTTP file upload');
+        }
+
+        return $this->validateUploadedFile($file, $this->kindForFilename($file['name']));
+    }
+
+    public function kindForFilename(string $filename): string
+    {
+        $extension = strtolower((string)pathinfo($filename, PATHINFO_EXTENSION));
+        if (in_array($extension, $this->config->getAllowedImageExtensions(), true)) {
+            return self::KIND_IMAGE;
+        }
+        if (in_array($extension, $this->config->getAllowedPdfExtensions(), true)) {
+            return self::KIND_PDF;
+        }
+        if (in_array($extension, $this->config->getAllowedVideoExtensions(), true)) {
+            return self::KIND_VIDEO;
+        }
+        if (in_array($extension, $this->config->getAllowedDocumentExtensions(), true)) {
+            return self::KIND_DOCUMENT;
+        }
+
+        throw new FileValidationException('Uploaded file extension is not allowed');
     }
 
     public function validateFile(
