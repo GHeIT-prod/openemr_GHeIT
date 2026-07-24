@@ -52,6 +52,11 @@ class Document extends ORDataObject
     public const STORAGE_METHOD_COUCHDB = 1;
 
     /**
+     * Use Amazon S3 to store files at
+     */
+    public const STORAGE_METHOD_S3 = 2;
+
+    /**
      * Flag that the encryption is on.
      */
     public const ENCRYPTED_ON = 1;
@@ -204,6 +209,12 @@ class Document extends ORDataObject
 
     // Storage method
     public $storagemethod;
+
+    /**
+     * Canonical S3 metadata row id from file_storage
+     * @public int|null
+     */
+    public $storage_file_id;
 
     // For storing couch docid
     public $couch_docid;
@@ -823,6 +834,16 @@ class Document extends ORDataObject
     function get_storagemethod()
     {
         return $this->storagemethod;
+    }
+
+    function set_storage_file_id($storageFileId)
+    {
+        $this->storage_file_id = $storageFileId;
+    }
+
+    function get_storage_file_id()
+    {
+        return $this->storage_file_id;
     }
 
     function set_couch_docid($str)

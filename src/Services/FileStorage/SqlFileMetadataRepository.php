@@ -69,6 +69,15 @@ final class SqlFileMetadataRepository implements FileMetadataRepositoryInterface
         );
     }
 
+    public function markScanClean(int $fileId): bool
+    {
+        return $this->update(
+            "UPDATE `file_storage` SET `scan_status` = 'clean' "
+            . "WHERE `id` = ? AND `storage_status` = 'uploaded' AND `scan_status` = 'pending'",
+            [$fileId]
+        );
+    }
+
     public function markFailed(int $fileId): bool
     {
         return $this->update(

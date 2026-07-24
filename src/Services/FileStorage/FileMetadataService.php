@@ -13,7 +13,7 @@ namespace OpenEMR\Services\FileStorage;
 
 use InvalidArgumentException;
 
-final class FileMetadataService
+final class FileMetadataService implements FileMetadataServiceInterface
 {
     public function __construct(
         private readonly FileMetadataRepositoryInterface $repository,
@@ -56,6 +56,13 @@ final class FileMetadataService
     {
         if (!$this->repository->markUploaded($fileId, $storedFile)) {
             throw new FileMetadataException('Unable to mark file uploaded');
+        }
+    }
+
+    public function markScanClean(int $fileId): void
+    {
+        if (!$this->repository->markScanClean($fileId)) {
+            throw new FileMetadataException('Unable to mark file scan clean');
         }
     }
 

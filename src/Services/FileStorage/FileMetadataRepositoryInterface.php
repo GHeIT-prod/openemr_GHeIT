@@ -26,6 +26,8 @@ interface FileMetadataRepositoryInterface
 
     public function markUploaded(int $fileId, StoredFile $storedFile): bool;
 
+    public function markScanClean(int $fileId): bool;
+
     public function markFailed(int $fileId): bool;
 
     public function markDeleting(int $fileId): bool;

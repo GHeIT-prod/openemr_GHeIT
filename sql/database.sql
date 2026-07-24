@@ -1404,7 +1404,7 @@ CREATE TABLE `documents` (
   `drive_uuid` binary(16) DEFAULT NULL,
   `couch_docid` VARCHAR(100) DEFAULT NULL,
   `couch_revid` VARCHAR(100) DEFAULT NULL,
-  `storagemethod` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '0->Harddisk,1->CouchDB',
+  `storagemethod` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '0->Harddisk,1->CouchDB,2->S3',
   `path_depth` TINYINT DEFAULT '1' COMMENT 'Depth of path to use in url to find document. Not applicable for CouchDB.',
   `imported` TINYINT DEFAULT 0 NULL COMMENT 'Parsing status for CCR/CCD/CCDA importing',
   `encounter_id` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Encounter id if tagged',
