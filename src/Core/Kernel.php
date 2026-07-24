@@ -8,6 +8,13 @@
 
 namespace OpenEMR\Core;
 
+use Aws\S3\S3ClientInterface;
+use OpenEMR\Common\Logging\SystemLogger;
+use OpenEMR\Services\FileStorage\FileStorageConfig;
+use OpenEMR\Services\FileStorage\FileStorageInterface;
+use OpenEMR\Services\FileStorage\S3ClientFactory;
+use OpenEMR\Services\FileStorage\S3FileStorage;
+use OpenEMR\Services\FileStorage\S3ObjectKeyGenerator;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -52,6 +59,29 @@ class Kernel
             }
             $definition->setPublic(true);
             $builder->setDefinition('event_dispatcher', $definition);
+
+            $builder->setDefinition(
+                FileStorageConfig::class,
+                (new Definition(FileStorageConfig::class))
+                    ->setFactory([FileStorageConfig::class, 'fromEnvironment'])
+            );
+            $builder->setDefinition(
+                S3ClientInterface::class,
+                (new Definition(S3ClientInterface::class, [new Reference(FileStorageConfig::class)]))
+                    ->setFactory([S3ClientFactory::class, 'create'])
+            );
+            $builder->setDefinition(
+                S3FileStorage::class,
+                new Definition(S3FileStorage::class, [
+                    new Reference(S3ClientInterface::class),
+                    new Reference(FileStorageConfig::class),
+                    new Reference(SystemLogger::class),
+                ])
+            );
+            $builder->setAlias(FileStorageInterface::class, S3FileStorage::class)->setPublic(true);
+            $builder->setDefinition(S3ObjectKeyGenerator::class, (new Definition(S3ObjectKeyGenerator::class))->setPublic(true));
+            $builder->setDefinition(SystemLogger::class, new Definition(SystemLogger::class));
+
             $builder->compile();
             $this->container = $builder;
             if (!empty($this->dispatcher)) {
