@@ -32,6 +32,136 @@ final class PatientDocumentStorageService
     public function upload(int $pid, int $categoryId, array $fileData, int $ownerId): int
     {
         $validated = $this->validator->validateUploadedFileAutoKind($fileData);
+
+        return $this->storeValidatedUpload($pid, $categoryId, $validated, $ownerId);
+    }
+
+    public function uploadFromPath(
+        int $pid,
+        int $categoryId,
+        string $path,
+        string $originalFilename,
+        int $ownerId,
+        ?int $foreignReferenceId = null,
+        ?string $foreignReferenceTable = null,
+        ?string $dateExpires = null
+    ): int {
+        $validated = $this->validator->validateFile(
+            $path,
+            $originalFilename,
+            $this->validator->kindForFilename($originalFilename)
+        );
+
+        return $this->storeValidatedUpload(
+            $pid,
+            $categoryId,
+            $validated,
+            $ownerId,
+            $foreignReferenceId,
+            $foreignReferenceTable,
+            $dateExpires
+        );
+    }
+
+    /**
+     * @return array{filename: string, mimetype: string, download_url: string}
+     */
+    public function createDownload(int $pid, int $documentId): array
+    {
+        $document = $this->resolveAccessibleDocument($pid, $documentId);
+        $filename = $this->documentFilename($document);
+        $mimeType = $this->documentMimeType($document);
+
+        return [
+            'filename' => $filename,
+            'mimetype' => $mimeType,
+            'download_url' => $this->storage->createDownloadUrl(
+                (string)$document['storage_key'],
+                $filename,
+                $mimeType,
+                $document['storage_version_id'] ?? null
+            ),
+        ];
+    }
+
+    /**
+     * @return array{filename: string, mimetype: string, view_url: string}
+     */
+    public function createView(int $pid, int $documentId): array
+    {
+        $access = $this->createAccessUrl($pid, $documentId, false);
+
+        return [
+            'filename' => $access['filename'],
+            'mimetype' => $access['mimetype'],
+            'view_url' => $access['url'],
+        ];
+    }
+
+    /**
+     * @return array{filename: string, mimetype: string, url: string}
+     */
+    public function createAccessUrl(int $pid, int $documentId, bool $asFile): array
+    {
+        $document = $this->resolveAccessibleDocument($pid, $documentId);
+        $filename = $this->documentFilename($document);
+        $mimeType = $this->documentMimeType($document);
+        $key = (string)$document['storage_key'];
+        $versionId = $document['storage_version_id'] ?? null;
+
+        if ($asFile) {
+            $url = $this->storage->createDownloadUrl($key, $filename, $mimeType, $versionId);
+        } else {
+            try {
+                $url = $this->storage->createViewUrl($key, $filename, $mimeType, $versionId);
+            } catch (FileStorageException) {
+                $url = $this->storage->createInlineUrl($key, $filename, $mimeType, $versionId);
+            }
+        }
+
+        return [
+            'filename' => $filename,
+            'mimetype' => $mimeType,
+            'url' => $url,
+        ];
+    }
+
+    public function readDocumentContent(int $pid, int $documentId): string
+    {
+        $document = $this->resolveAccessibleDocument($pid, $documentId);
+        $temporaryPath = tempnam($this->temporaryDirectory(), 'oer');
+        if ($temporaryPath === false) {
+            throw FileStorageException::forOperation('patient document read');
+        }
+
+        try {
+            $this->storage->downloadToPath(
+                (string)$document['storage_key'],
+                $temporaryPath,
+                $document['storage_version_id'] ?? null
+            );
+            $content = file_get_contents($temporaryPath);
+            if ($content === false) {
+                throw FileStorageException::forOperation('patient document read');
+            }
+
+            return $content;
+        } finally {
+            if (is_file($temporaryPath)) {
+                unlink($temporaryPath);
+            }
+        }
+    }
+
+    private function storeValidatedUpload(
+        int $pid,
+        int $categoryId,
+        ValidatedUpload $validated,
+        int $ownerId,
+        ?int $foreignReferenceId = null,
+        ?string $foreignReferenceTable = null,
+        ?string $dateExpires = null
+    ): int {
         $pending = $this->metadataService->createPending(
             $validated->getOriginalFilename(),
             $validated->getMimeType(),
@@ -69,7 +199,10 @@ final class PatientDocumentStorageService
                 $validated->getMimeType(),
                 $validated->getSize(),
                 (string)$storedFile->getChecksumSha256(),
-                $ownerId
+                $ownerId,
+                $foreignReferenceId,
+                $foreignReferenceTable,
+                $dateExpires
             );
         } catch (Throwable $exception) {
             $this->compensateFailedUpload($pending->getId(), $storedFile);
@@ -90,9 +223,9 @@ final class PatientDocumentStorageService
     }
 
     /**
-     * @return array{filename: string, mimetype: string, download_url: string}
+     * @return array<string, mixed>
      */
-    public function createDownload(int $pid, int $documentId): array
+    private function resolveAccessibleDocument(int $pid, int $documentId): array
     {
         $document = $this->documents->findDocumentForPatient($pid, $documentId);
         if ($document === null || empty($document['storage_file_id'])) {
@@ -106,19 +239,23 @@ final class PatientDocumentStorageService
             throw new FileStorageException('Patient document is not ready for download');
         }
 
-        $filename = (string)($document['original_filename'] ?: $document['name'] ?: 'document');
-        $mimeType = (string)($document['storage_mime_type'] ?: $document['mimetype'] ?: 'application/octet-stream');
+        return $document;
+    }
 
-        return [
-            'filename' => $filename,
-            'mimetype' => $mimeType,
-            'download_url' => $this->storage->createDownloadUrl(
-                (string)$document['storage_key'],
-                $filename,
-                $mimeType,
-                $document['storage_version_id'] ?? null
-            ),
-        ];
+    /**
+     * @param array<string, mixed> $document
+     */
+    private function documentFilename(array $document): string
+    {
+        return (string)($document['original_filename'] ?: $document['name'] ?: 'document');
+    }
+
+    /**
+     * @param array<string, mixed> $document
+     */
+    private function documentMimeType(array $document): string
+    {
+        return (string)($document['storage_mime_type'] ?: $document['mimetype'] ?: 'application/octet-stream');
     }
 
     private function compensateFailedUpload(int $fileId, ?StoredFile $storedFile): void
@@ -162,5 +299,12 @@ final class PatientDocumentStorageService
         }
 
         return UniqueInstallationUuid::getUniqueInstallationUuid();
+    }
+
+    private function temporaryDirectory(): string
+    {
+        $directory = $GLOBALS['temporary_files_dir'] ?? sys_get_temp_dir();
+
+        return is_string($directory) && $directory !== '' ? $directory : sys_get_temp_dir();
     }
 }

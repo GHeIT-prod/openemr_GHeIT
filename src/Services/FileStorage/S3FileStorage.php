@@ -180,6 +180,68 @@ final class S3FileStorage implements FileStorageInterface
         return $this->createPresignedUrl($key, $filename, $mimeType, 'attachment', $versionId);
     }
 
+    public function createInlineUrl(
+        string $key,
+        string $filename,
+        string $mimeType,
+        ?string $versionId = null
+    ): string {
+        $mimeType = in_array($mimeType, $this->allowedMimeTypes(), true)
+            ? $mimeType
+            : 'application/octet-stream';
+
+        return $this->createPresignedUrl($key, $filename, $mimeType, 'inline', $versionId);
+    }
+
+    public function downloadToPath(string $key, string $destinationPath, ?string $versionId = null): void
+    {
+        if ($destinationPath === '' || is_dir($destinationPath)) {
+            throw FileStorageException::forOperation('download');
+        }
+
+        $result = $this->execute('GetObject', $this->objectArguments($key, $versionId), 'download');
+        $body = $result['Body'] ?? null;
+        if (!is_resource($body) && !is_string($body)) {
+            throw FileStorageException::forOperation('download');
+        }
+
+        $destination = fopen($destinationPath, 'wb');
+        if ($destination === false) {
+            throw FileStorageException::forOperation('download');
+        }
+
+        try {
+            if (is_string($body)) {
+                if (fwrite($destination, $body) === false) {
+                    throw FileStorageException::forOperation('download');
+                }
+
+                return;
+            }
+
+            while (!feof($body)) {
+                $chunk = fread($body, 8192);
+                if ($chunk === false) {
+                    throw FileStorageException::forOperation('download');
+                }
+                if ($chunk !== '' && fwrite($destination, $chunk) === false) {
+                    throw FileStorageException::forOperation('download');
+                }
+            }
+        } catch (Throwable $exception) {
+            if ($exception instanceof FileStorageException) {
+                throw $exception;
+            }
+
+            throw $this->operationException('download', $exception);
+        } finally {
+            fclose($destination);
+            if (is_resource($body)) {
+                fclose($body);
+            }
+        }
+    }
+
     public function delete(string $key, ?string $versionId = null): void
     {
         $this->execute('DeleteObject', $this->objectArguments($key, $versionId), 'delete');

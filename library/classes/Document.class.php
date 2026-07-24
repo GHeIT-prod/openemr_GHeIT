@@ -31,6 +31,9 @@ use Google\Cloud\PubSub\PubSubClient;
 use Ramsey\Uuid\Uuid;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 use OpenEMR\Services\FHIR\FhirDocumentReferenceService;
+use OpenEMR\Services\FileStorage\FileStorageException;
+use OpenEMR\Services\FileStorage\FileValidationException;
+use OpenEMR\Services\FileStorage\PatientDocumentStorageService;
 
 class Document extends ORDataObject
 {
@@ -931,6 +934,20 @@ class Document extends ORDataObject
         ) {
             return xl('Reference table and reference id must both be set');
         }
+        if (is_numeric($patient_id) && (int)$patient_id > 0 && is_numeric($category_id)) {
+            return $this->createDocumentInS3(
+                (int)$patient_id,
+                (int)$category_id,
+                $filename,
+                $mimetype,
+                $data,
+                $owner,
+                $tmpfile,
+                $date_expires,
+                $foreign_reference_id,
+                $foreign_reference_table
+            );
+        }
         $session = SessionWrapperFactory::getInstance()->getWrapper();
         $this->set_foreign_reference_id($foreign_reference_id);
         $this->set_foreign_reference_table($foreign_reference_table);
@@ -1129,6 +1146,91 @@ class Document extends ORDataObject
         $pubSubController->publishPubsub('DocumentReference', 'document_uploaded', 'document_data', $fhirArray);
 
         return '';
+    }
+
+    /**
+     * Store a patient-linked document in S3 and persist its metadata row.
+     *
+     * @return string Empty string if success, otherwise error message text
+     */
+    private function createDocumentInS3(
+        int $patient_id,
+        int $category_id,
+        string $filename,
+        string $mimetype,
+        &$data,
+        $owner,
+        $tmpfile,
+        $date_expires,
+        $foreign_reference_id,
+        $foreign_reference_table
+    ) {
+        $session = SessionWrapperFactory::getInstance()->getWrapper();
+        $temporaryPath = null;
+        $cleanupTemporary = false;
+
+        try {
+            if (!isset($GLOBALS['kernel'])) {
+                return xl('Document storage is unavailable');
+            }
+
+            /** @var PatientDocumentStorageService $storageService */
+            $storageService = $GLOBALS['kernel']->getContainer()->get(PatientDocumentStorageService::class);
+
+            if (is_string($tmpfile) && is_file($tmpfile)) {
+                $sourcePath = $tmpfile;
+            } else {
+                $temporaryPath = tempnam($GLOBALS['temporary_files_dir'] ?? sys_get_temp_dir(), 'oer');
+                if ($temporaryPath === false || file_put_contents($temporaryPath, $data) === false) {
+                    return xl('Failed to prepare document for upload');
+                }
+                $sourcePath = $temporaryPath;
+                $cleanupTemporary = true;
+            }
+
+            $ownerId = (int)($owner ?: $session->get('authUserID'));
+            $foreignReferenceId = null;
+            if ($foreign_reference_id !== null && $foreign_reference_id !== '') {
+                $foreignReferenceId = (int)$foreign_reference_id;
+            }
+
+            $documentId = $storageService->uploadFromPath(
+                $patient_id,
+                $category_id,
+                $sourcePath,
+                $filename,
+                $ownerId,
+                $foreignReferenceId,
+                is_string($foreign_reference_table) && $foreign_reference_table !== ''
+                    ? $foreign_reference_table
+                    : null,
+                is_string($date_expires) && $date_expires !== '' ? $date_expires : null
+            );
+
+            $this->id = $documentId;
+            $this->populate();
+
+            $documentUuid = UuidRegistry::uuidToString($this->get_uuid());
+            $service = new FhirDocumentReferenceService();
+            $result = $service->getOne($documentUuid);
+            $documentRef = $result->getData()[0];
+            $fhirArray = $documentRef->jsonSerialize();
+
+            $pubSubController = new PubSub();
+            $pubSubController->publishPubsub('DocumentReference', 'document_uploaded', 'document_data', $fhirArray);
+
+            return '';
+        } catch (FileValidationException $exception) {
+            return xl('Invalid document upload');
+        } catch (FileStorageException $exception) {
+            return xl('Document upload failed');
+        } catch (\Throwable $exception) {
+            return xl('Document upload failed');
+        } finally {
+            if ($cleanupTemporary && is_string($temporaryPath) && is_file($temporaryPath)) {
+                unlink($temporaryPath);
+            }
+        }
     }
 
     /**

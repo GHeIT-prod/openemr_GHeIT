@@ -30,6 +30,8 @@ use OpenEMR\Services\FacilityService;
 use OpenEMR\Services\PatientService;
 use OpenEMR\Events\PatientDocuments\PatientDocumentTreeViewFilterEvent;
 use OpenEMR\Events\PatientDocuments\PatientRetrieveOffsiteDocument;
+use OpenEMR\Services\FileStorage\FileStorageException;
+use OpenEMR\Services\FileStorage\PatientDocumentStorageService;
 
 class C_Document extends Controller
 {
@@ -742,6 +744,21 @@ class C_Document extends Controller
             }
         }
 
+        $resolvedPatientId = (int)(($patient_id !== null && $patient_id !== '') ? $patient_id : $d->get_foreign_id());
+        if (
+            (int)$d->get_storagemethod() === Document::STORAGE_METHOD_S3
+            && $d->get_storage_file_id()
+        ) {
+            return $this->retrieveS3Document(
+                $d,
+                $resolvedPatientId,
+                $as_file,
+                $disable_exit,
+                $doEncryption,
+                $passphrase
+            );
+        }
+
         $url =  $d->get_url();
         $th_url = $d->get_thumb_url();
 
@@ -1025,6 +1042,54 @@ class C_Document extends Controller
             echo $filetext;
             exit;
         }
+    }
+
+    /**
+     * @return string|void
+     */
+    private function retrieveS3Document(
+        Document $document,
+        int $patientId,
+        bool $asFile,
+        bool $disableExit,
+        bool $doEncryption,
+        string $passphrase
+    ) {
+        try {
+            $storageService = $this->patientDocumentStorage();
+        } catch (\Throwable $exception) {
+            http_response_code(503);
+            die(xlt('Document storage is unavailable'));
+        }
+
+        $documentId = (int)$document->get_id();
+        try {
+            if ($disableExit) {
+                return $storageService->readDocumentContent($patientId, $documentId);
+            }
+
+            if ($doEncryption) {
+                $filetext = $storageService->readDocumentContent($patientId, $documentId);
+                $ciphertext = $this->cryptoGen->encryptStandard($filetext, $passphrase);
+                header('Content-Disposition: attachment; filename="' . "/encrypted_aes_" . $document->get_name() . '"');
+                header("Content-Type: application/octet-stream");
+                header("Content-Length: " . strlen($ciphertext));
+                echo $ciphertext;
+                exit;
+            }
+
+            $access = $storageService->createAccessUrl($patientId, $documentId, $asFile);
+            header('Location: ' . $access['url']);
+            exit;
+        } catch (FileStorageException $exception) {
+            http_response_code(404);
+            die(xlt('Document is unavailable'));
+        }
+    }
+
+    private function patientDocumentStorage(): PatientDocumentStorageService
+    {
+        return $GLOBALS['kernel']->getContainer()->get(PatientDocumentStorageService::class);
     }
 
     public function move_action_process(?string $patient_id, $document_id)

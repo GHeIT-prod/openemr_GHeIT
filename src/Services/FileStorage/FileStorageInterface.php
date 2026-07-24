@@ -38,6 +38,15 @@ interface FileStorageInterface
         ?string $versionId = null
     ): string;
 
+    public function createInlineUrl(
+        string $key,
+        string $filename,
+        string $mimeType,
+        ?string $versionId = null
+    ): string;
+
+    public function downloadToPath(string $key, string $destinationPath, ?string $versionId = null): void;
+
     public function delete(string $key, ?string $versionId = null): void;
 
     public function copy(string $sourceKey, string $destinationKey, ?string $sourceVersionId = null): StoredFile;
