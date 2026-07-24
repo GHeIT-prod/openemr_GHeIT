@@ -19,12 +19,16 @@ use OpenEMR\Common\Utils\FileUtils;
 use OpenEMR\Core\OEGlobalsBag;
 use OpenEMR\Modules\FaxSMS\Exception\FaxDocumentException;
 use OpenEMR\Modules\FaxSMS\Exception\FaxNotFoundException;
+use OpenEMR\Services\FileStorage\FileStorageException;
+use OpenEMR\Services\FileStorage\FileValidationException;
+use OpenEMR\Services\FileStorage\MessageAttachmentStorageService;
 
 class FaxDocumentService
 {
     private readonly string $siteId;
     private readonly string $sitePath;
     private readonly string $receivedFaxesPath;
+    private ?MessageAttachmentStorageService $communicationStorage = null;
 
     public function __construct(?string $siteId = null)
     {
@@ -32,16 +36,46 @@ class FaxDocumentService
         $this->siteId = $siteId ?? $_SESSION['site_id'];
         $this->sitePath = $globals->get('OE_SITE_DIR') ?? ($globals->get('OE_SITES_BASE') . '/' . $this->siteId);
         $this->receivedFaxesPath = $this->sitePath . '/documents/received_faxes';
+    }
 
-        // Ensure received faxes directory exists
-        if (!file_exists($this->receivedFaxesPath)) {
-            mkdir($this->receivedFaxesPath, 0770, true);
+    public static function storageReference(int $fileStorageId): string
+    {
+        return 's3://' . $fileStorageId;
+    }
+
+    public static function parseStorageReference(string $mediaPath): ?int
+    {
+        if (preg_match('/^s3:\/\/(\d+)$/', $mediaPath, $matches) !== 1) {
+            return null;
         }
 
-        $unassignedPath = $this->receivedFaxesPath . '/unassigned';
-        if (!file_exists($unassignedPath)) {
-            mkdir($unassignedPath, 0770, true);
+        return (int)$matches[1];
+    }
+
+    public function isMediaAvailable(string $mediaPath): bool
+    {
+        $fileStorageId = self::parseStorageReference($mediaPath);
+        if ($fileStorageId !== null) {
+            try {
+                $this->communicationStorage()->createStoredAccessUrl($fileStorageId, false);
+
+                return true;
+            } catch (FileStorageException) {
+                return false;
+            }
         }
+
+        return $mediaPath !== '' && file_exists($mediaPath);
+    }
+
+    public function createMediaAccessUrl(string $mediaPath, bool $asDownload): string
+    {
+        $fileStorageId = self::parseStorageReference($mediaPath);
+        if ($fileStorageId === null) {
+            throw new FaxDocumentException('Fax media is not stored in S3');
+        }
+
+        return $this->communicationStorage()->createStoredAccessUrl($fileStorageId, $asDownload);
     }
 
     /**
@@ -67,16 +101,13 @@ class FaxDocumentService
             $extension = FileUtils::getExtensionFromMimeType($mimeType);
             $filename = "fax_{$faxSid}_{$timestamp}.{$extension}";
 
-            // Determine storage location
             if ($patientId > 0) {
-                // Get FAX category ID
                 $categoryResult = QueryUtils::querySingleRow("SELECT id FROM categories WHERE name = 'FAX'");
                 $categoryId = $categoryResult['id'] ?? 1;
 
                 $formattedFrom = $this->formatPhoneDisplay($fromNumber);
                 $owner = $_SESSION['authUserID'];
 
-                // Create and save document using OpenEMR's standard method
                 $document = new Document();
                 $error = $document->createDocument(
                     $patientId,
@@ -84,8 +115,8 @@ class FaxDocumentService
                     $filename,
                     $mimeType,
                     $mediaContent,
-                    '',  // higher_level_path
-                    1,   // path_depth
+                    '',
+                    1,
                     $owner
                 );
 
@@ -93,7 +124,6 @@ class FaxDocumentService
                     throw new FaxDocumentException("Failed to create document: {$error}");
                 }
 
-                // Set document name
                 $document->set_name("Fax from {$formattedFrom} - {$timestamp}");
                 $document->persist();
 
@@ -106,12 +136,24 @@ class FaxDocumentService
                     'success' => true,
                     'document_id' => $documentId,
                     'media_path' => $mediaPath,
-                    'patient_id' => $patientId
+                    'patient_id' => $patientId,
+                    'file_storage_id' => $document->get_storage_file_id(),
                 ];
-            } else {
-                // Store in unassigned directory
-                $mediaPath = $this->receivedFaxesPath . '/unassigned/' . $filename;
-                file_put_contents($mediaPath, $mediaContent);
+            }
+
+            $temporaryPath = tempnam($this->temporaryDirectory(), 'oer');
+            if ($temporaryPath === false || file_put_contents($temporaryPath, $mediaContent) === false) {
+                throw new FaxDocumentException('Failed to prepare unassigned fax for upload');
+            }
+
+            try {
+                $ownerId = (int)($_SESSION['authUserID'] ?? 0);
+                if ($ownerId < 1) {
+                    $ownerId = 1;
+                }
+
+                $stored = $this->communicationStorage()->uploadFromPath($temporaryPath, $filename, $ownerId);
+                $mediaPath = self::storageReference($stored['file_storage_id']);
 
                 error_log("FaxDocumentService: Stored unassigned fax {$faxSid} at {$mediaPath}");
 
@@ -119,8 +161,17 @@ class FaxDocumentService
                     'success' => true,
                     'document_id' => null,
                     'media_path' => $mediaPath,
-                    'patient_id' => 0
+                    'patient_id' => 0,
+                    'file_storage_id' => $stored['file_storage_id'],
                 ];
+            } catch (FileValidationException $exception) {
+                throw new FaxDocumentException('Invalid fax document upload');
+            } catch (FileStorageException $exception) {
+                throw new FaxDocumentException('Failed to store unassigned fax in S3');
+            } finally {
+                if (is_file($temporaryPath)) {
+                    unlink($temporaryPath);
+                }
             }
         } catch (FaxDocumentException $e) {
             error_log("FaxDocumentService: Error storing fax document: " . $e->getMessage());
@@ -140,7 +191,6 @@ class FaxDocumentService
     public function assignFaxToPatient(string $faxSid, int $patientId): array
     {
         try {
-            // Get fax from queue
             $fax = QueryUtils::querySingleRow(
                 "SELECT * FROM oe_faxsms_queue WHERE job_id = ? AND site_id = ?",
                 [$faxSid, $this->siteId]
@@ -154,25 +204,21 @@ class FaxDocumentService
                 throw new FaxDocumentException("Fax already assigned to patient " . $fax['patient_id']);
             }
 
-            // Read the file from unassigned directory
-            $mediaPath = $fax['media_path'];
-            if (empty($mediaPath) || !file_exists($mediaPath)) {
+            $mediaPath = (string)($fax['media_path'] ?? '');
+            $mediaContent = $this->resolveMediaContent($mediaPath, (string)($fax['mime'] ?? ''));
+            if ($mediaContent === null) {
                 throw new FaxDocumentException("Fax media file not found: {$mediaPath}");
             }
 
-            $mediaContent = file_get_contents($mediaPath);
             $details = json_decode($fax['details_json'] ?? '{}', true);
             $fromNumber = $details['from'] ?? $fax['calling_number'] ?? 'Unknown';
+            $mimeType = (string)($fax['mime'] ?? 'application/pdf');
+            if ($mimeType === '') {
+                $mimeType = 'application/pdf';
+            }
 
-            // Determine mime type from file
-            $finfo = finfo_open(FILEINFO_MIME_TYPE);
-            $mimeType = finfo_file($finfo, $mediaPath);
-            finfo_close($finfo);
-
-            // Store as patient document
             $result = $this->storeFaxDocument($faxSid, $mediaContent, $fromNumber, $patientId, $mimeType);
 
-            // Update queue record
             QueryUtils::sqlStatementThrowException(
                 "UPDATE oe_faxsms_queue
                  SET patient_id = ?, document_id = ?, media_path = ?
@@ -180,10 +226,7 @@ class FaxDocumentService
                 [$patientId, $result['document_id'], $result['media_path'], $faxSid, $this->siteId]
             );
 
-            // Delete old unassigned file
-            if (file_exists($mediaPath)) {
-                unlink($mediaPath);
-            }
+            $this->deleteStoredMedia($mediaPath);
 
             error_log("FaxDocumentService: Assigned fax {$faxSid} to patient {$patientId}");
 
@@ -283,15 +326,13 @@ class FaxDocumentService
                 return false;
             }
 
-            // Mark as deleted in queue
             QueryUtils::sqlStatementThrowException(
                 "UPDATE oe_faxsms_queue SET deleted = 1 WHERE job_id = ? AND site_id = ?",
                 [$faxSid, $this->siteId]
             );
 
-            // Optionally delete physical file
-            if ($deleteFile && !empty($fax['media_path']) && file_exists($fax['media_path'])) {
-                unlink($fax['media_path']);
+            if ($deleteFile && !empty($fax['media_path'])) {
+                $this->deleteStoredMedia((string)$fax['media_path']);
             }
 
             error_log("FaxDocumentService: Deleted fax {$faxSid}");
@@ -301,7 +342,6 @@ class FaxDocumentService
             return false;
         }
     }
-
 
     /**
      * Format phone number for display
@@ -338,7 +378,6 @@ class FaxDocumentService
             $cleaned = substr((string) $cleaned, 1);
         }
 
-        // Try exact match first
         $patterns = [
             $cleaned,
             '+1' . $cleaned,
@@ -389,13 +428,9 @@ class FaxDocumentService
                 return 0;
             }
 
-            // Decode binary fax content
             $mediaContent = !empty($faxImage) ? base64_decode((string)$faxImage) : '';
-
-            // Attempt to match patient by phone number
             $patientId = $this->findPatientByPhone($fromNumber);
 
-            // Store document if we have content
             $documentId = null;
             $mediaPath = null;
             if (!empty($mediaContent)) {
@@ -409,13 +444,12 @@ class FaxDocumentService
                     );
                     $documentId = $result['document_id'];
                     $mediaPath = $result['media_path'];
+                    $patientId = (int)($result['patient_id'] ?? $patientId);
                 } catch (FaxDocumentException $e) {
                     error_log("FaxDocumentService.insertInboundFaxToQueue(): Warning - Failed to store document: " . $e->getMessage());
-                    // Continue with queue insert even if document storage fails
                 }
             }
 
-            // Build fax data
             $faxData = [
                 'JobId' => $jobId,
                 'from' => $fromNumber,
@@ -426,7 +460,6 @@ class FaxDocumentService
                 'receivedOn' => $received
             ];
 
-            // Insert into queue
             $sql = "INSERT INTO oe_faxsms_queue
                     (uid, account, job_id, date, receive_date, calling_number, called_number, mime, details_json, status, direction, site_id, patient_id, document_id, media_path)
                     VALUES (?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -448,7 +481,6 @@ class FaxDocumentService
                 $mediaPath
             ]);
 
-            // Get the inserted ID
             $inserted = QueryUtils::querySingleRow(
                 "SELECT id FROM oe_faxsms_queue WHERE job_id = ? AND site_id = ? ORDER BY date DESC LIMIT 1",
                 [$jobId, $this->siteId]
@@ -462,5 +494,64 @@ class FaxDocumentService
             error_log("FaxDocumentService.insertInboundFaxToQueue(): ERROR - " . $e->getMessage());
             throw new FaxDocumentException("Failed to insert inbound fax to queue: " . $e->getMessage(), 0, $e);
         }
+    }
+
+    private function resolveMediaContent(string $mediaPath, string $declaredMimeType = ''): ?string
+    {
+        $fileStorageId = self::parseStorageReference($mediaPath);
+        if ($fileStorageId !== null) {
+            try {
+                return $this->communicationStorage()->readStoredContent($fileStorageId);
+            } catch (FileStorageException) {
+                return null;
+            }
+        }
+
+        if ($mediaPath !== '' && file_exists($mediaPath)) {
+            $content = file_get_contents($mediaPath);
+            return $content === false ? null : $content;
+        }
+
+        return null;
+    }
+
+    private function deleteStoredMedia(string $mediaPath): void
+    {
+        $fileStorageId = self::parseStorageReference($mediaPath);
+        if ($fileStorageId !== null) {
+            try {
+                $this->communicationStorage()->deleteStoredFile($fileStorageId);
+            } catch (FileStorageException $exception) {
+                error_log('FaxDocumentService: Failed deleting S3 fax media: ' . $exception->getMessage());
+            }
+
+            return;
+        }
+
+        if ($mediaPath !== '' && file_exists($mediaPath)) {
+            unlink($mediaPath);
+        }
+    }
+
+    private function communicationStorage(): MessageAttachmentStorageService
+    {
+        if ($this->communicationStorage === null) {
+            if (!isset($GLOBALS['kernel'])) {
+                throw new FaxDocumentException('Document storage is unavailable');
+            }
+
+            $this->communicationStorage = $GLOBALS['kernel']
+                ->getContainer()
+                ->get(MessageAttachmentStorageService::class);
+        }
+
+        return $this->communicationStorage;
+    }
+
+    private function temporaryDirectory(): string
+    {
+        $directory = $GLOBALS['temporary_files_dir'] ?? sys_get_temp_dir();
+
+        return is_string($directory) && $directory !== '' ? $directory : sys_get_temp_dir();
     }
 }

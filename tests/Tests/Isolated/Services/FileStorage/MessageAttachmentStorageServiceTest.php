@@ -145,6 +145,73 @@ final class MessageAttachmentStorageServiceTest extends TestCase
         }
     }
 
+    public function testUploadFromPathStoresCommunicationArtifact(): void
+    {
+        $path = $this->temporaryFile('plain text');
+        $validated = new ValidatedUpload(
+            $path,
+            'note.txt',
+            'text/plain',
+            filesize($path),
+            'txt',
+            FileUploadValidator::KIND_DOCUMENT
+        );
+        $pending = new PendingFile(9, self::FILE_UUID);
+        $storedFile = new StoredFile(
+            'private-files',
+            'prod/' . self::SITE_UUID . '/communications/' . self::FILE_UUID . '.txt',
+            'version-1',
+            'etag',
+            'note.txt',
+            'text/plain',
+            filesize($path),
+            str_repeat('a', 64)
+        );
+
+        $storage = $this->createMock(FileStorageInterface::class);
+        $metadata = $this->createMock(FileMetadataServiceInterface::class);
+        $validator = $this->createMock(FileUploadValidatorInterface::class);
+
+        $validator->expects($this->once())->method('kindForFilename')->with('note.txt')->willReturn(FileUploadValidator::KIND_DOCUMENT);
+        $validator->expects($this->once())->method('validateFile')->with($path, 'note.txt', FileUploadValidator::KIND_DOCUMENT)->willReturn($validated);
+        $metadata->method('createPending')->willReturn($pending);
+        $metadata->method('assignStorageKey');
+        $storage->method('upload')->willReturn($storedFile);
+        $metadata->method('markUploaded');
+        $metadata->method('markScanClean');
+        $storage->method('createViewUrl')->willThrowException(FileStorageException::forOperation('view validation'));
+        $storage->method('createInlineUrl')->willReturn('https://example.test/view');
+
+        try {
+            $result = $this->service($storage, $metadata, $validator)->uploadFromPath($path, 'note.txt', 7);
+        } finally {
+            unlink($path);
+        }
+
+        $this->assertSame(9, $result['file_storage_id']);
+    }
+
+    public function testDeleteStoredFileMarksMetadataDeleted(): void
+    {
+        $storage = $this->createMock(FileStorageInterface::class);
+        $metadata = $this->createMock(FileMetadataServiceInterface::class);
+
+        $metadata->expects($this->once())->method('getById')->with(9)->willReturn([
+            'storage_status' => 'uploaded',
+            'storage_key' => 'prod/site/file.txt',
+            'storage_version_id' => 'version-1',
+        ]);
+        $metadata->expects($this->once())->method('beginDelete')->with(9);
+        $storage->expects($this->once())->method('delete')->with('prod/site/file.txt', 'version-1');
+        $metadata->expects($this->once())->method('markDeleted')->with(9);
+
+        $this->service(
+            $storage,
+            $metadata,
+            $this->createMock(FileUploadValidatorInterface::class)
+        )->deleteStoredFile(9);
+    }
+
     private function service(
         FileStorageInterface&MockObject $storage,
         FileMetadataServiceInterface&MockObject $metadata,
