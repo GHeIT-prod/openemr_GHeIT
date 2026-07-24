@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace OpenEMR\Tests\Isolated\Services\FileStorage;
 
 use OpenEMR\Core\Kernel;
+use OpenEMR\Services\FileStorage\FileMetadataService;
 use OpenEMR\Services\FileStorage\FileStorageInterface;
 use OpenEMR\Services\FileStorage\S3FileStorage;
 use PHPUnit\Framework\TestCase;
@@ -27,11 +28,14 @@ final class FileStorageContainerTest extends TestCase
         $_ENV['AWS_S3_BUCKET'] = 'private-files';
 
         try {
-            $storage = (new Kernel())->getContainer()->get(FileStorageInterface::class);
+            $container = (new Kernel())->getContainer();
+            $storage = $container->get(FileStorageInterface::class);
+            $metadataService = $container->get(FileMetadataService::class);
         } finally {
             $_ENV = $originalEnvironment;
         }
 
         $this->assertInstanceOf(S3FileStorage::class, $storage);
+        $this->assertInstanceOf(FileMetadataService::class, $metadataService);
     }
 }
