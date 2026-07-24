@@ -23,6 +23,10 @@ final class FileStorageConfig
     private const DEFAULT_VIDEO_MIME_TYPES = 'video/mp4,video/webm';
     private const DEFAULT_DOCUMENT_MIME_TYPES = 'application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/plain,text/csv';
     private const DEFAULT_PDF_MIME_TYPES = 'application/pdf';
+    private const DEFAULT_IMAGE_EXTENSIONS = 'jpg,jpeg,png,webp';
+    private const DEFAULT_VIDEO_EXTENSIONS = 'mp4,webm';
+    private const DEFAULT_DOCUMENT_EXTENSIONS = 'doc,docx,xls,xlsx,txt,csv';
+    private const DEFAULT_PDF_EXTENSIONS = 'pdf';
 
     private function __construct(
         private readonly string $region,
@@ -37,7 +41,11 @@ final class FileStorageConfig
         private readonly array $allowedImageMimeTypes,
         private readonly array $allowedVideoMimeTypes,
         private readonly array $allowedDocumentMimeTypes,
-        private readonly array $allowedPdfMimeTypes
+        private readonly array $allowedPdfMimeTypes,
+        private readonly array $allowedImageExtensions,
+        private readonly array $allowedVideoExtensions,
+        private readonly array $allowedDocumentExtensions,
+        private readonly array $allowedPdfExtensions
     ) {
     }
 
@@ -67,7 +75,11 @@ final class FileStorageConfig
             self::mimeTypes($environment['FILE_UPLOAD_ALLOWED_IMAGE_MIME_TYPES'] ?? self::DEFAULT_IMAGE_MIME_TYPES),
             self::mimeTypes($environment['FILE_UPLOAD_ALLOWED_VIDEO_MIME_TYPES'] ?? self::DEFAULT_VIDEO_MIME_TYPES),
             self::mimeTypes($environment['FILE_UPLOAD_ALLOWED_DOCUMENT_MIME_TYPES'] ?? self::DEFAULT_DOCUMENT_MIME_TYPES),
-            self::mimeTypes($environment['FILE_UPLOAD_ALLOWED_PDF_MIME_TYPES'] ?? self::DEFAULT_PDF_MIME_TYPES)
+            self::mimeTypes($environment['FILE_UPLOAD_ALLOWED_PDF_MIME_TYPES'] ?? self::DEFAULT_PDF_MIME_TYPES),
+            self::extensions($environment['FILE_UPLOAD_ALLOWED_IMAGE_EXTENSIONS'] ?? self::DEFAULT_IMAGE_EXTENSIONS),
+            self::extensions($environment['FILE_UPLOAD_ALLOWED_VIDEO_EXTENSIONS'] ?? self::DEFAULT_VIDEO_EXTENSIONS),
+            self::extensions($environment['FILE_UPLOAD_ALLOWED_DOCUMENT_EXTENSIONS'] ?? self::DEFAULT_DOCUMENT_EXTENSIONS),
+            self::extensions($environment['FILE_UPLOAD_ALLOWED_PDF_EXTENSIONS'] ?? self::DEFAULT_PDF_EXTENSIONS)
         );
     }
 
@@ -136,6 +148,26 @@ final class FileStorageConfig
         return $this->allowedPdfMimeTypes;
     }
 
+    public function getAllowedImageExtensions(): array
+    {
+        return $this->allowedImageExtensions;
+    }
+
+    public function getAllowedVideoExtensions(): array
+    {
+        return $this->allowedVideoExtensions;
+    }
+
+    public function getAllowedDocumentExtensions(): array
+    {
+        return $this->allowedDocumentExtensions;
+    }
+
+    public function getAllowedPdfExtensions(): array
+    {
+        return $this->allowedPdfExtensions;
+    }
+
     private static function required(array $environment, string $name): string
     {
         $value = trim((string)($environment[$name] ?? ''));
@@ -180,5 +212,22 @@ final class FileStorageConfig
         }
 
         return $mimeTypes;
+    }
+
+    private static function extensions(mixed $value): array
+    {
+        $extensions = array_values(array_unique(array_filter(array_map(
+            static fn(string $extension): string => strtolower(ltrim(trim($extension), '.')),
+            explode(',', (string)$value)
+        ))));
+
+        if (
+            $extensions === []
+            || array_filter($extensions, static fn(string $extension): bool => !preg_match('/^[a-z0-9]{1,10}$/', $extension))
+        ) {
+            throw new InvalidArgumentException('File upload extension allowlists are invalid');
+        }
+
+        return $extensions;
     }
 }
