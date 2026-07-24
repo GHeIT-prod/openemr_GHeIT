@@ -36,6 +36,10 @@ final class FileStorageConfigTest extends TestCase
             'FILE_UPLOAD_ALLOWED_VIDEO_MIME_TYPES' => 'video/mp4',
             'FILE_UPLOAD_ALLOWED_DOCUMENT_MIME_TYPES' => 'text/plain,text/csv',
             'FILE_UPLOAD_ALLOWED_PDF_MIME_TYPES' => 'application/pdf',
+            'FILE_UPLOAD_ALLOWED_IMAGE_EXTENSIONS' => '.jpg,png',
+            'FILE_UPLOAD_ALLOWED_VIDEO_EXTENSIONS' => 'mp4',
+            'FILE_UPLOAD_ALLOWED_DOCUMENT_EXTENSIONS' => 'txt,csv',
+            'FILE_UPLOAD_ALLOWED_PDF_EXTENSIONS' => 'pdf',
         ]);
 
         $this->assertSame('us-east-1', $config->getRegion());
@@ -51,6 +55,10 @@ final class FileStorageConfigTest extends TestCase
         $this->assertSame(['video/mp4'], $config->getAllowedVideoMimeTypes());
         $this->assertSame(['text/plain', 'text/csv'], $config->getAllowedDocumentMimeTypes());
         $this->assertSame(['application/pdf'], $config->getAllowedPdfMimeTypes());
+        $this->assertSame(['jpg', 'png'], $config->getAllowedImageExtensions());
+        $this->assertSame(['mp4'], $config->getAllowedVideoExtensions());
+        $this->assertSame(['txt', 'csv'], $config->getAllowedDocumentExtensions());
+        $this->assertSame(['pdf'], $config->getAllowedPdfExtensions());
     }
 
     public function testUsesSecureDefaultsForOptionalSettings(): void
@@ -109,6 +117,18 @@ final class FileStorageConfigTest extends TestCase
             'AWS_REGION' => 'us-east-1',
             'AWS_S3_BUCKET' => 'private-files',
             'FILE_UPLOAD_ALLOWED_IMAGE_MIME_TYPES' => ' ',
+        ]);
+    }
+
+    public function testRejectsUnsafeExtensionAllowlist(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('File upload extension allowlists are invalid');
+
+        FileStorageConfig::fromEnvironment([
+            'AWS_REGION' => 'us-east-1',
+            'AWS_S3_BUCKET' => 'private-files',
+            'FILE_UPLOAD_ALLOWED_DOCUMENT_EXTENSIONS' => 'txt,pdf.exe',
         ]);
     }
 }

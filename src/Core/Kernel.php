@@ -14,6 +14,7 @@ use OpenEMR\Services\FileStorage\FileStorageConfig;
 use OpenEMR\Services\FileStorage\FileStorageInterface;
 use OpenEMR\Services\FileStorage\FileMetadataRepositoryInterface;
 use OpenEMR\Services\FileStorage\FileMetadataService;
+use OpenEMR\Services\FileStorage\FileUploadValidator;
 use OpenEMR\Services\FileStorage\S3ClientFactory;
 use OpenEMR\Services\FileStorage\S3FileStorage;
 use OpenEMR\Services\FileStorage\S3ObjectKeyGenerator;
@@ -89,6 +90,12 @@ class Kernel
                 FileMetadataService::class,
                 (new Definition(FileMetadataService::class, [
                     new Reference(FileMetadataRepositoryInterface::class),
+                    new Reference(FileStorageConfig::class),
+                ]))->setPublic(true)
+            );
+            $builder->setDefinition(
+                FileUploadValidator::class,
+                (new Definition(FileUploadValidator::class, [
                     new Reference(FileStorageConfig::class),
                 ]))->setPublic(true)
             );

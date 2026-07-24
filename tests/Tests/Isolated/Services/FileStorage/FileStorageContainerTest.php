@@ -16,6 +16,7 @@ namespace OpenEMR\Tests\Isolated\Services\FileStorage;
 use OpenEMR\Core\Kernel;
 use OpenEMR\Services\FileStorage\FileMetadataService;
 use OpenEMR\Services\FileStorage\FileStorageInterface;
+use OpenEMR\Services\FileStorage\FileUploadValidator;
 use OpenEMR\Services\FileStorage\S3FileStorage;
 use PHPUnit\Framework\TestCase;
 
@@ -31,11 +32,13 @@ final class FileStorageContainerTest extends TestCase
             $container = (new Kernel())->getContainer();
             $storage = $container->get(FileStorageInterface::class);
             $metadataService = $container->get(FileMetadataService::class);
+            $validator = $container->get(FileUploadValidator::class);
         } finally {
             $_ENV = $originalEnvironment;
         }
 
         $this->assertInstanceOf(S3FileStorage::class, $storage);
         $this->assertInstanceOf(FileMetadataService::class, $metadataService);
+        $this->assertInstanceOf(FileUploadValidator::class, $validator);
     }
 }

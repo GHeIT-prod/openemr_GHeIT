@@ -42,9 +42,13 @@ FILE_UPLOAD_ALLOWED_IMAGE_MIME_TYPES=image/jpeg,image/png,image/webp
 FILE_UPLOAD_ALLOWED_VIDEO_MIME_TYPES=video/mp4,video/webm
 FILE_UPLOAD_ALLOWED_DOCUMENT_MIME_TYPES=application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/plain,text/csv
 FILE_UPLOAD_ALLOWED_PDF_MIME_TYPES=application/pdf
+FILE_UPLOAD_ALLOWED_IMAGE_EXTENSIONS=jpg,jpeg,png,webp
+FILE_UPLOAD_ALLOWED_VIDEO_EXTENSIONS=mp4,webm
+FILE_UPLOAD_ALLOWED_DOCUMENT_EXTENSIONS=doc,docx,xls,xlsx,txt,csv
+FILE_UPLOAD_ALLOWED_PDF_EXTENSIONS=pdf
 ```
 
-The values are comma-separated server-detected MIME types. Browser-provided MIME values are never trusted.
+The values are comma-separated server-detected MIME types and matching extensions. Browser-provided MIME values are never trusted. Known formats enforce their MIME-to-extension mapping. For a custom format, operators must add both its detected MIME type and extension to the same category after security review.
 
 GIF, TIFF, QuickTime, PowerPoint, archives, and unknown binary formats are disabled by default. Add a type only after its workflow, preview behavior, malware-scanning behavior, and size limits are approved.
 
