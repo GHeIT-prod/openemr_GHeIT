@@ -47,6 +47,7 @@ class UuidRegistry
         'employer_data' => ['table_name' => 'employer_data'],
         'facility' => ['table_name' => 'facility'],
         'facility_user_ids' => ['table_name' => 'facility_user_ids', 'table_vertical' => ['uid', 'facility_id']],
+        'file_storage' => ['table_name' => 'file_storage'],
         'form_clinical_notes' => ['table_name' => 'form_clinical_notes'],
         'form_encounter' => ['table_name' => 'form_encounter'],
         'form_vitals' => ['table_name' => 'form_vitals'],
