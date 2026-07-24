@@ -12,9 +12,12 @@ use Aws\S3\S3ClientInterface;
 use OpenEMR\Common\Logging\SystemLogger;
 use OpenEMR\Services\FileStorage\FileStorageConfig;
 use OpenEMR\Services\FileStorage\FileStorageInterface;
+use OpenEMR\Services\FileStorage\FileMetadataRepositoryInterface;
+use OpenEMR\Services\FileStorage\FileMetadataService;
 use OpenEMR\Services\FileStorage\S3ClientFactory;
 use OpenEMR\Services\FileStorage\S3FileStorage;
 use OpenEMR\Services\FileStorage\S3ObjectKeyGenerator;
+use OpenEMR\Services\FileStorage\SqlFileMetadataRepository;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -80,6 +83,15 @@ class Kernel
             );
             $builder->setAlias(FileStorageInterface::class, S3FileStorage::class)->setPublic(true);
             $builder->setDefinition(S3ObjectKeyGenerator::class, (new Definition(S3ObjectKeyGenerator::class))->setPublic(true));
+            $builder->setDefinition(SqlFileMetadataRepository::class, new Definition(SqlFileMetadataRepository::class));
+            $builder->setAlias(FileMetadataRepositoryInterface::class, SqlFileMetadataRepository::class);
+            $builder->setDefinition(
+                FileMetadataService::class,
+                (new Definition(FileMetadataService::class, [
+                    new Reference(FileMetadataRepositoryInterface::class),
+                    new Reference(FileStorageConfig::class),
+                ]))->setPublic(true)
+            );
             $builder->setDefinition(SystemLogger::class, new Definition(SystemLogger::class));
 
             $builder->compile();
