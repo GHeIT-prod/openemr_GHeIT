@@ -240,6 +240,175 @@ final class PatientDocumentStorageServiceTest extends TestCase
         )->createDownload(15, 100);
     }
 
+    public function testUploadFromPathValidatesStoresAndLinksDocument(): void
+    {
+        $path = $this->temporaryFile("%PDF-1.4\n%%EOF");
+        $validated = new ValidatedUpload(
+            $path,
+            'report.pdf',
+            'application/pdf',
+            filesize($path),
+            'pdf',
+            FileUploadValidator::KIND_PDF
+        );
+        $pending = new PendingFile(9, self::FILE_UUID);
+        $storedFile = new StoredFile(
+            'private-files',
+            'prod/' . self::SITE_UUID . '/patients/' . self::PATIENT_UUID
+                . '/general/pdfs/' . self::FILE_UUID . '.pdf',
+            'version-1',
+            'etag',
+            'report.pdf',
+            'application/pdf',
+            filesize($path),
+            str_repeat('a', 64)
+        );
+
+        $storage = $this->createMock(FileStorageInterface::class);
+        $metadata = $this->createMock(FileMetadataServiceInterface::class);
+        $validator = $this->createMock(FileUploadValidatorInterface::class);
+        $documents = $this->createMock(PatientDocumentRecordRepositoryInterface::class);
+
+        $validator->expects($this->once())->method('kindForFilename')->with('report.pdf')->willReturn(FileUploadValidator::KIND_PDF);
+        $validator->expects($this->once())
+            ->method('validateFile')
+            ->with($path, 'report.pdf', FileUploadValidator::KIND_PDF)
+            ->willReturn($validated);
+        $metadata->method('createPending')->willReturn($pending);
+        $documents->method('resolvePatientUuid')->willReturn(self::PATIENT_UUID);
+        $metadata->method('assignStorageKey');
+        $storage->method('upload')->willReturn($storedFile);
+        $metadata->method('markUploaded');
+        $metadata->method('markScanClean');
+        $documents->expects($this->once())
+            ->method('createDocument')
+            ->with(
+                15,
+                3,
+                9,
+                'report.pdf',
+                'application/pdf',
+                filesize($path),
+                str_repeat('a', 64),
+                7,
+                55,
+                'issue_encounter',
+                '2030-01-01 00:00:00'
+            )
+            ->willReturn(100);
+
+        try {
+            $documentId = $this->service($storage, $metadata, $validator, $documents)->uploadFromPath(
+                15,
+                3,
+                $path,
+                'report.pdf',
+                7,
+                55,
+                'issue_encounter',
+                '2030-01-01 00:00:00'
+            );
+        } finally {
+            unlink($path);
+        }
+
+        $this->assertSame(100, $documentId);
+    }
+
+    public function testCreateViewUsesInlineUrl(): void
+    {
+        $storage = $this->createMock(FileStorageInterface::class);
+        $documents = $this->createMock(PatientDocumentRecordRepositoryInterface::class);
+        $documents->method('findDocumentForPatient')->willReturn($this->readyDocument());
+
+        $storage->expects($this->once())
+            ->method('createViewUrl')
+            ->with('prod/site/file.pdf', 'report.pdf', 'application/pdf', 'version-1')
+            ->willReturn('https://example.test/view');
+
+        $result = $this->service(
+            $storage,
+            $this->createMock(FileMetadataServiceInterface::class),
+            $this->createMock(FileUploadValidatorInterface::class),
+            $documents
+        )->createView(15, 100);
+
+        $this->assertSame('https://example.test/view', $result['view_url']);
+    }
+
+    public function testCreateAccessUrlFallsBackToInlineUrlForNonViewableMime(): void
+    {
+        $storage = $this->createMock(FileStorageInterface::class);
+        $documents = $this->createMock(PatientDocumentRecordRepositoryInterface::class);
+        $documents->method('findDocumentForPatient')->willReturn(array_merge($this->readyDocument(), [
+            'mimetype' => 'application/msword',
+            'storage_mime_type' => 'application/msword',
+        ]));
+
+        $storage->expects($this->once())
+            ->method('createViewUrl')
+            ->willThrowException(FileStorageException::forOperation('view validation'));
+        $storage->expects($this->once())
+            ->method('createInlineUrl')
+            ->with('prod/site/file.pdf', 'report.pdf', 'application/msword', 'version-1')
+            ->willReturn('https://example.test/inline');
+
+        $result = $this->service(
+            $storage,
+            $this->createMock(FileMetadataServiceInterface::class),
+            $this->createMock(FileUploadValidatorInterface::class),
+            $documents
+        )->createAccessUrl(15, 100, false);
+
+        $this->assertSame('https://example.test/inline', $result['url']);
+    }
+
+    public function testReadDocumentContentDownloadsToTemporaryFile(): void
+    {
+        $storage = $this->createMock(FileStorageInterface::class);
+        $documents = $this->createMock(PatientDocumentRecordRepositoryInterface::class);
+        $documents->method('findDocumentForPatient')->willReturn($this->readyDocument());
+
+        $storage->expects($this->once())
+            ->method('downloadToPath')
+            ->with(
+                'prod/site/file.pdf',
+                $this->callback(static fn(string $path): bool => is_file($path)),
+                'version-1'
+            )
+            ->willReturnCallback(static function (string $key, string $destinationPath): void {
+                file_put_contents($destinationPath, 'clinical document');
+            });
+
+        $content = $this->service(
+            $storage,
+            $this->createMock(FileMetadataServiceInterface::class),
+            $this->createMock(FileUploadValidatorInterface::class),
+            $documents
+        )->readDocumentContent(15, 100);
+
+        $this->assertSame('clinical document', $content);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function readyDocument(): array
+    {
+        return [
+            'id' => 100,
+            'name' => 'report.pdf',
+            'mimetype' => 'application/pdf',
+            'storage_file_id' => 9,
+            'storage_key' => 'prod/site/file.pdf',
+            'storage_version_id' => 'version-1',
+            'storage_status' => 'uploaded',
+            'scan_status' => 'clean',
+            'original_filename' => 'report.pdf',
+            'storage_mime_type' => 'application/pdf',
+        ];
+    }
+
     private function service(
         FileStorageInterface&MockObject $storage,
         FileMetadataServiceInterface&MockObject $metadata,

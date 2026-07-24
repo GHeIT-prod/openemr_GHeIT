@@ -23,8 +23,19 @@ interface PatientDocumentRecordRepositoryInterface
         string $mimeType,
         int $size,
         string $checksumSha256,
-        int $ownerId
+        int $ownerId,
+        ?int $foreignReferenceId = null,
+        ?string $foreignReferenceTable = null,
+        ?string $dateExpires = null
     ): int;
 
+    /**
+     * @return array<string, mixed>|null
+     */
     public function findDocumentForPatient(int $pid, int $documentId): ?array;
+
+    /**
+     * @return array<string, mixed>|null
+     */
+    public function findDocumentById(int $documentId): ?array;
 }
