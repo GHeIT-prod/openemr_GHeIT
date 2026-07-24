@@ -39,7 +39,128 @@ final class MessageAttachmentStorageService
      */
     public function upload(int $pid, array $fileData, int $ownerId): array
     {
+        unset($pid);
+
         $validated = $this->validator->validateUploadedFileAutoKind($fileData);
+
+        return $this->storeValidatedUpload($validated, $ownerId);
+    }
+
+    /**
+     * @return array{
+     *     view_url: string,
+     *     s3_key: string,
+     *     file_storage_id: int,
+     *     filename: string,
+     *     mimetype: string
+     * }
+     */
+    public function uploadFromPath(string $path, string $originalFilename, int $ownerId): array
+    {
+        $validated = $this->validator->validateFile(
+            $path,
+            $originalFilename,
+            $this->validator->kindForFilename($originalFilename)
+        );
+
+        return $this->storeValidatedUpload($validated, $ownerId);
+    }
+
+    public function readStoredContent(int $fileStorageId): string
+    {
+        $metadata = $this->requireUploadedCleanMetadata($fileStorageId);
+        $temporaryPath = tempnam($this->temporaryDirectory(), 'oer');
+        if ($temporaryPath === false) {
+            throw FileStorageException::forOperation('communication file read');
+        }
+
+        try {
+            $this->storage->downloadToPath(
+                (string)$metadata['storage_key'],
+                $temporaryPath,
+                $metadata['storage_version_id'] ?? null
+            );
+            $content = file_get_contents($temporaryPath);
+            if ($content === false) {
+                throw FileStorageException::forOperation('communication file read');
+            }
+
+            return $content;
+        } finally {
+            if (is_file($temporaryPath)) {
+                unlink($temporaryPath);
+            }
+        }
+    }
+
+    public function createStoredAccessUrl(int $fileStorageId, bool $asDownload): string
+    {
+        $metadata = $this->requireUploadedCleanMetadata($fileStorageId);
+        $filename = (string)($metadata['original_filename'] ?: 'attachment');
+        $mimeType = (string)($metadata['mime_type'] ?: 'application/octet-stream');
+        $key = (string)$metadata['storage_key'];
+        $versionId = $metadata['storage_version_id'] ?? null;
+
+        if ($asDownload) {
+            return $this->storage->createDownloadUrl($key, $filename, $mimeType, $versionId);
+        }
+
+        try {
+            return $this->storage->createViewUrl($key, $filename, $mimeType, $versionId);
+        } catch (FileStorageException) {
+            return $this->storage->createInlineUrl($key, $filename, $mimeType, $versionId);
+        }
+    }
+
+    public function deleteStoredFile(int $fileStorageId): void
+    {
+        $metadata = $this->metadataService->getById($fileStorageId);
+        if (($metadata['storage_status'] ?? null) === 'deleted') {
+            return;
+        }
+
+        if (($metadata['storage_status'] ?? null) === 'uploaded' && !empty($metadata['storage_key'])) {
+            $this->metadataService->beginDelete($fileStorageId);
+            $this->storage->delete(
+                (string)$metadata['storage_key'],
+                $metadata['storage_version_id'] ?? null
+            );
+            $this->metadataService->markDeleted($fileStorageId);
+
+            return;
+        }
+
+        $this->metadataService->markFailed($fileStorageId);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function requireUploadedCleanMetadata(int $fileStorageId): array
+    {
+        $metadata = $this->metadataService->getById($fileStorageId);
+        if (
+            ($metadata['storage_status'] ?? null) !== 'uploaded'
+            || ($metadata['scan_status'] ?? null) !== 'clean'
+            || empty($metadata['storage_key'])
+        ) {
+            throw new FileStorageException('Communication file is not ready for access');
+        }
+
+        return $metadata;
+    }
+
+    /**
+     * @return array{
+     *     view_url: string,
+     *     s3_key: string,
+     *     file_storage_id: int,
+     *     filename: string,
+     *     mimetype: string
+     * }
+     */
+    private function storeValidatedUpload(ValidatedUpload $validated, int $ownerId): array
+    {
         $pending = $this->metadataService->createPending(
             $validated->getOriginalFilename(),
             $validated->getMimeType(),
@@ -95,12 +216,11 @@ final class MessageAttachmentStorageService
                 throw $exception;
             }
 
-            $this->logger?->error('Message attachment upload failed', [
-                'operation' => 'message attachment upload',
-                'patient_id' => $pid,
+            $this->logger?->error('Communication file upload failed', [
+                'operation' => 'communication file upload',
                 'exception_class' => $exception::class,
             ]);
-            throw FileStorageException::forOperation('message attachment upload');
+            throw FileStorageException::forOperation('communication file upload');
         }
     }
 
@@ -111,8 +231,8 @@ final class MessageAttachmentStorageService
                 $this->storage->delete($storedFile->getKey(), $storedFile->getVersionId());
             }
         } catch (Throwable $exception) {
-            $this->logger?->error('Failed compensating S3 delete after message attachment upload failure', [
-                'operation' => 'message attachment upload compensation',
+            $this->logger?->error('Failed compensating S3 delete after communication file upload failure', [
+                'operation' => 'communication file upload compensation',
                 'exception_class' => $exception::class,
             ]);
         }
@@ -120,8 +240,8 @@ final class MessageAttachmentStorageService
         try {
             $this->metadataService->markFailed($fileId);
         } catch (Throwable $exception) {
-            $this->logger?->error('Failed marking message attachment metadata failed', [
-                'operation' => 'message attachment upload compensation',
+            $this->logger?->error('Failed marking communication file metadata failed', [
+                'operation' => 'communication file upload compensation',
                 'exception_class' => $exception::class,
             ]);
         }
@@ -145,5 +265,12 @@ final class MessageAttachmentStorageService
         }
 
         return UniqueInstallationUuid::getUniqueInstallationUuid();
+    }
+
+    private function temporaryDirectory(): string
+    {
+        $directory = $GLOBALS['temporary_files_dir'] ?? sys_get_temp_dir();
+
+        return is_string($directory) && $directory !== '' ? $directory : sys_get_temp_dir();
     }
 }
