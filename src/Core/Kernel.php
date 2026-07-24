@@ -18,6 +18,7 @@ use OpenEMR\Services\FileStorage\FileMetadataServiceInterface;
 use OpenEMR\Services\FileStorage\FileUploadValidator;
 use OpenEMR\Services\FileStorage\FileUploadValidatorInterface;
 use OpenEMR\Services\FileStorage\PatientDocumentRecordRepositoryInterface;
+use OpenEMR\Services\FileStorage\MessageAttachmentStorageService;
 use OpenEMR\Services\FileStorage\PatientDocumentStorageService;
 use OpenEMR\Services\FileStorage\S3ClientFactory;
 use OpenEMR\Services\FileStorage\S3FileStorage;
@@ -124,6 +125,16 @@ class Kernel
                     new Reference(FileUploadValidatorInterface::class),
                     new Reference(S3ObjectKeyGenerator::class),
                     new Reference(PatientDocumentRecordRepositoryInterface::class),
+                    new Reference(SystemLogger::class),
+                ]))->setPublic(true)
+            );
+            $builder->setDefinition(
+                MessageAttachmentStorageService::class,
+                (new Definition(MessageAttachmentStorageService::class, [
+                    new Reference(FileStorageInterface::class),
+                    new Reference(FileMetadataServiceInterface::class),
+                    new Reference(FileUploadValidatorInterface::class),
+                    new Reference(S3ObjectKeyGenerator::class),
                     new Reference(SystemLogger::class),
                 ]))->setPublic(true)
             );

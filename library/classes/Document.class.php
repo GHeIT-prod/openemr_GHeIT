@@ -1255,6 +1255,24 @@ class Document extends ORDataObject
 
         $base64Decode = false;
 
+        if ($storagemethod === self::STORAGE_METHOD_S3 && $this->get_storage_file_id()) {
+            if (!isset($GLOBALS['kernel'])) {
+                return false;
+            }
+
+            try {
+                /** @var PatientDocumentStorageService $storageService */
+                $storageService = $GLOBALS['kernel']->getContainer()->get(PatientDocumentStorageService::class);
+
+                return $storageService->readDocumentContent(
+                    (int)$this->get_foreign_id(),
+                    (int)$this->get_id()
+                );
+            } catch (FileStorageException $exception) {
+                return false;
+            }
+        }
+
         if ($storagemethod === self::STORAGE_METHOD_COUCHDB) {
             // encrypting does not use base64 encoding
             if (!$this->is_encrypted()) {
