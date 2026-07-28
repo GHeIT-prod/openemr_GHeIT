@@ -3,24 +3,35 @@
 namespace OpenEMR\Modules\CustomModuleGheit\Controller;
 
 use Google\Cloud\PubSub\PubSubClient;
-use Dotenv\Dotenv;
-
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../../../../../../');
-$dotenv->safeLoad();
 
 class PubSub
 {
-    public function publishPubsub($resource, $event, $resourceDataName, $data)
+    public function publishPubsub($resource, $event, $resourceDataName, $data): void
     {
-        putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $_ENV['PUBSUB_CREDENTIALS_PATH']);
+        $credentialsPath = getenv('PUBSUB_CREDENTIALS_PATH');
+        $projectId = getenv('PUBSUB_PROJECT_ID');
+        $topicName = getenv('PUBSUB_TOPIC_NAME');
+
+        // Validate required configuration
+        if (
+            empty($credentialsPath) ||
+            empty($projectId) ||
+            empty($topicName)
+        ) {
+            error_log('PubSub configuration is missing.');
+            return;
+        }
+
+        // Validate credentials file
+        if (!file_exists($credentialsPath)) {
+            error_log("PubSub credentials file not found: {$credentialsPath}");
+            return;
+        }
 
         try {
-            
-            $projectId = $_ENV['PUBSUB_PROJECT_ID'];
-            $topicName = $_ENV['PUBSUB_TOPIC_NAME'];
-
             $pubSub = new PubSubClient([
-                'projectId' => $projectId,
+                'projectId'  => $projectId,
+                'keyFilePath' => $credentialsPath,
             ]);
 
             $topic = $pubSub->topic($topicName);
@@ -28,16 +39,17 @@ class PubSub
             $payload = [
                 'resource' => $resource,
                 'event' => $event,
-                $resourceDataName => $data
+                $resourceDataName => $data,
             ];
 
-            // Publish message
             $topic->publish([
-                'data' => json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+                'data' => json_encode(
+                    $payload,
+                    JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+                ),
             ]);
-
-        } catch (Exception $e) {
-            error_log("PubSub Error: " . $e->getMessage());
-        }   
+        } catch (\Throwable $e) {
+            error_log('PubSub Error: ' . $e->getMessage());
+        }
     }
 }
