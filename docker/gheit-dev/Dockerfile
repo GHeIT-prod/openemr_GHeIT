@@ -19,4 +19,6 @@ RUN composer install
 RUN composer require google/cloud-pubsub aws/aws-sdk-php --with-all-dependencies
 RUN composer require auth0/auth0-php --ignore-platform-req=ext-bcmath --with-all-dependencies
 
+RUN npm run build
+
 RUN chown -R apache:root /var/www/localhost/htdocs/openemr
