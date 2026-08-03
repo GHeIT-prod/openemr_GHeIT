@@ -41,6 +41,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 use OpenEMR\Services\FHIR\FhirProcedureService;
 use OpenEMR\Services\FHIR\FhirServiceRequestService;
+use OpenEMR\Events\Orders\ProcedureOrderCreatedEvent;
 
 if (!$encounter) { // comes from globals.php
     die("Internal error: we do not seem to be in an encounter!");
@@ -386,6 +387,14 @@ if (($_POST['bn_save'] ?? null) || !empty($_POST['bn_xmit']) || !empty($_POST['b
             'service_request_data',
             $payload
         );
+
+        $event = new ProcedureOrderCreatedEvent(
+            (int) $formid,
+            (int) $pid,
+            (int) $encounter,
+            (int) ($_POST['form_provider_id'] ?? 0),
+            $payload
+        );
     }
 
     $lab_name = normalizeDirectoryName(get_lab_name($ppid ?? 0));
@@ -575,6 +584,13 @@ if (($_POST['bn_save'] ?? null) || !empty($_POST['bn_xmit']) || !empty($_POST['b
     $reload_url = $rootdir . '/patient_file/encounter/view_form.php?formname=procedure_order&id=' . attr($formid);
     if (empty($order_data)) {
         header('Location:' . $reload_url);
+
+        if (!empty($event)) {
+            if (function_exists('fastcgi_finish_request')) {
+                fastcgi_finish_request();
+            }
+            $ed->dispatch($event, ProcedureOrderCreatedEvent::EVENT_NAME);
+        }
     }
 }
 

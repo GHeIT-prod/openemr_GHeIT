@@ -183,7 +183,8 @@
         "psr-4": {
             "OpenEMR\\PHPStan\\Rules\\": ".phpstan",
             "OpenEMR\\Tests\\": "tests\\Tests",
-            "OpenEMR\\Modules\\CustomModuleGheit\\": "interface/modules/custom_modules/oe-module-custom-gheit/src/"
+            "OpenEMR\\Modules\\CustomModuleGheit\\": "interface/modules/custom_modules/oe-module-custom-gheit/src/",
+            "OpenEMR\\Modules\\PriorAuthModule\\": "interface/modules/custom_modules/oe-module-prior-authorizations/src/"
         }
     },
     "config": {
