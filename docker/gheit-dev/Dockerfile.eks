@@ -1,0 +1,16 @@
+# EKS build for the neocarex (OpenEMR) image.
+#
+# Deliberately does NOT run composer or npm: the CodeBuild pipeline
+# (neocarex-dev-build) stages a pre-resolved vendor/ bundle from S3 into the
+# build context, so dependency resolution never touches Packagist or GitHub at
+# build time. Use docker/gheit-dev/Dockerfile instead for local compose work,
+# which does resolve dependencies itself.
+FROM openemr/openemr:8.0.0
+
+ARG OPENEMR_DIR=/var/www/localhost/htdocs/openemr
+
+# vendor/ first so the large layer stays cacheable via --cache-from
+COPY --chown=apache:apache vendor ${OPENEMR_DIR}/vendor
+COPY --chown=apache:apache . ${OPENEMR_DIR}
+
+EXPOSE 80
