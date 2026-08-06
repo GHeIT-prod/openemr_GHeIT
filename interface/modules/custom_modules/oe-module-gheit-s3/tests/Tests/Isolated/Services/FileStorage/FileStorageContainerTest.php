@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * File storage container wiring test
+ *
+ * @package OpenEMR
+ * @link https://www.open-emr.org
+ * @copyright Copyright (c) 2026 OpenEMR Contributors
+ * @license https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
+ */
+
+declare(strict_types=1);
+
+namespace OpenEMR\Modules\GheitS3\Tests\Isolated\Services\FileStorage;
+
+use OpenEMR\Core\Kernel;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileMetadataService;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileStorageInterface;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileUploadValidator;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\S3FileStorage;
+use PHPUnit\Framework\TestCase;
+
+final class FileStorageContainerTest extends TestCase
+{
+    public function testContainerProvidesS3StorageImplementation(): void
+    {
+        $originalEnvironment = $_ENV;
+        $_ENV['AWS_REGION'] = 'us-east-1';
+        $_ENV['AWS_S3_BUCKET'] = 'private-files';
+
+        try {
+            $container = (new Kernel())->getContainer();
+            $storage = $container->get(FileStorageInterface::class);
+            $metadataService = $container->get(FileMetadataService::class);
+            $validator = $container->get(FileUploadValidator::class);
+        } finally {
+            $_ENV = $originalEnvironment;
+        }
+
+        $this->assertInstanceOf(S3FileStorage::class, $storage);
+        $this->assertInstanceOf(FileMetadataService::class, $metadataService);
+        $this->assertInstanceOf(FileUploadValidator::class, $validator);
+    }
+}

@@ -8,6 +8,23 @@
 
 namespace OpenEMR\Core;
 
+use Aws\S3\S3ClientInterface;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileStorageConfig;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileStorageInterface;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileMetadataRepositoryInterface;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileMetadataService;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileMetadataServiceInterface;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileUploadValidator;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileUploadValidatorInterface;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\PatientDocumentRecordRepositoryInterface;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\MessageAttachmentStorageService;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\PatientDocumentStorageService;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\S3ClientFactory;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\S3FileStorage;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\S3ObjectKeyGenerator;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\SqlFileMetadataRepository;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\SqlPatientDocumentRecordRepository;
+use OpenEMR\Common\Logging\SystemLogger;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -52,6 +69,77 @@ class Kernel
             }
             $definition->setPublic(true);
             $builder->setDefinition('event_dispatcher', $definition);
+
+            $builder->setDefinition(
+                FileStorageConfig::class,
+                (new Definition(FileStorageConfig::class))
+                    ->setFactory([FileStorageConfig::class, 'fromEnvironment'])
+            );
+            $builder->setDefinition(
+                S3ClientInterface::class,
+                (new Definition(S3ClientInterface::class, [new Reference(FileStorageConfig::class)]))
+                    ->setFactory([S3ClientFactory::class, 'create'])
+            );
+            $builder->setDefinition(
+                S3FileStorage::class,
+                new Definition(S3FileStorage::class, [
+                    new Reference(S3ClientInterface::class),
+                    new Reference(FileStorageConfig::class),
+                    new Reference(SystemLogger::class),
+                ])
+            );
+            $builder->setAlias(FileStorageInterface::class, S3FileStorage::class)->setPublic(true);
+            $builder->setDefinition(S3ObjectKeyGenerator::class, (new Definition(S3ObjectKeyGenerator::class))->setPublic(true));
+            $builder->setDefinition(SqlFileMetadataRepository::class, new Definition(SqlFileMetadataRepository::class));
+            $builder->setAlias(FileMetadataRepositoryInterface::class, SqlFileMetadataRepository::class);
+            $builder->setDefinition(
+                FileMetadataService::class,
+                (new Definition(FileMetadataService::class, [
+                    new Reference(FileMetadataRepositoryInterface::class),
+                    new Reference(FileStorageConfig::class),
+                ]))->setPublic(true)
+            );
+            $builder->setAlias(FileMetadataServiceInterface::class, FileMetadataService::class)
+                ->setPublic(true);
+            $builder->setDefinition(
+                FileUploadValidator::class,
+                (new Definition(FileUploadValidator::class, [
+                    new Reference(FileStorageConfig::class),
+                ]))->setPublic(true)
+            );
+            $builder->setAlias(FileUploadValidatorInterface::class, FileUploadValidator::class)
+                ->setPublic(true);
+            $builder->setDefinition(
+                SqlPatientDocumentRecordRepository::class,
+                new Definition(SqlPatientDocumentRecordRepository::class)
+            );
+            $builder->setAlias(
+                PatientDocumentRecordRepositoryInterface::class,
+                SqlPatientDocumentRecordRepository::class
+            );
+            $builder->setDefinition(
+                PatientDocumentStorageService::class,
+                (new Definition(PatientDocumentStorageService::class, [
+                    new Reference(FileStorageInterface::class),
+                    new Reference(FileMetadataServiceInterface::class),
+                    new Reference(FileUploadValidatorInterface::class),
+                    new Reference(S3ObjectKeyGenerator::class),
+                    new Reference(PatientDocumentRecordRepositoryInterface::class),
+                    new Reference(SystemLogger::class),
+                ]))->setPublic(true)
+            );
+            $builder->setDefinition(
+                MessageAttachmentStorageService::class,
+                (new Definition(MessageAttachmentStorageService::class, [
+                    new Reference(FileStorageInterface::class),
+                    new Reference(FileMetadataServiceInterface::class),
+                    new Reference(FileUploadValidatorInterface::class),
+                    new Reference(S3ObjectKeyGenerator::class),
+                    new Reference(SystemLogger::class),
+                ]))->setPublic(true)
+            );
+            $builder->setDefinition(SystemLogger::class, new Definition(SystemLogger::class));
+
             $builder->compile();
             $this->container = $builder;
             if (!empty($this->dispatcher)) {

@@ -19,6 +19,9 @@ require_once(__DIR__ . "/../../controllers/C_Document.class.php");
 use Document;
 use OpenEMR\Common\Database\QueryUtils;
 use OpenEMR\Common\Uuid\UuidRegistry;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileStorageException;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileValidationException;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\PatientDocumentStorageService;
 use OpenEMR\Services\Search\FhirSearchWhereClauseBuilder;
 use OpenEMR\Services\Search\ISearchField;
 use OpenEMR\Services\Search\SearchFieldException;
@@ -28,10 +31,24 @@ class DocumentService extends BaseService
 {
     const TABLE_NAME = "documents";
 
-    public function __construct()
+    private ?PatientDocumentStorageService $patientDocumentStorage = null;
+
+    public function __construct(?PatientDocumentStorageService $patientDocumentStorage = null)
     {
         parent::__construct(self::TABLE_NAME);
         UuidRegistry::createMissingUuidsForTables([self::TABLE_NAME]);
+        $this->patientDocumentStorage = $patientDocumentStorage;
+    }
+
+    private function patientDocumentStorage(): PatientDocumentStorageService
+    {
+        if ($this->patientDocumentStorage === null) {
+            $this->patientDocumentStorage = $GLOBALS['kernel']
+                ->getContainer()
+                ->get(PatientDocumentStorageService::class);
+        }
+
+        return $this->patientDocumentStorage;
     }
 
     /**
@@ -123,45 +140,56 @@ class DocumentService extends BaseService
 
     public function insertAtPath($pid, $path, $fileData)
     {
-        // Ensure filetype is allowed
-        if ($GLOBALS['secure_upload'] && !isWhiteFile($fileData["tmp_name"])) {
-            error_log("OpenEMR API Error: Attempt to upload unsecure patient document was declined");
-            return false;
-        }
-
         // Ensure category exists
         if (!$this->isValidPath($path)) {
             error_log("OpenEMR API Error: Attempt to upload patient document to category that did not exist was declined");
             return false;
         }
 
-        // Collect category id
-        $categoryId = $this->getLastIdOfPath($path);
-
-        // Store file in variable
-        $file = file_get_contents($fileData["tmp_name"]);
-        if (empty($file)) {
-            error_log("OpenEMR API Error: Patient document was empty, so declined request");
+        $categoryId = (int)$this->getLastIdOfPath($path);
+        $ownerId = (int)($this->getSession()?->get('authUserID') ?? $_SESSION['authUserID'] ?? 0);
+        if ($ownerId < 1) {
+            error_log("OpenEMR API Error: Patient document upload declined because owner was missing");
             return false;
         }
 
-        // Store the document in OpenEMR
-        $doc = new \Document();
-        $ret = $doc->createDocument($pid, $categoryId, $fileData["name"], mime_content_type($fileData["tmp_name"]), $file);
-        if (!empty($ret)) {
-            error_log("OpenEMR API Error: There was an error in attempt to upload a patient document");
+        try {
+            $this->patientDocumentStorage()->upload((int)$pid, $categoryId, $fileData, $ownerId);
+            return true;
+        } catch (FileValidationException $exception) {
+            error_log('OpenEMR API Error: Patient document validation failed');
+            return false;
+        } catch (FileStorageException $exception) {
+            error_log('OpenEMR API Error: There was an error in attempt to upload a patient document');
+            return false;
+        } catch (\Throwable $exception) {
+            error_log('OpenEMR API Error: There was an error in attempt to upload a patient document');
             return false;
         }
-
-        return true;
     }
 
     public function getFile($pid, $did)
     {
-        $filenameSql = sqlQuery("SELECT `name`, `mimetype` FROM `documents` WHERE `id` = ? AND `foreign_id` = ? AND `deleted` = 0", [$did, $pid]);
+        $filenameSql = sqlQuery(
+            "SELECT `name`, `mimetype`, `storage_file_id` FROM `documents` "
+            . "WHERE `id` = ? AND `foreign_id` = ? AND `deleted` = 0",
+            [$did, $pid]
+        );
+        if (empty($filenameSql)) {
+            error_log("OpenEMR API Error: Requested patient document was empty, so declined request");
+            return false;
+        }
+
+        if (!empty($filenameSql['storage_file_id'])) {
+            try {
+                return $this->patientDocumentStorage()->createDownload((int)$pid, (int)$did);
+            } catch (FileStorageException) {
+                error_log("OpenEMR API Error: Requested patient document was unavailable, so declined request");
+                return false;
+            }
+        }
 
         $filename = empty($filenameSql['name']) ? "unknownName" : $filenameSql['name'];
-
         $obj = new \C_Document();
         $obj->onReturnRetrieveKey();
         $document = $obj->retrieve_action($pid, $did, true, true, true);

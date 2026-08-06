@@ -1404,7 +1404,7 @@ CREATE TABLE `documents` (
   `drive_uuid` binary(16) DEFAULT NULL,
   `couch_docid` VARCHAR(100) DEFAULT NULL,
   `couch_revid` VARCHAR(100) DEFAULT NULL,
-  `storagemethod` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '0->Harddisk,1->CouchDB',
+  `storagemethod` TINYINT(4) NOT NULL DEFAULT '0' COMMENT '0->Harddisk,1->CouchDB,2->S3',
   `path_depth` TINYINT DEFAULT '1' COMMENT 'Depth of path to use in url to find document. Not applicable for CouchDB.',
   `imported` TINYINT DEFAULT 0 NULL COMMENT 'Parsing status for CCR/CCD/CCDA importing',
   `encounter_id` bigint(20) NOT NULL DEFAULT '0' COMMENT 'Encounter id if tagged',
@@ -1417,14 +1417,50 @@ CREATE TABLE `documents` (
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   `foreign_reference_id` bigint(20) default NULL,
   `foreign_reference_table` VARCHAR(40) default NULL,
+  `storage_file_id` bigint(20) DEFAULT NULL COMMENT 'fk to file_storage.id; NULL means legacy/non-S3 binary',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `drive_uuid` (`drive_uuid`),
   UNIQUE KEY `uuid` (`uuid`),
   KEY `revision` (`revision`),
   KEY `foreign_id` (`foreign_id`),
   KEY `foreign_reference` (`foreign_reference_id`, `foreign_reference_table`),
-  KEY `owner` (`owner`)
+  KEY `owner` (`owner`),
+  KEY `idx_documents_storage_file_id` (`storage_file_id`)
 ) ENGINE=InnoDB;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `file_storage`
+--
+
+DROP TABLE IF EXISTS `file_storage`;
+CREATE TABLE `file_storage` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `uuid` binary(16) DEFAULT NULL,
+  `storage_provider` varchar(16) NOT NULL DEFAULT 's3',
+  `storage_bucket` varchar(63) NOT NULL,
+  `storage_key` varchar(512) DEFAULT NULL,
+  `storage_version_id` varchar(1024) DEFAULT NULL,
+  `original_filename` varchar(255) NOT NULL,
+  `mime_type` varchar(255) NOT NULL,
+  `file_size` bigint(20) NOT NULL,
+  `checksum_sha256` char(64) DEFAULT NULL,
+  `storage_status` varchar(32) NOT NULL DEFAULT 'pending' COMMENT 'pending, uploaded, failed, deleting, deleted, unavailable',
+  `scan_status` varchar(32) NOT NULL DEFAULT 'pending' COMMENT 'pending, clean, infected, failed',
+  `created_by` bigint(20) DEFAULT NULL COMMENT 'fk to users.id',
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted_at` datetime DEFAULT NULL,
+  `parent_file_id` bigint(20) DEFAULT NULL COMMENT 'fk to file_storage.id for thumbnails and other derivatives',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unq_file_storage_uuid` (`uuid`),
+  UNIQUE KEY `unq_file_storage_object` (`storage_provider`, `storage_bucket`, `storage_key`),
+  KEY `idx_file_storage_status` (`storage_status`, `scan_status`),
+  KEY `idx_file_storage_created_by` (`created_by`),
+  KEY `idx_file_storage_deleted_at` (`deleted_at`),
+  KEY `idx_file_storage_parent_file_id` (`parent_file_id`)
+) ENGINE=InnoDB COMMENT='Canonical S3 object metadata for application binaries';
 
 -- --------------------------------------------------------
 

@@ -1,0 +1,315 @@
+<?php
+
+/**
+ * PatientDocumentStorageService
+ *
+ * The single entry point legacy code (Document.class.php,
+ * C_Document.class.php) and REST code (DocumentRestController) should
+ * call to persist a patient document. Ties together validation, S3 key
+ * generation, storage, metadata recording, and linking back to the
+ * `documents` table row — so every call site gets identical behavior
+ * instead of re-implementing the pipeline.
+ *
+ * @package   OpenEMR\Modules\GheitS3\Services\FileStorage
+ * @license   https://github.com/openemr/openemr/blob/master/LICENSE GNU General Public License 3
+ */
+
+namespace OpenEMR\Modules\GheitS3\Services\FileStorage;
+
+use OpenEMR\Common\Uuid\UniqueInstallationUuid;
+use Psr\Log\LoggerInterface;
+use Throwable;
+
+final class PatientDocumentStorageService
+{
+    public function __construct(
+        private readonly FileStorageInterface $storage,
+        private readonly FileMetadataServiceInterface $metadataService,
+        private readonly FileUploadValidatorInterface $validator,
+        private readonly S3ObjectKeyGenerator $keyGenerator,
+        private readonly PatientDocumentRecordRepositoryInterface $documents,
+        private readonly ?LoggerInterface $logger = null,
+        private readonly ?string $environment = null,
+        private readonly ?string $siteUuid = null
+    ) {
+    }
+
+    public function upload(int $pid, int $categoryId, array $fileData, int $ownerId): int
+    {
+        $validated = $this->validator->validateUploadedFileAutoKind($fileData);
+
+        return $this->storeValidatedUpload($pid, $categoryId, $validated, $ownerId);
+    }
+
+    public function uploadFromPath(
+        int $pid,
+        int $categoryId,
+        string $path,
+        string $originalFilename,
+        int $ownerId,
+        ?int $foreignReferenceId = null,
+        ?string $foreignReferenceTable = null,
+        ?string $dateExpires = null
+    ): int {
+        $validated = $this->validator->validateFile(
+            $path,
+            $originalFilename,
+            $this->validator->kindForFilename($originalFilename)
+        );
+
+        return $this->storeValidatedUpload(
+            $pid,
+            $categoryId,
+            $validated,
+            $ownerId,
+            $foreignReferenceId,
+            $foreignReferenceTable,
+            $dateExpires
+        );
+    }
+
+    /**
+     * @return array{filename: string, mimetype: string, download_url: string}
+     */
+    public function createDownload(int $pid, int $documentId): array
+    {
+        $document = $this->resolveAccessibleDocument($pid, $documentId);
+        $filename = $this->documentFilename($document);
+        $mimeType = $this->documentMimeType($document);
+
+        return [
+            'filename' => $filename,
+            'mimetype' => $mimeType,
+            'download_url' => $this->storage->createDownloadUrl(
+                (string)$document['storage_key'],
+                $filename,
+                $mimeType,
+                $document['storage_version_id'] ?? null
+            ),
+        ];
+    }
+
+    /**
+     * @return array{filename: string, mimetype: string, view_url: string}
+     */
+    public function createView(int $pid, int $documentId): array
+    {
+        $access = $this->createAccessUrl($pid, $documentId, false);
+
+        return [
+            'filename' => $access['filename'],
+            'mimetype' => $access['mimetype'],
+            'view_url' => $access['url'],
+        ];
+    }
+
+    /**
+     * @return array{filename: string, mimetype: string, url: string}
+     */
+    public function createAccessUrl(int $pid, int $documentId, bool $asFile): array
+    {
+        $document = $this->resolveAccessibleDocument($pid, $documentId);
+        $filename = $this->documentFilename($document);
+        $mimeType = $this->documentMimeType($document);
+        $key = (string)$document['storage_key'];
+        $versionId = $document['storage_version_id'] ?? null;
+
+        if ($asFile) {
+            $url = $this->storage->createDownloadUrl($key, $filename, $mimeType, $versionId);
+        } else {
+            try {
+                $url = $this->storage->createViewUrl($key, $filename, $mimeType, $versionId);
+            } catch (FileStorageException) {
+                $url = $this->storage->createInlineUrl($key, $filename, $mimeType, $versionId);
+            }
+        }
+
+        return [
+            'filename' => $filename,
+            'mimetype' => $mimeType,
+            'url' => $url,
+        ];
+    }
+
+    public function readDocumentContent(int $pid, int $documentId): string
+    {
+        $document = $this->resolveAccessibleDocument($pid, $documentId);
+        $temporaryPath = tempnam($this->temporaryDirectory(), 'oer');
+        if ($temporaryPath === false) {
+            throw FileStorageException::forOperation('patient document read');
+        }
+
+        try {
+            $this->storage->downloadToPath(
+                (string)$document['storage_key'],
+                $temporaryPath,
+                $document['storage_version_id'] ?? null
+            );
+            $content = file_get_contents($temporaryPath);
+            if ($content === false) {
+                throw FileStorageException::forOperation('patient document read');
+            }
+
+            return $content;
+        } finally {
+            if (is_file($temporaryPath)) {
+                unlink($temporaryPath);
+            }
+        }
+    }
+
+    private function storeValidatedUpload(
+        int $pid,
+        int $categoryId,
+        ValidatedUpload $validated,
+        int $ownerId,
+        ?int $foreignReferenceId = null,
+        ?string $foreignReferenceTable = null,
+        ?string $dateExpires = null
+    ): int {
+        $pending = $this->metadataService->createPending(
+            $validated->getOriginalFilename(),
+            $validated->getMimeType(),
+            $validated->getSize(),
+            $ownerId
+        );
+
+        $storedFile = null;
+        try {
+            $key = $this->keyGenerator->forPatient(
+                $this->environment(),
+                $this->siteUuid(),
+                $this->documents->resolvePatientUuid($pid),
+                $validated->getKind(),
+                $pending->getUuid(),
+                $validated->getExtension()
+            );
+            $this->metadataService->assignStorageKey($pending->getId(), $key);
+
+            $storedFile = $this->storage->upload(
+                $validated->getPath(),
+                $key,
+                $validated->getOriginalFilename(),
+                $validated->getMimeType()
+            );
+            $this->metadataService->markUploaded($pending->getId(), $storedFile);
+            // Malware scanning integration will replace this temporary clean mark.
+            $this->metadataService->markScanClean($pending->getId());
+
+            return $this->documents->createDocument(
+                $pid,
+                $categoryId,
+                $pending->getId(),
+                $validated->getOriginalFilename(),
+                $validated->getMimeType(),
+                $validated->getSize(),
+                (string)$storedFile->getChecksumSha256(),
+                $ownerId,
+                $foreignReferenceId,
+                $foreignReferenceTable,
+                $dateExpires
+            );
+        } catch (Throwable $exception) {
+            $this->compensateFailedUpload($pending->getId(), $storedFile);
+            if (
+                $exception instanceof FileStorageException
+                || $exception instanceof FileMetadataException
+                || $exception instanceof FileValidationException
+            ) {
+                throw $exception;
+            }
+
+            $this->logger?->error('Patient document upload failed', [
+                'operation' => 'patient document upload',
+                'exception_class' => $exception::class,
+            ]);
+            throw FileStorageException::forOperation('patient document upload');
+        }
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function resolveAccessibleDocument(int $pid, int $documentId): array
+    {
+        $document = $this->documents->findDocumentForPatient($pid, $documentId);
+        if ($document === null || empty($document['storage_file_id'])) {
+            throw new FileStorageException('Patient document is unavailable');
+        }
+        if (
+            ($document['storage_status'] ?? null) !== 'uploaded'
+            || ($document['scan_status'] ?? null) !== 'clean'
+            || empty($document['storage_key'])
+        ) {
+            throw new FileStorageException('Patient document is not ready for download');
+        }
+
+        return $document;
+    }
+
+    /**
+     * @param array<string, mixed> $document
+     */
+    private function documentFilename(array $document): string
+    {
+        return (string)($document['original_filename'] ?: $document['name'] ?: 'document');
+    }
+
+    /**
+     * @param array<string, mixed> $document
+     */
+    private function documentMimeType(array $document): string
+    {
+        return (string)($document['storage_mime_type'] ?: $document['mimetype'] ?: 'application/octet-stream');
+    }
+
+    private function compensateFailedUpload(int $fileId, ?StoredFile $storedFile): void
+    {
+        try {
+            if ($storedFile !== null) {
+                $this->storage->delete($storedFile->getKey(), $storedFile->getVersionId());
+            }
+        } catch (Throwable $exception) {
+            $this->logger?->error('Failed compensating S3 delete after patient document upload failure', [
+                'operation' => 'patient document upload compensation',
+                'exception_class' => $exception::class,
+            ]);
+        }
+
+        try {
+            $this->metadataService->markFailed($fileId);
+        } catch (Throwable $exception) {
+            $this->logger?->error('Failed marking patient document metadata failed', [
+                'operation' => 'patient document upload compensation',
+                'exception_class' => $exception::class,
+            ]);
+        }
+    }
+
+    private function environment(): string
+    {
+        if ($this->environment !== null && $this->environment !== '') {
+            return $this->environment;
+        }
+
+        $environment = strtolower(trim((string)($_ENV['OPENEMR__ENVIRONMENT'] ?? 'prod')));
+
+        return $environment !== '' ? $environment : 'prod';
+    }
+
+    private function siteUuid(): string
+    {
+        if ($this->siteUuid !== null && $this->siteUuid !== '') {
+            return $this->siteUuid;
+        }
+
+        return UniqueInstallationUuid::getUniqueInstallationUuid();
+    }
+
+    private function temporaryDirectory(): string
+    {
+        $directory = $GLOBALS['temporary_files_dir'] ?? sys_get_temp_dir();
+
+        return is_string($directory) && $directory !== '' ? $directory : sys_get_temp_dir();
+    }
+}

@@ -31,6 +31,12 @@ use Google\Cloud\PubSub\PubSubClient;
 use Ramsey\Uuid\Uuid;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 use OpenEMR\Services\FHIR\FhirDocumentReferenceService;
+// use OpenEMR\Services\FileStorage\FileStorageException;
+// use OpenEMR\Services\FileStorage\FileValidationException;
+// use OpenEMR\Services\FileStorage\PatientDocumentStorageService;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileStorageException;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileValidationException;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\PatientDocumentStorageService;
 
 class Document extends ORDataObject
 {
@@ -50,6 +56,11 @@ class Document extends ORDataObject
      * Use CouchDb to store files at
      */
     public const STORAGE_METHOD_COUCHDB = 1;
+
+    /**
+     * Use Amazon S3 to store files at
+     */
+    public const STORAGE_METHOD_S3 = 2;
 
     /**
      * Flag that the encryption is on.
@@ -204,6 +215,12 @@ class Document extends ORDataObject
 
     // Storage method
     public $storagemethod;
+
+    /**
+     * Canonical S3 metadata row id from file_storage
+     * @public int|null
+     */
+    public $storage_file_id;
 
     // For storing couch docid
     public $couch_docid;
@@ -825,6 +842,16 @@ class Document extends ORDataObject
         return $this->storagemethod;
     }
 
+    function set_storage_file_id($storageFileId)
+    {
+        $this->storage_file_id = $storageFileId;
+    }
+
+    function get_storage_file_id()
+    {
+        return $this->storage_file_id;
+    }
+
     function set_couch_docid($str)
     {
         $this->couch_docid = $str;
@@ -909,6 +936,20 @@ class Document extends ORDataObject
             || empty($foreign_reference_id) && !empty($foreign_reference_table)
         ) {
             return xl('Reference table and reference id must both be set');
+        }
+        if (is_numeric($patient_id) && (int)$patient_id > 0 && is_numeric($category_id)) {
+            return $this->createDocumentInS3(
+                (int)$patient_id,
+                (int)$category_id,
+                $filename,
+                $mimetype,
+                $data,
+                $owner,
+                $tmpfile,
+                $date_expires,
+                $foreign_reference_id,
+                $foreign_reference_table
+            );
         }
         $session = SessionWrapperFactory::getInstance()->getWrapper();
         $this->set_foreign_reference_id($foreign_reference_id);
@@ -1111,6 +1152,91 @@ class Document extends ORDataObject
     }
 
     /**
+     * Store a patient-linked document in S3 and persist its metadata row.
+     *
+     * @return string Empty string if success, otherwise error message text
+     */
+    private function createDocumentInS3(
+        int $patient_id,
+        int $category_id,
+        string $filename,
+        string $mimetype,
+        &$data,
+        $owner,
+        $tmpfile,
+        $date_expires,
+        $foreign_reference_id,
+        $foreign_reference_table
+    ) {
+        $session = SessionWrapperFactory::getInstance()->getWrapper();
+        $temporaryPath = null;
+        $cleanupTemporary = false;
+
+        try {
+            if (!isset($GLOBALS['kernel'])) {
+                return xl('Document storage is unavailable');
+            }
+
+            /** @var PatientDocumentStorageService $storageService */
+            $storageService = $GLOBALS['kernel']->getContainer()->get(PatientDocumentStorageService::class);
+
+            if (is_string($tmpfile) && is_file($tmpfile)) {
+                $sourcePath = $tmpfile;
+            } else {
+                $temporaryPath = tempnam($GLOBALS['temporary_files_dir'] ?? sys_get_temp_dir(), 'oer');
+                if ($temporaryPath === false || file_put_contents($temporaryPath, $data) === false) {
+                    return xl('Failed to prepare document for upload');
+                }
+                $sourcePath = $temporaryPath;
+                $cleanupTemporary = true;
+            }
+
+            $ownerId = (int)($owner ?: $session->get('authUserID'));
+            $foreignReferenceId = null;
+            if ($foreign_reference_id !== null && $foreign_reference_id !== '') {
+                $foreignReferenceId = (int)$foreign_reference_id;
+            }
+
+            $documentId = $storageService->uploadFromPath(
+                $patient_id,
+                $category_id,
+                $sourcePath,
+                $filename,
+                $ownerId,
+                $foreignReferenceId,
+                is_string($foreign_reference_table) && $foreign_reference_table !== ''
+                    ? $foreign_reference_table
+                    : null,
+                is_string($date_expires) && $date_expires !== '' ? $date_expires : null
+            );
+
+            $this->id = $documentId;
+            $this->populate();
+
+            $documentUuid = UuidRegistry::uuidToString($this->get_uuid());
+            $service = new FhirDocumentReferenceService();
+            $result = $service->getOne($documentUuid);
+            $documentRef = $result->getData()[0];
+            $fhirArray = $documentRef->jsonSerialize();
+
+            $pubSubController = new PubSub();
+            $pubSubController->publishPubsub('DocumentReference', 'document_uploaded', 'document_data', $fhirArray);
+
+            return '';
+        } catch (FileValidationException $exception) {
+            return xl('Invalid document upload');
+        } catch (FileStorageException $exception) {
+            return xl('Document upload failed');
+        } catch (\Throwable $exception) {
+            return xl('Document upload failed');
+        } finally {
+            if ($cleanupTemporary && is_string($temporaryPath) && is_file($temporaryPath)) {
+                unlink($temporaryPath);
+            }
+        }
+    }
+
+    /**
      * Retrieves the document data that has been saved to the filesystem or couch db.  If the $force_no_decrypt flag is
      * set to true, it will return the encrypted version of the data for the document.
      * @param bool $force_no_decrypt True if the document should have its data returned encrypted, false otherwise
@@ -1131,6 +1257,24 @@ class Document extends ORDataObject
         }
 
         $base64Decode = false;
+
+        if ($storagemethod === self::STORAGE_METHOD_S3 && $this->get_storage_file_id()) {
+            if (!isset($GLOBALS['kernel'])) {
+                return false;
+            }
+
+            try {
+                /** @var PatientDocumentStorageService $storageService */
+                $storageService = $GLOBALS['kernel']->getContainer()->get(PatientDocumentStorageService::class);
+
+                return $storageService->readDocumentContent(
+                    (int)$this->get_foreign_id(),
+                    (int)$this->get_id()
+                );
+            } catch (FileStorageException $exception) {
+                return false;
+            }
+        }
 
         if ($storagemethod === self::STORAGE_METHOD_COUCHDB) {
             // encrypting does not use base64 encoding

@@ -183,7 +183,8 @@
         "psr-4": {
             "OpenEMR\\PHPStan\\Rules\\": ".phpstan",
             "OpenEMR\\Tests\\": "tests\\Tests",
-            "OpenEMR\\Modules\\CustomModuleGheit\\": "interface/modules/custom_module/oe-module-custom-gheit/src/"
+            "OpenEMR\\Modules\\CustomModuleGheit\\": "interface/modules/custom_modules/oe-module-custom-gheit/src/",
+            "OpenEMR\\Modules\\GheitS3\\": "interface/modules/custom_modules/oe-module-gheit-s3/src/"
         }
     },
     "config": {

@@ -16,16 +16,19 @@
 
 namespace OpenEMR\Services;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-
+use OpenEMR\Common\Session\SessionWrapperFactory;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileStorageException;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileValidationException;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\MessageAttachmentStorageService;
 use Particle\Validator\Validator;
-use Aws\S3\S3Client;
-use Aws\Exception\AwsException;
 
 class MessageService
 {
-    public function __construct()
+    private ?MessageAttachmentStorageService $attachmentStorage = null;
+
+    public function __construct(?MessageAttachmentStorageService $attachmentStorage = null)
     {
+        $this->attachmentStorage = $attachmentStorage;
     }
 
     public function validate($message)
@@ -122,109 +125,39 @@ class MessageService
         return sqlStatement($sql, [$pid, $mid]);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function s3DocumentHandler($pid, array $input)
     {
-        // Placeholder for S3 document handling logic
-        // ---------- CONFIG ----------
-        $bucket = $_ENV['AWS_BUCKET_NAME'];
-        $region = $_ENV['AWS_DEFAULT_REGION'];
-        $maxSize = 10 * 1024 * 1024; // 10 MB
+        unset($input);
 
-        $allowedMimeTypes = [
-            'application/pdf',
-            'application/msword',
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-            'application/vnd.ms-excel',
-            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-            'application/vnd.ms-powerpoint',
-            'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-            'text/plain',
-            'text/csv',
-            'image/jpeg',
-            'image/png'
-        ];
-
-        $allowedExtensions = ['pdf','doc','docx','xls','xlsx','ppt','pptx','txt','csv','jpg','jpeg','png'];
-
-        // ---------- INPUT ----------
-
-        if (!$input) {
-            http_response_code(400);
-            exit(json_encode(['error' => 'Invalid JSON']));
-        }
-
-        if (!isset($_FILES['file'])) {
+        if (!isset($_FILES['file']) || !is_array($_FILES['file'])) {
             return ['error' => 'No file uploaded'];
         }
 
-        $file = $_FILES['file'];
-
-        $filename    = $file['name'];
-        $contentType = mime_content_type($file['tmp_name']);
-        $fileSize    = $file['size'];
-
-        $extension = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-
-        if (!in_array($contentType, $allowedMimeTypes)) {
-            http_response_code(415);
-            exit(json_encode(['error' => 'Unsupported file type']));
-        }
-
-        if (!in_array($extension, $allowedExtensions)) {
-            http_response_code(415);
-            exit(json_encode(['error' => 'Invalid file extension']));
-        }
-
-        if ($fileSize > $maxSize) {
-            http_response_code(413);
-            exit(json_encode(['error' => 'File too large']));
-        }
-
-        // ---------- S3 CLIENT ----------
-        $s3 = new S3Client([
-            'version' => 'latest',
-            'region'  => $region,
-            'credentials' => [
-                'key'    => $_ENV['AWS_ACCESS_KEY_ID'],
-                'secret' => $_ENV['AWS_SECRET_ACCESS_KEY'],
-            ],
-        ]);
-
-        // ---------- OBJECT KEY ----------
-        $uuid = bin2hex(random_bytes(16));
-        $key = "attachments/patients/{$pid}/documents/{$uuid}.{$extension}";
-
-        // ---------- PRESIGNED REQUEST ----------
         try {
+            $session = SessionWrapperFactory::getInstance()->getWrapper();
+            $ownerId = (int)$session->get('authUserID');
 
-            $s3->putObject([
-                'Bucket' => $bucket,
-                'Key'    => $key,
-                'Body'   => fopen($file['tmp_name'], 'r'),
-                'ContentType' => mime_content_type($file['tmp_name']),
-                'ServerSideEncryption' => 'AES256'
-            ]);
-
-            // //View URL (GET)
-            $getCmd = $s3->getCommand('GetObject', [
-                'Bucket' => $bucket,
-                'Key' => $key,
-            ]);
-
-            $viewRequest = $s3->createPresignedRequest($getCmd, '+60 minutes');
-            $viewUrl = (string) $viewRequest->getUri();
-
-            return [
-                'view_url'   => $viewUrl,
-                's3_key'     => $key
-            ];
-
-        } catch (AwsException $e) {
-            http_response_code(500);
-            echo json_encode([
-                'error' => 'Failed to generate presigned URL',
-                'details' => $e->getMessage()
-            ]);
+            return $this->attachmentStorage()->upload((int)$pid, $_FILES['file'], $ownerId);
+        } catch (FileValidationException $exception) {
+            return ['error' => 'Unsupported file type'];
+        } catch (FileStorageException $exception) {
+            return ['error' => 'Failed to store attachment'];
+        } catch (\Throwable $exception) {
+            return ['error' => 'Failed to store attachment'];
         }
+    }
+
+    private function attachmentStorage(): MessageAttachmentStorageService
+    {
+        if ($this->attachmentStorage === null) {
+            $this->attachmentStorage = $GLOBALS['kernel']
+                ->getContainer()
+                ->get(MessageAttachmentStorageService::class);
+        }
+
+        return $this->attachmentStorage;
     }
 }
