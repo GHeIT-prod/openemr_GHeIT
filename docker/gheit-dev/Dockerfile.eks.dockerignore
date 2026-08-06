@@ -1,0 +1,20 @@
+# Build-context excludes for docker/gheit-dev/Dockerfile.eks.
+#
+# BuildKit prefers <dockerfile>.dockerignore over the repo-root .dockerignore,
+# so this file shadows the root one for the EKS build only.
+#
+# Identical to the root .dockerignore EXCEPT that `vendor` is NOT excluded:
+# the neocarex-dev buildspec stages a pre-resolved vendor/ bundle from S3 into
+# the build context, and Dockerfile.eks COPYs it into the image. Excluding it
+# here makes the build fail with `"/vendor": not found`.
+.git
+.github
+.phpstan
+ci
+Documentation
+tests
+docker/**/docker_data
+docker/**/.env
+node_modules
+npm-debug.log*
+yarn-error.log*
