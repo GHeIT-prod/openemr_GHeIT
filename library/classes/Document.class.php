@@ -31,9 +31,12 @@ use Google\Cloud\PubSub\PubSubClient;
 use Ramsey\Uuid\Uuid;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 use OpenEMR\Services\FHIR\FhirDocumentReferenceService;
-use OpenEMR\Services\FileStorage\FileStorageException;
-use OpenEMR\Services\FileStorage\FileValidationException;
-use OpenEMR\Services\FileStorage\PatientDocumentStorageService;
+// use OpenEMR\Services\FileStorage\FileStorageException;
+// use OpenEMR\Services\FileStorage\FileValidationException;
+// use OpenEMR\Services\FileStorage\PatientDocumentStorageService;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileStorageException;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileValidationException;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\PatientDocumentStorageService;
 
 class Document extends ORDataObject
 {

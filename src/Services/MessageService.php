@@ -17,9 +17,9 @@
 namespace OpenEMR\Services;
 
 use OpenEMR\Common\Session\SessionWrapperFactory;
-use OpenEMR\Services\FileStorage\FileStorageException;
-use OpenEMR\Services\FileStorage\FileValidationException;
-use OpenEMR\Services\FileStorage\MessageAttachmentStorageService;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileStorageException;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileValidationException;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\MessageAttachmentStorageService;
 use Particle\Validator\Validator;
 
 class MessageService

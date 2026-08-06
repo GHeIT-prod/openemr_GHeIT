@@ -42,6 +42,7 @@ services:
     - ./docker_data/couchdbvolume:/couchdb/data
     - ../../openemr.sh:/var/www/localhost/htdocs/openemr/openemr.sh
     - ../../openemr-keys/pubsub.json:/var/www/keys/pubsub.json
+    - ../../controllers:/var/www/localhost/htdocs/openemr/controllers
     environment:
       DEBUG_COLORS: "true"
       TERM: xterm-256color

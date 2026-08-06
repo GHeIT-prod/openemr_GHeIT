@@ -19,9 +19,9 @@ use OpenEMR\Common\Utils\FileUtils;
 use OpenEMR\Core\OEGlobalsBag;
 use OpenEMR\Modules\FaxSMS\Exception\FaxDocumentException;
 use OpenEMR\Modules\FaxSMS\Exception\FaxNotFoundException;
-use OpenEMR\Services\FileStorage\FileStorageException;
-use OpenEMR\Services\FileStorage\FileValidationException;
-use OpenEMR\Services\FileStorage\MessageAttachmentStorageService;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileStorageException;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileValidationException;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\MessageAttachmentStorageService;
 
 class FaxDocumentService
 {

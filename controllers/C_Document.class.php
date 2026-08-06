@@ -30,8 +30,8 @@ use OpenEMR\Services\FacilityService;
 use OpenEMR\Services\PatientService;
 use OpenEMR\Events\PatientDocuments\PatientDocumentTreeViewFilterEvent;
 use OpenEMR\Events\PatientDocuments\PatientRetrieveOffsiteDocument;
-use OpenEMR\Services\FileStorage\FileStorageException;
-use OpenEMR\Services\FileStorage\PatientDocumentStorageService;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileStorageException;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\PatientDocumentStorageService;
 
 class C_Document extends Controller
 {

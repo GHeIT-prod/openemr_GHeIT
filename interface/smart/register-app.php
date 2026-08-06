@@ -29,6 +29,7 @@ use OpenEMR\FHIR\Config\ServerConfig;
 use OpenEMR\RestControllers\AuthorizationController;
 use OpenEMR\Common\Auth\OpenIDConnect\Entities\ClientEntity;
 use OpenEMR\Services\DecisionSupportInterventionService;
+use OpenEMR\Common\Csrf\CsrfUtils;
 
 // not sure if we need the site id or not...
 $ignoreAuth = true;
@@ -118,6 +119,7 @@ $dsiTypesStringNames = DecisionSupportInterventionService::DSI_TYPES_CLIENT_STRI
                 const formData = new FormData();
                 formData.append("file", file);
                 formData.append("appName", appName);
+                formData.append("csrf_token_form", document.querySelector('input[name="csrf_token_form"]').value);
 
                 fetch("uploadSmartLogo.php", {
                     method: "POST",
@@ -394,6 +396,7 @@ $dsiTypesStringNames = DecisionSupportInterventionService::DSI_TYPES_CLIENT_STRI
 </head>
 <body class="register-app">
 <form id="app_form" method="POST" autocomplete="off">
+    <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>" />
     <div class="<?php echo $loginrow; ?> card m-5">
         <div class="<?php echo attr($logoarea); ?>">
             <?php $extraLogo = $GLOBALS['extra_logo_login']; ?>
