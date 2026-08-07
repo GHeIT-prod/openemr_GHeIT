@@ -138,7 +138,7 @@ repos:
 
   - id: conventional-commits
     name: Conventional Commits
-    entry: composer conventional-commits:check --
+    entry: php -r "passthru(escapeshellarg(PHP_BINARY) . ' vendor/ramsey/conventional-commits/bin/conventional-commits validate ' . escapeshellarg(file_get_contents($argv[1])), $exitCode); exit($exitCode);"
     language: system
     stages:
     - commit-msg
