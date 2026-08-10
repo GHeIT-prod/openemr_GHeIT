@@ -14,10 +14,27 @@ class PubSub
     {
         putenv('GOOGLE_APPLICATION_CREDENTIALS=' . $_ENV['PUBSUB_CREDENTIALS_PATH']);
 
+        $projectId = $_ENV['PUBSUB_PROJECT_ID'];
+        $topicName = $_ENV['PUBSUB_TOPIC_NAME'];
+        $credentialsPath = $_ENV['PUBSUB_CREDENTIALS_PATH'];
+
+        // Validate required configuration
+        if (
+            empty($credentialsPath) ||
+            empty($projectId) ||
+            empty($topicName)
+        ) {
+            error_log('PubSub configuration is missing.');
+            return;
+        }
+
+        // Validate credentials file
+        if (!file_exists($credentialsPath)) {
+            error_log("PubSub credentials file not found: {$credentialsPath}");
+            return;
+        }
+
         try {
-            
-            $projectId = $_ENV['PUBSUB_PROJECT_ID'];
-            $topicName = $_ENV['PUBSUB_TOPIC_NAME'];
 
             $pubSub = new PubSubClient([
                 'projectId' => $projectId,
@@ -26,17 +43,23 @@ class PubSub
             $topic = $pubSub->topic($topicName);
 
             $payload = [
-                'resource' => $resource,
+                'resourceType' => $resource,
                 'event' => $event,
-                $resourceDataName => $data
+                $resourceDataName => $data,
+                'timestamp' => date('c'),
+                'data' => $data
             ];
 
             // Publish message
             $topic->publish([
-                'data' => json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+                'data' => json_encode($payload),
+                'attributes' => [
+                    'resourceType' => $resource,
+                    'eventType' => $event
+                ]
             ]);
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             error_log("PubSub Error: " . $e->getMessage());
         }   
     }

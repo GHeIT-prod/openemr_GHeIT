@@ -20,6 +20,9 @@ require_once $GLOBALS['srcdir'] . '/patient.inc.php';
 require_once $GLOBALS['srcdir'] . '/options.inc.php';
 require_once $GLOBALS['fileroot'] . '/custom/code_types.inc.php';
 require_once $GLOBALS['srcdir'] . '/csv_like_join.php';
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirReferenceDetector.php';
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirBundleBuilder.php';
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirResourceResolver.php';
 
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Csrf\CsrfUtils;
@@ -334,24 +337,86 @@ if (!empty($_POST['form_save'])) {
             $uuid = sqlQuery("SELECT uuid FROM lists WHERE pid = ? AND id = ?", [$thispid, $issue])['uuid'];
             $conditionUuid = UuidRegistry::uuidToString($uuid);
 
+            // $service = new FhirConditionService();
+            // $result = $service->getOne($conditionUuid);
+            // $condition = $result->getData()[0];
+            // $fhirArray = $condition->jsonSerialize();
+
+            // $pubSubController = new PubSub();
+            // $pubSubController->publishPubsub('Condition', 'condition_created', 'condition_data', $fhirArray);
+
             $service = new FhirConditionService();
             $result = $service->getOne($conditionUuid);
-            $condition = $result->getData()[0];
-            $fhirArray = $condition->jsonSerialize();
+
+            $condition = $result->getData()[0]->jsonSerialize();
+            $condition = json_decode(json_encode($condition), true);
+
+            $hasReference = FhirReferenceDetector::hasReference($condition);
+
+            if ($hasReference) {
+                $resolved = FhirResourceResolver::resolveResourceContext($condition);
+
+                $payload = FhirBundleBuilder::buildTransactionBundle(
+                    $resolved['patient'],
+                    $resolved['resource'],
+                    $resolved['locations'] ?? [],
+                    $resolved['organizations'] ?? [],
+                    $resolved['practitioners'] ?? []
+                );
+
+            } else {
+                $payload = $condition;
+            }
 
             $pubSubController = new PubSub();
-            $pubSubController->publishPubsub('Condition', 'condition_created', 'condition_data', $fhirArray);
+            $pubSubController->publishPubsub(
+                'Condition',
+                'condition_created',
+                'condition_data',
+                $payload
+            );
 
         } elseif($issueRecord['type'] == 'medication') {
             $uuid = sqlQuery("SELECT uuid FROM lists WHERE pid = ? AND id = ?", [$thispid, $issue])['uuid'];
             $medicationRequestUuid = UuidRegistry::uuidToString($uuid);
+            // $service = new FhirMedicationRequestService();
+            // $result = $service->getOne($medicationRequestUuid);
+            // $medicationRequest = $result->getData()[0];
+            // $fhirArray = $medicationRequest->jsonSerialize();
+
+            // $pubSubController = new PubSub();
+            // $pubSubController->publishPubsub('MedicationRequest', 'medication_request_created', 'medication_request_data', $fhirArray);
+
             $service = new FhirMedicationRequestService();
             $result = $service->getOne($medicationRequestUuid);
-            $medicationRequest = $result->getData()[0];
-            $fhirArray = $medicationRequest->jsonSerialize();
+
+            $medicationRequest = $result->getData()[0]->jsonSerialize();
+            $medicationRequest = json_decode(json_encode($medicationRequest), true);
+
+            $hasReference = FhirReferenceDetector::hasReference($medicationRequest);
+
+            if ($hasReference) {
+                $resolved = FhirResourceResolver::resolveResourceContext($medicationRequest);
+
+                $payload = FhirBundleBuilder::buildTransactionBundle(
+                    $resolved['patient'],
+                    $resolved['resource'],
+                    $resolved['locations'] ?? [],
+                    $resolved['organizations'] ?? [],
+                    $resolved['practitioners'] ?? []
+                );
+
+            } else {
+                $payload = $medicationRequest;
+            }
 
             $pubSubController = new PubSub();
-            $pubSubController->publishPubsub('MedicationRequest', 'medication_request_created', 'medication_request_data', $fhirArray);
+            $pubSubController->publishPubsub(
+                'MedicationRequest',
+                'medication_request_created',
+                'medication_request_data',
+                $payload
+            );
         }
     }
 

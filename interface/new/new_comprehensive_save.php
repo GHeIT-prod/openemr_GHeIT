@@ -112,8 +112,96 @@ $result = $service->getOne($patientuuid);
 
 $patient = $result->getData()[0];
 
-$fhirArray = $patient->jsonSerialize();
+// $fhirArray = $patient->jsonSerialize();
+$fhirArray = json_decode(json_encode($patient->jsonSerialize()), true);
 
+$medicalRecordNumber = $newdata['patient_data']['MRN'] ?? '';
+
+if (!empty($medicalRecordNumber)) {
+
+    if (!isset($fhirArray['identifier'])) {
+        $fhirArray['identifier'] = [];
+    }
+
+    $fhirArray['identifier'][] = [
+        'use' => 'usual',
+        'type' => [
+            'coding' => [[
+                'system' => 'http://terminology.hl7.org/CodeSystem/v2-0203',
+                'code' => 'MR'
+            ]],
+            'text' => 'Medical Record Number'
+        ],
+        'system' => 'http://hospital.smarthealth.org/mrn',
+        'value' => (string)$medicalRecordNumber
+    ];
+}
+
+/*
+|--------------------------------------------------------------------------
+| CLEAN PATIENT BEFORE PUBLISHING
+|--------------------------------------------------------------------------
+*/
+
+// 1. Normalize profiles — collapse all us-core-patient variants to 9.0.0
+if (isset($fhirArray['meta']['profile'])) {
+    $others = array_values(array_filter(
+        $fhirArray['meta']['profile'],
+        fn($p) => !str_contains($p, 'us-core-patient')
+    ));
+    $fhirArray['meta']['profile'] = array_merge($others, [
+        'http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient|9.0.0',
+    ]);
+}
+
+// 2. Strip us-core-sex, fix us-core-interpreter-needed
+if (isset($fhirArray['extension']) && is_array($fhirArray['extension'])) {
+    foreach ($fhirArray['extension'] as &$ext) {
+        $url = $ext['url'] ?? '';
+
+        if (str_ends_with($url, 'us-core-sex')) {
+            $ext = null;
+            continue;
+        }
+
+        if (str_ends_with($url, 'us-core-interpreter-needed')) {
+            $system = $ext['valueCoding']['system'] ?? '';
+            if (
+                str_contains($system, 'data-absent-reason') ||
+                !str_starts_with($system, 'http://snomed')
+            ) {
+                $ext['valueCoding'] = [
+                    'system'  => 'http://snomed.info/sct',
+                    'code'    => '373067005',
+                    'display' => 'No (qualifier value)',
+                ];
+            }
+        }
+    }
+    unset($ext);
+
+    $fhirArray['extension'] = array_values(
+        array_filter($fhirArray['extension'], fn($e) => $e !== null && !empty($e))
+    );
+}
+
+// 3. Strip invalid communication.language (data-absent-reason)
+if (isset($fhirArray['communication'])) {
+    $fhirArray['communication'] = array_values(array_filter(
+        $fhirArray['communication'],
+        fn($c) => ($c['language']['coding'][0]['system'] ?? '')
+                  !== 'http://terminology.hl7.org/CodeSystem/data-absent-reason'
+    ));
+    if (empty($fhirArray['communication'])) {
+        unset($fhirArray['communication']);
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| PUBLISH
+|--------------------------------------------------------------------------
+*/
 $pubSubController = new PubSub();
 $pubSubController->publishPubsub('Patient', 'patient_created', 'patient_data', $fhirArray);
 

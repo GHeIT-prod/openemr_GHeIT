@@ -1,0 +1,31 @@
+{
+    "name": "gheit/oe-module-gheit-prior-auth",
+    "description": "Da Vinci CRD/DTR coverage-requirements and prior-authorization integration for OpenEMR (NeoCareX)",
+    "type": "openemr-module",
+    "license": "GPL-3.0-only",
+    "require": {
+        "php": ">=8.0",
+        "openemr/oe-module-installer-plugin": "^0.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "OpenEMR\\Modules\\GheitPriorAuth\\": "src/"
+        }
+    },
+    "extra": {
+        "install": [
+            {
+                "type": "openemr-module",
+                "name": "oe-module-gheit-prior-auth"
+            }
+        ]
+    },
+    "menu": [
+        {
+            "label": "CDS Hooks Services (CRD Prior Auth)",
+            "url": "public/admin_services.php",
+            "acl_component": "admin",
+            "global": false
+        }
+    ]
+}
