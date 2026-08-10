@@ -16,7 +16,7 @@ namespace OpenEMR\Modules\GheitS3\Services\FileStorage;
 
 use InvalidArgumentException;
 
-final class FileMetadataService implements FileMetaDataServiceInterface
+final class FileMetadataService implements FileMetadataServiceInterface
 {
     public function __construct(
         private readonly FileMetadataRepositoryInterface $repository,
