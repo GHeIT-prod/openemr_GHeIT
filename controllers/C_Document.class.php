@@ -144,10 +144,11 @@ class C_Document extends Controller
                     $fparts['extension'] = "dcm";
                     $name = $fparts['filename'] . ".dcm";
                 }
-                // required extension for viewer
-                if ($fparts['extension'] != "dcm") {
-                    continue;
-                }
+                // Non-DICOM entries are kept rather than discarded, so this control can zip an
+                // arbitrary directory and not only DICOM slices. Dropping them silently produced an
+                // empty archive, which the caller then rejected as "size 0". The upload handler
+                // inspects the finished archive and labels it application/zip unless every entry is
+                // DICOM, so viewer support for genuine DICOM studies is unaffected.
                 move_uploaded_file($_FILES['dicom_folder']['tmp_name'][$i], $zfn);
                 $zip->addFile($zfn, $name);
             }
