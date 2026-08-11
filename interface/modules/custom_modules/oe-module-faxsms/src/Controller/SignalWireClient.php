@@ -515,20 +515,7 @@ class SignalWireClient extends AppDispatch
         }
 
         $mediaPath = $fax['media_path'] ?? '';
-        if (empty($mediaPath) || !file_exists($mediaPath)) {
-            http_response_code(404);
-            die(xlt('Fax file not found'));
-        }
-
-        // Send file for inline viewing
-        $filename = basename((string) $mediaPath);
-        header('Content-Type: application/pdf');
-        header('Content-Disposition: inline; filename="' . $filename . '"');
-        header('Content-Length: ' . filesize($mediaPath));
-        header('Cache-Control: no-cache, must-revalidate');
-        header('Pragma: public');
-        readfile($mediaPath);
-        exit;
+        $this->serveFaxMedia($mediaPath, false, (string)($fax['mime'] ?? 'application/pdf'));
     }
 
     /**
@@ -549,7 +536,6 @@ class SignalWireClient extends AppDispatch
             die(xlt('Missing fax ID'));
         }
 
-        // Fetch fax from queue
         $site_id = $_SESSION['site_id'] ?? 'default';
         $fax = QueryUtils::querySingleRow(
             "SELECT * FROM oe_faxsms_queue WHERE id = ? AND site_id = ?",
@@ -562,15 +548,34 @@ class SignalWireClient extends AppDispatch
         }
 
         $mediaPath = $fax['media_path'] ?? '';
-        if (empty($mediaPath) || !file_exists($mediaPath)) {
+        $this->serveFaxMedia($mediaPath, true, (string)($fax['mime'] ?? 'application/pdf'));
+    }
+
+    private function serveFaxMedia(string $mediaPath, bool $asDownload, string $mimeType = 'application/pdf'): void
+    {
+        $faxDocumentService = new FaxDocumentService();
+        if (FaxDocumentService::parseStorageReference($mediaPath) !== null) {
+            try {
+                header('Location: ' . $faxDocumentService->createMediaAccessUrl($mediaPath, $asDownload));
+                exit;
+            } catch (FaxDocumentException $exception) {
+                http_response_code(404);
+                die(xlt('Fax file not found'));
+            }
+        }
+
+        if (!$faxDocumentService->isMediaAvailable($mediaPath)) {
             http_response_code(404);
             die(xlt('Fax file not found'));
         }
 
-        // Send file as download
-        $filename = basename((string) $mediaPath);
-        header('Content-Type: application/pdf');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        $filename = basename($mediaPath);
+        header('Content-Type: ' . ($mimeType !== '' ? $mimeType : 'application/pdf'));
+        header(
+            'Content-Disposition: '
+            . ($asDownload ? 'attachment' : 'inline')
+            . '; filename="' . $filename . '"'
+        );
         header('Content-Length: ' . filesize($mediaPath));
         header('Cache-Control: no-cache, must-revalidate');
         header('Pragma: public');
@@ -711,7 +716,7 @@ class SignalWireClient extends AppDispatch
                     if ($numPages > 0) {
                         $messageCol .= "(" . text($numPages) . " " . xlt('pages') . ") ";
                     }
-                } elseif (!empty($mediaPath) && file_exists($mediaPath)) {
+                } elseif (!empty($mediaPath) && (new FaxDocumentService())->isMediaAvailable($mediaPath)) {
                     // Unassigned fax - use queue view/download links
                     $filename = basename((string) $mediaPath);
                     $viewLink = "./viewFaxPdf?type=fax&site=" . urlencode($_SESSION['site_id'] ?? 'default') . "&id=" . urlencode($queueId);
@@ -833,7 +838,10 @@ class SignalWireClient extends AppDispatch
             error_log("SignalWireClient.upsertFaxFromSignalWire(): DEBUG - Upserting fax sid={$jobId}, from={$from}, to={$to}, status={$status}, direction={$direction}");
 
             // Download fax media if available
-            $mediaPath = $this->downloadFaxMedia($fax);
+            $storeResult = $this->persistInboundFaxMedia($fax);
+            $mediaPath = $storeResult['media_path'] ?? null;
+            $patientId = $storeResult['patient_id'] ?? null;
+            $documentId = $storeResult['document_id'] ?? null;
             if ($mediaPath) {
                 $faxData['media_path'] = $mediaPath;
             }
@@ -847,18 +855,41 @@ class SignalWireClient extends AppDispatch
                         SET details_json = ?,
                             direction = ?,
                             status = ?,
-                            media_path = ?
+                            media_path = ?,
+                            patient_id = COALESCE(?, patient_id),
+                            document_id = COALESCE(?, document_id)
                         WHERE job_id = ?";
-                QueryUtils::sqlStatementThrowException($sql, [json_encode($faxData), $direction, $status, $mediaPath ?? null, $jobId]);
+                QueryUtils::sqlStatementThrowException($sql, [
+                    json_encode($faxData),
+                    $direction,
+                    $status,
+                    $mediaPath ?? null,
+                    $patientId ?: null,
+                    $documentId ?: null,
+                    $jobId,
+                ]);
                 error_log("SignalWireClient.upsertFaxFromSignalWire(): DEBUG - Updated fax {$jobId} with fresh status");
             } else {
                 // Insert new fax from API fetch (these are received/already-sent faxes)
                 $uid = $_SESSION['authUserID'] ?? 0;
                 $sql = "INSERT INTO oe_faxsms_queue
-                        (uid, job_id, calling_number, called_number, details_json, date, direction, status, site_id, media_path)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        (uid, job_id, calling_number, called_number, details_json, date, direction, status, site_id, media_path, patient_id, document_id)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 $site_id = $_SESSION['site_id'] ?? 'default';
-                QueryUtils::sqlStatementThrowException($sql, [$uid, $jobId, $from, $to, json_encode($faxData), $dateCreated, $direction, $status, $site_id, $mediaPath ?? null]);
+                QueryUtils::sqlStatementThrowException($sql, [
+                    $uid,
+                    $jobId,
+                    $from,
+                    $to,
+                    json_encode($faxData),
+                    $dateCreated,
+                    $direction,
+                    $status,
+                    $site_id,
+                    $mediaPath ?? null,
+                    $patientId ?: null,
+                    $documentId ?: null,
+                ]);
                 error_log("SignalWireClient.upsertFaxFromSignalWire(): DEBUG - Inserted fax {$jobId}");
             }
         } catch (Exception $e) {
@@ -867,56 +898,53 @@ class SignalWireClient extends AppDispatch
     }
 
     /**
+     * Persist inbound fax media through the centralized fax document service.
+     *
+     * @param mixed $fax Fax object from SignalWire API
+     * @return array<string, mixed>|null
+     */
+    private function persistInboundFaxMedia($fax): ?array
+    {
+        try {
+            if (empty($fax->mediaUrl)) {
+                error_log("SignalWireClient.persistInboundFaxMedia(): No media URL available");
+                return null;
+            }
+
+            $fileContent = $this->downloadFaxMediaContent($fax->mediaUrl);
+            if ($fileContent === null) {
+                return null;
+            }
+
+            $faxDocumentService = new FaxDocumentService();
+            $fromNumber = $fax->from ?? '';
+            $patientId = $faxDocumentService->findPatientByPhone($fromNumber);
+
+            return $faxDocumentService->storeFaxDocument(
+                (string)$fax->sid,
+                $fileContent,
+                $fromNumber,
+                $patientId,
+                'application/pdf'
+            );
+        } catch (Exception $e) {
+            error_log("SignalWireClient.persistInboundFaxMedia(): ERROR - " . $e->getMessage());
+            return null;
+        }
+    }
+
+    /**
      * Download fax media file from SignalWire
      *
-     * Downloads fax media PDF from SignalWire API and stores locally.
-     *
+     * @deprecated Use persistInboundFaxMedia()
      * @param mixed $fax Fax object from SignalWire API
      * @return string|null File path if successful, null otherwise
      */
     private function downloadFaxMedia($fax): ?string
     {
-        try {
-            if (empty($fax->mediaUrl)) {
-                error_log("SignalWireClient.downloadFaxMedia(): No media URL available");
-                return null;
-            }
+        $result = $this->persistInboundFaxMedia($fax);
 
-            // Create directory for fax media if it doesn't exist
-            $faxDir = $this->baseDir . '/received_faxes';
-            if (!file_exists($faxDir)) {
-                mkdir($faxDir, 0777, true);
-            }
-
-            // Generate filename
-            $filename = $fax->sid . '.pdf';
-            $filepath = $faxDir . '/' . $filename;
-
-            // Skip if file already exists
-            if (file_exists($filepath)) {
-                error_log("SignalWireClient.downloadFaxMedia(): File already exists: {$filepath}");
-                return $filepath;
-            }
-
-            // Download the file from SignalWire
-            $fileContent = file_get_contents($fax->mediaUrl);
-            if ($fileContent === false) {
-                error_log("SignalWireClient.downloadFaxMedia(): Failed to download media from {$fax->mediaUrl}");
-                return null;
-            }
-
-            // Save the file
-            if (file_put_contents($filepath, $fileContent) === false) {
-                error_log("SignalWireClient.downloadFaxMedia(): Failed to save file to {$filepath}");
-                return null;
-            }
-
-            error_log("SignalWireClient.downloadFaxMedia(): Successfully downloaded fax to {$filepath}");
-            return $filepath;
-        } catch (Exception $e) {
-            error_log("SignalWireClient.downloadFaxMedia(): ERROR - " . $e->getMessage());
-            return null;
-        }
+        return $result['media_path'] ?? null;
     }
 
     /**

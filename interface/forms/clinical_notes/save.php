@@ -18,12 +18,18 @@
 require_once(__DIR__ . "/../../globals.php");
 require_once("$srcdir/api.inc.php");
 require_once("$srcdir/forms.inc.php");
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirReferenceDetector.php';
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirBundleBuilder.php';
+require_once dirname(__DIR__, 3) . '/library/fhir/FhirResourceResolver.php';
 
 use OpenEMR\Common\Csrf\CsrfUtils;
 use OpenEMR\Common\Uuid\UuidRegistry;
 use OpenEMR\Services\ClinicalNotesService;
 use OpenEMR\Modules\CustomModuleGheit\Controller\PubSub;
 use OpenEMR\Services\FHIR\FhirDiagnosticReportService;
+use FhirReferenceDetector;
+use FhirResourceResolver;
+use FhirBundleBuilder;
 
 if (!CsrfUtils::verifyCsrfToken($_POST["csrf_token_form"])) {
     CsrfUtils::csrfNotVerified();
@@ -138,13 +144,45 @@ if (!empty($count)) {
     $uuid = sqlQuery("SELECT uuid FROM form_clinical_notes WHERE id = ?", [$clinicalNoteId]);
     $clinicalUUID = UuidRegistry::uuidToString($uuid['uuid']);
 
+    // $service = new FhirDiagnosticReportService();
+    // $clinicalResult = $service->getOne($clinicalUUID);
+    // $clinicalResource = $clinicalResult->getData()[0];
+    // $fhirArray = $clinicalResource->jsonSerialize();
+
+    // $pubSubController = new PubSub();
+    // $pubSubController->publishPubsub('DiagnosticReport', 'diagnostic_report_created', 'diagnostic_report_data', $fhirArray);
+
     $service = new FhirDiagnosticReportService();
-    $clinicalResult = $service->getOne($clinicalUUID);
-    $clinicalResource = $clinicalResult->getData()[0];
-    $fhirArray = $clinicalResource->jsonSerialize();
+    $result = $service->getOne($clinicalUUID);
+
+    $clinicalNotes = $result->getData()[0]->jsonSerialize();
+    $clinicalNotes = json_decode(json_encode($clinicalNotes), true);
+
+    $hasReference = FhirReferenceDetector::hasReference($clinicalNotes);
+
+    if ($hasReference) {
+        $resolved = FhirResourceResolver::resolveResourceContext($clinicalNotes);
+
+        $payload = FhirBundleBuilder::buildTransactionBundle(
+            $resolved['patient'],
+            $resolved['resource'],
+            $resolved['locations'] ?? [],
+            $resolved['organizations'] ?? [],
+            $resolved['practitioners'] ?? [],
+            $resolved['encounters'] ?? []
+        );
+
+    } else {
+        $payload = $clinicalNotes;
+    }
 
     $pubSubController = new PubSub();
-    $pubSubController->publishPubsub('DiagnosticReport', 'diagnostic_report_created', 'diagnostic_report_data', $fhirArray);
+    $pubSubController->publishPubsub(
+        'DiagnosticReport',
+        'diagnostic_report_created',
+        'diagnostic_report_data',
+        $payload
+    );
 
 }
 

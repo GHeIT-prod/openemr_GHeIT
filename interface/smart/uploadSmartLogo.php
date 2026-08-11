@@ -1,38 +1,90 @@
 <?php
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (isset($_FILES['file']) && $_FILES['file']['error'] === UPLOAD_ERR_OK) {
+require_once(__DIR__ . '/../globals.php');
 
-            $oldUploadDir = __DIR__ . '/public/images/logos/custom/rideon/';
-            $newUploadDir = str_replace('/interface/smart/', '/', $oldUploadDir);
-            if (!is_dir($newUploadDir)) {
-                mkdir($newUploadDir, 0755, true); // create uploads folder if it doesn't exist
-            }
+use OpenEMR\Common\Acl\AclMain;
+use OpenEMR\Common\Csrf\CsrfUtils;
+use OpenEMR\Common\Logging\SystemLogger;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\BrandingAssetStorageServiceFactory;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileStorageException;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileUploadValidator;
+use OpenEMR\Modules\GheitS3\Services\FileStorage\FileValidationException;
+use Ramsey\Uuid\Uuid;
 
-            $filename = basename($_FILES['file']['name']);
-            $character = ".";
-            $imageFormat = strstr($filename, $character);   
+header('Content-Type: text/plain');
 
-            $newFilename = $_POST['appName'].$imageFormat;
-            $targetPath = $newUploadDir . $newFilename;
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo "Method not allowed.";
+    exit;
+}
 
-            //check file extension
-            $allowed = array('png');
-            $ext = pathinfo($filename, PATHINFO_EXTENSION);
-            if (!in_array($ext, $allowed)) {
-                http_response_code(400);
-                echo "File Extension .png required";
-            } else {
-                if (move_uploaded_file($_FILES['file']['tmp_name'], $targetPath)) {
-                    echo "File uploaded successfully.";
-                } else {
-                    http_response_code(500);
-                    echo "Failed to upload file.";
-                }
-            }
+if (!AclMain::aclCheckCore('admin', 'super')) {
+    http_response_code(403);
+    echo "Not authorized.";
+    exit;
+}
 
-        } else {
-            http_response_code(400);
-            echo "No file uploaded.";
-        }
+if (empty($_POST['csrf_token_form']) || !CsrfUtils::verifyCsrfToken($_POST['csrf_token_form'], 'default')) {
+    http_response_code(400);
+    echo "Invalid CSRF token.";
+    exit;
+}
+
+// Must match, exactly, whatever appName the SMART client is registered
+// under — smart_launch.html.twig looks logos up by client.getName().
+$appName = trim((string)($_POST['appName'] ?? ''));
+if ($appName === '' || preg_match('/[\/\\\\\0]/', $appName)) {
+    http_response_code(400);
+    echo "A valid appName is required.";
+    exit;
+}
+
+try {
+    $validated = BrandingAssetStorageServiceFactory::validator()->validateUploadedFile(
+        $_FILES['file'] ?? [],
+        FileUploadValidator::KIND_IMAGE
+    );
+
+    if ($validated->getExtension() !== 'png') {
+        http_response_code(400);
+        echo "File Extension .png required";
+        exit;
     }
+
+    $key = BrandingAssetStorageServiceFactory::keyGenerator()->forSharedNamespace(
+        BrandingAssetStorageServiceFactory::environment(),
+        BrandingAssetStorageServiceFactory::siteUuid(),
+        'branding',
+        Uuid::uuid4()->toString(),
+        $validated->getExtension()
+    );
+
+    $storedFile = BrandingAssetStorageServiceFactory::storage()->upload(
+        $validated->getPath(),
+        $key,
+        $validated->getOriginalFilename(),
+        $validated->getMimeType()
+    );
+
+    sqlStatement(
+        "REPLACE INTO globals SET gl_name = ?, gl_value = ?",
+        [
+            'gheit_s3_smart_logo_' . $appName,
+            json_encode([
+                'key' => $storedFile->getKey(),
+                'version_id' => $storedFile->getVersionId(),
+                'mimetype' => $storedFile->getMimeType(),
+            ]),
+        ]
+    );
+
+    echo "File uploaded successfully.";
+} catch (FileValidationException $e) {
+    http_response_code(400);
+    echo "File Extension .png required";
+} catch (FileStorageException $e) {
+    (new SystemLogger())->error('Smart logo upload failed', ['exception' => $e->getMessage()]);
+    http_response_code(500);
+    echo "Failed to upload file.";
+}

@@ -183,7 +183,9 @@
         "psr-4": {
             "OpenEMR\\PHPStan\\Rules\\": ".phpstan",
             "OpenEMR\\Tests\\": "tests\\Tests",
-            "OpenEMR\\Modules\\CustomModuleGheit\\": "interface/modules/custom_modules/oe-module-custom-gheit/src/"
+            "OpenEMR\\Modules\\CustomModuleGheit\\": "interface/modules/custom_modules/oe-module-custom-gheit/src/",
+            "OpenEMR\\Modules\\GheitPriorAuth\\": "interface/modules/custom_modules/oe-module-gheit-prior-auth/src/",
+            "OpenEMR\\Modules\\GheitS3\\": "interface/modules/custom_modules/oe-module-gheit-s3/src/"
         }
     },
     "config": {
@@ -228,10 +230,7 @@
             "ext-zlib": "8.2",
             "php": "8.2"
         },
-        "sort-packages": true,
-        "audit": {
-            "block-insecure": false
-        }
+        "sort-packages": true
     },
     "extra": {
         "composer-normalize": {

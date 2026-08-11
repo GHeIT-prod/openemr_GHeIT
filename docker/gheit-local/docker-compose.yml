@@ -2,7 +2,7 @@ services:
   mysql:
     restart: always
     image: mariadb:11.4
-    command: ['mariadbd','--character-set-server=utf8mb4','--ssl-ca=/etc/ssl/ca.pem','--ssl_cert=/etc/ssl/server-cert.pem','--ssl_key=/etc/ssl/server-key.pem']
+    command: [mariadbd, --character-set-server=utf8mb4, --ssl-ca=/etc/ssl/ca.pem, --ssl_cert=/etc/ssl/server-cert.pem, --ssl_key=/etc/ssl/server-key.pem]
     ports:
     - 8320:3306
     volumes:
@@ -12,36 +12,25 @@ services:
     - ./docker_data/databasevolume:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASS}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASS}
   openemr:
     restart: always
-    build:
-      context: "."
-      dockerfile: Dockerfile
+    image: openemr/openemr:flex
+    entrypoint: [/bin/sh, /windows-entrypoint.sh]
     ports:
-    - 80:80
-    - 443:443
+    - 8300:80
+    - 9300:443
     volumes:
-    # - ./docker_data/assetvolume:/var/www/localhost/htdocs/openemr/public/assets:rw
-    # - ./docker_data/themevolume:/var/www/localhost/htdocs/openemr/public/themes:rw
+    - ./windows-entrypoint.sh:/windows-entrypoint.sh:ro
+    - ../..:/var/www/localhost/htdocs/openemr:rw
     - ./docker_data/sitesvolume:/var/www/localhost/htdocs/openemr/sites:rw
-    # - ./docker_data/nodemodules:/var/www/localhost/htdocs/openemr/node_modules:rw
-    #- ./docker_data/vendordir:/var/www/localhost/htdocs/openemr/vendor:rw
-    # - ./docker_data/ccdanodemodules:/var/www/localhost/htdocs/openemr/ccdaservice/node_modules:rw
-    - ../../interface:/var/www/localhost/htdocs/openemr/interface
-    - ../../library:/var/www/localhost/htdocs/openemr/library
-    - ../../src:/var/www/localhost/htdocs/openemr/src
-    - ../../public:/var/www/localhost/htdocs/openemr/public
-    - ../../portal:/var/www/localhost/htdocs/openemr/portal
-    - ../../templates:/var/www/localhost/htdocs/openemr/templates
-    - ../../contrib:/var/www/localhost/htdocs/openemr/contrib
-    - ../../apis:/var/www/localhost/htdocs/openemr/apis
-    - ../../composer.json:/var/www/localhost/htdocs/openemr/composer.json
-    - ../../composer.lock:/var/www/localhost/htdocs/openemr/composer.lock
-    - ../../package-lock.json:/var/www/localhost/htdocs/openemr/package-lock.json
-    - ./docker_data/logvolume:/var/log/www
+    - ./.env:/var/www/localhost/htdocs/openemr/.env:ro
+    - ./docker_data/logvolume:/var/www/logs:rw
     - ./docker_data/couchdbvolume:/couchdb/data
     environment:
-      DEBUG_COLORS: "true"
+      DEBUG_COLORS: 'true'
       TERM: xterm-256color
       COLORTERM: truecolor
       MYSQL_HOST: ${MYSQL_HOST}
@@ -49,15 +38,12 @@ services:
       MYSQL_ROOT_PASS: ${MYSQL_ROOT_PASS}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASS: ${MYSQL_PASS}
-      EMAIL: ${EMAIL}
       OE_USER: ${OE_USER}
       OE_PASS: ${OE_PASS}
-      EASY_DEV_MODE: "yes"
-      EASY_DEV_MODE_NEW: "yes"
-      DEVELOPER_TOOLS: "yes"
+      EASY_DEV_MODE: yes
+      DEVELOPER_TOOLS: yes
       XDEBUG_ON: 1
       XDEBUG_PROFILER_ON: 1
-      # setting xdebug client host for cases where xdebug.discover_client_host fails
       XDEBUG_CLIENT_HOST: host.docker.internal
       GITHUB_COMPOSER_TOKEN: c313de1ed5a00eb6ff9309559ec9ad01fcc553f0
       GITHUB_COMPOSER_TOKEN_ENCODED: ZWU5YWIwZWNiM2ZlN2I4YThlNGQ0ZWZiNjMyNDQ5MjFkZTJhMTY2OQo=
@@ -76,10 +62,11 @@ services:
       OPENEMR_SETTING_couchdb_pass: ${COUCHDB_PASSWORD}
       OPENEMR_SETTING_couchdb_dbase: example
       OPENEMR_SETTING_couchdb_ssl_allow_selfsigned: 1
-      OPENEMR_SETTING_gbl_ldap_host: 'ldap://openldap:389'
-      OPENEMR_SETTING_gbl_ldap_dn: 'cn={login},dc=example,dc=org'
+      OPENEMR_SETTING_gbl_ldap_host: ldap://openldap:389
+      OPENEMR_SETTING_gbl_ldap_dn: cn={login},dc=example,dc=org
     depends_on:
-    - mysql
+      mysql:
+        condition: service_started
   phpmyadmin:
     restart: always
     image: phpmyadmin
