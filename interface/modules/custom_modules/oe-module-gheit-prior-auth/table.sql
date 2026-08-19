@@ -21,7 +21,6 @@ CREATE TABLE IF NOT EXISTS `cds_hooks_services` (
   `date_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uq_cds_hooks_service` (`base_url`(255), `service_id`),
   KEY `idx_cds_hooks_enabled` (`enabled`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -50,3 +49,9 @@ CREATE TABLE IF NOT EXISTS `cds_hooks_crd_status` (
 -- Master feature flag, shows up under Administration -> Globals once installed.
 INSERT IGNORE INTO `globals` (`gl_name`, `gl_index`, `gl_value`)
 VALUES ('enable_cds_hooks', 0, '0');
+
+ALTER TABLE `cds_hooks_crd_status`
+  ADD column `encounter_id` INT NULL AFTER `patient_id`,
+  ADD column `resource_id` VARCHAR(255) NULL AFTER `dtr_launch_url`,
+  ADD column `authorization_number` VARCHAR(255) NULL AFTER `resource_id`,
+  ADD column `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER `card_summary`;

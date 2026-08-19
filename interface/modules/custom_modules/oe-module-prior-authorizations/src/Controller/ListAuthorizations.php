@@ -22,14 +22,48 @@ class ListAuthorizations
         $this->pid = $pid;
     }
 
-    public function getAllAuthorizations(): false|array|\ADORecordSet_mysqli
-    {
-        $sql = "SELECT *
-                      FROM module_prior_authorizations
-                      WHERE pid = ? ORDER BY `start_date` DESC";
+    // public function getAllAuthorizations(): false|array|\ADORecordSet_mysqli
+    // {
+    //     $sql = "SELECT *
+    //                   FROM module_prior_authorizations
+    //                   WHERE pid = ? ORDER BY `start_date` DESC";
                     
-        // return sqlStatement($sql, [$this->pid]);
-        $result = sqlStatement($sql, [$this->pid]);
+    //     // return sqlStatement($sql, [$this->pid]);
+    //     $result = sqlStatement($sql, [$this->pid]);
+
+    //     if (!$result) {
+    //         return false;
+    //     }
+
+    //     $authorizations = [];
+    //     while ($row = sqlFetchArray($result)) {
+    //         $authorizations[] = $row;
+    //     }
+
+    //     return $authorizations;
+    // }
+
+    public function getAllAuthorizations($pid): false|array|\ADORecordSet_mysqli
+    {
+        $sql = "SELECT
+                    cds_hooks_crd_status.status as pa_status,
+                    cds_hooks_crd_status.created_at as start_date,
+                    cds_hooks_crd_status.dtr_launch_url,
+                    cds_hooks_crd_status.resource_id,
+                    cds_hooks_crd_status.authorization_number,
+                    procedure_order_code.procedure_code as code,
+                    procedure_order_code.procedure_name as name,
+                    procedure_order_code.diagnoses as icd10,
+                    procedure_order.encounter_id
+                FROM cds_hooks_crd_status
+                INNER JOIN procedure_order_code
+                    ON cds_hooks_crd_status.order_id = procedure_order_code.procedure_order_id
+                INNER JOIN procedure_order
+                    ON procedure_order_code.procedure_order_id = procedure_order.procedure_order_id
+                WHERE procedure_order.patient_id = ?
+                ORDER BY cds_hooks_crd_status.created_at DESC";
+
+        $result = sqlStatement($sql, [$pid]);
 
         if (!$result) {
             return false;

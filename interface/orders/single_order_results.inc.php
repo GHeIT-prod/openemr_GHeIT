@@ -52,6 +52,39 @@ function myCellText($s)
     return text($s);
 }
 
+
+function getPaStatusRows($orow, $codes): array
+{
+    $status_card = sqlQuery("SELECT  cds_hooks_crd_status.status,
+                cds_hooks_crd_status.created_at as status_created_at,
+                cds_hooks_crd_status.dtr_launch_url,
+                cds_hooks_crd_status.resource_id,
+                cds_hooks_crd_status.authorization_number,
+                procedure_order_code.procedure_code as code,
+                procedure_order_code.procedure_name as name,
+                procedure_order_code.diagnoses as icd10
+
+            FROM cds_hooks_crd_status
+                INNER JOIN procedure_order_code ON cds_hooks_crd_status.order_id = procedure_order_code.procedure_order_id
+                    WHERE procedure_order_id = ?", [$orow['procedure_order_id']]);
+
+    // Placeholder data — wire up to real CRD service response later.
+    $cptCode = explode(':', $status_card['code'])[1];
+    $cptName = $status_card['name'] ?? '';
+    $icd10   = explode(':', $status_card['icd10'])[1];
+
+    return [
+        [
+            'order_id'      => $orow['procedure_order_id'],
+            'cpt_hcpcs'     => $cptCode . ' — ' . $cptName,
+            'icd10'         => $icd10,
+            'auth_required' => $status_card['status'],
+            'pa_status'     => !empty($status_card['status']) ?  xl('PA Needs to be Submitted'): '',
+            'pa_manager_url' => '#',
+        ],
+    ];
+}
+
 // Check if the given string already exists in the $aNotes array.
 // If not, stores it as a new entry.
 // Either way, returns the corresponding key which is a small integer.
@@ -711,6 +744,63 @@ function generate_order_report($orderid, $input_form = false, $genstyles = true,
             </tr>
         </table>
     </div>
+
+    <?php
+    $paRows = getPaStatusRows($orow, $codes);
+    if (!empty($paRows)) :
+    ?>
+    <div class="mb-3">
+        <div class="mb-1">
+            <strong class="lfont1"><?php echo xlt('Prior Authorization Status'); ?></strong>
+            <span class="text-muted"> (<?php echo xlt('from CDS Hooks Services — CRD'); ?>)</span>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered mb-0">
+                <tr style="background-color: var(--gray200);">
+                    <th><?php echo xlt('Order ID'); ?></th>
+                    <th><?php echo xlt('CPT / HCPCS'); ?></th>
+                    <th><?php echo xlt('ICD-10'); ?></th>
+                    <th><?php echo xlt('Auth Required?'); ?></th>
+                    <th><?php echo xlt('PA Status'); ?></th>
+                    <th><?php echo xlt('Action'); ?></th>
+                </tr>
+                <?php foreach ($paRows as $paRow) : ?>
+                <tr>
+                    <td><?php echo myCellText($paRow['order_id']); ?></td>
+                    <td><?php echo myCellText($paRow['cpt_hcpcs']); ?></td>
+                    <td><?php echo myCellText($paRow['icd10']); ?></td>
+                    <td>
+                        <?php if (!empty($paRow['auth_required'])) : ?>
+                            <span class="badge badge-pill" style="background:#fbe4e4;color:#b3261e;padding:5px 12px;">
+                                <?php echo xlt('Required'); ?>
+                            </span>
+                        <?php else : ?>
+                            <span class="badge badge-pill" style="background:#e6f4ea;color:#1e7e34;padding:5px 12px;">
+                                <?php echo xlt('Not Required'); ?>
+                            </span>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <a href="<?php echo attr($GLOBALS['webroot'] . "/interface/modules/custom_modules/oe-module-prior-authorizations/public/index.php"); ?>" style="color:#0d6efd;text-decoration:underline;">
+                            <?php echo text($paRow['pa_status']); ?>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="<?php echo attr($GLOBALS['webroot'] . "/interface/modules/custom_modules/oe-module-prior-authorizations/public/index.php"); ?>" class="btn btn-sm" style="background:#b3261e;color:#fff;">
+                            <?php echo xlt('Open in PA Manager'); ?>
+                        </a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+        </div>
+    </div>
+    <style>
+        .table-bordered, .table-bordered td, .table-bordered th {
+            border: 1px solid #000 !important;
+        }
+    </style>
+    <?php endif; ?>
 
     <?php if ($input_form) { ?>
 </form>

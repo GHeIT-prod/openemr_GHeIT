@@ -18,6 +18,7 @@ class CrdCardRouter
 {
     const STATUS_NO_PA       = 'no-pa';
     const STATUS_PA_REQUIRED = 'pa-required';
+    const STATUS_DTR_REQUIRED = 'dtr-required'; 
     const STATUS_UNKNOWN     = 'unknown';
 
     private const COVERAGE_EXTENSION_URL =
@@ -28,7 +29,7 @@ class CrdCardRouter
      *
      * @return array {status, action, dtr_launch_url}
      */
-    public function routeCard(array $card, array $orderContext): array
+    public function routeCard(array $card, array $orderContext, array $service = []): array
     {
         $parsed = $this->parseCard($card);
 
@@ -42,6 +43,12 @@ class CrdCardRouter
             case self::STATUS_NO_PA:
                 $this->logDecision($orderContext, 'no-pa', $card);
                 $response['action'] = 'proceed';
+                break;
+
+            case self::STATUS_DTR_REQUIRED:
+                $this->logDecision($orderContext, 'dtr-required', $card);
+                $this->stagePasBundle($orderContext, $card);
+                $response['action'] = 'launch-dtr-then-submit';
                 break;
 
             case self::STATUS_PA_REQUIRED:
@@ -60,10 +67,6 @@ class CrdCardRouter
                 break;
         }
 
-        if (!empty($parsed['dtr_link'])) {
-            $response['dtr_launch_url'] = $this->buildDtrLaunchUrl($parsed['dtr_link'], $orderContext);
-        }
-
         return $response;
     }
 
@@ -73,11 +76,12 @@ class CrdCardRouter
     public function parseCard(array $card): array
     {
         $result = [
-            'status'    => self::STATUS_UNKNOWN,
-            'indicator' => $card['indicator'] ?? null,
-            'pa_needed' => null,
-            'covered'   => null,
-            'dtr_link'  => null,
+            'status'     => self::STATUS_UNKNOWN,
+            'indicator'  => $card['indicator'] ?? null,
+            'pa_needed'  => null,
+            'covered'    => null,
+            'doc_needed' => null,
+            'dtr_link'   => null,
         ];
 
         $coverageExt = null;
@@ -96,10 +100,18 @@ class CrdCardRouter
                 if (($sub['url'] ?? '') === 'pa-needed') {
                     $result['pa_needed'] = $sub['valueCode'] ?? null;
                 }
+                if (($sub['url'] ?? '') === 'doc-needed') {
+                    $result['doc_needed'] = $sub['valueCode'] ?? null;
+                }
             }
         }
 
-        $result['status'] = $this->resolveStatus($result['indicator'], $result['covered'], $result['pa_needed']);
+        $result['status'] = $this->resolveStatus(
+            $result['indicator'],
+            $result['covered'],
+            $result['pa_needed'],
+            $result['doc_needed']
+        );
 
         foreach ($card['links'] ?? [] as $link) {
             if (($link['type'] ?? '') === 'smart') {
@@ -120,8 +132,11 @@ class CrdCardRouter
      * no-auth-needed extension should still be treated as PA required, not
      * silently downgraded.
      */
-    private function resolveStatus(?string $indicator, ?string $covered, ?string $paNeeded): string
+    private function resolveStatus(?string $indicator, ?string $covered, ?string $paNeeded, ?string $docNeeded = null): string
     {
+        if (!empty($docNeeded)) {
+            return self::STATUS_DTR_REQUIRED;
+        }
         if (in_array($indicator, ['warning', 'critical'], true)) {
             return self::STATUS_PA_REQUIRED;
         }
@@ -132,9 +147,6 @@ class CrdCardRouter
             return self::STATUS_NO_PA;
         }
         if ($indicator === 'info' && $paNeeded === null) {
-            // Informational card, no coverage extension at all, no warning -
-            // treat as no PA required. This is the common case for a payer
-            // that only implements the simple indicator signal.
             return self::STATUS_NO_PA;
         }
         return self::STATUS_UNKNOWN;
@@ -144,7 +156,7 @@ class CrdCardRouter
      * SMART App Launch URL for the DTR/Aidbox PA app iframe. iss + an
      * opaque, short-lived launch token as query params - never raw ids.
      */
-    private function buildDtrLaunchUrl(array $dtrLink, array $orderContext): string
+    private function buildDtrLaunchUrl(array $dtrLink, array $orderContext, array $service = []): string
     {
         $launchToken = $this->mintLaunchToken($orderContext);
 
@@ -191,10 +203,33 @@ class CrdCardRouter
 
     public function persistStatus(array $orderContext, array $routed, array $card): void
     {
+        $file = __DIR__ . '/persisted-responses.json';
+
+        $existingResponses = [];
+
+        if (file_exists($file)) {
+            $existingResponses = json_decode(file_get_contents($file), true) ?? [];
+        }
+
+        $existingResponses[] = [
+            'timestamp' => date('c'),
+            'routed' => $routed,
+            'card' => $card,
+            'orderContext' => $orderContext,
+        ];
+
+        file_put_contents(
+            $file,
+            json_encode(
+                $existingResponses,
+                JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+            )
+        );
+        $authorizationNumber = 'AUTH-' . date('Y-m-d') . '-' . '00'.$orderContext['order_id'];
         sqlStatement(
             "INSERT INTO `cds_hooks_crd_status`
-                (`order_id`, `patient_id`, `status`, `action`, `dtr_launch_url`, `card_summary`, `updated_at`)
-            VALUES (?, ?, ?, ?, ?, ?, NOW())
+                (`order_id`, `patient_id`, `status`, `action`, `dtr_launch_url`, `card_summary`, `updated_at`, `created_at`, `encounter_id`, `resource_id`, `authorization_number`)
+            VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW(), ?, ?, ?)
             ON DUPLICATE KEY UPDATE
                 `status` = VALUES(`status`),
                 `action` = VALUES(`action`),
@@ -208,6 +243,9 @@ class CrdCardRouter
                 $routed['action'],
                 $routed['dtr_launch_url'],
                 $card['summary'] ?? null,
+                $orderContext['encounter_id'] ?? null,
+                $card['resourceId'] ?? null,
+                $authorizationNumber
             ]
         );
     }

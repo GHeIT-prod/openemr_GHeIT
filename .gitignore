@@ -44,3 +44,7 @@ public/images/logos/custom/*
 openemr-keys/pubsub.json
 
 pubsub/
+
+interface/modules/custom_modules/oe-module-gheit-prior-auth/src/Service/all-payload.json
+interface/modules/custom_modules/oe-module-gheit-prior-auth/src/Service/all-responses.json
+interface/modules/custom_modules/oe-module-gheit-prior-auth/src/Service/persisted-responses.json

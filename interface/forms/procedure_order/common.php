@@ -583,7 +583,7 @@ if (($_POST['bn_save'] ?? null) || !empty($_POST['bn_xmit']) || !empty($_POST['b
     unset($_POST['bn_save']);
     $reload_url = $rootdir . '/patient_file/encounter/view_form.php?formname=procedure_order&id=' . attr($formid);
     if (empty($order_data)) {
-        header('Location:' . $reload_url);
+        // header('Location:' . $reload_url);
 
         if (!empty($event)) {
             if (function_exists('fastcgi_finish_request')) {
@@ -591,6 +591,73 @@ if (($_POST['bn_save'] ?? null) || !empty($_POST['bn_xmit']) || !empty($_POST['b
             }
             $ed->dispatch($event, ProcedureOrderCreatedEvent::EVENT_NAME);
         }
+
+        $cdrsResult = sqlQuery("SELECT  cds_hooks_crd_status.status,
+                cds_hooks_crd_status.created_at as status_created_at,
+                cds_hooks_crd_status.dtr_launch_url,
+                cds_hooks_crd_status.resource_id,
+                cds_hooks_crd_status.authorization_number,
+                procedure_order_code.procedure_code as code,
+                procedure_order_code.procedure_name as name,
+                procedure_order_code.diagnoses as icd10
+            FROM cds_hooks_crd_status
+                INNER JOIN procedure_order_code ON cds_hooks_crd_status.order_id = procedure_order_code.procedure_order_id
+                    WHERE procedure_order_id = ?", [$formid]);
+
+        $cdsResult = [
+            'status' => $cdrsResult['status'] ?? 'clear', // 'pa-required' | 'dtr-required' | 'clear' | etc.
+            'code'   => $cdrsResult['code'] ?? '',
+            'name'   => $cdrsResult['name'] ?? '',
+            'icd10'  => trim((string) ($cdrsResult['icd10'] ?? '')),
+            'dtr_launch_url' => $cdrsResult['dtr_launch_url'] ?? null,
+            'status_created_at' => $cdrsResult['status_created_at'] ?? null,
+            'resourceId' => $cdrsResult['resource_id'] ?? null,
+            'authorization_number' => $cdrsResult['authorization_number'] ?? null,
+        ];
+
+        $modalConfig = null;
+
+        switch ($cdsResult['status']) {
+            case 'pa-required':
+                $modalConfig = [
+                    'type'        => 'pa',
+                    'status'      => xl('PA Submission Required'),
+                    'description' => xl('Payer requires a full prior authorization request before this service is rendered.'),
+                    'code'        => explode(':', $cdsResult['code'])[1],
+                    'name'        => $cdsResult['name'],
+                    'icd10'       => explode(':', $cdsResult['icd10'])[1],
+                    'startDate'   => $cdsResult['status_created_at'] ?? null,
+                    'resourceId'  => $cdsResult['resourceId'] ?? null,
+                    'authorization_number' => $cdsResult['authorization_number'] ?? null,
+                ];
+                break;
+
+            case 'dtr-required':
+                $modalConfig = [
+                    'type'        => 'dtr',
+                    'status'      => xl('DTR Required'),
+                    'description' => xl('Documentation Templates & Rules (DTR) must be completed before submission.'),
+                    'code'        => explode(':', $cdsResult['code'])[1],
+                    'name'        => $cdsResult['name'],
+                    'icd10'       => explode(':', $cdsResult['icd10'])[1],
+                    'dtrLaunchUrl' => $cdsResult['dtr_launch_url'] ?? null,
+                    'startDate'   => $cdsResult['status_created_at'] ?? null,
+                    'resourceId'  => $cdsResult['resourceId'] ?? null,
+                    'authorization_number' => $cdsResult['authorization_number'] ?? null,
+                ];
+                break;
+
+            default:
+                $modalConfig = null; // 'clear' or unrecognized status — proceed normally
+        }
+
+        $showCdsModal = ($modalConfig !== null);
+
+        if (!$showCdsModal) {
+            header('Location:' . $reload_url);
+            exit;
+        }
+        
     }
 }
 
@@ -1776,6 +1843,44 @@ $reasonCodeStatii[ReasonStatusCodes::NONE]['description'] = xl("Select a status 
                         </div>
                     </div>
                 </fieldset>
+
+                <?php if (!empty($modalConfig)) :
+                    $isDtr = ($modalConfig['type'] === 'dtr');
+                    $isPa  = ($modalConfig['type'] === 'pa');
+                    $accentColor = $isDtr ? '#c98a2e' : '#b3261e';
+                    $badgeText   = $isDtr ? xl('DTR · Documentation Required') : xl('PA · Prior Authorization Required');
+                ?>
+                <div class="container-xl mb-3">
+                    <div class="d-flex align-items-center mb-2">
+                        <strong class="lfont1"><?php echo xlt('CDS Card'); ?> — <?php echo xlt('CRD Process'); ?></strong>
+                        <span class="badge badge-pill badge-light ml-2" style="background:#eee;color:#555;">
+                            <?php echo text($badgeText); ?>
+                        </span>
+                    </div>
+                    <div class="card" style="border-top: 4px solid <?php echo $accentColor; ?>;">
+                        <div class="card-body">
+                            <div class="text-muted"><?php echo text($modalConfig['code'] . ' — ' . $modalConfig['name']); ?></div>
+                            <div class="font-weight-bold" style="color: <?php echo $accentColor; ?>;">
+                                <?php echo text($modalConfig['status']); ?>
+                            </div>
+                            <div class="text-muted"><?php echo text($modalConfig['description']); ?></div>
+
+                            <?php if ($isDtr) : ?>
+                                <button type="button" class="btn dtr-btn-primary" id="btnLaunchDtr"
+                                    onclick="launchDtrQueue()">
+                                    <?php echo xlt('Launch DTR Queue'); ?> &rarr;
+                                </button>
+                            <?php elseif ($isPa) : ?>
+                                <button type="button" class="btn btn-sm mt-2" style="background:#b3261e;color:#fff;"
+                                        data-toggle="modal" data-target="#cdsModal">
+                                    <?php echo xlt('Submit PA'); ?>
+                                </button>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+
                 <fieldset class="col-md-12">
                     <div class="my-0 py-0 text-center">
                         <?php $t = "<span class='lfont1'>" .
@@ -2043,5 +2148,239 @@ $reasonCodeStatii[ReasonStatusCodes::NONE]['description'] = xl("Select a status 
             </form>
         </div>
     </div><!--end of .container -->
+
+    <?php if (!empty($showCdsModal)) { ?>
+        <div class="modal fade" id="cdsModal" tabindex="-1" role="dialog" aria-hidden="true"
+            data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered modal-cds-wide" id="cdsModalDialog" role="document">
+                <div class="modal-content dtr-modal-content">
+                    <div class="modal-header dtr-modal-header">
+                        <h5 class="modal-title"><?php echo xlt('CDS Check'); ?> — <?php echo xlt('Order'); ?> <?php echo text($formid); ?></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="<?php echo xla('Close'); ?>">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <?php if ($modalConfig['type'] === 'dtr') { ?>
+                        <div id="dtrLaunchedHeader" style="display:none; padding:8px 16px; border-bottom:1px solid #ddd; align-items:center; justify-content:space-between;">
+                            <span><?php echo xlt('DTR — Documentation Templates & Rules'); ?></span>
+                            <button type="button" class="btn btn-sm dtr-btn-secondary" onclick="exitDtrLaunch()">
+                                <?php echo xlt('Back'); ?>
+                            </button>
+                        </div>
+                    <?php } ?>
+
+                    <div class="modal-body dtr-modal-body">
+                        <div class="dtr-card" id="dtrCardSummary">
+                            <div class="dtr-card-code"><?php echo text($modalConfig['code']); ?> — <?php echo text($modalConfig['name']); ?></div>
+                            <div class="dtr-card-status"><?php echo text($modalConfig['status']); ?></div>
+                            <div class="dtr-card-desc"><?php echo text($modalConfig['description']); ?></div>
+                        </div>
+
+                        <?php if ($modalConfig['type'] === 'pa') { ?>
+                            <form id="paSubmitForm" class="pa-form mt-3">
+                                <input type="hidden" name="order_id" value="<?php echo attr($formid); ?>">
+                                <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken()); ?>">
+
+                                <div class="form-row">
+                                    <div class="col-md-6 form-group">
+                                        <label for="pa_auth_number"><?php echo xlt('Authorization Number'); ?></label>
+                                        <!-- Visible field: shows the authorization number, but is NOT submitted -->
+                                        <input type="text" class="form-control" id="pa_auth_number_display"
+                                            value="<?php echo attr($modalConfig['authorization_number']); ?>"
+                                            placeholder="<?php echo xla('Assigned by payer (optional)'); ?>" readonly>
+
+                                        <!-- Hidden field: this is what actually gets submitted -->
+                                        <input type="hidden" id="pa_auth_number" name="pa_auth_number"
+                                            value="<?php echo attr($modalConfig['resourceId']); ?>">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label for="pa_units"><?php echo xlt('Units Requested'); ?></label>
+                                        <input type="number" min="1" class="form-control" id="pa_units" name="pa_units"
+                                            placeholder="<?php echo xla('e.g. 3'); ?>">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-md-6 form-group">
+                                        <label for="pa_start_date"><?php echo xlt('Start Date'); ?></label>
+                                        <input type="date" class="form-control" id="pa_start_date" name="pa_start_date"
+                                        value="<?php echo attr(substr($modalConfig['startDate'], 0, 10)); ?>">
+                                    </div>
+                                    <div class="col-md-6 form-group">
+                                        <label for="pa_end_date"><?php echo xlt('End Date'); ?></label>
+                                        <input type="date" class="form-control" id="pa_end_date" name="pa_end_date">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pa_cpt"><?php echo xlt('CPT'); ?></label>
+                                    <input type="text" class="form-control" id="pa_cpt" name="pa_cpt"
+                                        value="<?php echo attr($modalConfig['code']); ?>">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pa_icd10"><?php echo xlt('ICD-10'); ?></label>
+                                    <input type="text" class="form-control" id="pa_icd10" name="pa_icd10"
+                                        value="<?php echo attr($modalConfig['icd10']); ?>">
+                                </div>
+                            </form>
+                        <?php } elseif ($modalConfig['type'] === 'dtr') { ?>
+                            <p class="dtr-warning mt-3 mb-0" id="dtrWarningText"><?php echo xlt('This order cannot be transmitted until DTR is completed.'); ?></p>
+                        <?php } ?>
+                    </div>
+                    <div class="modal-footer dtr-modal-footer" id="dtrModalFooter">
+                        <?php if ($modalConfig['type'] === 'pa') { ?>
+                            <button type="button" class="btn dtr-btn-primary" id="btnSubmitPa">
+                                <?php echo xlt('Submit PA'); ?>
+                            </button>
+                            <button type="button" class="btn dtr-btn-secondary" data-dismiss="modal">
+                                <?php echo xlt('Close (do this later)'); ?>
+                            </button>
+                        <?php } elseif ($modalConfig['type'] === 'dtr') { ?>
+
+                            <button type="button" class="btn dtr-btn-primary" id="btnLaunchDtr"
+                                onclick="launchDtrQueue()">
+                                <?php echo xlt('Launch DTR Queue'); ?> &rarr;
+                            </button>
+
+                            <button type="button" class="btn dtr-btn-secondary" data-dismiss="modal">
+                                <?php echo xlt('Close (do this later)'); ?>
+                            </button>
+                        <?php } ?>
+                    </div>
+
+
+                    <?php if ($modalConfig['type'] === 'dtr') { ?>
+                        <div id="dtrFrameContainer" style="display:none; margin-top:10px;">
+                            <iframe id="dtrFrame"
+                                    src="about:blank"
+                                    style="width:100%; height:600px; border:1px solid #ccc;"
+                                    title="<?php echo xla('DTR Queue'); ?>">
+                            </iframe>
+                        </div>
+                    <?php } ?>
+
+
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(function () {
+                $('#cdsModal').modal('show');
+
+                $('#btnSubmitPa').on('click', function () {
+                    top.restoreSession();
+                    let formData = $('#paSubmitForm').serialize();
+                    $.ajax({
+                        url: top.webroot_url + '/interface/forms/procedure_order/handle_pa_submit.php',
+                        type: 'POST',
+                        data: formData,
+                        success: function (response) {
+                            if (response.success) {
+                                $('#cdsModal').modal('hide');
+                                location.href = <?php echo js_escape($reload_url); ?>;
+                            } else {
+                                alert(<?php echo xlj('Error submitting PA:'); ?> + ' ' + (response.error || 'Unknown error'));
+                            }
+                        },
+                        error: function () {
+                            alert(<?php echo xlj('Failed to submit PA. Please try again.'); ?>);
+                        }
+                    });
+                });
+            });
+
+            function launchDtrQueue() {
+                document.getElementById('cdsModalDialog').classList.add('dtr-launched');
+
+                // hide the launching UI, SMART-launch style - the app takes over
+                document.getElementById('dtrCardSummary').style.display = 'none';
+                const warning = document.getElementById('dtrWarningText');
+                if (warning) warning.style.display = 'none';
+                document.getElementById('dtrModalFooter').style.display = 'none';
+
+                const container = document.getElementById('dtrFrameContainer');
+                document.getElementById('dtrFrame').src = 'http://localhost:8080/';
+                container.style.display = 'block';
+            }
+
+            function exitDtrLaunch() {
+                document.getElementById('cdsModalDialog').classList.remove('dtr-launched');
+                document.getElementById('dtrCardSummary').style.display = '';
+                const warning = document.getElementById('dtrWarningText');
+                if (warning) warning.style.display = '';
+                document.getElementById('dtrModalFooter').style.display = '';
+                document.getElementById('dtrLaunchedHeader').style.display = 'none';
+
+                document.getElementById('dtrFrameContainer').style.display = 'none';
+                document.getElementById('dtrFrame').src = 'about:blank';
+            }
+
+
+        </script>
+
+        <style>
+            .modal-cds-wide {
+                max-width: 640px;
+            }
+            .dtr-modal-content { border-radius: 10px; overflow: hidden; }
+            .dtr-modal-header { background: #eceff1; border-bottom: 1px solid #dee2e6; padding: 0.9rem 1.25rem; }
+            .dtr-modal-header .modal-title { font-weight: 700; color: #212529; font-size: 0.95rem; }
+            .dtr-modal-body { padding: 1.25rem; font-size: 0.85rem; }
+            .dtr-card {
+                border: 1px solid #e0e0e0;
+                border-left: 5px solid #b3452f;
+                border-radius: 8px;
+                padding: 0.75rem 1rem;
+                background: #fff;
+            }
+            .dtr-card-code { color: #495057; margin-bottom: 0.35rem; font-size: 0.8rem; }
+            .dtr-card-status { color: #b3452f; font-weight: 700; font-size: 0.95rem; margin-bottom: 0.35rem; }
+            .dtr-card-desc { color: #6c757d; font-size: 0.8rem; }
+            .dtr-warning { color: #212529; font-size: 0.8rem; }
+            .pa-form label { font-weight: 600; color: #495057; font-size: 0.78rem; margin-bottom: 0.2rem; }
+            .pa-form .form-control { border-radius: 6px; font-size: 0.8rem; padding: 0.4rem 0.6rem; height: auto; }
+            .dtr-modal-footer {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                gap: 0.5rem;
+                padding: 0.9rem 1.25rem;
+            }
+            .dtr-modal-footer .btn {
+                font-size: 0.8rem;
+                padding: 0.45rem 1.1rem;
+            }
+            .dtr-btn-primary { background-color: #b3452f; border-color: #b3452f; color: #fff; font-weight: 600; }
+            .dtr-btn-primary:hover { background-color: #9c3c28; color: #fff; }
+            .dtr-btn-primary:disabled { opacity: 0.6; }
+            .dtr-btn-secondary { background-color: #fff; border: 1px solid #ced4da; color: #212529; font-weight: 600; }
+            .dtr-btn-secondary:hover { background-color: #f8f9fa; }
+
+            #cdsModalDialog.dtr-launched {
+                max-width: 95vw;
+                width: 95vw;
+                height: 90vh;
+                margin: 5vh auto;
+            }
+            #cdsModalDialog.dtr-launched .dtr-modal-content {
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+            }
+            #cdsModalDialog.dtr-launched .modal-body,
+            #cdsModalDialog.dtr-launched #dtrFrameContainer {
+                flex: 1 1 auto;
+                min-height: 0;
+            }
+            #cdsModalDialog.dtr-launched #dtrFrame {
+                width: 100%;
+                height: 100%;
+                border: none;
+            }
+        </style>
+    <?php } ?>
 </body>
 </html>

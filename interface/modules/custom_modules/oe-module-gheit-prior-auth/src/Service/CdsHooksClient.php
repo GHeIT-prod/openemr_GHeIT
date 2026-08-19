@@ -160,6 +160,22 @@ class CdsHooksClient
 
         // file_put_contents(__DIR__ . '/last-payload.json', $jsonPayload);
 
+        $payload_file = __DIR__ . '/all-payload.json';
+    
+        $existingPayloads = [];
+        $existingPayloads[] = [
+            'timestamp' => date('c'),
+            'body' => $payload,
+        ];
+
+        file_put_contents(
+            $payload_file,
+            json_encode(
+                $existingPayloads,
+                JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+            )
+        );
+
         $headers = ['Content-Type: application/json'];
         $token = $this->getBearerToken($service);
         if (!empty($token)) {
@@ -197,6 +213,29 @@ class CdsHooksClient
 
         // error_log('CRD: Nucural Service Response: ' . json_encode($decoded));
 
+        $file = __DIR__ . '/all-responses.json';
+
+        $existingResponses = [];
+
+        if (file_exists($file)) {
+            $existingResponses = json_decode(file_get_contents($file), true) ?? [];
+        }
+
+        $existingResponses[] = [
+            'timestamp' => date('c'),
+            'httpCode' => $httpCode,
+            'curlError' => $error,
+            'body' => json_decode($response, true) ?? $response,
+        ];
+
+        file_put_contents(
+            $file,
+            json_encode(
+                $existingResponses,
+                JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES
+            )
+        );
+
         if (empty($decoded['cards']) && empty($decoded['systemActions'])) {
             return [];
         }
@@ -208,12 +247,15 @@ class CdsHooksClient
         // systemActions don't carry `indicator` or `links`, only cards do).
         foreach ($decoded['systemActions'] ?? [] as $action) {
             $resource = $action['resource'] ?? [];
+            $links = $this->extractSystemActionLinks($action, $resource);
+
             $cards[] = [
-                'summary'   => $resource['note'][0]['text'] ?? ($action['description'] ?? 'System action received'),
-                'indicator' => null,
-                'extension' => $resource['extension'] ?? [],
-                'links'     => [],
-                'source'    => ['label' => 'systemAction'],
+                'summary'    => $resource['note'][0]['text'] ?? ($action['description'] ?? 'System action received'),
+                'indicator'  => null,
+                'extension'  => $resource['extension'] ?? [],
+                'links'      => $links,
+                'source'     => ['label' => 'systemAction'],
+                'resourceId' => $resource['id'] ?? null,
             ];
         }
 
@@ -327,5 +369,55 @@ class CdsHooksClient
         $data[6] = chr((ord($data[6]) & 0x0f) | 0x40);
         $data[8] = chr((ord($data[8]) & 0x3f) | 0x80);
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
+    }
+
+    private function extractSystemActionLinks(array $action, array $resource): array
+    {
+        // Shape 1: vendor already used the card "links" convention directly
+        // on the systemAction.
+        if (!empty($action['links']) && is_array($action['links'])) {
+            return array_values(array_filter(
+                $action['links'],
+                fn($link) => ($link['type'] ?? '') === 'smart' && !empty($link['url'])
+            ));
+        }
+
+        // Shape 2: FHIR-native `link` array on the resource itself
+        // (e.g. resource.link = [{ "relation": "...", "url": "..." }]).
+        if (!empty($resource['link']) && is_array($resource['link'])) {
+            $found = [];
+            foreach ($resource['link'] as $link) {
+                if (!empty($link['url'])) {
+                    $found[] = ['type' => 'smart', 'url' => $link['url']];
+                }
+            }
+            if (!empty($found)) {
+                return $found;
+            }
+        }
+
+        // Shape 3: a launch URL buried in an extension on the resource,
+        // identified by "smart" or "launch" appearing in the extension's URL.
+        foreach ($resource['extension'] ?? [] as $ext) {
+            $extUrl = $ext['url'] ?? '';
+            if (stripos($extUrl, 'smart') !== false || stripos($extUrl, 'launch') !== false) {
+                $launchUrl = $ext['valueUrl'] ?? $ext['valueString'] ?? null;
+                if (!empty($launchUrl)) {
+                    return [['type' => 'smart', 'url' => $launchUrl]];
+                }
+            }
+        }
+
+        // Nothing recognized. Not necessarily an error - this systemAction may
+        // genuinely have no DTR link - but log it so a real payload with a
+        // link can be captured and this method updated to match its actual shape.
+        if (!empty($action) || !empty($resource)) {
+            (new SystemLogger())->info(
+                "CdsHooksClient::extractSystemActionLinks() no recognized link shape on systemAction",
+                ['actionKeys' => array_keys($action), 'resourceKeys' => array_keys($resource)]
+            );
+        }
+
+        return [];
     }
 }

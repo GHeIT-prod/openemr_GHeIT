@@ -104,6 +104,10 @@ class CrdComplianceCheck
                 $serviceRequest
             );
 
+            $severity = ['no-pa' => 0, 'unknown' => 1, 'pa-required' => 2, 'dtr-required' => 3];
+            $winningRouted = null;
+            $winningCard = null;
+
             foreach ($services as $service) {
                 $cards = $client->callService($service, $hookContext, $prefetch);
 
@@ -112,15 +116,13 @@ class CrdComplianceCheck
                 if (empty($cards)) {
                     self::logDecision($orderContext, 'no-pa', ['summary' => 'no cards returned']);
                     continue;
-                }
-
-                $severity = ['no-pa' => 0, 'unknown' => 1, 'pa-required' => 2];
-                $winningRouted = null;
-                $winningCard = null;
+                }                
 
                 foreach ($cards as $card) {
-                    $routed = $router->routeCard($card, $orderContext);
-                    if ($winningRouted === null || $severity[$routed['status']] > $severity[$winningRouted['status']]) {
+                    $routed = $router->routeCard($card, $orderContext, $service);
+                    $rank = $severity[$routed['status']] ?? 0;
+                    $winningRank = $winningRouted !== null ? ($severity[$winningRouted['status']] ?? 0) : -1;
+                    if ($winningRouted === null || $rank > $winningRank) {
                         $winningRouted = $routed;
                         $winningCard = $card;
                     }

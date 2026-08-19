@@ -46,6 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             trim($_POST['token_url'] ?? '') ?: null,
             trim($_POST['client_id'] ?? '') ?: null,
             trim($_POST['client_secret'] ?? '') ?: null,
+            (int) ($_POST['tenant_id'] ?? 0),
+            trim($_POST['service_hash'] ?? '') ?: null,
             trim($_POST['fhir_server'] ?? '') ?: null
         );
         $message = xlt('Service added.');
